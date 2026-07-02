@@ -2,8 +2,18 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>Banca ENARE · Farmácia Multiprofissional</title>
+<meta name="description" content="App de estudo de questões — ENARE Farmácia/Multiprofissional. Progresso e taxa de acerto salvos no aparelho.">
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#0A3F3B">
+<link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
+<link rel="icon" type="image/png" sizes="64x64" href="favicon-64.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Banca ENARE">
 <style>
   :root{
     --bg:#FAF8F3;
@@ -26,16 +36,17 @@
   body{
     font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
     background:var(--bg);color:var(--ink);line-height:1.5;
-    padding:0 0 64px;
+    padding:0 0 calc(64px + env(safe-area-inset-bottom));
   }
   .wrap{max-width:760px;margin:0 auto;padding:0 16px}
 
   /* Header */
   header{
     background:linear-gradient(180deg,var(--teal-deep),var(--teal));
-    color:#fff;padding:22px 0 18px;margin-bottom:18px;
+    color:#fff;padding:calc(22px + env(safe-area-inset-top)) 0 18px;margin-bottom:18px;
     border-bottom:3px solid var(--amber);
   }
+  .wrap{padding-left:calc(16px + env(safe-area-inset-left));padding-right:calc(16px + env(safe-area-inset-right))}
   .brand{display:flex;align-items:baseline;gap:10px;flex-wrap:wrap}
   .brand h1{font-family:Georgia,"Times New Roman",serif;font-size:1.35rem;font-weight:700;letter-spacing:.2px}
   .brand .tag{font-size:.72rem;text-transform:uppercase;letter-spacing:.14em;opacity:.82;border:1px solid rgba(255,255,255,.4);padding:2px 8px;border-radius:999px}
@@ -4338,6 +4349,14 @@ document.getElementById("reset").onclick = ()=>{
 /* ---- init ---- */
 buildFilter();
 applyFilter();
+</script>
+<script>
+/* ---- PWA: registro do service worker ---- */
+if ("serviceWorker" in navigator) {
+  window.addEventListener("load", () => {
+    navigator.serviceWorker.register("sw.js").catch(() => {});
+  });
+}
 </script>
 </body>
 </html>
