@@ -1,0 +1,286 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gestão &amp; Logística de Medicamentos e Material Hospitalar — Guia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@500;600;700;800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#E7E1D2;--surface:#FBF8F0;--surface-2:#F3EEE1;
+    --ink:#143C42;--ink-soft:#4E5F5C;--vermilion:#D6492A;--ochre:#B98220;--green:#3C6E47;--blue:#2C5A74;
+    --line:rgba(20,60,66,.22);--line-strong:rgba(20,60,66,.55);
+    --font-display:'Anton',Impact,sans-serif;--font-head:'Archivo',system-ui,sans-serif;--font-body:'IBM Plex Sans',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+  body{margin:0;background:radial-gradient(circle at 100% -2%, rgba(214,73,42,.06), transparent 38%),var(--paper);
+    color:var(--ink);font-family:var(--font-body);line-height:1.55;padding:clamp(16px,3.5vw,44px) clamp(12px,4vw,40px) 80px}
+  .wrap{max-width:1080px;margin:0 auto}
+  .top-rule{height:6px;background:var(--ink)}
+  .kicker{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-family:var(--font-head);font-weight:700;text-transform:uppercase;letter-spacing:.15em;font-size:11px;color:var(--ink-soft);padding:9px 2px;border-bottom:1px solid var(--line)}
+  .kicker .dot{color:var(--vermilion)}
+  h1{font-family:var(--font-display);font-weight:400;line-height:.92;font-size:clamp(28px,5.6vw,62px);margin:16px 0 8px;text-transform:uppercase;letter-spacing:.5px}
+  h1 .accent{color:var(--vermilion)}
+  .dek{font-size:clamp(15px,2vw,17.5px);color:var(--ink-soft);max-width:66ch;border-top:3px double var(--line-strong);padding-top:12px}
+  .dek b{color:var(--ink);font-weight:600}
+  nav.toc{position:sticky;top:0;z-index:20;background:rgba(231,225,210,.94);backdrop-filter:blur(6px);margin:18px 0 8px;padding:10px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  nav.toc ul{list-style:none;display:flex;gap:7px;flex-wrap:wrap;margin:0;padding:0}
+  nav.toc a{font-family:var(--font-head);font-weight:600;font-size:12px;text-decoration:none;color:var(--ink);border:1.5px solid var(--line-strong);border-radius:2px;padding:5px 10px;transition:background .12s,color .12s}
+  nav.toc a:hover{background:var(--ink);color:var(--surface)}
+  section{margin:38px 0 0;scroll-margin-top:64px}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:14px;border-bottom:2px solid var(--ink);padding-bottom:8px}
+  .sec-num{font-family:var(--font-display);font-size:clamp(26px,4vw,40px);color:var(--vermilion);line-height:.8}
+  .sec-head h2{font-family:var(--font-head);font-weight:800;font-size:clamp(18px,3vw,25px);margin:0;letter-spacing:-.01em}
+  p{margin:0 0 12px}.lead{font-size:16px}
+  strong,b{color:var(--ink);font-weight:600}.hl{color:var(--vermilion);font-weight:600}
+  ul.clean{margin:0 0 12px;padding-left:18px}ul.clean li{margin:5px 0}
+  .box{background:var(--surface);border:1.5px solid var(--ink);border-radius:3px;box-shadow:4px 4px 0 var(--ink);padding:16px 18px;margin:14px 0}
+  .grid2{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+  .bizu{border:1.5px dashed var(--green);background:rgba(60,110,71,.06);border-radius:3px;padding:13px 16px;margin:14px 0}
+  .bizu .tag{font-family:var(--font-head);font-weight:700;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--green);display:block;margin-bottom:5px}
+  .bizu b{color:var(--green)}
+  .trap{border:1.5px solid var(--vermilion);background:rgba(214,73,42,.05);border-radius:3px;padding:13px 16px;margin:14px 0}
+  .trap .tag{font-family:var(--font-head);font-weight:700;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--vermilion);display:block;margin-bottom:5px}
+  .tbl{width:100%;border-collapse:collapse;margin:14px 0;font-size:12.5px;background:var(--surface)}
+  .tbl th,.tbl td{border:1px solid var(--line-strong);padding:8px 10px;text-align:left;vertical-align:top}
+  .tbl thead th{background:var(--ink);color:var(--surface);font-family:var(--font-head);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.03em}
+  .tbl tbody th{background:var(--surface-2);font-family:var(--font-head);font-weight:700;white-space:nowrap}
+  .tbl-scroll{overflow-x:auto}
+  .formula{font-family:var(--font-head);font-weight:600;background:var(--surface-2);border:1.5px solid var(--line-strong);border-radius:3px;padding:10px 14px;margin:10px 0;font-size:14px}
+  .fc-grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));margin-top:14px}
+  .fc{background:var(--surface);border:1.5px solid var(--ink);border-radius:3px;box-shadow:4px 4px 0 var(--ink);padding:16px 17px;cursor:pointer;text-align:left;width:100%;font-family:var(--font-body);color:var(--ink);display:flex;flex-direction:column;gap:9px;transition:transform .12s,box-shadow .12s}
+  .fc:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--vermilion)}
+  .fc:focus-visible{outline:3px solid var(--vermilion);outline-offset:3px}
+  .fc .q{font-family:var(--font-head);font-weight:700;font-size:15px;line-height:1.28}
+  .fc .hint{font-family:var(--font-head);font-weight:600;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--vermilion)}
+  .fc .ans{font-size:13.5px;color:var(--ink-soft)}
+  .fc:not(.open) .ans{display:none}.fc.open .hint{display:none}
+  .case .q::before{content:"SITUAÇÃO ";font-family:var(--font-display);color:var(--vermilion);font-size:11px;letter-spacing:.08em}
+  footer{margin:46px 0 0;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--ink-soft)}
+  footer b{color:var(--ink)}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="top-rule"></div>
+    <div class="kicker">
+      <span>Farmácia Hospitalar <span class="dot">·</span> Gestão &amp; Logística</span>
+      <span>Resmulti · ENARE · EBSERH · HUs</span>
+    </div>
+    <h1>Gestão &amp; Logística de <span class="accent">Medicamentos</span></h1>
+    <p class="dek">Materiais e medicamentos no hospital: ciclo logístico, <b>gestão de estoques (ABC/XYZ)</b>, aquisição/licitação, armazenamento e <b>sistemas de distribuição</b>. Guia de revisão com bizus, tabelas e situações de prova.</p>
+  </header>
+
+  <nav class="toc" aria-label="Índice">
+    <ul>
+      <li><a href="#ciclo">1 · Ciclo logístico</a></li>
+      <li><a href="#programacao">2 · Programação</a></li>
+      <li><a href="#abc">3 · Curva ABC ★</a></li>
+      <li><a href="#xyz">4 · XYZ &amp; combinação ★</a></li>
+      <li><a href="#parametros">5 · Parâmetros de estoque ★</a></li>
+      <li><a href="#licitacao">6 · Aquisição / licitação ★</a></li>
+      <li><a href="#armazenamento">7 · Armazenamento ★</a></li>
+      <li><a href="#distribuicao">8 · Distribuição ★</a></li>
+      <li><a href="#indicadores">9 · Indicadores</a></li>
+      <li><a href="#pegadinhas">10 · Pegadinhas</a></li>
+      <li><a href="#casos">11 · Situações ★</a></li>
+    </ul>
+  </nav>
+
+  <!-- 1 -->
+  <section id="ciclo">
+    <div class="sec-head"><span class="sec-num">01</span><h2>Ciclo logístico da AF hospitalar</h2></div>
+    <p class="lead">A logística farmacêutica garante o <b>medicamento certo, na quantidade e qualidade certas, no momento e local certos, ao menor custo</b>.</p>
+    <p>Sequência: <b>Seleção → Programação → Aquisição → Armazenamento → Distribuição → Dispensação</b>. A <span class="hl">seleção é o eixo</span> (orienta todo o ciclo). Abrange medicamentos e <b>materiais médico-hospitalares</b> (correlatos e OPME — órteses, próteses e materiais especiais).</p>
+    <div class="bizu"><span class="tag">★ Bizu</span> A <b>seleção</b> define o que entra (padronização via <b>CFT</b> e formulário/REMUME hospitalar). Selecionar bem reduz custo e erro em todas as etapas seguintes.</div>
+  </section>
+
+  <!-- 2 -->
+  <section id="programacao">
+    <div class="sec-head"><span class="sec-num">02</span><h2>Programação (previsão de demanda)</h2></div>
+    <ul class="clean">
+      <li><b>Consumo histórico (CMM):</b> baseia-se no consumo médio mensal. Simples, mas perpetua distorções (faltas, perdas).</li>
+      <li><b>Perfil epidemiológico:</b> baseia-se na morbidade/protocolos. Bom quando não há histórico confiável.</li>
+      <li><b>Oferta de serviços / consumo ajustado:</b> baseia-se na capacidade instalada.</li>
+      <li><b>Misto:</b> combina os anteriores (mais usado na prática).</li>
+    </ul>
+    <div class="formula">CMM = consumo total do período ÷ nº de meses (ajustar por perdas e dias sem estoque)</div>
+  </section>
+
+  <!-- 3 -->
+  <section id="abc">
+    <div class="sec-head"><span class="sec-num">03</span><h2>Curva ABC (valor) ★</h2></div>
+    <p>Classifica os itens pelo <span class="hl">valor financeiro</span> (consumo × preço) — princípio de Pareto (80/20).</p>
+    <div class="tbl-scroll">
+    <table class="tbl">
+      <thead><tr><th>Classe</th><th>% itens (aprox.)</th><th>% do valor (aprox.)</th><th>Controle</th></tr></thead>
+      <tbody>
+        <tr><th>A</th><td>~20%</td><td>~80%</td><td><b>Rigoroso</b> (poucos itens, muito dinheiro).</td></tr>
+        <tr><th>B</th><td>~30%</td><td>~15%</td><td>Intermediário.</td></tr>
+        <tr><th>C</th><td>~50%</td><td>~5%</td><td>Simples (muitos itens, pouco valor).</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="bizu"><span class="tag">★ Bizu</span> <b>Classe A = poucos itens, muito valor</b> → onde focar o controle. A curva ABC fala de <b>$$$</b>, não de importância clínica.</div>
+  </section>
+
+  <!-- 4 -->
+  <section id="xyz">
+    <div class="sec-head"><span class="sec-num">04</span><h2>Curva XYZ (criticidade) &amp; combinação ★</h2></div>
+    <div class="tbl-scroll">
+    <table class="tbl">
+      <thead><tr><th>Classe</th><th>Criticidade / essencialidade</th></tr></thead>
+      <tbody>
+        <tr><th>X</th><td><b>Baixa</b> — facilmente substituível; a falta não compromete o atendimento.</td></tr>
+        <tr><th>Y</th><td><b>Média</b> — substituível com restrições.</td></tr>
+        <tr><th>Z</th><td><b>Alta / vital</b> — imprescindível, sem substituto; a <span class="hl">falta compromete o atendimento</span> e pode causar dano.</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="trap"><span class="tag">⚠ Pegadinha</span> <b>ABC = valor financeiro; XYZ = criticidade clínica.</b> Um item pode ser <b>C</b> (barato) e <b>Z</b> (vital) — ex.: soro fisiológico. Combinar ABC + XYZ prioriza o que é caro <b>e/ou</b> crítico.</div>
+    <div class="bizu"><span class="tag">★ Bizu</span> Curva <b>PQR / 123</b> = popularidade/giro (frequência de saída). Não confunda com ABC (valor) nem XYZ (criticidade).</div>
+  </section>
+
+  <!-- 5 -->
+  <section id="parametros">
+    <div class="sec-head"><span class="sec-num">05</span><h2>Parâmetros de estoque ★</h2></div>
+    <ul class="clean">
+      <li><b>Estoque de segurança (mínimo):</b> reserva para variação de consumo e atraso na entrega — evita a ruptura.</li>
+      <li><b>Ponto de pedido (PP):</b> nível que dispara nova compra.</li>
+      <li><b>Estoque máximo:</b> limite superior (evita excesso e perdas por validade).</li>
+      <li><b>Lote econômico de compra (LEC):</b> quantidade que minimiza o custo total (pedido + manutenção).</li>
+      <li><b>Giro de estoque:</b> quantas vezes o estoque se renova — quanto <b>maior</b>, melhor (menos capital parado).</li>
+      <li><b>Cobertura:</b> por quanto tempo o estoque atual atende ao consumo.</li>
+    </ul>
+    <div class="formula">Ponto de pedido = (consumo médio × tempo de reposição) + estoque de segurança</div>
+    <div class="formula">Giro = consumo do período ÷ estoque médio</div>
+    <div class="bizu"><span class="tag">★ Bizu</span> O <b>ponto de pedido SEMPRE inclui o estoque de segurança</b>. Giro alto + cobertura adequada = gestão eficiente (sem ruptura nem capital imobilizado).</div>
+  </section>
+
+  <!-- 6 -->
+  <section id="licitacao">
+    <div class="sec-head"><span class="sec-num">06</span><h2>Aquisição &amp; licitação ★</h2></div>
+    <p>Aquisição pública segue a <b>Lei nº 14.133/2021</b> (Nova Lei de Licitações), que <span class="hl">substituiu a Lei 8.666/93</span>.</p>
+    <div class="tbl-scroll">
+    <table class="tbl">
+      <thead><tr><th>Modalidades (Lei 14.133/2021)</th><th>Observação</th></tr></thead>
+      <tbody>
+        <tr><th>Pregão</th><td><b>Preferencial para bens/serviços comuns</b> (caso dos medicamentos); geralmente <b>eletrônico</b>, critério menor preço.</td></tr>
+        <tr><th>Concorrência</th><td>Para objetos de maior vulto/complexidade.</td></tr>
+        <tr><th>Concurso · Leilão · Diálogo competitivo</th><td>Demais finalidades específicas.</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <ul class="clean">
+      <li><b>Extintas</b> pela nova lei: <b>convite</b> e <b>tomada de preços</b>.</li>
+      <li><b>Contratação direta:</b> <b>dispensa</b> (ex.: valor baixo, emergência) e <b>inexigibilidade</b> (fornecedor/medicamento <b>exclusivo</b> — marca única/patente).</li>
+      <li><b>Sistema de Registro de Preços (SRP):</b> ata para compras parceladas — muito usado para medicamentos.</li>
+    </ul>
+    <div class="bizu"><span class="tag">★ Bizu</span> <b>Medicamento comum → pregão eletrônico.</b> <b>Fornecedor único → inexigibilidade.</b> <b>Compra recorrente parcelada → registro de preços.</b></div>
+  </section>
+
+  <!-- 7 -->
+  <section id="armazenamento">
+    <div class="sec-head"><span class="sec-num">07</span><h2>Armazenamento (boas práticas) ★</h2></div>
+    <ul class="clean">
+      <li><b>FEFO</b> (<i>first expire, first out</i> — primeiro que <b>vence</b>, primeiro que sai): regra de saída por <b>validade</b>. FIFO/PEPS é por ordem de entrada.</li>
+      <li><b>Cadeia de frio (2–8 °C)</b> para termolábeis (vacinas, insulina, alguns biológicos) — monitorar temperatura.</li>
+      <li><b>Segregação:</b> alta vigilância, termolábeis, inflamáveis e <b>controlados (Portaria 344/98)</b> sob chave/segurança, com escrituração (SNGPC).</li>
+      <li>Áreas definidas: recebimento, estocagem, separação e expedição; identificação, organização e controle de validade.</li>
+      <li>Evitar estoque <b>morto/obsoleto</b> e perdas por vencimento.</li>
+    </ul>
+    <div class="trap"><span class="tag">⚠ Pegadinha</span> Na farmácia hospitalar a saída prioriza <b>FEFO (validade)</b>, não apenas FIFO (entrada) — porque um lote que entrou depois pode vencer antes.</div>
+  </section>
+
+  <!-- 8 -->
+  <section id="distribuicao">
+    <div class="sec-head"><span class="sec-num">08</span><h2>Sistemas de distribuição ★</h2></div>
+    <div class="tbl-scroll">
+    <table class="tbl">
+      <thead><tr><th>Sistema</th><th>Como funciona</th><th>Prós / contras</th></tr></thead>
+      <tbody>
+        <tr><th>Coletivo</th><td>Medicamentos enviados em lote às unidades, que mantêm estoque próprio e administram conforme prescrição.</td><td>Simples e rápido · <span class="hl">muito estoque na enfermaria, mais perdas e erros, sem revisão farmacêutica</span>.</td></tr>
+        <tr><th>Individualizado</th><td>Separação por paciente (geralmente 24 h) a partir da prescrição.</td><td>Permite revisão farmacêutica; menos estoque na unidade · ainda exige conferência na ponta.</td></tr>
+        <tr><th>Dose unitária (DU)</th><td>Cada dose pronta para administrar, <b>identificada por paciente</b>, para 24 h.</td><td><b>Mais seguro</b> (menor erro/perda), revisão farmacêutica completa, faturamento preciso · <span class="hl">exige estrutura, RH e custo inicial</span>.</td></tr>
+        <tr><th>Dose unitária mista</th><td>Combinação de DU com individualizado/coletivo.</td><td>Equilíbrio entre segurança e estrutura.</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="bizu"><span class="tag">★ Bizu</span> Segurança crescente: <b>Coletivo &lt; Individualizado &lt; Dose unitária</b>. A <b>dose unitária</b> é o padrão-ouro de segurança e a que mais reduz erros e perdas.</div>
+  </section>
+
+  <!-- 9 -->
+  <section id="indicadores">
+    <div class="sec-head"><span class="sec-num">09</span><h2>Indicadores de gestão</h2></div>
+    <ul class="clean">
+      <li><b>Giro</b> e <b>cobertura</b> de estoque.</li>
+      <li><b>Taxa de ruptura/desabastecimento</b> (itens em falta).</li>
+      <li><b>% de perdas</b> por validade/avaria.</li>
+      <li><b>Acuracidade do estoque</b> (inventário físico × sistema).</li>
+      <li><b>DDD</b> (dose diária definida) para monitorar consumo, sobretudo de antimicrobianos.</li>
+    </ul>
+  </section>
+
+  <!-- 10 -->
+  <section id="pegadinhas">
+    <div class="sec-head"><span class="sec-num">10</span><h2>Pegadinhas consolidadas</h2></div>
+    <div class="trap"><span class="tag">⚠ Top pegadinhas</span>
+      <ul class="clean" style="margin:0">
+        <li><b>ABC = valor financeiro; XYZ = criticidade.</b> Item pode ser C e Z ao mesmo tempo.</li>
+        <li><b>Classe A</b> = poucos itens, muito valor → controle rigoroso.</li>
+        <li><b>FEFO (validade)</b> tem prioridade sobre FIFO (entrada).</li>
+        <li><b>Ponto de pedido</b> inclui o estoque de segurança.</li>
+        <li><b>Giro alto</b> = bom (menos capital parado); cobertura adequada evita ruptura.</li>
+        <li><b>Pregão</b> = bens comuns (medicamentos), preferencial e eletrônico.</li>
+        <li><b>Lei 14.133/2021</b> substituiu a 8.666/93; <b>extinguiu convite e tomada de preços</b>.</li>
+        <li><b>Inexigibilidade</b> = fornecedor exclusivo; <b>registro de preços</b> = compras parceladas.</li>
+        <li><b>Dose unitária</b> = mais segura, porém mais cara/estruturada.</li>
+        <li><b>Termolábeis</b> = cadeia de frio 2–8 °C; <b>controlados</b> = Portaria 344/98 sob guarda.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 11 -->
+  <section id="casos">
+    <div class="sec-head"><span class="sec-num">11</span><h2>Situações de gestão — autoteste ★</h2></div>
+    <p>Leia, decida a conduta e clique para conferir o raciocínio.</p>
+    <div class="fc-grid" id="caseGrid"></div>
+  </section>
+
+  <footer>
+    <b>Fontes-base:</b> ciclo da assistência farmacêutica e logística (Marin et al./OPAS); técnicas de gestão de estoques (curvas ABC, XYZ, PQR; LEC; ponto de pedido); Lei nº 14.133/2021 (licitações); boas práticas de armazenamento e cadeia de frio; sistemas de distribuição em farmácia hospitalar (SBRAFH); Portaria SVS/MS 344/1998 (controlados). Material de estudo — confronte com o edital da sua banca.
+  </footer>
+
+</div>
+
+<script>
+  const cases = [
+    {q:"Imunoglobulina: poucos frascos por mês, mas representa enorme parte do orçamento da farmácia. Como classificar e controlar?", a:"Classe A na curva ABC (poucos itens, alto valor financeiro). Exige controle rigoroso: acompanhamento de saldo, programação cuidadosa e revisão frequente."},
+    {q:"Soro fisiológico é barato, mas sua falta paralisa o atendimento. Como a curva XYZ o classifica?", a:"Classe Z (alta criticidade/vital): imprescindível, sem substituto adequado. Pode ser 'C' na ABC (barato) e 'Z' na XYZ ao mesmo tempo — daí a importância de combinar as duas curvas."},
+    {q:"Há dois lotes do mesmo medicamento: o lote que chegou depois vence antes. Qual dispensar primeiro?", a:"O de validade mais próxima (FEFO — primeiro que vence, primeiro que sai), independentemente da ordem de entrada. Assim se evita perda por vencimento."},
+    {q:"Consumo médio de 100 unidades/mês, prazo de reposição de 1 mês e estoque de segurança de 50. Qual o ponto de pedido?", a:"PP = (consumo médio × tempo de reposição) + estoque de segurança = (100 × 1) + 50 = 150 unidades. Ao atingir 150, dispara-se a compra."},
+    {q:"O hospital quer reduzir erros de administração, perdas e estoque nas enfermarias. Qual sistema de distribuição adotar?", a:"Dose unitária — doses prontas, identificadas por paciente, para 24h. É o sistema mais seguro, permite revisão farmacêutica completa e reduz erros e perdas (exige estrutura e RH)."},
+    {q:"Medicamento de marca única, protegido por patente, com fornecedor exclusivo. Como adquirir?", a:"Por inexigibilidade de licitação (inviabilidade de competição — fornecedor exclusivo), conforme a Lei 14.133/2021, com a devida justificativa e comprovação."},
+    {q:"Compra recorrente e parcelada de medicamentos comuns ao longo do ano. Melhor estratégia?", a:"Sistema de Registro de Preços (ata), geralmente via pregão eletrônico. Permite contratações conforme a necessidade, sem novo certame a cada compra."},
+    {q:"A farmácia tem capital imobilizado e itens parados por meses. Que indicador está ruim e como melhorar?", a:"Giro de estoque baixo (e cobertura alta demais). Rever a programação/CMM, reduzir estoque máximo e melhorar a rotatividade evita capital parado e perdas por validade."},
+    {q:"Enfermaria acumula estoque, com frequentes perdas por vencimento e erros de administração. Qual a causa provável?", a:"Sistema de distribuição coletivo (estoque solto na unidade). A migração para individualizado ou dose unitária reduz estoque na ponta, perdas e erros."},
+    {q:"Recebimento de vacinas e insulina. Que cuidado de armazenamento é crítico?", a:"Cadeia de frio: manter entre 2 e 8 °C, com monitoramento contínuo de temperatura. Quebra da cadeia de frio inutiliza o produto."},
+    {q:"Medicamentos da Portaria 344/98 (controlados) chegaram ao estoque. Como armazenar?", a:"Guarda em local seguro (sob chave/cofre), acesso restrito e escrituração da movimentação (SNGPC/livros), conforme a Portaria 344/98."},
+    {q:"A banca pergunta a diferença entre as curvas ABC e XYZ. Como responder em uma frase?", a:"ABC classifica os itens pelo valor financeiro (consumo × preço); XYZ classifica pela criticidade/essencialidade (impacto da falta). São complementares."}
+  ];
+  const grid = document.getElementById('caseGrid');
+  cases.forEach(c=>{
+    const b=document.createElement('button');b.className='fc case';b.type='button';
+    b.innerHTML=`<span class="q">${c.q}</span><span class="hint">Ver conduta</span><span class="ans">${c.a}</span>`;
+    b.addEventListener('click',()=>b.classList.toggle('open'));
+    grid.appendChild(b);
+  });
+</script>
+</body>
+</html>

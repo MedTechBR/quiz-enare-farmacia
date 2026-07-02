@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Protocolo de Segurança na Prescrição, Uso e Administração de Medicamentos</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@500;600;700;800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#E7E1D2;--surface:#FBF8F0;--surface-2:#F3EEE1;
+    --ink:#143C42;--ink-soft:#4E5F5C;--vermilion:#D6492A;--ochre:#B98220;--green:#3C6E47;--blue:#2C5A74;
+    --line:rgba(20,60,66,.22);--line-strong:rgba(20,60,66,.55);
+    --font-display:'Anton',Impact,sans-serif;--font-head:'Archivo',system-ui,sans-serif;--font-body:'IBM Plex Sans',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+  body{margin:0;background:radial-gradient(circle at 100% -2%, rgba(214,73,42,.06), transparent 38%),var(--paper);
+    color:var(--ink);font-family:var(--font-body);line-height:1.55;padding:clamp(16px,3.5vw,44px) clamp(12px,4vw,40px) 80px}
+  .wrap{max-width:1080px;margin:0 auto}
+  .top-rule{height:6px;background:var(--ink)}
+  .kicker{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-family:var(--font-head);font-weight:700;text-transform:uppercase;letter-spacing:.15em;font-size:11px;color:var(--ink-soft);padding:9px 2px;border-bottom:1px solid var(--line)}
+  .kicker .dot{color:var(--vermilion)}
+  h1{font-family:var(--font-display);font-weight:400;line-height:.92;font-size:clamp(26px,5vw,56px);margin:16px 0 8px;text-transform:uppercase;letter-spacing:.5px}
+  h1 .accent{color:var(--vermilion)}
+  .dek{font-size:clamp(15px,2vw,17.5px);color:var(--ink-soft);max-width:66ch;border-top:3px double var(--line-strong);padding-top:12px}
+  .dek b{color:var(--ink);font-weight:600}
+  nav.toc{position:sticky;top:0;z-index:20;background:rgba(231,225,210,.94);backdrop-filter:blur(6px);margin:18px 0 8px;padding:10px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  nav.toc ul{list-style:none;display:flex;gap:7px;flex-wrap:wrap;margin:0;padding:0}
+  nav.toc a{font-family:var(--font-head);font-weight:600;font-size:12px;text-decoration:none;color:var(--ink);border:1.5px solid var(--line-strong);border-radius:2px;padding:5px 10px;transition:background .12s,color .12s}
+  nav.toc a:hover{background:var(--ink);color:var(--surface)}
+  section{margin:38px 0 0;scroll-margin-top:64px}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:14px;border-bottom:2px solid var(--ink);padding-bottom:8px}
+  .sec-num{font-family:var(--font-display);font-size:clamp(26px,4vw,40px);color:var(--vermilion);line-height:.8}
+  .sec-head h2{font-family:var(--font-head);font-weight:800;font-size:clamp(18px,3vw,25px);margin:0;letter-spacing:-.01em}
+  p{margin:0 0 12px}.lead{font-size:16px}
+  strong,b{color:var(--ink);font-weight:600}.hl{color:var(--vermilion);font-weight:600}
+  ul.clean{margin:0 0 12px;padding-left:18px}ul.clean li{margin:5px 0}
+  .box{background:var(--surface);border:1.5px solid var(--ink);border-radius:3px;box-shadow:4px 4px 0 var(--ink);padding:16px 18px;margin:14px 0}
+  .grid2{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+  .grid3{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr))}
+  .bizu{border:1.5px dashed var(--green);background:rgba(60,110,71,.06);border-radius:3px;padding:13px 16px;margin:14px 0}
+  .bizu .tag{font-family:var(--font-head);font-weight:700;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--green);display:block;margin-bottom:5px}
+  .bizu b{color:var(--green)}
+  .trap{border:1.5px solid var(--vermilion);background:rgba(214,73,42,.05);border-radius:3px;padding:13px 16px;margin:14px 0}
+  .trap .tag{font-family:var(--font-head);font-weight:700;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--vermilion);display:block;margin-bottom:5px}
+  .tbl{width:100%;border-collapse:collapse;margin:14px 0;font-size:12.5px;background:var(--surface)}
+  .tbl th,.tbl td{border:1px solid var(--line-strong);padding:8px 10px;text-align:left;vertical-align:top}
+  .tbl thead th{background:var(--ink);color:var(--surface);font-family:var(--font-head);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.03em}
+  .tbl tbody th{background:var(--surface-2);font-family:var(--font-head);font-weight:700;white-space:nowrap}
+  .tbl-scroll{overflow-x:auto}
+  .certos{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));margin:14px 0;counter-reset:certo}
+  .certo{position:relative;background:var(--surface);border:1.5px solid var(--ink);border-radius:3px;box-shadow:3px 3px 0 var(--ink);padding:12px 13px 12px 40px}
+  .certo::before{counter-increment:certo;content:counter(certo);position:absolute;left:9px;top:11px;width:24px;height:24px;background:var(--vermilion);color:#fff;font-family:var(--font-display);font-size:14px;display:flex;align-items:center;justify-content:center;border-radius:50%}
+  .certo h4{font-family:var(--font-head);font-weight:700;margin:0 0 3px;font-size:13.5px}
+  .certo p{margin:0;font-size:12px;color:var(--ink-soft)}
+  .ynbox{display:grid;gap:10px;grid-template-columns:1fr 1fr;margin:12px 0}
+  .yn{border:1.5px solid var(--line-strong);border-radius:3px;padding:10px 13px;font-family:var(--font-head);font-weight:600}
+  .yn.no{border-color:var(--vermilion);background:rgba(214,73,42,.05)}
+  .yn.yes{border-color:var(--green);background:rgba(60,110,71,.06)}
+  .yn span{display:block;font-size:11px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px}
+  .yn.no span{color:var(--vermilion)}.yn.yes span{color:var(--green)}
+  .fc-grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));margin-top:14px}
+  .fc{background:var(--surface);border:1.5px solid var(--ink);border-radius:3px;box-shadow:4px 4px 0 var(--ink);padding:16px 17px;cursor:pointer;text-align:left;width:100%;font-family:var(--font-body);color:var(--ink);display:flex;flex-direction:column;gap:9px;transition:transform .12s,box-shadow .12s}
+  .fc:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--vermilion)}
+  .fc:focus-visible{outline:3px solid var(--vermilion);outline-offset:3px}
+  .fc .q{font-family:var(--font-head);font-weight:700;font-size:15px;line-height:1.28}
+  .fc .hint{font-family:var(--font-head);font-weight:600;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--vermilion)}
+  .fc .ans{font-size:13.5px;color:var(--ink-soft)}
+  .fc:not(.open) .ans{display:none}.fc.open .hint{display:none}
+  .case .q::before{content:"CASO ";font-family:var(--font-display);color:var(--vermilion);font-size:12px;letter-spacing:.1em}
+  footer{margin:46px 0 0;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--ink-soft)}
+  footer b{color:var(--ink)}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
+  @media (max-width:520px){.ynbox{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="top-rule"></div>
+    <div class="kicker">
+      <span>Segurança do Paciente <span class="dot">·</span> PNSP</span>
+      <span>Resmulti · ENARE · EBSERH · HUs</span>
+    </div>
+    <h1>Protocolo de Segurança — <span class="accent">Medicamentos</span></h1>
+    <p class="dek">Protocolo de Segurança na <b>Prescrição, Uso e Administração de Medicamentos</b> (MS/Anvisa/Fiocruz/Fhemig, 2013). Os três eixos, a escrita segura da dose e os <b>9 certos</b>. Guia com bizus, tabelas e casos.</p>
+  </header>
+
+  <nav class="toc" aria-label="Índice">
+    <ul>
+      <li><a href="#identificacao">1 · O protocolo</a></li>
+      <li><a href="#eixos">2 · Os 3 eixos ★</a></li>
+      <li><a href="#prescricao">3 · Prescrição segura ★</a></li>
+      <li><a href="#dose">4 · Escrita da dose ★</a></li>
+      <li><a href="#dispensacao">5 · Dispensação segura</a></li>
+      <li><a href="#certos">6 · Os 9 certos ★</a></li>
+      <li><a href="#administracao">7 · Boas práticas ★</a></li>
+      <li><a href="#alta">8 · Alta vigilância &amp; LASA</a></li>
+      <li><a href="#pegadinhas">9 · Pegadinhas</a></li>
+      <li><a href="#casos">10 · Casos ★</a></li>
+    </ul>
+  </nav>
+
+  <!-- 1 -->
+  <section id="identificacao">
+    <div class="sec-head"><span class="sec-num">01</span><h2>O protocolo — identificação</h2></div>
+    <ul class="clean">
+      <li><b>Quem:</b> Ministério da Saúde e ANVISA, em parceria com <b>FIOCRUZ e FHEMIG</b> (2013).</li>
+      <li><b>Onde se insere:</b> é um dos <b>6 protocolos básicos</b> do <b>PNSP</b> (Portaria GM/MS nº 529/2013), aprovados pelas <b>Portarias MS nº 1.377 e nº 2.095/2013</b>; alinhado à <b>RDC nº 36/2013</b> (Núcleo de Segurança do Paciente).</li>
+      <li><b>Finalidade:</b> promover práticas seguras no uso de medicamentos nos serviços de saúde, reduzindo erros e eventos adversos evitáveis.</li>
+    </ul>
+    <div class="bizu"><span class="tag">★ Bizu</span> Os 6 protocolos básicos: identificação do paciente · <b>medicamentos</b> · cirurgia segura · higiene das mãos · prevenção de quedas · prevenção de lesão por pressão.</div>
+  </section>
+
+  <!-- 2 -->
+  <section id="eixos">
+    <div class="sec-head"><span class="sec-num">02</span><h2>Os 3 eixos do protocolo ★</h2></div>
+    <div class="grid3">
+      <div class="box"><b>Prescrição segura</b><p style="margin:0">Identificação completa, legibilidade, escrita segura da dose, padronização e cautela com alta vigilância.</p></div>
+      <div class="box"><b>Dispensação segura</b><p style="margin:0">Análise/validação farmacêutica da prescrição, organização, segregação e conferência.</p></div>
+      <div class="box"><b>Administração segura</b><p style="margin:0">Os <b>9 certos</b> e boas práticas à beira do leito.</p></div>
+    </div>
+    <div class="bizu"><span class="tag">★ Bizu</span> O título dá a estrutura: <b>Prescrição → Uso/Dispensação → Administração</b>. Cada etapa é uma barreira contra o erro.</div>
+  </section>
+
+  <!-- 3 -->
+  <section id="prescricao">
+    <div class="sec-head"><span class="sec-num">03</span><h2>Prescrição segura — recomendações ★</h2></div>
+    <ul class="clean">
+      <li><b>Identificação do paciente</b> completa (com leito/enfermaria, quando internado) e do <b>prescritor</b> (nome, registro no conselho, assinatura).</li>
+      <li><b>Legibilidade</b> — preferir <b>prescrição eletrônica</b>; dúvidas de legibilidade devem ser esclarecidas <b>com o prescritor</b>.</li>
+      <li>Itens completos: <b>nome do medicamento</b> (sem abreviar), concentração, forma farmacêutica, <b>dose, via, frequência</b> e, quando aplicável, <b>diluente e velocidade de infusão</b>.</li>
+      <li>Indicar o <b>objetivo/indicação</b> e a posologia de forma clara (inclusive “se necessário”, com dose máxima diária).</li>
+      <li>Evitar <b>abreviaturas perigosas</b> (não abreviar “unidades”).</li>
+      <li>Atenção redobrada com <b>medicamentos de alta vigilância</b> e nomes semelhantes (<b>LASA</b>).</li>
+      <li>No <b>ambulatório</b>: trazer a quantidade total para o tratamento e a dose máxima diária; <b>não rasurar</b> a receita — se mudar a terapia, emitir <b>nova receita</b>.</li>
+    </ul>
+  </section>
+
+  <!-- 4 -->
+  <section id="dose">
+    <div class="sec-head"><span class="sec-num">04</span><h2>Escrita segura da dose ★</h2></div>
+    <p>Regra de prova frequente — a forma de escrever números evita erros de 10× ou 100×:</p>
+    <div class="ynbox">
+      <div class="yn yes"><span>✓ Faça</span>Zero à <b>esquerda</b> em frações: <b>0,5 mg</b></div>
+      <div class="yn no"><span>✗ Evite</span>Sem zero à esquerda: <b>,5 mg</b> (lê-se 5)</div>
+      <div class="yn yes"><span>✓ Faça</span>Sem zero à <b>direita</b>: <b>1 mg</b></div>
+      <div class="yn no"><span>✗ Evite</span>Zero à direita: <b>1,0 mg</b> (lê-se 10)</div>
+      <div class="yn yes"><span>✓ Faça</span>Usar <b>vírgula</b> como separador decimal</div>
+      <div class="yn no"><span>✗ Evite</span>Usar <b>ponto</b> (confunde com casas)</div>
+      <div class="yn yes"><span>✓ Faça</span>Preferir <b>número inteiro</b>: <b>500 mg</b></div>
+      <div class="yn no"><span>✗ Evite</span>Decimal evitável: <b>0,5 g</b></div>
+    </div>
+    <div class="bizu"><span class="tag">★ Bizu</span> O protocolo recomenda expressar a dose como <b>número inteiro</b> sempre que possível (ex.: <b>500 mg</b> em vez de 0,5 g) e <b>não usar ponto</b> no lugar da vírgula. Sempre <b>zero à esquerda</b>, <b>nunca zero à direita</b>.</div>
+    <div class="trap"><span class="tag">⚠ Pegadinha</span> “1.0 mg” ou “1,0 mg” pode virar <b>10 mg</b>; “,5 mg” pode virar <b>5 mg</b>. E não abreviar “unidades” como “U” — pode virar zero.</div>
+  </section>
+
+  <!-- 5 -->
+  <section id="dispensacao">
+    <div class="sec-head"><span class="sec-num">05</span><h2>Dispensação segura</h2></div>
+    <ul class="clean">
+      <li><b>Análise/validação farmacêutica</b> da prescrição antes de dispensar (dose, via, interações, duplicidade, alergias).</li>
+      <li>Garantir o medicamento <b>certo, na forma e quantidade certas</b>, com qualidade e validade.</li>
+      <li><b>Organização e segregação</b>: alta vigilância separados, controle por <b>FEFO</b>, identificação clara.</li>
+      <li>Esclarecer <b>dúvidas com o prescritor</b>; orientar a equipe sobre diluição, estabilidade e compatibilidade.</li>
+      <li>Sistemas que reduzem erro: <b>dose unitária</b>, prescrição eletrônica e código de barras.</li>
+    </ul>
+  </section>
+
+  <!-- 6 -->
+  <section id="certos">
+    <div class="sec-head"><span class="sec-num">06</span><h2>Os 9 certos da administração ★</h2></div>
+    <div class="certos">
+      <div class="certo"><h4>Paciente certo</h4><p>Confirmar nome completo; usar <b>2 identificadores</b> e a pulseira.</p></div>
+      <div class="certo"><h4>Medicamento certo</h4><p>Conferir o nome com a prescrição; checar alergias.</p></div>
+      <div class="certo"><h4>Via certa</h4><p>Confirmar a via prescrita e tecnicamente adequada.</p></div>
+      <div class="certo"><h4>Hora certa</h4><p>Administrar e <b>checar</b> o horário a cada dose.</p></div>
+      <div class="certo"><h4>Dose certa</h4><p>Conferir a dose; atenção a vírgula/ponto/zero.</p></div>
+      <div class="certo"><h4>Registro certo</h4><p>Registrar a administração (e a omissão) no prontuário.</p></div>
+      <div class="certo"><h4>Orientação correta</h4><p>Comunicar ao paciente o que está sendo administrado.</p></div>
+      <div class="certo"><h4>Forma certa</h4><p>Conferir forma farmacêutica, diluente e preparo.</p></div>
+      <div class="certo"><h4>Resposta certa</h4><p>Monitorar o efeito esperado e reações adversas.</p></div>
+    </div>
+    <div class="bizu"><span class="tag">★ Bizu</span> Os <b>5 clássicos</b> (Paciente, Medicamento, Via, Hora, Dose) foram ampliados para <b>9</b> com: <b>Registro, Orientação, Forma e Resposta</b> certos.</div>
+  </section>
+
+  <!-- 7 -->
+  <section id="administracao">
+    <div class="sec-head"><span class="sec-num">07</span><h2>Boas práticas na administração ★</h2></div>
+    <ul class="clean">
+      <li><b>Higienizar as mãos</b> antes do preparo e da administração.</li>
+      <li>Confirmar o paciente por <b>2 identificadores</b>; se baixo nível de consciência, conferir a prescrição com a <b>pulseira</b>.</li>
+      <li>Conferir <b>diluente (tipo/volume)</b> e <b>velocidade de infusão</b>.</li>
+      <li><b>Ordem verbal só em emergência</b>: quem recebe <b>repete oralmente</b>, o prescritor <b>confirma</b>, e registra-se por escrito assim que possível.</li>
+      <li>Conferir a <b>validade</b> do medicamento/solução.</li>
+      <li><b>Registrar a omissão</b> de dose e comunicar ao enfermeiro.</li>
+      <li>Diante de qualquer dúvida, <b>só administrar após esclarecê-la</b>.</li>
+      <li><b>Notificar erros e eventos adversos</b> ao Núcleo de Segurança do Paciente (NSP).</li>
+    </ul>
+    <div class="trap"><span class="tag">⚠ Pegadinha</span> Ordem verbal <b>não</b> é rotina — só em emergência, com <b>repetição + confirmação (read-back)</b> e registro posterior. Fora disso, exige-se prescrição escrita.</div>
+  </section>
+
+  <!-- 8 -->
+  <section id="alta">
+    <div class="sec-head"><span class="sec-num">08</span><h2>Alta vigilância &amp; LASA</h2></div>
+    <div class="grid2">
+      <div class="box"><p><b>Medicamentos de alta vigilância (MPP)</b></p><p>Maior risco de dano grave em caso de erro: <b>insulina, anticoagulantes, opioides, eletrólitos concentrados (KCl), quimioterápicos</b>. Estratégias: dupla checagem, restrição de acesso, padronização e alertas.</p></div>
+      <div class="box"><p><b>LASA (nomes/embalagens semelhantes)</b></p><p>Estratégia <b>tall man lettering</b>: diferenciar com maiúsculas — ex.: <b>clorproMAZINA</b>, <b>vinBLASTina × vinCRIStina</b>, DOPAmina × DOBUTamina. Separação física e alertas.</p></div>
+    </div>
+  </section>
+
+  <!-- 9 -->
+  <section id="pegadinhas">
+    <div class="sec-head"><span class="sec-num">09</span><h2>Pegadinhas consolidadas</h2></div>
+    <div class="trap"><span class="tag">⚠ Top pegadinhas</span>
+      <ul class="clean" style="margin:0">
+        <li>Protocolo: <b>MS/Anvisa + Fiocruz + Fhemig (2013)</b>; Portarias <b>1.377 e 2.095/2013</b>.</li>
+        <li>Três eixos: <b>prescrição, dispensação (uso) e administração</b>.</li>
+        <li><b>9 certos</b> = 5 clássicos + registro, orientação, forma e resposta.</li>
+        <li><b>Zero à esquerda</b> sempre (0,5); <b>nunca zero à direita</b> (1,0).</li>
+        <li>Preferir <b>número inteiro</b> (500 mg) e <b>vírgula</b>, não ponto.</li>
+        <li>Não abreviar “unidades” (“U”).</li>
+        <li><b>Ordem verbal</b> só em emergência, com read-back e registro.</li>
+        <li><b>2 identificadores</b> para confirmar o paciente.</li>
+        <li><b>Eletrólitos concentrados</b> e insulina = alta vigilância.</li>
+        <li>Erros/EA devem ser <b>notificados ao NSP</b>.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 10 -->
+  <section id="casos">
+    <div class="sec-head"><span class="sec-num">10</span><h2>Casos clínicos — autoteste ★</h2></div>
+    <p>Leia, decida a conduta segundo o protocolo e clique para conferir.</p>
+    <div class="fc-grid" id="caseGrid"></div>
+  </section>
+
+  <footer>
+    <b>Fonte-base:</b> Brasil. Ministério da Saúde / ANVISA, em parceria com Fiocruz e Fhemig. <i>Protocolo de Segurança na Prescrição, Uso e Administração de Medicamentos</i> (2013); PNSP (Portaria GM/MS 529/2013); Portarias MS 1.377 e 2.095/2013; RDC ANVISA 36/2013. Conteúdo resumido e parafraseado para estudo — consulte o protocolo na íntegra e confronte com o edital da sua banca.
+  </footer>
+
+</div>
+
+<script>
+  const cases = [
+    {q:"Prescrição manuscrita: 'digoxina 1.0 mg'. Por que isso é inseguro e como corrigir?", a:"O zero à direita ('1,0') pode ser lido como 10 mg (erro de 10×). Pelo protocolo, não se usa zero à direita nem ponto como separador: escrever '1 mg'. Na dúvida, esclarecer com o prescritor."},
+    {q:"Prescrição: 'levotiroxina ,5 mg'. Qual o risco e a forma correta?", a:"A ausência de zero à esquerda ('.5') pode ser lida como 5 mg. Deve-se sempre usar zero à esquerda: '0,5 mg' (ou, melhor, expressar como número inteiro na unidade adequada)."},
+    {q:"O técnico vai administrar um medicamento e o paciente está inconsciente, sem pulseira legível. Como proceder?", a:"Confirmar a identificação por pelo menos 2 identificadores; na impossibilidade de o paciente confirmar, conferir o nome na prescrição com a pulseira de identificação. Não administrar sem confirmar a identidade."},
+    {q:"Em emergência, o médico dá uma ordem verbal de medicação. Qual o procedimento seguro?", a:"Ordem verbal só em emergência: quem recebe deve repetir oralmente (read-back), o prescritor confirma, administra-se e registra-se por escrito assim que possível. Fora da emergência, exige-se prescrição escrita."},
+    {q:"Quais são os 9 certos da administração de medicamentos?", a:"Paciente, medicamento, via, hora e dose certos (os 5 clássicos) + registro certo, orientação correta, forma certa e resposta certa."},
+    {q:"A enfermeira não administrou uma dose porque o paciente estava em jejum para exame. O que o protocolo orienta?", a:"Registrar adequadamente a omissão da dose e comunicar ao enfermeiro responsável, para reprogramação. A omissão também é um evento que deve ser documentado."},
+    {q:"Farmacêutico recebe prescrição com 'clorpromazina' e 'clorpropamida' próximas e teme troca. Que estratégia o protocolo recomenda?", a:"São medicamentos LASA (nomes semelhantes). Estratégia: tall man lettering (clorproMAZINA × clorproPAMIDA), separação física no estoque e alertas. Confirmar com o prescritor se houver dúvida."},
+    {q:"KCl concentrado está disponível solto no posto de enfermagem. Isso é seguro?", a:"Não. Eletrólitos concentrados são medicamentos de alta vigilância e não devem ficar disponíveis soltos na unidade; exigem restrição de acesso, padronização de diluição e dupla checagem."},
+    {q:"Antes de administrar, qual o primeiro cuidado de higiene previsto?", a:"Higienizar as mãos antes do preparo e da administração do medicamento — medida de precaução padrão que reduz infecções relacionadas à assistência."},
+    {q:"O farmacêutico, ao validar a prescrição, identifica dose acima da máxima. Qual a conduta na dispensação segura?", a:"Não dispensar até esclarecer; contatar o prescritor para confirmar/corrigir. A análise farmacêutica da prescrição é parte essencial da dispensação segura."},
+    {q:"Um erro de medicação foi identificado, sem dano ao paciente. O que o protocolo recomenda fazer?", a:"Notificar ao Núcleo de Segurança do Paciente (NSP), em cultura não punitiva, para medir, monitorar e implementar melhorias. Mesmo sem dano (quase erro/incidente sem dano), a notificação é fundamental."},
+    {q:"Como o protocolo recomenda expressar 'meio grama' de um medicamento na prescrição?", a:"Preferir o número inteiro na unidade adequada: '500 mg' em vez de '0,5 g'. Isso evita decimais e o risco de erro de leitura; e usar vírgula, nunca ponto, quando o decimal for inevitável."}
+  ];
+  const grid = document.getElementById('caseGrid');
+  cases.forEach(c=>{
+    const b=document.createElement('button');b.className='fc case';b.type='button';
+    b.innerHTML=`<span class="q">${c.q}</span><span class="hint">Ver conduta</span><span class="ans">${c.a}</span>`;
+    b.addEventListener('click',()=>b.classList.toggle('open'));
+    grid.appendChild(b);
+  });
+</script>
+</body>
+</html>

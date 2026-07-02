@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seguimento de Pacientes em Pediatria — Guia de revisão</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@500;600;700;800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#E7E1D2;--surface:#FBF8F0;--surface-2:#F3EEE1;
+    --ink:#143C42;--ink-soft:#4E5F5C;--vermilion:#D6492A;--ochre:#B98220;--green:#3C6E47;--blue:#2C5A74;
+    --line:rgba(20,60,66,.22);--line-strong:rgba(20,60,66,.55);
+    --font-display:'Anton',Impact,sans-serif;--font-head:'Archivo',system-ui,sans-serif;--font-body:'IBM Plex Sans',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+  body{margin:0;background:radial-gradient(circle at 100% -2%, rgba(214,73,42,.06), transparent 38%),var(--paper);
+    color:var(--ink);font-family:var(--font-body);line-height:1.55;padding:clamp(16px,3.5vw,44px) clamp(12px,4vw,40px) 80px}
+  .wrap{max-width:1080px;margin:0 auto}
+  .top-rule{height:6px;background:var(--ink)}
+  .kicker{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-family:var(--font-head);font-weight:700;text-transform:uppercase;letter-spacing:.15em;font-size:11px;color:var(--ink-soft);padding:9px 2px;border-bottom:1px solid var(--line)}
+  .kicker .dot{color:var(--vermilion)}
+  h1{font-family:var(--font-display);font-weight:400;line-height:.92;font-size:clamp(28px,5.4vw,60px);margin:16px 0 8px;text-transform:uppercase;letter-spacing:.5px}
+  h1 .accent{color:var(--vermilion)}
+  .dek{font-size:clamp(15px,2vw,17.5px);color:var(--ink-soft);max-width:66ch;border-top:3px double var(--line-strong);padding-top:12px}
+  .dek b{color:var(--ink);font-weight:600}
+  nav.toc{position:sticky;top:0;z-index:20;background:rgba(231,225,210,.94);backdrop-filter:blur(6px);margin:18px 0 8px;padding:10px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  nav.toc ul{list-style:none;display:flex;gap:7px;flex-wrap:wrap;margin:0;padding:0}
+  nav.toc a{font-family:var(--font-head);font-weight:600;font-size:12px;text-decoration:none;color:var(--ink);border:1.5px solid var(--line-strong);border-radius:2px;padding:5px 10px;transition:background .12s,color .12s}
+  nav.toc a:hover{background:var(--ink);color:var(--surface)}
+  section{margin:38px 0 0;scroll-margin-top:64px}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:14px;border-bottom:2px solid var(--ink);padding-bottom:8px}
+  .sec-num{font-family:var(--font-display);font-size:clamp(26px,4vw,40px);color:var(--vermilion);line-height:.8}
+  .sec-head h2{font-family:var(--font-head);font-weight:800;font-size:clamp(18px,3vw,25px);margin:0;letter-spacing:-.01em}
+  p{margin:0 0 12px}.lead{font-size:16px}
+  strong,b{color:var(--ink);font-weight:600}.hl{color:var(--vermilion);font-weight:600}
+  ul.clean{margin:0 0 12px;padding-left:18px}ul.clean li{margin:5px 0}
+  .box{background:var(--surface);border:1.5px solid var(--ink);border-radius:3px;box-shadow:4px 4px 0 var(--ink);padding:16px 18px;margin:14px 0}
+  .grid2{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+  .bizu{border:1.5px dashed var(--green);background:rgba(60,110,71,.06);border-radius:3px;padding:13px 16px;margin:14px 0}
+  .bizu .tag{font-family:var(--font-head);font-weight:700;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--green);display:block;margin-bottom:5px}
+  .bizu b{color:var(--green)}
+  .trap{border:1.5px solid var(--vermilion);background:rgba(214,73,42,.05);border-radius:3px;padding:13px 16px;margin:14px 0}
+  .trap .tag{font-family:var(--font-head);font-weight:700;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--vermilion);display:block;margin-bottom:5px}
+  .note{border:1.5px solid var(--blue);background:rgba(44,90,116,.06);border-radius:3px;padding:13px 16px;margin:14px 0}
+  .note .tag{font-family:var(--font-head);font-weight:700;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--blue);display:block;margin-bottom:5px}
+  .tbl{width:100%;border-collapse:collapse;margin:14px 0;font-size:12.5px;background:var(--surface)}
+  .tbl th,.tbl td{border:1px solid var(--line-strong);padding:8px 10px;text-align:left;vertical-align:top}
+  .tbl thead th{background:var(--ink);color:var(--surface);font-family:var(--font-head);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.03em}
+  .tbl tbody th{background:var(--surface-2);font-family:var(--font-head);font-weight:700;white-space:nowrap}
+  .tbl-scroll{overflow-x:auto}
+  .pheap{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));margin:14px 0}
+  .pcard{background:var(--surface);border:1.5px solid var(--ink);border-radius:3px;box-shadow:3px 3px 0 var(--ink);padding:13px 15px}
+  .pcard .ph{font-family:var(--font-display);color:var(--vermilion);font-size:15px;letter-spacing:.05em}
+  .pcard h4{font-family:var(--font-head);font-weight:700;margin:3px 0 6px;font-size:14.5px}
+  .pcard p{margin:0;font-size:12.5px;color:var(--ink-soft)}
+  .formula{font-family:var(--font-head);font-weight:600;background:var(--surface-2);border:1.5px solid var(--line-strong);border-radius:3px;padding:10px 14px;margin:8px 0;font-size:14px}
+  .fc-grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));margin-top:14px}
+  .fc{background:var(--surface);border:1.5px solid var(--ink);border-radius:3px;box-shadow:4px 4px 0 var(--ink);padding:16px 17px;cursor:pointer;text-align:left;width:100%;font-family:var(--font-body);color:var(--ink);display:flex;flex-direction:column;gap:9px;transition:transform .12s,box-shadow .12s}
+  .fc:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--vermilion)}
+  .fc:focus-visible{outline:3px solid var(--vermilion);outline-offset:3px}
+  .fc .q{font-family:var(--font-head);font-weight:700;font-size:15px;line-height:1.28}
+  .fc .hint{font-family:var(--font-head);font-weight:600;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--vermilion)}
+  .fc .ans{font-size:13.5px;color:var(--ink-soft)}
+  .fc:not(.open) .ans{display:none}.fc.open .hint{display:none}
+  .case .q::before{content:"CASO ";font-family:var(--font-display);color:var(--vermilion);font-size:12px;letter-spacing:.1em}
+  footer{margin:46px 0 0;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--ink-soft)}
+  footer b{color:var(--ink)}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="top-rule"></div>
+    <div class="kicker">
+      <span>Farmácia Clínica <span class="dot">·</span> Pediatria</span>
+      <span>Resmulti · ENARE · EBSERH · HUs</span>
+    </div>
+    <h1>Seguimento em <span class="accent">Pediatria</span></h1>
+    <p class="dek">A criança não é “adulto em miniatura”. Como a <b>maturação</b> altera a farmacocinética, o <b>cálculo de dose</b> (peso/superfície corporal), os fármacos <b>contraindicados por faixa etária</b> e a segurança da formulação. Guia com bizus, tabelas e casos.</p>
+  </header>
+
+  <nav class="toc" aria-label="Índice">
+    <ul>
+      <li><a href="#faixas">1 · Faixas etárias ★</a></li>
+      <li><a href="#pk">2 · Farmacocinética ★</a></li>
+      <li><a href="#pd">3 · Suscetibilidades ★</a></li>
+      <li><a href="#evitar">4 · Fármacos a evitar ★</a></li>
+      <li><a href="#dose">5 · Cálculo de dose ★</a></li>
+      <li><a href="#formulacao">6 · Formulação &amp; via ★</a></li>
+      <li><a href="#erros">7 · Erros &amp; segurança ★</a></li>
+      <li><a href="#seguimento">8 · Seguimento farmacêutico</a></li>
+      <li><a href="#pegadinhas">9 · Pegadinhas</a></li>
+      <li><a href="#casos">10 · Casos ★</a></li>
+    </ul>
+  </nav>
+
+  <!-- 1 -->
+  <section id="faixas">
+    <div class="sec-head"><span class="sec-num">01</span><h2>Faixas etárias ★</h2></div>
+    <div class="tbl-scroll">
+    <table class="tbl">
+      <thead><tr><th>Faixa</th><th>Idade (referência usual)</th></tr></thead>
+      <tbody>
+        <tr><th>Recém-nascido (neonato)</th><td><b>0 a 28 dias.</b> Pré-termo (&lt; 37 sem) = ainda mais vulnerável.</td></tr>
+        <tr><th>Lactente</th><td>28 dias a 2 anos.</td></tr>
+        <tr><th>Pré-escolar</th><td>2 a 6 anos.</td></tr>
+        <tr><th>Escolar</th><td>6 a 10 anos.</td></tr>
+        <tr><th>Adolescente</th><td>10 a 19 anos (OMS).</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="bizu"><span class="tag">★ Bizu</span> Quanto <b>menor e mais prematuro</b>, maior a imaturidade de fígado e rim e maior o risco de toxicidade. O <b>neonato</b> é o paciente mais vulnerável da farmacoterapia.</div>
+  </section>
+
+  <!-- 2 -->
+  <section id="pk">
+    <div class="sec-head"><span class="sec-num">02</span><h2>Farmacocinética da maturação ★</h2></div>
+    <div class="pheap">
+      <div class="pcard"><span class="ph">A</span><h4>Absorção</h4><p>↑ pH gástrico no neonato; esvaziamento/motilidade irregulares. <b>Via percutânea aumentada</b> (pele fina + maior relação superfície/peso → risco de toxicidade tópica). IM errática.</p></div>
+      <div class="pcard"><span class="ph">D</span><h4>Distribuição</h4><p><b>↑ Água corporal total</b> → ↑ Vd de <b>hidrossolúveis</b> (precisam de maior dose/kg). ↓ proteínas e ↓ afinidade → <b>↑ fração livre</b>; competição com a <b>bilirrubina</b>.</p></div>
+      <div class="pcard"><span class="ph">M</span><h4>Metabolismo</h4><p>Enzimas hepáticas <b>imaturas no neonato</b> (fases I e II) → acúmulo (ex.: <b>cloranfenicol → bebê cinzento</b>). Após meses, a criança pode ter <b>clearance/kg maior</b> que o adulto.</p></div>
+      <div class="pcard"><span class="ph">E</span><h4>Excreção</h4><p>Função <b>renal imatura</b> ao nascer (TFG baixa, amadurece no 1º ano) → <b>prolongar intervalo</b> de fármacos renais (aminoglicosídeos, vancomicina, penicilinas).</p></div>
+    </div>
+    <div class="trap"><span class="tag">⚠ Pegadinha</span> Por causa da <b>maior água corporal</b>, hidrossolúveis (ex.: aminoglicosídeos) têm <b>maior Vd</b> e exigem <b>dose/kg maior</b> que no adulto — mas o <b>intervalo</b> é alongado pela imaturidade renal.</div>
+  </section>
+
+  <!-- 3 -->
+  <section id="pd">
+    <div class="sec-head"><span class="sec-num">03</span><h2>Suscetibilidades específicas ★</h2></div>
+    <ul class="clean">
+      <li><b>Barreira hematoencefálica imatura</b> → maior penetração de fármacos no SNC do neonato.</li>
+      <li><b>Deslocamento da bilirrubina</b> (sulfas, ceftriaxona) → risco de <b>kernicterus</b> no neonato.</li>
+      <li>Maior sensibilidade a <b>sintomas extrapiramidais</b> (metoclopramida) e a <b>depressão respiratória</b> por opioides.</li>
+      <li>Impacto de corticoides no <b>crescimento</b>; risco de hipoglicemia/desidratação mais rápido.</li>
+    </ul>
+  </section>
+
+  <!-- 4 -->
+  <section id="evitar">
+    <div class="sec-head"><span class="sec-num">04</span><h2>Fármacos a evitar por faixa etária ★</h2></div>
+    <div class="tbl-scroll">
+    <table class="tbl">
+      <thead><tr><th>Fármaco</th><th>Problema</th><th>Faixa</th></tr></thead>
+      <tbody>
+        <tr><th>Cloranfenicol</th><td>Síndrome do <b>bebê cinzento</b> (imaturidade da glicuronidação).</td><td>Neonato</td></tr>
+        <tr><th>Sulfonamidas / ceftriaxona</th><td>Deslocam a bilirrubina → <b>kernicterus</b>; ceftriaxona + cálcio EV (precipitação).</td><td>Neonato</td></tr>
+        <tr><th>AAS (ácido acetilsalicílico)</th><td><b>Síndrome de Reye</b> em infecções virais (varicela/influenza).</td><td>Crianças/adolesc.</td></tr>
+        <tr><th>Tetraciclinas</th><td><b>Manchas/hipoplasia dentária</b> e efeito ósseo.</td><td>&lt; 8 anos</td></tr>
+        <tr><th>Fluoroquinolonas</th><td>Possível efeito em <b>cartilagem</b>/artropatia (uso restrito).</td><td>Crianças</td></tr>
+        <tr><th>Codeína / tramadol</th><td>Metabolizadores ultrarrápidos (CYP2D6) → <b>depressão respiratória</b>.</td><td>&lt; 12 anos</td></tr>
+        <tr><th>Antitussígenos/descongestionantes</th><td>Risco &gt; benefício; pouca eficácia.</td><td>&lt; 2–6 anos</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="bizu"><span class="tag">★ Bizu</span> Decore os “proibidos clássicos”: <b>cloranfenicol</b> (bebê cinzento), <b>AAS</b> (Reye), <b>tetraciclina &lt; 8 anos</b> (dentes), <b>codeína &lt; 12 anos</b>, <b>sulfas/ceftriaxona</b> no neonato (bilirrubina).</div>
+  </section>
+
+  <!-- 5 -->
+  <section id="dose">
+    <div class="sec-head"><span class="sec-num">05</span><h2>Cálculo de dose ★</h2></div>
+    <p>A base do cálculo pediátrico é o <b>peso</b>:</p>
+    <div class="formula">Dose = dose (mg/kg/dia ou /dose) × peso (kg) &nbsp;→&nbsp; nunca exceder a dose máxima do adulto</div>
+    <p>Para quimioterapia e alguns casos, usa-se a <b>superfície corporal (SC)</b> — fórmula de Mosteller:</p>
+    <div class="formula">SC (m²) = √[ altura(cm) × peso(kg) ÷ 3600 ] &nbsp;·&nbsp; Dose = dose/m² × SC</div>
+    <div class="note"><span class="tag">ℹ Regras históricas</span> Regras antigas baseadas em adulto podem aparecer na prova: <b>Clark</b> (peso), <b>Young</b> (idade), <b>Fried</b> (lactentes). Hoje preferem-se <b>mg/kg</b> e <b>superfície corporal</b>, por serem mais seguras.</div>
+    <div class="trap"><span class="tag">⚠ Pegadinha</span> Sempre <b>confira a dose máxima</b>: uma criança grande/adolescente pode atingir a dose do adulto — o cálculo por kg <b>não</b> pode ultrapassá-la. E recalcule a cada consulta, pois o <b>peso muda</b>.</div>
+  </section>
+
+  <!-- 6 -->
+  <section id="formulacao">
+    <div class="sec-head"><span class="sec-num">06</span><h2>Formulação, via &amp; excipientes ★</h2></div>
+    <ul class="clean">
+      <li>Preferir <b>formas líquidas</b> (suspensões/soluções); <b>agitar</b> suspensões; medir com <b>seringa dosadora</b>, nunca colher de chá.</li>
+      <li><b>Uso off-label / não licenciado</b> é comum (faltam apresentações pediátricas) → fracionamento/manipulação, com risco de erro.</li>
+      <li>Evitar <b>IM</b> quando possível (dor, absorção errática); atenção a <b>volumes</b> em neonatos.</li>
+    </ul>
+    <div class="trap"><span class="tag">⚠ Excipientes perigosos</span>
+      <b>Álcool benzílico</b> → <b>síndrome do gasping</b> (gasping syndrome) no neonato; <b>propilenoglicol</b> (toxicidade); atenção a <b>etanol, sódio, sacarose/corantes</b>. Verifique os excipientes em produtos para neonatos.</div>
+  </section>
+
+  <!-- 7 -->
+  <section id="erros">
+    <div class="sec-head"><span class="sec-num">07</span><h2>Erros de medicação &amp; segurança ★</h2></div>
+    <p>Pediatria e neonatologia têm <b>alto risco de erro</b>: dose individualizada por peso, diluições e apresentações pensadas para adultos. <b>Erros de 10×</b> (vírgula/diluição) são frequentes e graves.</p>
+    <ul class="clean">
+      <li><b>Dupla checagem independente</b> de medicamentos de alta vigilância (insulina, opioides, KCl, heparina, quimioterápicos).</li>
+      <li><b>Padronizar concentrações</b> e usar prescrição eletrônica com alertas por peso.</li>
+      <li>Conferir <b>dose/kg, dose máxima, diluente, concentração e volume</b> antes de liberar.</li>
+    </ul>
+    <div class="bizu"><span class="tag">★ Bizu</span> Na validação pediátrica, o farmacêutico <b>refaz o cálculo por peso</b> e compara com a dose máxima — é a principal barreira contra o erro de 10×.</div>
+  </section>
+
+  <!-- 8 -->
+  <section id="seguimento">
+    <div class="sec-head"><span class="sec-num">08</span><h2>Seguimento farmacêutico em pediatria</h2></div>
+    <ul class="clean">
+      <li><b>Validação da prescrição</b>: dose/kg, dose máxima, diluição, via e formulação adequadas à idade.</li>
+      <li><b>Peso atualizado</b> — a dose acompanha o crescimento.</li>
+      <li><b>Educação do cuidador</b>: técnica de medida (seringa), conservação, agitar suspensão, adesão (paladar) e sinais de alerta.</li>
+      <li><b>Conciliação</b> e atuação <b>multiprofissional</b> (UTI neonatal/pediátrica).</li>
+      <li><b>Lactação:</b> a maioria dos fármacos é compatível; preferir baixa excreção no leite e meia-vida curta, avaliando risco/benefício.</li>
+    </ul>
+  </section>
+
+  <!-- 9 -->
+  <section id="pegadinhas">
+    <div class="sec-head"><span class="sec-num">09</span><h2>Pegadinhas consolidadas</h2></div>
+    <div class="trap"><span class="tag">⚠ Top pegadinhas</span>
+      <ul class="clean" style="margin:0">
+        <li><b>Neonato = 0–28 dias</b>; prematuro é o mais vulnerável.</li>
+        <li><b>↑ água corporal</b> → hidrossolúveis precisam de <b>maior dose/kg</b>.</li>
+        <li>Fígado e rim <b>imaturos</b> no neonato → acúmulo e intervalos maiores.</li>
+        <li><b>Cloranfenicol</b> → bebê cinzento; <b>AAS</b> → Reye.</li>
+        <li><b>Tetraciclina &lt; 8 anos</b> (dentes); <b>codeína &lt; 12 anos</b>; <b>fluoroquinolona</b> (cartilagem).</li>
+        <li><b>Sulfas/ceftriaxona</b> deslocam bilirrubina → kernicterus no neonato.</li>
+        <li><b>Álcool benzílico</b> → gasping syndrome no neonato.</li>
+        <li>Dose por <b>mg/kg</b> sem exceder a do adulto; <b>SC (Mosteller)</b> na quimio.</li>
+        <li>Medir com <b>seringa</b>, não colher; agitar suspensão.</li>
+        <li>Alto índice de <b>off-label</b> e de <b>erros de 10×</b> → dupla checagem.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 10 -->
+  <section id="casos">
+    <div class="sec-head"><span class="sec-num">10</span><h2>Casos clínicos — autoteste ★</h2></div>
+    <p>Leia, decida a conduta e clique para conferir.</p>
+    <div class="fc-grid" id="caseGrid"></div>
+  </section>
+
+  <footer>
+    <b>Fontes-base:</b> farmacologia e farmacocinética pediátrica/neonatal (maturação de ADME); cálculo de dose por peso e superfície corporal (Mosteller); contraindicações por faixa etária; segurança de excipientes e erros de medicação em pediatria. Material de estudo — confronte com o edital e a bibliografia da sua banca.
+  </footer>
+
+</div>
+
+<script>
+  const cases = [
+    {q:"Neonato recebe cloranfenicol e evolui com distensão abdominal, hipotensão, cianose e cor acinzentada. Qual o diagnóstico e o mecanismo?", a:"Síndrome do bebê cinzento (grey baby syndrome): o fígado imaturo do neonato não glicuroniza o cloranfenicol, que se acumula e causa colapso cardiovascular. Por isso o fármaco é evitado/ajustado nessa faixa."},
+    {q:"Criança de 5 anos com varicela e febre; os pais querem dar AAS. Qual a orientação?", a:"Contraindicar o AAS pelo risco de síndrome de Reye (encefalopatia + lesão hepática) em viroses como varicela/influenza. Orientar antitérmico seguro (paracetamol ou dipirona, conforme protocolo)."},
+    {q:"Prescrição: amoxicilina 50 mg/kg/dia, de 8/8h, para criança de 12 kg. Qual a dose diária e por tomada?", a:"Dose diária = 50 × 12 = 600 mg/dia. Dividida de 8/8h (3 tomadas) = 200 mg por dose. Sempre conferir a dose máxima e a concentração da suspensão para calcular o volume."},
+    {q:"Por que aminoglicosídeos exigem dose por kg relativamente alta, mas com intervalo alongado, no neonato?", a:"São hidrossolúveis: a maior água corporal total eleva o volume de distribuição (precisa de dose/kg maior para atingir o pico). Porém a função renal imatura reduz a eliminação, exigindo intervalos maiores e monitorização de níveis."},
+    {q:"Prescrição de tetraciclina para criança de 3 anos com infecção. Qual o problema e a conduta?", a:"Tetraciclinas são evitadas em menores de 8 anos por causarem manchas e hipoplasia do esmalte dentário e efeitos ósseos. Conduta: sugerir antibiótico alternativo apropriado para a idade."},
+    {q:"Medicação injetável para um neonato contém álcool benzílico como conservante. Qual o risco?", a:"Álcool benzílico pode causar a síndrome do gasping (gasping syndrome) em neonatos — acidose metabólica, gasping respiratório e colapso. Deve-se evitar excipientes com álcool benzílico em recém-nascidos e escolher apresentações livres dele."},
+    {q:"A mãe relata medir o xarope do filho com colher de chá comum da cozinha. Qual a orientação?", a:"Orientar o uso da seringa dosadora ou copo-medida fornecido, pois colheres comuns têm volume variável e geram erro de dose. Demonstrar a medida correta e pedir teach-back."},
+    {q:"Como se calcula a dose de um quimioterápico em uma criança?", a:"Geralmente pela superfície corporal (SC). Pela fórmula de Mosteller: SC = raiz quadrada de (altura em cm × peso em kg ÷ 3600); a dose é dose/m² × SC. Exige dupla checagem por ser medicamento de alta vigilância."},
+    {q:"Prescrição de codeína para tosse em criança de 6 anos. Qual a conduta farmacêutica?", a:"Contraindicar: a codeína não é recomendada em menores de 12 anos pelo risco de depressão respiratória em metabolizadores ultrarrápidos do CYP2D6. Sugerir manejo não farmacológico/alternativa segura."},
+    {q:"O farmacêutico recebe prescrição neonatal cuja dose parece 10 vezes maior que a esperada. O que fazer?", a:"Refazer o cálculo por peso e comparar com a dose máxima/de referência; provável erro de vírgula ou diluição. Não liberar até esclarecer com o prescritor — a dupla checagem é a principal barreira contra o erro de 10× em neonatologia."},
+    {q:"Por que o neonato apresenta maior fração livre de fármacos que se ligam à albumina?", a:"Porque tem menor concentração de proteínas plasmáticas e menor afinidade de ligação, além da competição com a bilirrubina. Isso aumenta a fração livre (ativa) e o risco de toxicidade — e, com sulfas/ceftriaxona, o risco de kernicterus."},
+    {q:"Ceftriaxona EV foi prescrita junto com solução contendo cálcio para um recém-nascido. Qual o alerta?", a:"A coadministração de ceftriaxona com cálcio EV é contraindicada em neonatos pelo risco de precipitação (sais de ceftriaxona-cálcio). Além disso, a ceftriaxona desloca a bilirrubina, aumentando o risco de kernicterus nessa faixa."}
+  ];
+  const grid = document.getElementById('caseGrid');
+  cases.forEach(c=>{
+    const b=document.createElement('button');b.className='fc case';b.type='button';
+    b.innerHTML=`<span class="q">${c.q}</span><span class="hint">Ver conduta</span><span class="ans">${c.a}</span>`;
+    b.addEventListener('click',()=>b.classList.toggle('open'));
+    grid.appendChild(b);
+  });
+</script>
+</body>
+</html>

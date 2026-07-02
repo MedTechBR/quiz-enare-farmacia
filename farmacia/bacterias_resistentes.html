@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bactérias de Alta Resistência</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+    background: #f4f3ef;
+    color: #2c2c2a;
+    min-height: 100vh;
+    padding: 28px 16px 48px;
+  }
+
+  .page { max-width: 900px; margin: 0 auto; }
+
+  /* ── Cover ── */
+  .cover {
+    background: #26215C;
+    border-radius: 16px;
+    padding: 32px 36px;
+    margin-bottom: 20px;
+    text-align: center;
+  }
+  .cover h1 { font-size: 26px; font-weight: 700; color: #fff; margin-bottom: 8px; }
+  .cover p  { font-size: 13px; color: #b0acdf; }
+
+  /* ── Legend ── */
+  .legend {
+    display: flex; flex-wrap: wrap; gap: 12px;
+    justify-content: center;
+    background: #eae9e3;
+    border-radius: 10px;
+    padding: 12px 20px;
+    margin-bottom: 28px;
+    font-size: 12px; font-weight: 600;
+  }
+  .legend-item { display: flex; align-items: center; gap: 6px; }
+  .legend-dot  { width: 10px; height: 10px; border-radius: 50%; }
+
+  /* ── Grid ── */
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+    gap: 16px;
+  }
+
+  /* ── Card ── */
+  .card {
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid #d3d1c7;
+    background: #fff;
+    box-shadow: 0 1px 4px rgba(0,0,0,.06);
+    transition: box-shadow .2s;
+  }
+  .card:hover { box-shadow: 0 4px 14px rgba(0,0,0,.1); }
+
+  .card-header {
+    display: flex; align-items: flex-start; gap: 10px;
+    padding: 14px 16px 12px;
+    cursor: pointer;
+    user-select: none;
+  }
+  .dot { width: 11px; height: 11px; border-radius: 50%; flex-shrink: 0; margin-top: 5px; }
+  .card-title    { font-size: 15px; font-weight: 700; }
+  .card-subtitle { font-size: 11px; color: #73726c; margin-top: 3px; line-height: 1.4; }
+  .chevron { margin-left: auto; font-size: 16px; color: #aaa; transition: transform .25s; flex-shrink: 0; margin-top: 2px; }
+  .card.open .chevron { transform: rotate(180deg); }
+
+  .tags { display: flex; flex-wrap: wrap; gap: 5px; padding: 0 16px 12px; }
+  .tag {
+    font-size: 10px; font-weight: 600;
+    padding: 3px 10px; border-radius: 20px;
+  }
+
+  /* ── Body ── */
+  .card-body { display: none; padding: 0 16px 14px; }
+  .card.open .card-body { display: block; }
+
+  .divider { height: 1px; background: #eae9e3; margin: 8px 0; }
+
+  .field-label {
+    font-size: 9px; font-weight: 700; letter-spacing: .08em;
+    text-transform: uppercase; color: #888780;
+    margin-bottom: 5px; margin-top: 10px;
+  }
+  .field-label:first-child { margin-top: 4px; }
+
+  ul.items { padding-left: 0; list-style: none; }
+  ul.items li {
+    font-size: 12.5px; color: #444441; line-height: 1.55;
+    padding: 2px 0 2px 14px;
+    position: relative;
+  }
+  ul.items li::before {
+    content: "•"; position: absolute; left: 0;
+    color: #aaa; font-size: 13px;
+  }
+
+  /* ── Expand all ── */
+  .toolbar {
+    display: flex; justify-content: flex-end; gap: 8px;
+    margin-bottom: 14px;
+  }
+  .btn {
+    font-size: 12px; font-weight: 600;
+    padding: 6px 14px; border-radius: 8px; border: 1px solid #d3d1c7;
+    background: #fff; color: #444; cursor: pointer;
+    transition: background .15s;
+  }
+  .btn:hover { background: #f1efe8; }
+
+  /* ── Footer ── */
+  .footer {
+    text-align: center; font-size: 11px; color: #888;
+    margin-top: 36px;
+  }
+
+  @media (max-width: 600px) {
+    .grid { grid-template-columns: 1fr; }
+    .cover h1 { font-size: 20px; }
+  }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="cover">
+    <h1>Bactérias de Alta Resistência</h1>
+    <p>Mecanismos de resistência · Tratamento · Grupo de risco · Virulência</p>
+  </div>
+
+  <div class="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:#534AB7"></div> Gram-positiva</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#0F6E56"></div> Gram-negativa</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#993C1D"></div> Diplococo gram-negativo</div>
+  </div>
+
+  <div class="toolbar">
+    <button class="btn" onclick="toggleAll(true)">Expandir todos</button>
+    <button class="btn" onclick="toggleAll(false)">Recolher todos</button>
+  </div>
+
+  <div class="grid" id="grid"></div>
+
+  <div class="footer">Referência clínica — Bactérias Resistentes</div>
+</div>
+
+<script>
+const data = [
+  {
+    name: "MRSA",
+    full: "Staphylococcus aureus resistente à meticilina",
+    gram: "Gram-positiva / Coco",
+    color: "#534AB7", bg: "#EEEDFE", fg: "#3C3489",
+    tags: ["Nosocomial", "Comunitária (CA-MRSA)"],
+    mec: [
+      "Aquisição do gene mecA (via SCCmec)",
+      "Produção de PBP2a — proteína ligadora de penicilina com baixa afinidade por β-lactâmicos",
+      "Torna todos os β-lactâmicos ineficazes",
+      "Biofilme potencializa a resistência"
+    ],
+    trat: [
+      "Vancomicina (1ª linha em infecções graves)",
+      "Daptomicina (bacteremia, endocardite)",
+      "Linezolida (pneumonia, pele e tecidos moles)",
+      "Ceftarolina (5ª geração — ativa contra MRSA)",
+      "TMP-SMX ou doxiciclina (CA-MRSA em pele)"
+    ],
+    risco: [
+      "Hospitalizados / pós-cirúrgicos",
+      "Usuários de dispositivos invasivos",
+      "Imunossuprimidos",
+      "Usuários de drogas intravenosas",
+      "Comunidade: esportes de contato, presídios"
+    ],
+    vir: [
+      "Toxina de esfoliação (TSST-1)",
+      "Leucocidina de Panton-Valentine (CA-MRSA)",
+      "Proteína A (evasão imune)",
+      "Coagulase e hialuronidase",
+      "Biofilme resistente a antibióticos"
+    ]
+  },
+  {
+    name: "VRE",
+    full: "Enterococcus faecium / faecalis resistente à vancomicina",
+    gram: "Gram-positiva / Coco",
+    color: "#534AB7", bg: "#EEEDFE", fg: "#3C3489",
+    tags: ["Nosocomial", "Trato gastrointestinal"],
+    mec: [
+      "Operons vanA, vanB, vanC (mais comuns: vanA e vanB)",
+      "vanA: síntese de peptidoglicano com D-Ala-D-Lac em vez de D-Ala-D-Ala",
+      "Vancomicina não consegue se ligar ao alvo alterado",
+      "vanA = resistência a vancomicina E teicoplanina (alto nível)"
+    ],
+    trat: [
+      "Linezolida (bacteriostático; 1ª linha em muitos casos)",
+      "Daptomicina (bactericida; endocardite, bacteremia)",
+      "Quinupristina-dalfopristina (apenas E. faecium)",
+      "Tigeciclina (infecções intra-abdominais)",
+      "Ampicilina se houver suscetibilidade (E. faecalis)"
+    ],
+    risco: [
+      "Pacientes de UTI de longa permanência",
+      "Transplantados",
+      "Usuários de vancomicina prévia",
+      "Imunossuprimidos / oncológicos",
+      "Dialíticos"
+    ],
+    vir: [
+      "Cápsula polissacarídea (E. faecalis)",
+      "Ferômônos sexuais (transferência plasmidial eficiente)",
+      "Proteína de superfície Esp",
+      "Resistência intrínseca a múltiplos antibióticos",
+      "Formação de biofilme em cateteres"
+    ]
+  },
+  {
+    name: "KPC",
+    full: "Klebsiella pneumoniae produtora de carbapenemase",
+    gram: "Gram-negativa / Bacilo",
+    color: "#0F6E56", bg: "#E1F5EE", fg: "#085041",
+    tags: ["Nosocomial", "Pan-resistente (XDR)"],
+    mec: [
+      "Produção da enzima KPC (Klebsiella pneumoniae Carbapenemase) — Classe A de Ambler",
+      "Hidrolisa carbapenemas, cefalosporinas, aztreonam e penicilinas",
+      "Gene blaKPC em plasmídios conjugativos (transmissão horizontal eficiente)",
+      "Associada a perda de porinas (OmpK35/36) e bombas de efluxo"
+    ],
+    trat: [
+      "Ceftazidima-avibactam (inibidor restaura atividade)",
+      "Meropenem-vaborbactam",
+      "Imipenem-cilastatina-relebactam",
+      "Cefiderocol (sideróforo cefalosporina)",
+      "Colistina + meropenem em altas doses (opção de resgate)"
+    ],
+    risco: [
+      "Pacientes em UTI / ventilação mecânica",
+      "Imunossuprimidos",
+      "Transplantados de órgãos sólidos",
+      "Usuários de carbapenemas prévias",
+      "Cateteres e dispositivos invasivos"
+    ],
+    vir: [
+      "Cápsula hiperprodutora (hipermucoide)",
+      "Sideróforos (enterobactina, yersiniabactina)",
+      "Fímbrias tipo 1 e tipo 3",
+      "Toxina Rmp (disseminação hematogênica)",
+      "Resistência ao soro (LPS)"
+    ]
+  },
+  {
+    name: "Acinetobacter baumannii",
+    full: "Acinetobacter baumannii resistente a carbapenemas",
+    gram: "Gram-negativa / Cocobacilo",
+    color: "#0F6E56", bg: "#E1F5EE", fg: "#085041",
+    tags: ["Nosocomial", "UTI / Pneumonia", "XDR / PDR"],
+    mec: [
+      "OXA-carbapenemases (OXA-23, 24, 40, 58, 143) — Classe D",
+      "Metalo-β-lactamases (NDM, IMP, VIM) — Classe B",
+      "Bombas de efluxo (AdeABC, AdeFGH, AdeIJK)",
+      "Perda de porinas e alteração de PBPs",
+      "Hidrólise eficiente de quase todos os β-lactâmicos"
+    ],
+    trat: [
+      "Sulbactam (inibidor com atividade intrínseca anti-Acinetobacter)",
+      "Cefiderocol (atividade contra cepas XDR/PDR)",
+      "Sulbactam-durlobactam (nova combinação aprovada)",
+      "Colistina / polimixina B (opção de resgate)",
+      "Minociclina ou tigeciclina (infecções não-bacterêmicas)"
+    ],
+    risco: [
+      "UTI / politraumatizados",
+      "Queimados graves",
+      "Ventilação mecânica prolongada",
+      "Imunossuprimidos",
+      "Pós-operatório de neurocirurgia"
+    ],
+    vir: [
+      "Biofilme extremamente persistente em superfícies",
+      "Proteínas de membrana externa (OmpA)",
+      "Lipopolissacarídeo (evasão imune)",
+      "Sobrevivência prolongada no ambiente hospitalar",
+      "Sideróforos e aquisição de ferro"
+    ]
+  },
+  {
+    name: "Pseudomonas aeruginosa",
+    full: "Pseudomonas aeruginosa multirresistente (MDR/XDR)",
+    gram: "Gram-negativa / Bacilo",
+    color: "#0F6E56", bg: "#E1F5EE", fg: "#085041",
+    tags: ["Nosocomial", "Fibrose Cística", "Oportunista"],
+    mec: [
+      "Metalo-β-lactamases (VIM, IMP, NDM) — Classe B",
+      "β-lactamases tipo AmpC (produção constitutiva)",
+      "Bombas de efluxo (MexAB-OprM, MexCD-OprJ, MexXY-OprM)",
+      "Perda da porina OprD (resistência específica a carbapenemas)",
+      "Modificação de aminoglicosídeos (AMEs)",
+      "Mutações em DNA girase/topoisomerase (fluoroquinolonas)"
+    ],
+    trat: [
+      "Ceftolozano-tazobactam (β-lactâmico novo + inibidor)",
+      "Ceftazidima-avibactam",
+      "Imipenem-relebactam",
+      "Cefiderocol",
+      "Piperacilina-tazobactam (se suscetível)",
+      "Colistina (resgate PDR)"
+    ],
+    risco: [
+      "Fibrose cística e bronquiectasias",
+      "Neutropênicos / oncológicos",
+      "UTI / VM prolongada",
+      "Queimados",
+      "Usuários de corticosteroides prolongados"
+    ],
+    vir: [
+      "Exotoxina A (inibição de síntese proteica)",
+      "Proteases elastase A e B",
+      "Alginato (biofilme mucoide em fibrose cística)",
+      "Sistema de secreção tipo III (ExoS, ExoT, ExoU, ExoY)",
+      "Piocianina e sideróforos (pioverdina, pioquelinea)",
+      "Flagelos e pili tipo IV"
+    ]
+  },
+  {
+    name: "ESBL",
+    full: "Enterobactérias produtoras de ESBL (betalactamase de espectro estendido)",
+    gram: "Gram-negativa / Bacilo",
+    color: "#0F6E56", bg: "#E1F5EE", fg: "#085041",
+    tags: ["Nosocomial + Comunitária", "E. coli / Klebsiella"],
+    mec: [
+      "Enzimas CTX-M (CTX-M-15 mais prevalente), TEM e SHV derivadas",
+      "Hidrolisam cefalosporinas de 3ª e 4ª geração e aztreonam",
+      "Não hidrolisam carbapenemas (diferencial do KPC)",
+      "Genes em plasmídios: transmissão horizontal inter e intraespécie",
+      "Frequentemente associadas a resistência a quinolonas e aminoglicosídeos"
+    ],
+    trat: [
+      "Carbapenemas (ertapenem, meropenem) — infecções graves / 1ª linha",
+      "Piperacilina-tazobactam (ITU não-complicada, se CIM baixo)",
+      "Cefoxitina (resistente à ESBL)",
+      "Nitrofurantoína ou fosfomicina (ITU baixa)",
+      "Fluoroquinolonas ou TMP-SMX se houver suscetibilidade"
+    ],
+    risco: [
+      "ITU de repetição / cateterismo",
+      "Diabetes mellitus",
+      "Idosos institucionalizados",
+      "Viajantes de regiões endêmicas",
+      "Usuários de cefalosporinas prévias"
+    ],
+    vir: [
+      "Fímbrias tipo 1 e P (adesão urotelial — E. coli)",
+      "Toxinas (hemolisina HlyA, CNF1 — E. coli)",
+      "Sideróforos (aerobactina)",
+      "Cápsulas polissacarídeas (Klebsiella)",
+      "LPS e endotoxinas (sepse grave)"
+    ]
+  },
+  {
+    name: "Neisseria gonorrhoeae",
+    full: "Neisseria gonorrhoeae multirresistente",
+    gram: "Gram-negativa / Diplococo",
+    color: "#993C1D", bg: "#FAECE7", fg: "#712B13",
+    tags: ["IST", "Transmissão sexual", "XDR emergente"],
+    mec: [
+      "β-lactamases TEM-1 (plasmidial) — resistência às penicilinas",
+      "Mutações em PBP1 e PBP2 (cefalosporinas)",
+      "Bombas de efluxo MtrCDE (múltiplos fármacos)",
+      "Mutações em parC e gyrA (fluoroquinolonas)",
+      "Modificação ribossomal e metilação (tetraciclinas / azitromicina)",
+      "Alteração do alvo 23S rRNA (azitromicina — alto nível)"
+    ],
+    trat: [
+      "Ceftriaxona 500 mg IM dose única (padrão CDC/OMS)",
+      "Ceftriaxona 1 g IM (faringite gonocócica)",
+      "Azitromicina em combinação (quando CIM elevado à ceftriaxona)",
+      "Gentamicina + azitromicina (alternativa em alergia)",
+      "NÃO usar fluoroquinolonas ou penicilinas (resistência disseminada)"
+    ],
+    risco: [
+      "Adultos jovens sexualmente ativos (15–35 anos)",
+      "Homens que fazem sexo com homens (HSH)",
+      "Múltiplos parceiros sexuais",
+      "Uso inconsistente de preservativo",
+      "Populações marginalizadas / uso de drogas"
+    ],
+    vir: [
+      "Pili tipo IV (adesão e variação antigênica)",
+      "Proteínas Opa (invasão celular)",
+      "LOS — lipooligossacarídeo (endotoxina forte)",
+      "IgA1-protease (evasão de anticorpos mucosos)",
+      "Porina PorB (sobrevivência intracelular)",
+      "Sistema de captura de ferro (transferrina, lactoferrina)"
+    ]
+  }
+];
+
+const fields = [
+  { label: "🔬 Mecanismo de Resistência", key: "mec" },
+  { label: "💊 Tratamento",               key: "trat" },
+  { label: "⚠️ Grupo de Risco",           key: "risco" },
+  { label: "⚡ Fatores de Virulência",    key: "vir" }
+];
+
+function buildCard(b) {
+  const card = document.createElement("div");
+  card.className = "card";
+
+  const tagHTML = [
+    `<span class="tag" style="background:${b.bg};color:${b.fg}">${b.gram}</span>`,
+    ...b.tags.map(t => `<span class="tag" style="background:#f1efe8;color:#5f5e5a">${t}</span>`)
+  ].join("");
+
+  const bodyHTML = fields.map(f => `
+    <div class="field-label">${f.label}</div>
+    <ul class="items">${b[f.key].map(i => `<li>${i}</li>`).join("")}</ul>
+    <div class="divider"></div>
+  `).join("");
+
+  card.innerHTML = `
+    <div class="card-header" onclick="this.parentNode.classList.toggle('open')">
+      <div class="dot" style="background:${b.color}"></div>
+      <div>
+        <div class="card-title">${b.name}</div>
+        <div class="card-subtitle">${b.full}</div>
+      </div>
+      <div class="chevron">▾</div>
+    </div>
+    <div class="tags">${tagHTML}</div>
+    <div class="card-body">${bodyHTML}</div>
+  `;
+  return card;
+}
+
+function toggleAll(open) {
+  document.querySelectorAll(".card").forEach(c =>
+    open ? c.classList.add("open") : c.classList.remove("open"));
+}
+
+const grid = document.getElementById("grid");
+data.forEach(b => grid.appendChild(buildCard(b)));
+</script>
+</body>
+</html>

@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Orientação Farmacêutica &amp; Adesão ao Tratamento — Guia de revisão</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@500;600;700;800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#E7E1D2;--surface:#FBF8F0;--surface-2:#F3EEE1;
+    --ink:#143C42;--ink-soft:#4E5F5C;--vermilion:#D6492A;--ochre:#B98220;--green:#3C6E47;--blue:#2C5A74;
+    --line:rgba(20,60,66,.22);--line-strong:rgba(20,60,66,.55);
+    --font-display:'Anton',Impact,sans-serif;--font-head:'Archivo',system-ui,sans-serif;--font-body:'IBM Plex Sans',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+  body{margin:0;background:radial-gradient(circle at 100% -2%, rgba(214,73,42,.06), transparent 38%),var(--paper);
+    color:var(--ink);font-family:var(--font-body);line-height:1.55;padding:clamp(16px,3.5vw,44px) clamp(12px,4vw,40px) 80px}
+  .wrap{max-width:1080px;margin:0 auto}
+  .top-rule{height:6px;background:var(--ink)}
+  .kicker{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-family:var(--font-head);font-weight:700;text-transform:uppercase;letter-spacing:.15em;font-size:11px;color:var(--ink-soft);padding:9px 2px;border-bottom:1px solid var(--line)}
+  .kicker .dot{color:var(--vermilion)}
+  h1{font-family:var(--font-display);font-weight:400;line-height:.92;font-size:clamp(28px,5.4vw,60px);margin:16px 0 8px;text-transform:uppercase;letter-spacing:.5px}
+  h1 .accent{color:var(--vermilion)}
+  .dek{font-size:clamp(15px,2vw,17.5px);color:var(--ink-soft);max-width:66ch;border-top:3px double var(--line-strong);padding-top:12px}
+  .dek b{color:var(--ink);font-weight:600}
+  nav.toc{position:sticky;top:0;z-index:20;background:rgba(231,225,210,.94);backdrop-filter:blur(6px);margin:18px 0 8px;padding:10px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  nav.toc ul{list-style:none;display:flex;gap:7px;flex-wrap:wrap;margin:0;padding:0}
+  nav.toc a{font-family:var(--font-head);font-weight:600;font-size:12px;text-decoration:none;color:var(--ink);border:1.5px solid var(--line-strong);border-radius:2px;padding:5px 10px;transition:background .12s,color .12s}
+  nav.toc a:hover{background:var(--ink);color:var(--surface)}
+  section{margin:38px 0 0;scroll-margin-top:64px}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:14px;border-bottom:2px solid var(--ink);padding-bottom:8px}
+  .sec-num{font-family:var(--font-display);font-size:clamp(26px,4vw,40px);color:var(--vermilion);line-height:.8}
+  .sec-head h2{font-family:var(--font-head);font-weight:800;font-size:clamp(18px,3vw,25px);margin:0;letter-spacing:-.01em}
+  p{margin:0 0 12px}.lead{font-size:16px}
+  strong,b{color:var(--ink);font-weight:600}.hl{color:var(--vermilion);font-weight:600}
+  ul.clean{margin:0 0 12px;padding-left:18px}ul.clean li{margin:5px 0}
+  ol.clean{margin:0 0 12px;padding-left:20px}ol.clean li{margin:5px 0}
+  .box{background:var(--surface);border:1.5px solid var(--ink);border-radius:3px;box-shadow:4px 4px 0 var(--ink);padding:16px 18px;margin:14px 0}
+  .grid2{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+  .bizu{border:1.5px dashed var(--green);background:rgba(60,110,71,.06);border-radius:3px;padding:13px 16px;margin:14px 0}
+  .bizu .tag{font-family:var(--font-head);font-weight:700;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--green);display:block;margin-bottom:5px}
+  .bizu b{color:var(--green)}
+  .trap{border:1.5px solid var(--vermilion);background:rgba(214,73,42,.05);border-radius:3px;padding:13px 16px;margin:14px 0}
+  .trap .tag{font-family:var(--font-head);font-weight:700;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--vermilion);display:block;margin-bottom:5px}
+  .tbl{width:100%;border-collapse:collapse;margin:14px 0;font-size:12.5px;background:var(--surface)}
+  .tbl th,.tbl td{border:1px solid var(--line-strong);padding:8px 10px;text-align:left;vertical-align:top}
+  .tbl thead th{background:var(--ink);color:var(--surface);font-family:var(--font-head);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.03em}
+  .tbl tbody th{background:var(--surface-2);font-family:var(--font-head);font-weight:700;white-space:nowrap}
+  .tbl-scroll{overflow-x:auto}
+  .fc-grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));margin-top:14px}
+  .fc{background:var(--surface);border:1.5px solid var(--ink);border-radius:3px;box-shadow:4px 4px 0 var(--ink);padding:16px 17px;cursor:pointer;text-align:left;width:100%;font-family:var(--font-body);color:var(--ink);display:flex;flex-direction:column;gap:9px;transition:transform .12s,box-shadow .12s}
+  .fc:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--vermilion)}
+  .fc:focus-visible{outline:3px solid var(--vermilion);outline-offset:3px}
+  .fc .q{font-family:var(--font-head);font-weight:700;font-size:15px;line-height:1.28}
+  .fc .hint{font-family:var(--font-head);font-weight:600;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--vermilion)}
+  .fc .ans{font-size:13.5px;color:var(--ink-soft)}
+  .fc:not(.open) .ans{display:none}.fc.open .hint{display:none}
+  .case .q::before{content:"CASO ";font-family:var(--font-display);color:var(--vermilion);font-size:12px;letter-spacing:.1em}
+  footer{margin:46px 0 0;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--ink-soft)}
+  footer b{color:var(--ink)}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="top-rule"></div>
+    <div class="kicker">
+      <span>Farmácia Clínica <span class="dot">·</span> Cuidado ao Paciente</span>
+      <span>Resmulti · ENARE · EBSERH · HUs</span>
+    </div>
+    <h1>Orientação Farmacêutica &amp; <span class="accent">Adesão</span></h1>
+    <p class="dek">Cuidado ao paciente <b>internado e ambulatorial</b> e <b>adesão ao tratamento</b>: conceitos, tipos de não adesão, dimensões da OMS, como medir e como melhorar. Guia com bizus, tabelas e casos.</p>
+  </header>
+
+  <nav class="toc" aria-label="Índice">
+    <ul>
+      <li><a href="#conceitos">1 · Conceitos ★</a></li>
+      <li><a href="#dispensacao">2 · Dispensação clínica</a></li>
+      <li><a href="#internado">3 · Internado</a></li>
+      <li><a href="#ambulatorial">4 · Ambulatorial</a></li>
+      <li><a href="#adesao">5 · Adesão — conceitos ★</a></li>
+      <li><a href="#tipos">6 · Tipos de não adesão ★</a></li>
+      <li><a href="#dimensoes">7 · 5 dimensões OMS ★</a></li>
+      <li><a href="#medir">8 · Como medir ★</a></li>
+      <li><a href="#estrategias">9 · Como melhorar ★</a></li>
+      <li><a href="#pegadinhas">10 · Pegadinhas</a></li>
+      <li><a href="#casos">11 · Casos clínicos ★</a></li>
+    </ul>
+  </nav>
+
+  <!-- 1 -->
+  <section id="conceitos">
+    <div class="sec-head"><span class="sec-num">01</span><h2>Conceitos fundamentais ★</h2></div>
+    <div class="grid2">
+      <div class="box"><p><b>Orientação farmacêutica</b></p><p>Ato de fornecer informações ao paciente/cuidador sobre o uso <b>correto, seguro e racional</b> do medicamento. Integra a <b>dispensação</b> e o cuidado.</p></div>
+      <div class="box"><p><b>Cuidado farmacêutico</b></p><p>Prática <b>centrada no paciente</b> em que o farmacêutico se responsabiliza pelas necessidades relacionadas a medicamentos, buscando <span class="hl">resultados que melhorem a qualidade de vida</span>.</p></div>
+    </div>
+    <p>Serviços clínicos incluem: dispensação orientada, <b>conciliação medicamentosa</b>, revisão da farmacoterapia, <b>seguimento farmacoterapêutico</b>, manejo de problemas autolimitados e educação em saúde. No Brasil, respaldados pelas <b>Resoluções CFF 585 e 586/2013</b>.</p>
+  </section>
+
+  <!-- 2 -->
+  <section id="dispensacao">
+    <div class="sec-head"><span class="sec-num">02</span><h2>Dispensação como ato clínico</h2></div>
+    <p>Dispensar <b>não é</b> apenas entregar/vender: é fornecer <b>com orientação</b>. O que comunicar:</p>
+    <ul class="clean">
+      <li><b>O quê e para quê:</b> nome e indicação.</li>
+      <li><b>Como usar:</b> dose, via, horários, relação com alimentos, técnica (inalador, insulina, colírio).</li>
+      <li><b>Por quanto tempo</b> e o que fazer se <b>esquecer</b> uma dose.</li>
+      <li><b>Efeitos adversos</b> esperados e sinais de alerta; o que monitorar.</li>
+      <li><b>Conservação</b>, interações e cuidados; <b>importância da adesão</b>.</li>
+    </ul>
+    <div class="bizu"><span class="tag">★ Bizu</span> Use o <b>teach-back</b>: peça que o paciente <b>repita com as próprias palavras</b> — não basta perguntar “entendeu?”. Linguagem simples, atenta ao <b>letramento em saúde</b>.</div>
+  </section>
+
+  <!-- 3 -->
+  <section id="internado">
+    <div class="sec-head"><span class="sec-num">03</span><h2>Paciente internado</h2></div>
+    <ul class="clean">
+      <li><b>Conciliação medicamentosa</b> na <b>admissão, transferência e alta</b> — comparar o que o paciente usava com o prescrito, resolvendo discrepâncias.</li>
+      <li><b>Orientação de alta:</b> revisar a lista final (o que foi <b>mantido, alterado, suspenso e iniciado</b>), esclarecer dúvidas e entregar <b>lista escrita/calendário posológico</b>.</li>
+      <li>Educação para <b>autocuidado</b> (anticoagulante, insulina, inalador) antes da alta.</li>
+    </ul>
+    <div class="bizu"><span class="tag">★ Bizu</span> A <b>orientação de alta</b> reduz reinternações, eventos adversos pós-alta e discrepâncias. É o momento de maior impacto do farmacêutico no paciente internado.</div>
+  </section>
+
+  <!-- 4 -->
+  <section id="ambulatorial">
+    <div class="sec-head"><span class="sec-num">04</span><h2>Paciente ambulatorial</h2></div>
+    <ul class="clean">
+      <li>Foco em <b>doenças crônicas</b> (HAS, DM, dislipidemia, asma) e programas (HIV, TB).</li>
+      <li><b>Seguimento farmacoterapêutico</b> contínuo: avaliar efetividade, segurança e adesão ao longo do tempo.</li>
+      <li><b>Demonstração de dispositivos</b> (inaladores, canetas de insulina, colírios) e uso de <b>calendário posológico</b> e organizadores.</li>
+      <li>TB: <b>tratamento diretamente observado (DOT/TDO)</b>.</li>
+    </ul>
+  </section>
+
+  <!-- 5 -->
+  <section id="adesao">
+    <div class="sec-head"><span class="sec-num">05</span><h2>Adesão — conceitos ★</h2></div>
+    <div class="tbl-scroll">
+    <table class="tbl">
+      <thead><tr><th>Termo</th><th>Significado</th></tr></thead>
+      <tbody>
+        <tr><th>Adesão (adherence)</th><td>Grau em que o comportamento do paciente <b>corresponde às recomendações acordadas</b> com o profissional. Implica <span class="hl">concordância ativa</span>. Termo preferido.</td></tr>
+        <tr><th>Compliance (cumprimento)</th><td>Termo mais antigo e <b>passivo</b>: o paciente “obedece” à prescrição. Caiu em desuso.</td></tr>
+        <tr><th>Concordância (concordance)</th><td><b>Processo de negociação/parceria</b> entre paciente e profissional na decisão terapêutica.</td></tr>
+        <tr><th>Persistência</th><td><b>Tempo</b> durante o qual o paciente mantém o tratamento.</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="bizu"><span class="tag">★ Bizu</span> <b>Compliance = obedecer (passivo); adesão = acordar e seguir (ativo); concordância = decidir junto.</b> A OMS estima ~50% de adesão em doenças crônicas.</div>
+  </section>
+
+  <!-- 6 -->
+  <section id="tipos">
+    <div class="sec-head"><span class="sec-num">06</span><h2>Tipos de não adesão ★</h2></div>
+    <div class="grid2">
+      <div class="box"><p><b>Não intencional (involuntária)</b></p><p><b>Esquecimento</b>, falta de compreensão, regime complexo, custo/acesso, dificuldades físicas/visuais. O paciente <b>quer</b>, mas não consegue.</p></div>
+      <div class="box"><p><b>Intencional (voluntária)</b></p><p>Decisão <b>consciente</b> de não seguir: crenças, medo de efeitos adversos, percepção de não necessidade, melhora dos sintomas.</p></div>
+    </div>
+    <p>Também: <b>não adesão primária</b> (não retira/não inicia o tratamento) × <b>secundária</b> (inicia, mas não mantém ou usa incorretamente).</p>
+    <div class="trap"><span class="tag">⚠ Pegadinha</span> <b>Esquecimento = não intencional.</b> “Parei porque me sinto bem” ou “tenho medo do efeito” = <b>intencional</b>. A estratégia muda conforme o tipo.</div>
+  </section>
+
+  <!-- 7 -->
+  <section id="dimensoes">
+    <div class="sec-head"><span class="sec-num">07</span><h2>5 dimensões da adesão — OMS (2003) ★</h2></div>
+    <div class="tbl-scroll">
+    <table class="tbl">
+      <thead><tr><th>Dimensão</th><th>Exemplos</th></tr></thead>
+      <tbody>
+        <tr><th>Socioeconômica</th><td>Custo, acesso, escolaridade, suporte social/familiar.</td></tr>
+        <tr><th>Sistema/equipe de saúde</th><td>Relação profissional-paciente, acesso ao serviço, continuidade do cuidado.</td></tr>
+        <tr><th>Condição/doença</th><td>Gravidade, presença de sintomas (<b>doença assintomática → pior adesão</b>), comorbidades, depressão.</td></tr>
+        <tr><th>Terapia</th><td><b>Complexidade</b> do esquema, nº de doses, duração, efeitos adversos.</td></tr>
+        <tr><th>Paciente</th><td>Crenças, conhecimento, motivação, esquecimento, letramento em saúde.</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="bizu"><span class="tag">★ Bizu</span> Mnemônico <b>“S-S-C-T-P”</b>: Socioeconômica, Sistema de saúde, Condição, Terapia, Paciente. A adesão é <b>multifatorial</b> — não é “culpa” só do paciente.</div>
+  </section>
+
+  <!-- 8 -->
+  <section id="medir">
+    <div class="sec-head"><span class="sec-num">08</span><h2>Como medir a adesão ★</h2></div>
+    <div class="tbl-scroll">
+    <table class="tbl">
+      <thead><tr><th>Métodos diretos</th><th>Métodos indiretos</th></tr></thead>
+      <tbody>
+        <tr><td><b>Observação direta</b> (DOT); dosagem do fármaco/metabólito no sangue ou urina; biomarcadores. <br><b>+</b> precisos · <b>–</b> caros/invasivos.</td><td><b>Questionários/escalas</b> (Morisky-Green 4 ou 8 itens, teste de Batalla); <b>contagem de comprimidos</b>; <b>registro de retirada</b> na farmácia (refill); diários; dispositivos eletrônicos. <br><b>+</b> simples/baratos · <b>–</b> <span class="hl">superestimam a adesão</span>.</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="trap"><span class="tag">⚠ Pegadinha</span> Os métodos <b>indiretos</b> (escalas, contagem, refill) são os mais usados, mas <b>superestimam</b> a adesão. Os <b>diretos</b> são mais precisos, porém caros/invasivos.</div>
+  </section>
+
+  <!-- 9 -->
+  <section id="estrategias">
+    <div class="sec-head"><span class="sec-num">09</span><h2>Como melhorar a adesão ★</h2></div>
+    <ul class="clean">
+      <li><b>Simplificar o regime:</b> menos doses/dia, associações em dose fixa, posologia 1×/dia. (Das mais eficazes.)</li>
+      <li><b>Educar</b> com linguagem simples e <b>teach-back</b>; abordar crenças e medos (concordância).</li>
+      <li><b>Lembretes e auxílios:</b> calendário posológico, organizadores/blísteres, alarmes, SMS/apps.</li>
+      <li><b>Seguimento</b> farmacoterapêutico, busca ativa, telefonemas, manejo de efeitos adversos.</li>
+      <li><b>Apoio social/familiar</b>; tratamento diretamente observado (TB).</li>
+      <li><b>Conciliação medicamentosa</b> nas transições de cuidado.</li>
+    </ul>
+    <div class="bizu"><span class="tag">★ Bizu</span> Intervenções <b>multifacetadas</b> (combinadas) superam as isoladas. Combine <b>tipo de não adesão</b> (intencional × não intencional) com a estratégia certa: esquecimento → lembrete/simplificação; crença → educação/negociação.</div>
+  </section>
+
+  <!-- 10 -->
+  <section id="pegadinhas">
+    <div class="sec-head"><span class="sec-num">10</span><h2>Pegadinhas consolidadas</h2></div>
+    <div class="trap"><span class="tag">⚠ Top pegadinhas</span>
+      <ul class="clean" style="margin:0">
+        <li><b>Adesão</b> (ativa/acordada) ≠ <b>compliance</b> (passiva) ≠ <b>concordância</b> (decisão conjunta).</li>
+        <li><b>Esquecimento = não intencional</b>; “parei porque melhorei/tenho medo” = intencional.</li>
+        <li><b>Doença assintomática</b> (ex.: HAS) → tende a <b>pior</b> adesão.</li>
+        <li><b>Métodos indiretos superestimam</b> a adesão; diretos são mais precisos.</li>
+        <li><b>Simplificar o regime</b> é das estratégias mais eficazes.</li>
+        <li><b>Teach-back</b>: pedir que o paciente repita (não só “entendeu?”).</li>
+        <li><b>Dispensação</b> inclui orientação — é ato clínico, não só entrega.</li>
+        <li><b>Conciliação medicamentosa</b> nas transições de cuidado.</li>
+        <li>Adesão é <b>multifatorial</b> (5 dimensões da OMS), não só do paciente.</li>
+        <li>Não adesão <b>primária</b> = nem chega a iniciar/retirar o medicamento.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 11 -->
+  <section id="casos">
+    <div class="sec-head"><span class="sec-num">11</span><h2>Casos clínicos — autoteste ★</h2></div>
+    <p>Leia, identifique o tipo de não adesão / a conduta e clique para conferir.</p>
+    <div class="fc-grid" id="caseGrid"></div>
+  </section>
+
+  <footer>
+    <b>Fontes-base:</b> OMS — <i>Adherence to long-term therapies</i> (2003, 5 dimensões); definições de adesão/concordância; escalas (Morisky-Green); literatura de cuidado farmacêutico e Ministério da Saúde (Cuidado Farmacêutico); Resoluções CFF 585 e 586/2013. Material de estudo — confronte com o edital e a bibliografia da sua banca.
+  </footer>
+
+</div>
+
+<script>
+  const cases = [
+    {q:"Paciente com esquema de 4 tomadas/dia relata que 'esquece algumas doses'. Tipo de não adesão e conduta?", a:"Não adesão não intencional (esquecimento/complexidade). Conduta: simplificar o regime (menos doses/dia, dose fixa combinada), calendário posológico e lembretes (alarme/app)."},
+    {q:"Paciente hipertenso parou o anti-hipertensivo porque 'se sente bem e não sente nada'. Como classificar e abordar?", a:"Não adesão intencional, ligada à crença e ao caráter assintomático da HAS. Conduta: educar sobre a cronicidade e o risco cardiovascular silencioso, negociar (concordância) e reforçar a importância de manter o tratamento."},
+    {q:"Por que pacientes com doenças assintomáticas (como HAS) tendem a aderir menos?", a:"Dimensão relacionada à condição/doença (OMS): a ausência de sintomas reduz a percepção de necessidade do tratamento, favorecendo a não adesão intencional."},
+    {q:"Após orientar um paciente sobre o uso da varfarina, como confirmar que ele entendeu?", a:"Técnica de teach-back: pedir que ele explique com as próprias palavras como vai tomar e quais sinais de alerta observar — não apenas perguntar 'entendeu?'."},
+    {q:"Paciente recebe alta com 2 medicamentos novos, 1 com dose alterada e 1 suspenso. Qual a conduta do farmacêutico?", a:"Conciliação medicamentosa de alta + orientação: revisar a lista final (mantidos/alterados/suspensos/iniciados), esclarecer dúvidas e entregar lista escrita/calendário. Reduz reinternação e eventos adversos."},
+    {q:"Idoso com polifarmácia e baixa visão tem dificuldade de organizar os medicamentos. Que estratégias ajudam?", a:"Organizador de comprimidos (caixinha por horário), rótulos com letra grande, simplificação do regime, envolvimento do cuidador e calendário posológico ilustrado."},
+    {q:"No ambulatório, qual método prático de medir adesão e qual sua limitação?", a:"Métodos indiretos (escala de Morisky-Green, contagem de comprimidos, registro de retirada/refill). Limitação: tendem a superestimar a adesão. Os diretos (dosagem sérica, observação) são mais precisos, porém caros."},
+    {q:"Paciente com tuberculose, histórico de abandono de tratamento. Qual estratégia de adesão é indicada?", a:"Tratamento diretamente observado (DOT/TDO): o profissional acompanha a tomada da medicação, melhorando a adesão e reduzindo resistência e abandono."},
+    {q:"Paciente nunca chega a retirar a medicação prescrita na farmácia. Que tipo de não adesão é?", a:"Não adesão primária: o paciente não inicia o tratamento (não retira/não compra). Investigar barreiras (custo, acesso, crença) e orientar."},
+    {q:"Paciente asmático usa o inalador com técnica incorreta e não melhora. Conduta de orientação?", a:"Demonstração da técnica do dispositivo + teach-back (pedir que o paciente demonstre de volta). Erro de técnica é uma forma de não adesão/uso incorreto, não falha do fármaco."},
+    {q:"Paciente teme sangramento e por isso reduz por conta própria a dose do anticoagulante. Abordagem?", a:"Não adesão intencional por crença/medo. Conduta: acolher a preocupação, educar sobre riscos/benefícios e sinais de alerta, decidir em conjunto (concordância) e monitorar (INR)."},
+    {q:"Qual a diferença, em uma frase, entre adesão, compliance e concordância?", a:"Compliance = o paciente obedece à prescrição (passivo); adesão = o paciente segue um plano acordado com o profissional (ativo); concordância = o processo de decisão compartilhada que sustenta a adesão."}
+  ];
+  const grid = document.getElementById('caseGrid');
+  cases.forEach(c=>{
+    const b=document.createElement('button');b.className='fc case';b.type='button';
+    b.innerHTML=`<span class="q">${c.q}</span><span class="hint">Ver conduta</span><span class="ans">${c.a}</span>`;
+    b.addEventListener('click',()=>b.classList.toggle('open'));
+    grid.appendChild(b);
+  });
+</script>
+</body>
+</html>

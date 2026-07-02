@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Farmacovigilância &amp; Reações Adversas a Medicamentos — Guia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@500;600;700;800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#E7E1D2;--surface:#FBF8F0;--surface-2:#F3EEE1;
+    --ink:#143C42;--ink-soft:#4E5F5C;--vermilion:#D6492A;--ochre:#B98220;--green:#3C6E47;--blue:#2C5A74;
+    --line:rgba(20,60,66,.22);--line-strong:rgba(20,60,66,.55);
+    --font-display:'Anton',Impact,sans-serif;--font-head:'Archivo',system-ui,sans-serif;--font-body:'IBM Plex Sans',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+  body{margin:0;background:radial-gradient(circle at 100% -2%, rgba(214,73,42,.06), transparent 38%),var(--paper);
+    color:var(--ink);font-family:var(--font-body);line-height:1.55;padding:clamp(16px,3.5vw,44px) clamp(12px,4vw,40px) 80px}
+  .wrap{max-width:1080px;margin:0 auto}
+  .top-rule{height:6px;background:var(--ink)}
+  .kicker{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-family:var(--font-head);font-weight:700;text-transform:uppercase;letter-spacing:.15em;font-size:11px;color:var(--ink-soft);padding:9px 2px;border-bottom:1px solid var(--line)}
+  .kicker .dot{color:var(--vermilion)}
+  h1{font-family:var(--font-display);font-weight:400;line-height:.92;font-size:clamp(30px,6vw,64px);margin:16px 0 8px;text-transform:uppercase;letter-spacing:.5px}
+  h1 .accent{color:var(--vermilion)}
+  .dek{font-size:clamp(15px,2vw,17.5px);color:var(--ink-soft);max-width:66ch;border-top:3px double var(--line-strong);padding-top:12px}
+  .dek b{color:var(--ink);font-weight:600}
+  nav.toc{position:sticky;top:0;z-index:20;background:rgba(231,225,210,.94);backdrop-filter:blur(6px);margin:18px 0 8px;padding:10px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  nav.toc ul{list-style:none;display:flex;gap:7px;flex-wrap:wrap;margin:0;padding:0}
+  nav.toc a{font-family:var(--font-head);font-weight:600;font-size:12px;text-decoration:none;color:var(--ink);border:1.5px solid var(--line-strong);border-radius:2px;padding:5px 10px;transition:background .12s,color .12s}
+  nav.toc a:hover{background:var(--ink);color:var(--surface)}
+  section{margin:38px 0 0;scroll-margin-top:64px}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:14px;border-bottom:2px solid var(--ink);padding-bottom:8px}
+  .sec-num{font-family:var(--font-display);font-size:clamp(26px,4vw,40px);color:var(--vermilion);line-height:.8}
+  .sec-head h2{font-family:var(--font-head);font-weight:800;font-size:clamp(18px,3vw,25px);margin:0;letter-spacing:-.01em}
+  p{margin:0 0 12px}.lead{font-size:16px}
+  strong,b{color:var(--ink);font-weight:600}.hl{color:var(--vermilion);font-weight:600}
+  ul.clean{margin:0 0 12px;padding-left:18px}ul.clean li{margin:5px 0}
+  .box{background:var(--surface);border:1.5px solid var(--ink);border-radius:3px;box-shadow:4px 4px 0 var(--ink);padding:16px 18px;margin:14px 0}
+  .grid2{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+  .bizu{border:1.5px dashed var(--green);background:rgba(60,110,71,.06);border-radius:3px;padding:13px 16px;margin:14px 0}
+  .bizu .tag{font-family:var(--font-head);font-weight:700;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--green);display:block;margin-bottom:5px}
+  .bizu b{color:var(--green)}
+  .trap{border:1.5px solid var(--vermilion);background:rgba(214,73,42,.05);border-radius:3px;padding:13px 16px;margin:14px 0}
+  .trap .tag{font-family:var(--font-head);font-weight:700;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--vermilion);display:block;margin-bottom:5px}
+  .tbl{width:100%;border-collapse:collapse;margin:14px 0;font-size:12.5px;background:var(--surface)}
+  .tbl th,.tbl td{border:1px solid var(--line-strong);padding:8px 10px;text-align:left;vertical-align:top}
+  .tbl thead th{background:var(--ink);color:var(--surface);font-family:var(--font-head);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.03em}
+  .tbl tbody th{background:var(--surface-2);font-family:var(--font-head);font-weight:700;white-space:nowrap}
+  .tbl-scroll{overflow-x:auto}
+  .letter{display:inline-flex;align-items:center;justify-content:center;width:26px;height:26px;background:var(--vermilion);color:#fff;font-family:var(--font-display);font-size:16px;border-radius:3px;margin-right:4px}
+  .fc-grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));margin-top:14px}
+  .fc{background:var(--surface);border:1.5px solid var(--ink);border-radius:3px;box-shadow:4px 4px 0 var(--ink);padding:16px 17px;cursor:pointer;text-align:left;width:100%;font-family:var(--font-body);color:var(--ink);display:flex;flex-direction:column;gap:9px;transition:transform .12s,box-shadow .12s}
+  .fc:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--vermilion)}
+  .fc:focus-visible{outline:3px solid var(--vermilion);outline-offset:3px}
+  .fc .q{font-family:var(--font-head);font-weight:700;font-size:15px;line-height:1.28}
+  .fc .hint{font-family:var(--font-head);font-weight:600;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--vermilion)}
+  .fc .ans{font-size:13.5px;color:var(--ink-soft)}
+  .fc:not(.open) .ans{display:none}.fc.open .hint{display:none}
+  .case .q::before{content:"CASO ";font-family:var(--font-display);color:var(--vermilion);font-size:12px;letter-spacing:.1em}
+  footer{margin:46px 0 0;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--ink-soft)}
+  footer b{color:var(--ink)}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="top-rule"></div>
+    <div class="kicker">
+      <span>Segurança do Paciente <span class="dot">·</span> Farmacovigilância</span>
+      <span>Resmulti · ENARE · EBSERH · HUs</span>
+    </div>
+    <h1>Farmacovigilância &amp; <span class="accent">RAM</span></h1>
+    <p class="dek">Reações adversas a medicamentos: conceitos, <b>classificação (A–F)</b>, causalidade, métodos e notificação (<b>VigiMed</b>). Guia de revisão com forte ênfase em <b>casos clínicos</b>.</p>
+  </header>
+
+  <nav class="toc" aria-label="Índice">
+    <ul>
+      <li><a href="#conceitos">1 · Conceitos ★</a></li>
+      <li><a href="#historico">2 · Histórico</a></li>
+      <li><a href="#classif">3 · Classificação A–F ★</a></li>
+      <li><a href="#axb">4 · Tipo A × B ★</a></li>
+      <li><a href="#gravidade">5 · Gravidade</a></li>
+      <li><a href="#causalidade">6 · Causalidade ★</a></li>
+      <li><a href="#metodos">7 · Métodos</a></li>
+      <li><a href="#notificacao">8 · Notificação ★</a></li>
+      <li><a href="#pegadinhas">9 · Pegadinhas</a></li>
+      <li><a href="#casos">10 · Casos clínicos ★</a></li>
+    </ul>
+  </nav>
+
+  <!-- 1 -->
+  <section id="conceitos">
+    <div class="sec-head"><span class="sec-num">01</span><h2>Conceitos fundamentais ★</h2></div>
+    <div class="tbl-scroll">
+    <table class="tbl">
+      <thead><tr><th>Termo</th><th>Definição (OMS)</th></tr></thead>
+      <tbody>
+        <tr><th>Farmacovigilância</th><td>Ciência e atividades de <b>detecção, avaliação, compreensão e prevenção</b> de efeitos adversos ou de qualquer problema relacionado a medicamentos. Visa o uso seguro e racional.</td></tr>
+        <tr><th>RAM</th><td>Resposta a um medicamento <b>nociva e não intencional</b>, que ocorre em <span class="hl">doses normalmente utilizadas</span> no homem para profilaxia, diagnóstico ou tratamento.</td></tr>
+        <tr><th>Evento adverso (EA)</th><td>Ocorrência médica desfavorável durante o uso de um medicamento que <b>não necessariamente</b> tem relação causal (não pressupõe nexo).</td></tr>
+        <tr><th>Sinal (signal)</th><td>Informação que sugere <b>nova associação causal</b> (ou novo aspecto de uma já conhecida) e que requer investigação.</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="bizu"><span class="tag">★ Bizu</span> <b>RAM pressupõe suspeita de causalidade e dose normal; EA não.</b> Todo RAM é EA, mas nem todo EA é RAM. Superdose/intoxicação intencional é EA, não a RAM “clássica”.</div>
+  </section>
+
+  <!-- 2 -->
+  <section id="historico">
+    <div class="sec-head"><span class="sec-num">02</span><h2>Histórico &amp; sistema</h2></div>
+    <ul class="clean">
+      <li><b>Talidomida (anos 1960):</b> focomelia em recém-nascidos → marco que originou a farmacovigilância e o <b>Programa Internacional de Monitorização de Medicamentos (PIDM/OMS)</b>, em 1968, gerido pelo <b>UMC</b> (Uppsala).</li>
+      <li><b>Brasil:</b> membro pleno do PIDM/OMS <b>desde 2001</b> (ANVISA/GFARM). Estruturas: CNMM, <b>Rede Sentinela</b> (hospitais), e o sistema <b>VigiMed</b> (2018).</li>
+    </ul>
+  </section>
+
+  <!-- 3 -->
+  <section id="classif">
+    <div class="sec-head"><span class="sec-num">03</span><h2>Classificação das RAM — Rawlins &amp; Thompson (A–F) ★</h2></div>
+    <div class="tbl-scroll">
+    <table class="tbl">
+      <thead><tr><th>Tipo</th><th>Característica</th><th>Exemplos</th></tr></thead>
+      <tbody>
+        <tr><th><span class="letter">A</span>Augmented<br>(aumentada)</th><td><b>Previsível</b>, <b>dose-dependente</b>, ligada à ação farmacológica. Comum, baixa letalidade.</td><td>Hipoglicemia por insulina, sangramento por anticoagulante, sonolência por benzodiazepínico.</td></tr>
+        <tr><th><span class="letter">B</span>Bizarre<br>(bizarra)</th><td><b>Imprevisível</b>, <b>NÃO dose-dependente</b>, idiossincrásica/imunológica. Rara, alta letalidade.</td><td>Anafilaxia à penicilina, Stevens-Johnson, hepatite idiossincrásica.</td></tr>
+        <tr><th><span class="letter">C</span>Chronic<br>(crônica)</th><td>Relacionada ao <b>uso prolongado/cumulativo</b> (dose + tempo).</td><td>Osteoporose por corticoide, discinesia tardia por antipsicótico, nefropatia por analgésicos.</td></tr>
+        <tr><th><span class="letter">D</span>Delayed<br>(tardia)</th><td>Aparece <b>tempo depois</b> do uso (teratogênese, carcinogênese).</td><td>Malformação por <b>talidomida</b>; câncer associado a exposição prévia.</td></tr>
+        <tr><th><span class="letter">E</span>End-of-use<br>(retirada)</th><td>Efeito de <b>suspensão</b> (rebote/abstinência).</td><td>Crise hipertensiva ao parar betabloqueador; abstinência de opioides/benzodiazepínicos.</td></tr>
+        <tr><th><span class="letter">F</span>Failure<br>(falha)</th><td><b>Inefetividade</b> inesperada da terapia (muitas vezes por interação/dose).</td><td>Falha de contraceptivo por <b>rifampicina</b> (indução enzimática).</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="bizu"><span class="tag">★ Bizu</span> <b>A-B-C-D-E-F:</b> <b>A</b>umentada, <b>B</b>izarra, <b>C</b>rônica, <b>D</b>elayed (tardia), <b>E</b>nd (retirada), <b>F</b>ailure (falha). As duas que mais caem: <b>A</b> e <b>B</b>.</div>
+  </section>
+
+  <!-- 4 -->
+  <section id="axb">
+    <div class="sec-head"><span class="sec-num">04</span><h2>Tipo A × Tipo B ★</h2></div>
+    <div class="tbl-scroll">
+    <table class="tbl">
+      <thead><tr><th>Critério</th><th>Tipo A (aumentada)</th><th>Tipo B (bizarra)</th></tr></thead>
+      <tbody>
+        <tr><th>Previsibilidade</th><td><b>Previsível</b></td><td><b>Imprevisível</b></td></tr>
+        <tr><th>Dose-dependente</th><td>Sim</td><td>Não</td></tr>
+        <tr><th>Mecanismo</th><td>Exagero do efeito farmacológico</td><td>Imunológico / idiossincrásico</td></tr>
+        <tr><th>Frequência</th><td>Comum</td><td>Rara</td></tr>
+        <tr><th>Letalidade</th><td>Baixa</td><td>Alta</td></tr>
+        <tr><th>Conduta típica</th><td><span class="hl">Reduzir a dose</span></td><td><span class="hl">Suspender o fármaco</span></td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="trap"><span class="tag">⚠ Pegadinha</span> <b>Alergia/anafilaxia é sempre Tipo B</b> (imprevisível, não dose-dependente). Se a reação some ao <b>baixar a dose</b>, é Tipo A; se só resolve ao <b>retirar</b>, pense em Tipo B.</div>
+  </section>
+
+  <!-- 5 -->
+  <section id="gravidade">
+    <div class="sec-head"><span class="sec-num">05</span><h2>Gravidade (RAM grave/séria — OMS)</h2></div>
+    <p>É considerada <b>grave/séria</b> a RAM que resulta em:</p>
+    <ul class="clean">
+      <li><b>Óbito</b> ou <b>ameaça à vida</b>;</li>
+      <li><b>Hospitalização</b> ou seu prolongamento;</li>
+      <li><b>Incapacidade</b>/invalidez persistente ou significativa;</li>
+      <li><b>Anomalia congênita</b>;</li>
+      <li>Evento clinicamente importante (ex.: que exige intervenção para evitar os itens acima).</li>
+    </ul>
+    <div class="bizu"><span class="tag">★ Bizu</span> Mnemônico <b>“MAHIA”</b>: <b>M</b>orte, <b>A</b>meaça à vida, <b>H</b>ospitalização, <b>I</b>ncapacidade, <b>A</b>nomalia congênita. RAM grave ≠ RAM intensa: gravidade é definida por <b>desfecho</b>, não por intensidade do sintoma.</div>
+  </section>
+
+  <!-- 6 -->
+  <section id="causalidade">
+    <div class="sec-head"><span class="sec-num">06</span><h2>Avaliação de causalidade (nexo) ★</h2></div>
+    <div class="grid2">
+      <div class="box"><p><b>Algoritmo de Naranjo</b></p>
+        <p>Questionário de <b>10 perguntas</b> com pontuação:</p>
+        <ul class="clean" style="margin:0">
+          <li><b>≥ 9</b> → Definida</li>
+          <li><b>5–8</b> → Provável</li>
+          <li><b>1–4</b> → Possível</li>
+          <li><b>≤ 0</b> → Duvidosa/improvável</li>
+        </ul></div>
+      <div class="box"><p><b>Categorias OMS-UMC</b></p>
+        <p>Definida · Provável · Possível · Improvável · Condicional/não classificada · Não classificável.</p></div>
+    </div>
+    <p><b>Critérios que reforçam o nexo:</b></p>
+    <ul class="clean">
+      <li><b>Relação temporal</b> plausível entre o uso e o evento.</li>
+      <li><b>Dechallenge:</b> melhora ao <b>retirar</b> o fármaco.</li>
+      <li><b>Rechallenge:</b> reaparecimento ao <b>reexpor</b> (critério mais forte).</li>
+      <li>Ausência de <b>explicação alternativa</b> (outra doença/fármaco).</li>
+      <li>Reação já <b>conhecida/descrita</b> para o fármaco.</li>
+    </ul>
+    <div class="bizu"><span class="tag">★ Bizu</span> <b>Some ao retirar (dechallenge) e volta ao reexpor (rechallenge) = nexo forte.</b> O rechallenge positivo é o critério de maior peso para causalidade.</div>
+  </section>
+
+  <!-- 7 -->
+  <section id="metodos">
+    <div class="sec-head"><span class="sec-num">07</span><h2>Métodos de farmacovigilância</h2></div>
+    <div class="tbl-scroll">
+    <table class="tbl">
+      <thead><tr><th>Método</th><th>Característica</th><th>Limite</th></tr></thead>
+      <tbody>
+        <tr><th>Notificação espontânea<br>(passiva)</th><td><b>Principal método</b>. Barato, abrange toda a população e todo o ciclo de vida do fármaco; bom para detectar RAM <b>raras</b> e Tipo B.</td><td><span class="hl">Subnotificação</span>; não calcula incidência (sem denominador).</td></tr>
+        <tr><th>Farmacovigilância ativa</th><td>Busca ativa de eventos (monitorização intensiva, hospitais sentinela, PEM).</td><td>Mais cara e localizada.</td></tr>
+        <tr><th>Estudos epidemiológicos</th><td>Coorte e caso-controle; <b>quantificam risco/incidência</b>.</td><td>Tempo e custo.</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="trap"><span class="tag">⚠ Pegadinha</span> A <b>notificação espontânea</b> é o método principal, mas <b>não mede incidência</b> e sofre <b>subnotificação</b>. Para calcular risco, usam-se estudos epidemiológicos.</div>
+  </section>
+
+  <!-- 8 -->
+  <section id="notificacao">
+    <div class="sec-head"><span class="sec-num">08</span><h2>Notificação no Brasil ★</h2></div>
+    <div class="grid2">
+      <div class="box"><p><b>VigiMed</b> (2018)</p>
+        <p>Canal <b>oficial</b> para eventos adversos de <b>medicamentos e vacinas</b>: RAM, <b>inefetividade</b>, erros de medicação, interações, uso off-label. Versão brasileira do <b>VigiFlow</b>, conectada à base global da OMS (<b>VigiBase</b>/UMC).</p></div>
+      <div class="box"><p><b>Notivisa</b></p>
+        <p>Destinado a <b>queixas técnicas</b> (desvio de qualidade) e a EA de outros produtos. <span class="hl">Queixa técnica + evento adverso → VigiMed.</span></p></div>
+    </div>
+    <ul class="clean">
+      <li>Notificação por profissionais e cidadãos é <b>voluntária</b>; para <b>detentores de registro</b> (empresas) é <b>obrigatória</b> (RDC nº 406/2020 — Boas Práticas de Farmacovigilância).</li>
+      <li><b>Basta a suspeita</b> — não é preciso ter certeza do nexo para notificar.</li>
+      <li>Prioridade: RAM <b>graves</b>, <b>inesperadas</b>, de <b>medicamentos novos</b>, inefetividade e erros.</li>
+    </ul>
+    <div class="bizu"><span class="tag">★ Bizu</span> <b>Medicamento/vacina → VigiMed. Desvio de qualidade → Notivisa.</b> E lembre: a <b>suspeita já basta</b> para notificar.</div>
+  </section>
+
+  <!-- 9 -->
+  <section id="pegadinhas">
+    <div class="sec-head"><span class="sec-num">09</span><h2>Pegadinhas consolidadas</h2></div>
+    <div class="trap"><span class="tag">⚠ Top pegadinhas</span>
+      <ul class="clean" style="margin:0">
+        <li><b>RAM</b> = dose normal + suspeita de nexo; <b>EA</b> não pressupõe causalidade.</li>
+        <li><b>Tipo A</b> = previsível/dose-dependente → <b>reduzir dose</b>; <b>Tipo B</b> = imprevisível/imunológico → <b>suspender</b>.</li>
+        <li><b>Alergia/anafilaxia = Tipo B</b> sempre.</li>
+        <li><b>Talidomida = Tipo D</b> (tardia/teratogênica) e marco histórico.</li>
+        <li><b>Inefetividade terapêutica = Tipo F</b> e é notificável.</li>
+        <li><b>Naranjo:</b> ≥9 definida · 5–8 provável · 1–4 possível · ≤0 duvidosa.</li>
+        <li><b>Rechallenge positivo</b> = critério mais forte de nexo.</li>
+        <li><b>Notificação espontânea</b>: principal método, mas subnotifica e não dá incidência.</li>
+        <li><b>VigiMed</b> = EA de medicamento/vacina; <b>Notivisa</b> = queixa técnica.</li>
+        <li>Gravidade da RAM é pelo <b>desfecho</b> (morte, hospitalização...), não pela intensidade.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 10 -->
+  <section id="casos">
+    <div class="sec-head"><span class="sec-num">10</span><h2>Casos clínicos — autoteste ★</h2></div>
+    <p>Leia, classifique a RAM / defina a conduta e clique para conferir.</p>
+    <div class="fc-grid" id="caseGrid"></div>
+  </section>
+
+  <footer>
+    <b>Fontes-base:</b> definições OMS de farmacovigilância e RAM; classificação de Rawlins &amp; Thompson (A–F); algoritmo de Naranjo e categorias OMS-UMC; ANVISA — VigiMed (2018), Notivisa, Rede Sentinela, RDC 406/2020 (BPF); PIDM/OMS (UMC). Material de estudo — confronte com o edital e a bibliografia da sua banca.
+  </footer>
+
+</div>
+
+<script>
+  const cases = [
+    {q:"Paciente diabético recebe dose alta de insulina e evolui com hipoglicemia sintomática. Tipo de RAM e conduta?", a:"Tipo A (aumentada): previsível e dose-dependente, exagero do efeito farmacológico. Conduta: ajustar/reduzir a dose. Letalidade geralmente baixa."},
+    {q:"Após 1ª dose de penicilina, paciente sem alergia prévia conhecida faz anafilaxia. Classificação e conduta?", a:"Tipo B (bizarra): imprevisível, imunológica, não dose-dependente. Conduta: suspender o fármaco, tratar a anafilaxia e notificar (RAM grave) no VigiMed; registrar a alergia."},
+    {q:"Mulher em corticoterapia crônica por anos desenvolve osteoporose. Que tipo de RAM?", a:"Tipo C (crônica): relacionada ao uso prolongado e cumulativo (dose + tempo)."},
+    {q:"Recém-nascido com focomelia após uso materno de talidomida na gestação. Tipo?", a:"Tipo D (tardia/delayed): efeito teratogênico que se manifesta após o uso. É o marco histórico da farmacovigilância."},
+    {q:"Paciente hipertenso interrompe abruptamente o betabloqueador e tem crise hipertensiva/taquicardia de rebote. Tipo?", a:"Tipo E (end-of-use / retirada): efeito de suspensão (rebote/abstinência). Prevenção: desmame gradual."},
+    {q:"Mulher em uso de contraceptivo oral engravida durante tratamento com rifampicina. Como classificar?", a:"Tipo F (failure/falha): inefetividade terapêutica por interação — a rifampicina é indutora enzimática e reduz o nível do contraceptivo. É notificável."},
+    {q:"Suspeita de RAM: o sintoma melhorou ao suspender o fármaco e reapareceu quando ele foi reintroduzido. O que isso indica?", a:"Dechallenge positivo + rechallenge positivo → nexo causal forte (provável/definida). O rechallenge é o critério de maior peso."},
+    {q:"Paciente internado sofre queda e fratura, sem relação com qualquer medicamento. É RAM?", a:"Não. É um evento adverso (incidente), mas não uma RAM — falta a relação causal com um medicamento em dose terapêutica."},
+    {q:"Onde notificar uma suspeita de reação adversa a um antibiótico?", a:"No VigiMed (sistema oficial da ANVISA para eventos adversos de medicamentos e vacinas). Não é preciso ter certeza do nexo — a suspeita basta."},
+    {q:"Farmacêutico encontra comprimidos quebrados e com rótulo descolando, sem dano a paciente. Onde notificar?", a:"Notivisa (queixa técnica / desvio de qualidade). Se houvesse evento adverso associado ao paciente, a notificação iria para o VigiMed."},
+    {q:"Profissional suspeita de RAM mas não tem certeza se foi o medicamento. Deve notificar?", a:"Sim. A simples suspeita já justifica a notificação; a confirmação de causalidade é feita posteriormente pela análise (ex.: Naranjo/OMS-UMC)."},
+    {q:"Paciente desenvolve síndrome de Stevens-Johnson após alopurinol. Tipo de RAM, gravidade e conduta?", a:"Tipo B (idiossincrásica/imunológica), GRAVE (risco de vida/hospitalização). Conduta: suspender imediatamente, suporte e notificar no VigiMed; contraindicar o fármaco."}
+  ];
+  const grid = document.getElementById('caseGrid');
+  cases.forEach(c=>{
+    const b=document.createElement('button');b.className='fc case';b.type='button';
+    b.innerHTML=`<span class="q">${c.q}</span><span class="hint">Ver resposta</span><span class="ans">${c.a}</span>`;
+    b.addEventListener('click',()=>b.classList.toggle('open'));
+    grid.appendChild(b);
+  });
+</script>
+</body>
+</html>

@@ -5,7 +5,7 @@
    - Estáticos (ícones/manifest): cache-first.
    Obs.: o progresso do usuário fica no localStorage, que NÃO é tocado por este cache. */
 
-const CACHE = "enare-farma-v3";
+const CACHE = "enare-farma-v4";
 const ASSETS = [
   "./",
   "./index.html",
@@ -30,7 +30,26 @@ const ASSETS = [
   "./farmacia/medicamentos-snc-mapa-mental.html",
   "./farmacia/caderno-questoes-comentadas.html",
   "./farmacia/apostila-revisao-residencia-farmacia.pdf",
-  "./farmacia/caderno-questoes-comentadas.pdf"
+  "./farmacia/caderno-questoes-comentadas.pdf",
+  "./farmacia/antimicrobianos-mapa-mental.html",
+  "./farmacia/bacterias_resistentes.html",
+  "./farmacia/portaria-344-mapa-mental.html",
+  "./farmacia/processo-cuidado-paciente.html",
+  "./farmacia/orientacao-farmaceutica-adesao.html",
+  "./farmacia/interacoes-medicamentosas.html",
+  "./farmacia/monitorizacao-terapeutica-it-estreito.html",
+  "./farmacia/seguimento-cardiologia.html",
+  "./farmacia/seguimento-paciente-idoso.html",
+  "./farmacia/seguimento-pediatria.html",
+  "./farmacia/oncologia-terapia-nutricional.html",
+  "./farmacia/infeccao-hospitalar-antimicrobianos.html",
+  "./farmacia/gestao-logistica-medicamentos.html",
+  "./farmacia/erros-de-medicacao.html",
+  "./farmacia/protocolo-seguranca-medicamentos.html",
+  "./farmacia/resolucoes-cff-585-586.html",
+  "./farmacia/farmacoepidemiologia.html",
+  "./farmacia/estudos-medicamentos-fases-eum.html",
+  "./farmacia/farmacovigilancia-ram.html"
 ];
 
 self.addEventListener("install", (e) => {

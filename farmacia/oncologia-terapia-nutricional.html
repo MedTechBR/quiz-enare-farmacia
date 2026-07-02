@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Farmácia em Oncologia &amp; Terapia Nutricional — Guia de revisão</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@500;600;700;800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#E7E1D2;--surface:#FBF8F0;--surface-2:#F3EEE1;
+    --ink:#143C42;--ink-soft:#4E5F5C;--vermilion:#D6492A;--ochre:#B98220;--green:#3C6E47;--blue:#2C5A74;
+    --line:rgba(20,60,66,.22);--line-strong:rgba(20,60,66,.55);
+    --font-display:'Anton',Impact,sans-serif;--font-head:'Archivo',system-ui,sans-serif;--font-body:'IBM Plex Sans',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+  body{margin:0;background:radial-gradient(circle at 100% -2%, rgba(214,73,42,.06), transparent 38%),var(--paper);
+    color:var(--ink);font-family:var(--font-body);line-height:1.55;padding:clamp(16px,3.5vw,44px) clamp(12px,4vw,40px) 80px}
+  .wrap{max-width:1080px;margin:0 auto}
+  .top-rule{height:6px;background:var(--ink)}
+  .kicker{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-family:var(--font-head);font-weight:700;text-transform:uppercase;letter-spacing:.15em;font-size:11px;color:var(--ink-soft);padding:9px 2px;border-bottom:1px solid var(--line)}
+  .kicker .dot{color:var(--vermilion)}
+  h1{font-family:var(--font-display);font-weight:400;line-height:.92;font-size:clamp(24px,4.6vw,52px);margin:16px 0 8px;text-transform:uppercase;letter-spacing:.5px}
+  h1 .accent{color:var(--vermilion)}
+  .dek{font-size:clamp(15px,2vw,17.5px);color:var(--ink-soft);max-width:68ch;border-top:3px double var(--line-strong);padding-top:12px}
+  .dek b{color:var(--ink);font-weight:600}
+  nav.toc{position:sticky;top:0;z-index:20;background:rgba(231,225,210,.94);backdrop-filter:blur(6px);margin:18px 0 8px;padding:10px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  nav.toc ul{list-style:none;display:flex;gap:7px;flex-wrap:wrap;margin:0;padding:0}
+  nav.toc a{font-family:var(--font-head);font-weight:600;font-size:12px;text-decoration:none;color:var(--ink);border:1.5px solid var(--line-strong);border-radius:2px;padding:5px 10px;transition:background .12s,color .12s}
+  nav.toc a:hover{background:var(--ink);color:var(--surface)}
+  nav.toc a.part{background:var(--ink);color:var(--surface)}
+  section{margin:38px 0 0;scroll-margin-top:64px}
+  .part-rule{margin:42px 0 0;border-top:3px double var(--line-strong);padding-top:6px;font-family:var(--font-display);text-transform:uppercase;letter-spacing:.1em;color:var(--vermilion);font-size:14px}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:14px;border-bottom:2px solid var(--ink);padding-bottom:8px}
+  .sec-num{font-family:var(--font-display);font-size:clamp(26px,4vw,40px);color:var(--vermilion);line-height:.8}
+  .sec-head h2{font-family:var(--font-head);font-weight:800;font-size:clamp(18px,3vw,25px);margin:0;letter-spacing:-.01em}
+  p{margin:0 0 12px}.lead{font-size:16px}
+  strong,b{color:var(--ink);font-weight:600}.hl{color:var(--vermilion);font-weight:600}
+  ul.clean{margin:0 0 12px;padding-left:18px}ul.clean li{margin:5px 0}
+  .box{background:var(--surface);border:1.5px solid var(--ink);border-radius:3px;box-shadow:4px 4px 0 var(--ink);padding:16px 18px;margin:14px 0}
+  .grid2{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+  .bizu{border:1.5px dashed var(--green);background:rgba(60,110,71,.06);border-radius:3px;padding:13px 16px;margin:14px 0}
+  .bizu .tag{font-family:var(--font-head);font-weight:700;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--green);display:block;margin-bottom:5px}
+  .bizu b{color:var(--green)}
+  .trap{border:1.5px solid var(--vermilion);background:rgba(214,73,42,.05);border-radius:3px;padding:13px 16px;margin:14px 0}
+  .trap .tag{font-family:var(--font-head);font-weight:700;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--vermilion);display:block;margin-bottom:5px}
+  .note{border:1.5px solid var(--blue);background:rgba(44,90,116,.06);border-radius:3px;padding:13px 16px;margin:14px 0}
+  .note .tag{font-family:var(--font-head);font-weight:700;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--blue);display:block;margin-bottom:5px}
+  .tbl{width:100%;border-collapse:collapse;margin:14px 0;font-size:12.5px;background:var(--surface)}
+  .tbl th,.tbl td{border:1px solid var(--line-strong);padding:8px 10px;text-align:left;vertical-align:top}
+  .tbl thead th{background:var(--ink);color:var(--surface);font-family:var(--font-head);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.03em}
+  .tbl tbody th{background:var(--surface-2);font-family:var(--font-head);font-weight:700;white-space:nowrap}
+  .tbl-scroll{overflow-x:auto}
+  .formula{font-family:var(--font-head);font-weight:600;background:var(--surface-2);border:1.5px solid var(--line-strong);border-radius:3px;padding:10px 14px;margin:8px 0;font-size:13.5px}
+  .fc-grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));margin-top:14px}
+  .fc{background:var(--surface);border:1.5px solid var(--ink);border-radius:3px;box-shadow:4px 4px 0 var(--ink);padding:16px 17px;cursor:pointer;text-align:left;width:100%;font-family:var(--font-body);color:var(--ink);display:flex;flex-direction:column;gap:9px;transition:transform .12s,box-shadow .12s}
+  .fc:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--vermilion)}
+  .fc:focus-visible{outline:3px solid var(--vermilion);outline-offset:3px}
+  .fc .q{font-family:var(--font-head);font-weight:700;font-size:15px;line-height:1.28}
+  .fc .hint{font-family:var(--font-head);font-weight:600;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--vermilion)}
+  .fc .ans{font-size:13.5px;color:var(--ink-soft)}
+  .fc:not(.open) .ans{display:none}.fc.open .hint{display:none}
+  .case .q::before{content:"CASO ";font-family:var(--font-display);color:var(--vermilion);font-size:12px;letter-spacing:.1em}
+  footer{margin:46px 0 0;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--ink-soft)}
+  footer b{color:var(--ink)}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="top-rule"></div>
+    <div class="kicker">
+      <span>Farmácia Clínica <span class="dot">·</span> Oncologia &amp; Nutrição</span>
+      <span>Resmulti · ENARE · EBSERH · HUs</span>
+    </div>
+    <h1>Oncologia &amp; <span class="accent">Terapia Nutricional</span></h1>
+    <p class="dek"><b>Parte I:</b> quimioterápicos — classes, mecanismos, ciclo celular e toxicidades; manipulação segura. <b>Parte II:</b> terapia nutricional — enteral, parenteral, EMTN e síndrome de realimentação. Guia com bizus, tabelas e casos.</p>
+  </header>
+
+  <nav class="toc" aria-label="Índice">
+    <ul>
+      <li><a class="part" href="#p1">PARTE I · ONCOLOGIA</a></li>
+      <li><a href="#principios">1 · Princípios ★</a></li>
+      <li><a href="#classes">2 · Classes ★★</a></li>
+      <li><a href="#toxic">3 · Toxicidades ★</a></li>
+      <li><a href="#suporte">4 · Suporte</a></li>
+      <li><a href="#manip">5 · Manipulação ★</a></li>
+      <li><a class="part" href="#p2">PARTE II · NUTRIÇÃO</a></li>
+      <li><a href="#tn">6 · Conceitos &amp; EMTN ★</a></li>
+      <li><a href="#ne">7 · Nutrição enteral ★</a></li>
+      <li><a href="#np">8 · Nutrição parenteral ★</a></li>
+      <li><a href="#refeeding">9 · Realimentação ★</a></li>
+      <li><a href="#pegadinhas">10 · Pegadinhas</a></li>
+      <li><a href="#casos">11 · Casos ★</a></li>
+    </ul>
+  </nav>
+
+  <div class="part-rule" id="p1">Parte I — Farmácia em Oncologia</div>
+
+  <!-- 1 -->
+  <section id="principios">
+    <div class="sec-head"><span class="sec-num">01</span><h2>Princípios da quimioterapia ★</h2></div>
+    <ul class="clean">
+      <li><b>Intenção:</b> curativa, paliativa/controle; <b>adjuvante</b> (após cirurgia), <b>neoadjuvante</b> (antes, para reduzir o tumor), <b>concomitante</b> (com radioterapia).</li>
+      <li><b>Ciclo celular</b> (G0–G1–S–G2–M): fármacos <b>ciclo-específicos</b> (atuam numa fase — ex.: S ou M) × <b>ciclo-inespecíficos</b> (qualquer fase, inclusive G0 — ex.: alquilantes).</li>
+      <li><b>Log-kill (Skipper):</b> cada ciclo mata uma <b>fração constante</b> das células → exige ciclos repetidos.</li>
+      <li><b>Poliquimioterapia:</b> combinar fármacos com mecanismos distintos e toxicidades <b>não sobrepostas</b> → sinergia e menos resistência (glicoproteína-P/MDR).</li>
+      <li><b>Dose por superfície corporal (m²)</b>; exceção clássica: <b>carboplatina por AUC</b> (fórmula de Calvert).</li>
+    </ul>
+    <div class="bizu"><span class="tag">★ Bizu</span> A toxicidade atinge tecidos de <b>divisão rápida</b>: medula (mielossupressão), mucosa (mucosite/diarreia), folículo (alopecia) e gônadas. É a “assinatura” da quimioterapia clássica.</div>
+  </section>
+
+  <!-- 2 -->
+  <section id="classes">
+    <div class="sec-head"><span class="sec-num">02</span><h2>Classes de quimioterápicos ★★</h2></div>
+    <div class="tbl-scroll">
+    <table class="tbl">
+      <thead><tr><th>Classe</th><th>Mecanismo / ciclo</th><th>Exemplos</th><th>Toxicidade-marca</th></tr></thead>
+      <tbody>
+        <tr><th>Alquilantes</th><td>Ligam-se/“crosslink” no DNA. <b>Ciclo-inespecíficos</b>.</td><td>Ciclofosfamida, ifosfamida, bussulfano, melfalano, dacarbazina</td><td>Mielossupressão; <b>cistite hemorrágica</b> (ciclo/ifosfamida → <b>MESNA</b>)</td></tr>
+        <tr><th>Platinas</th><td>Ligações cruzadas no DNA (alquilante-<i>like</i>).</td><td>Cisplatina, carboplatina, oxaliplatina</td><td>Cisplatina: <b>nefro</b>, <b>oto</b>, neuro, êmese intensa; oxaliplatina: neuropatia ao frio</td></tr>
+        <tr><th>Antimetabólitos</th><td>Análogos que bloqueiam a síntese de DNA. <b>Fase S</b>.</td><td>Metotrexato, 5-FU/capecitabina, citarabina, gencitabina, 6-MP</td><td>Mucosite, diarreia, mielossupressão; <b>MTX → resgate com ácido folínico (leucovorin)</b></td></tr>
+        <tr><th>Antibióticos antitumorais</th><td>Intercalam DNA / radicais livres. Maioria <b>ciclo-inespecíficos</b>.</td><td><b>Antraciclinas</b> (doxorrubicina, daunorrubicina), bleomicina, mitomicina</td><td>Antraciclina: <b>cardiotoxicidade cumulativa</b> (vesicante); <b>bleomicina: toxicidade pulmonar</b></td></tr>
+        <tr><th>Inibidores de topoisomerase</th><td>Topo I ou II (quebra do DNA).</td><td>Irinotecano, topotecano (I); etoposídeo (II)</td><td>Irinotecano: <b>diarreia</b> (precoce colinérgica e tardia); mielossupressão</td></tr>
+        <tr><th>Alcaloides da vinca</th><td><b>Despolimerizam</b> microtúbulos. <b>Fase M</b>.</td><td>Vincristina, vimblastina, vinorelbina</td><td>Vincristina: <b>neuropatia periférica</b> (vesicante); <span class="hl">NUNCA intratecal</span></td></tr>
+        <tr><th>Taxanos</th><td><b>Estabilizam</b> microtúbulos. <b>Fase M</b>.</td><td>Paclitaxel, docetaxel</td><td><b>Hipersensibilidade</b> (pré-medicar), neuropatia, mielossupressão</td></tr>
+        <tr><th>Terapia-alvo</th><td>Alvos moleculares específicos.</td><td><b>–nibe</b>: imatinibe (BCR-ABL); <b>–mabe</b>: rituximabe (CD20), trastuzumabe (HER2), bevacizumabe (VEGF)</td><td>Trastuzumabe: <b>cardiotox</b>; bevacizumabe: HAS, sangramento, trombose</td></tr>
+        <tr><th>Imunoterapia (checkpoint)</th><td>Anti-PD-1/PD-L1; anti-CTLA-4.</td><td>Nivolumabe, pembrolizumabe, ipilimumabe</td><td><b>Eventos imunomediados</b>: colite, pneumonite, tireoidite, hepatite</td></tr>
+        <tr><th>Hormonioterapia</th><td>Bloqueio hormonal.</td><td>Tamoxifeno (SERM), anastrozol/letrozol (inib. aromatase)</td><td>Tamoxifeno: <b>TEV</b>, câncer de endométrio; aromatase: osteoporose, artralgia</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="bizu"><span class="tag">★ Bizu</span>
+      <b>Ciclo-inespecíficos</b> = alquilantes, platinas, antraciclinas (atuam em G0 também). <b>Ciclo-específicos</b> = antimetabólitos (fase S), vinca e taxanos (fase M). Microtúbulos: <b>vinca despolimeriza, taxano estabiliza</b>.</div>
+    <div class="trap"><span class="tag">⚠ Pegadinha fatal</span> <b>Vincristina NUNCA pode ser administrada por via intratecal</b> — causa neurotoxicidade ascendente fatal. É erro-sentinela; a via correta é EV. Rotule e separe rigorosamente.</div>
+  </section>
+
+  <!-- 3 -->
+  <section id="toxic">
+    <div class="sec-head"><span class="sec-num">03</span><h2>Toxicidades-chave &amp; antídotos ★</h2></div>
+    <div class="tbl-scroll">
+    <table class="tbl">
+      <thead><tr><th>Toxicidade</th><th>Fármacos</th><th>Prevenção / manejo</th></tr></thead>
+      <tbody>
+        <tr><th>Mielossupressão (nadir ~7–14 d)</th><td>Quase todos os citotóxicos</td><td>Hemograma; <b>G-CSF (filgrastim)</b>; neutropenia febril = <b>emergência</b> (ATB empírico)</td></tr>
+        <tr><th>Náusea/vômito (NVIQ)</th><td>Cisplatina (alta), outros</td><td>Antagonista <b>5-HT3</b> (ondansetrona) + <b>NK1</b> (aprepitanto) + <b>dexametasona</b> ± olanzapina</td></tr>
+        <tr><th>Cistite hemorrágica</th><td>Ciclofosfamida, ifosfamida (acroleína)</td><td><b>MESNA</b> + hidratação</td></tr>
+        <tr><th>Nefro/ototoxicidade</th><td>Cisplatina</td><td>Hidratação vigorosa; monitorar função renal/audição</td></tr>
+        <tr><th>Cardiotoxicidade</th><td>Antraciclinas (cumulativa), trastuzumabe</td><td>Limite de dose; FEVE; dexrazoxano</td></tr>
+        <tr><th>Síndrome de lise tumoral</th><td>Tumores volumosos/leucemias</td><td>Hidratação + <b>alopurinol/rasburicase</b>; corrigir K⁺, fosfato, ácido úrico</td></tr>
+        <tr><th>Extravasamento (vesicantes)</th><td>Antraciclinas, vinca</td><td>Protocolo de extravasamento; antídotos (dexrazoxano; hialuronidase)</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </section>
+
+  <!-- 4 -->
+  <section id="suporte">
+    <div class="sec-head"><span class="sec-num">04</span><h2>Cuidado de suporte</h2></div>
+    <ul class="clean">
+      <li><b>Mucosite/estomatite</b>, diarreia (irinotecano, 5-FU), alopecia, fadiga — manejo sintomático e educação.</li>
+      <li><b>Profilaxia antiemética</b> conforme a emetogenicidade do protocolo.</li>
+      <li><b>Suporte hematológico</b> (transfusão, fatores de crescimento) e profilaxia de infecções.</li>
+      <li>Avaliação de <b>função renal/hepática</b> antes de cada ciclo (ajuste de dose).</li>
+    </ul>
+  </section>
+
+  <!-- 5 -->
+  <section id="manip">
+    <div class="sec-head"><span class="sec-num">05</span><h2>Manipulação segura &amp; regulação ★</h2></div>
+    <p>Antineoplásicos são <b>medicamentos perigosos</b> (potencial mutagênico, carcinogênico e teratogênico para quem manipula).</p>
+    <ul class="clean">
+      <li><b>RDC ANVISA nº 220/2004:</b> regulamenta os <b>Serviços de Terapia Antineoplásica</b>; exige central de manipulação sob responsabilidade do <b>farmacêutico</b>.</li>
+      <li><b>NR 32:</b> segurança e saúde no trabalho em serviços de saúde (manuseio de quimioterápicos, EPIs, capacitação).</li>
+      <li>Preparo em <b>cabine de segurança biológica</b> (fluxo laminar vertical, classe II), técnica asséptica + proteção do operador; sala com pressão negativa.</li>
+      <li><b>Descarte</b> de resíduos quimioterápicos conforme o <b>PGRSS</b> (grupo de risco químico).</li>
+    </ul>
+    <div class="bizu"><span class="tag">★ Bizu</span> Papel do farmacêutico oncológico: <b>validar a prescrição</b> (dose por m²/AUC, protocolo, função orgânica), <b>manipular com segurança</b>, garantir <b>estabilidade/compatibilidade</b> e fazer <b>dupla checagem</b> (medicamentos de alta vigilância).</div>
+  </section>
+
+  <div class="part-rule" id="p2">Parte II — Terapia Nutricional</div>
+
+  <!-- 6 -->
+  <section id="tn">
+    <div class="sec-head"><span class="sec-num">06</span><h2>Conceitos &amp; EMTN ★</h2></div>
+    <p>Terapia nutricional (TN): conjunto de procedimentos para <b>manter ou recuperar o estado nutricional</b> por nutrição <b>enteral (NE)</b> e/ou <b>parenteral (NP)</b>. A desnutrição hospitalar é comum — em oncologia, a <b>caquexia</b> é frequente.</p>
+    <ul class="clean">
+      <li><b>Triagem nutricional</b>: ferramentas como <b>NRS-2002</b>, MUST e MNA (idoso); seguida de avaliação do estado nutricional.</li>
+      <li><b>EMTN</b> (Equipe Multiprofissional de Terapia Nutricional) é <b>obrigatória</b>, composta minimamente por <b>médico, nutricionista, farmacêutico e enfermeiro</b>.</li>
+    </ul>
+    <div class="note"><span class="tag">ℹ Marcos regulatórios</span> <b>Portaria SVS/MS nº 272/1998</b> (nutrição <b>parenteral</b>); <b>Portaria nº 337/1999</b> e <b>RDC nº 63/2000</b> (nutrição <b>enteral</b>); <b>RDC ANVISA nº 503/2021</b> atualiza requisitos de boas práticas em TN.</div>
+  </section>
+
+  <!-- 7 -->
+  <section id="ne">
+    <div class="sec-head"><span class="sec-num">07</span><h2>Nutrição enteral (NE) ★</h2></div>
+    <p>Nutrientes administrados por <b>via oral ou por sonda</b> no trato gastrointestinal <b>funcionante</b>.</p>
+    <ul class="clean">
+      <li><b>Vias:</b> nasogástrica, nasoentérica/nasojejunal; <b>ostomias</b> (gastrostomia/jejunostomia) para uso prolongado (&gt; 4–6 semanas).</li>
+      <li><b>Administração:</b> contínua (bomba), intermitente ou em bolus.</li>
+      <li><b>Complicações:</b> GI (diarreia, distensão, refluxo), mecânicas (obstrução/deslocamento da sonda), metabólicas e <b>broncoaspiração</b> (manter cabeceira a <b>30–45°</b>).</li>
+    </ul>
+    <div class="bizu"><span class="tag">★ Bizu</span> Regra de ouro: <b>“se o intestino funciona, use-o”</b>. A NE é preferível à NP — mais fisiológica, mantém o trofismo intestinal, tem menos infecção e menor custo.</div>
+  </section>
+
+  <!-- 8 -->
+  <section id="np">
+    <div class="sec-head"><span class="sec-num">08</span><h2>Nutrição parenteral (NP) ★</h2></div>
+    <p>Solução/emulsão estéril de macro e micronutrientes administrada por via <b>intravenosa</b>, para quem <b>não pode usar o TGI</b> (obstrução, fístula de alto débito, íleo prolongado, intestino curto, mucosite grave).</p>
+    <div class="grid2">
+      <div class="box"><p><b>Composição</b></p><p>Glicose, aminoácidos, <b>emulsão lipídica</b>, eletrólitos, vitaminas, oligoelementos e água.</p></div>
+      <div class="box"><p><b>Vias</b></p><p><b>Central (NPT):</b> alta osmolaridade, veia central, longa duração. <b>Periférica (NPP):</b> osmolaridade limitada, curta duração.</p></div>
+    </div>
+    <ul class="clean">
+      <li><b>Manipulada pelo farmacêutico</b> em ambiente controlado (fluxo laminar), com controle de <b>estabilidade e compatibilidade</b> e ordem correta de adição.</li>
+      <li><b>Complicações:</b> <b>infecção de cateter</b> (principal), distúrbios metabólicos (hiper/hipoglicemia, eletrólitos), <b>hepáticas</b> (colestase no uso prolongado), trombose.</li>
+    </ul>
+    <div class="trap"><span class="tag">⚠ Pegadinha</span> A <b>incompatibilidade cálcio–fosfato</b> pode precipitar na bolsa (risco de embolia). Não se adicionam medicamentos à bolsa de NP sem comprovação de compatibilidade.</div>
+  </section>
+
+  <!-- 9 -->
+  <section id="refeeding">
+    <div class="sec-head"><span class="sec-num">09</span><h2>Síndrome de realimentação ★</h2></div>
+    <p>Ao realimentar um paciente <b>gravemente desnutrido</b>, o aporte de glicose libera insulina, que empurra <b>fosfato, potássio e magnésio</b> para dentro das células.</p>
+    <div class="box"><p><b>Marca laboratorial:</b> <span class="hl">hipofosfatemia</span> (+ hipocalemia, hipomagnesemia) e deficiência de <b>tiamina (B1)</b> → arritmia, insuficiência cardíaca, convulsão, morte.</p></div>
+    <div class="bizu"><span class="tag">★ Bizu</span> Prevenção: identificar o risco, <b>iniciar a oferta calórica devagar</b>, <b>repor eletrólitos e tiamina</b> antes/durante e monitorar de perto. “Comece baixo, vá devagar” também vale na nutrição.</div>
+  </section>
+
+  <!-- 10 -->
+  <section id="pegadinhas">
+    <div class="sec-head"><span class="sec-num">10</span><h2>Pegadinhas consolidadas</h2></div>
+    <div class="trap"><span class="tag">⚠ Top pegadinhas</span>
+      <ul class="clean" style="margin:0">
+        <li><b>Ciclo-inespecíficos</b> = alquilantes, platinas, antraciclinas; <b>ciclo-específicos</b> = antimetabólitos (S), vinca e taxanos (M).</li>
+        <li><b>Vinca despolimeriza, taxano estabiliza</b> microtúbulos.</li>
+        <li><b>Vincristina nunca intratecal</b> (fatal); neuropatia dose-limitante.</li>
+        <li><b>Antraciclina → cardiotox</b> cumulativa; <b>bleomicina → pulmão</b>; <b>cisplatina → nefro/oto</b>.</li>
+        <li><b>Ciclo/ifosfamida → cistite hemorrágica → MESNA</b>; <b>MTX → leucovorin</b>.</li>
+        <li>Dose por <b>superfície corporal</b>; <b>carboplatina por AUC</b> (Calvert).</li>
+        <li>Manipulação: <b>RDC 220/2004 + NR 32</b>; cabine de segurança biológica; farmacêutico responsável.</li>
+        <li><b>“Se o intestino funciona, use-o”</b> → NE preferível à NP.</li>
+        <li><b>NP central</b> (alta osmolaridade) × <b>periférica</b> (limitada); cuidado <b>cálcio-fosfato</b>.</li>
+        <li><b>Realimentação = hipofosfatemia</b> (+ hipoK, hipoMg, tiamina).</li>
+        <li><b>EMTN</b> obrigatória: médico, nutricionista, farmacêutico, enfermeiro.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 11 -->
+  <section id="casos">
+    <div class="sec-head"><span class="sec-num">11</span><h2>Casos clínicos — autoteste ★</h2></div>
+    <p>Leia, decida a conduta e clique para conferir.</p>
+    <div class="fc-grid" id="caseGrid"></div>
+  </section>
+
+  <footer>
+    <b>Fontes-base:</b> farmacologia antineoplásica (classes, ciclo celular, toxicidades); RDC ANVISA nº 220/2004 e NR 32 (terapia antineoplásica e segurança ocupacional); terapia nutricional — Portaria SVS/MS nº 272/1998 (NP), Portaria nº 337/1999 e RDC nº 63/2000 (NE), RDC ANVISA nº 503/2021; EMTN; literatura de nutrição clínica (BRASPEN). Material de estudo — confronte com o edital e a bibliografia da sua banca.
+  </footer>
+
+</div>
+
+<script>
+  const cases = [
+    {q:"Paciente recebe ciclofosfamida e evolui com hematúria macroscópica. Qual o mecanismo e a prevenção?", a:"Cistite hemorrágica causada pela acroleína, metabólito tóxico da ciclofosfamida/ifosfamida na bexiga. Prevenção: hidratação vigorosa e MESNA (2-mercaptoetanossulfonato), que neutraliza a acroleína no trato urinário."},
+    {q:"Protocolo com metotrexato em altas doses. Qual agente é usado como 'resgate' e por quê?", a:"Ácido folínico (leucovorin/folinato de cálcio): repõe folato reduzido nas células normais, limitando a toxicidade do MTX (mucosite, mielossupressão) sem anular o efeito antitumoral. Exige também hidratação e alcalinização para proteção renal."},
+    {q:"Paciente em uso de doxorrubicina atinge dose cumulativa elevada. Qual a principal preocupação e o monitoramento?", a:"Cardiotoxicidade cumulativa das antraciclinas (cardiomiopatia/IC), dose-limitante. Monitorar a função ventricular (FEVE) e respeitar o limite de dose acumulada; dexrazoxano pode ser cardioprotetor."},
+    {q:"Uma prescrição traz vincristina por via intratecal. Qual a conduta do farmacêutico?", a:"Barrar imediatamente: vincristina por via intratecal é fatal (neurotoxicidade ascendente). A via correta é EV. É um erro-sentinela; a vincristina deve ser rotulada e segregada para evitar a troca de via."},
+    {q:"Cisplatina será administrada a um paciente. Quais cuidados de segurança são essenciais?", a:"Hidratação EV vigorosa (nefroproteção) e monitorização da função renal e da audição (oto/nefrotoxicidade). Como é altamente emetogênica, fazer profilaxia antiemética tripla (5-HT3 + NK1 + dexametasona)."},
+    {q:"Paciente em D10 pós-quimioterapia chega com febre e neutrófilos muito baixos. Qual a gravidade e a conduta?", a:"Neutropenia febril é uma emergência oncológica (o nadir medular costuma ocorrer em 7–14 dias). Conduta: antibioticoterapia empírica de amplo espectro imediata e suporte; G-CSF (filgrastim) conforme indicação."},
+    {q:"A que classe pertence a ciclofosfamida e qual sua relação com o ciclo celular?", a:"É um agente alquilante, ciclo-inespecífico (atua em qualquer fase do ciclo, inclusive G0, formando ligações cruzadas no DNA)."},
+    {q:"Paciente em bleomicina desenvolve tosse seca e dispneia progressivas. O que considerar?", a:"Toxicidade pulmonar (pneumonite/fibrose), a RAM-marca da bleomicina. Deve-se suspender e avaliar; a bleomicina tem pouca mielossupressão, mas o pulmão é o órgão-alvo da toxicidade."},
+    {q:"Onde e por quem deve ser preparada a quimioterapia injetável, segundo a regulação?", a:"Em cabine de segurança biológica (fluxo laminar vertical, classe II), por farmacêutico responsável pela central de manipulação, conforme a RDC ANVISA nº 220/2004 e a NR 32 (proteção do trabalhador e do produto)."},
+    {q:"Paciente com TGI funcionante precisa de suporte nutricional por incapacidade de ingestão oral. Qual via priorizar?", a:"A nutrição enteral (NE): 'se o intestino funciona, use-o'. É mais fisiológica, preserva o trofismo intestinal, tem menor risco de infecção e menor custo que a nutrição parenteral."},
+    {q:"Paciente gravemente desnutrido inicia suporte nutricional e desenvolve queda de fosfato, potássio e magnésio. Qual a síndrome e a conduta?", a:"Síndrome de realimentação (refeeding), marcada por hipofosfatemia (com hipoK e hipoMg) e risco de arritmia/IC. Conduta: iniciar a oferta calórica lentamente, repor eletrólitos e tiamina e monitorar de perto."},
+    {q:"Quais profissionais compõem, no mínimo, a Equipe Multiprofissional de Terapia Nutricional (EMTN)?", a:"Médico, nutricionista, farmacêutico e enfermeiro, habilitados e com treinamento específico — composição obrigatória conforme a legislação de terapia nutricional."},
+    {q:"Ao revisar uma bolsa de nutrição parenteral, observa-se precipitado. Qual a causa clássica?", a:"Incompatibilidade cálcio–fosfato, que pode precipitar e causar embolia. Por isso o farmacêutico controla as concentrações, a ordem de adição e a estabilidade da formulação, sem adicionar fármacos sem compatibilidade comprovada."},
+    {q:"A carboplatina é dosada de forma diferente da maioria dos quimioterápicos. Como?", a:"Por AUC (área sob a curva), pela fórmula de Calvert, que considera a função renal (clearance) — e não pela superfície corporal, usada na maioria dos citotóxicos."}
+  ];
+  const grid = document.getElementById('caseGrid');
+  cases.forEach(c=>{
+    const b=document.createElement('button');b.className='fc case';b.type='button';
+    b.innerHTML=`<span class="q">${c.q}</span><span class="hint">Ver conduta</span><span class="ans">${c.a}</span>`;
+    b.addEventListener('click',()=>b.classList.toggle('open'));
+    grid.appendChild(b);
+  });
+</script>
+</body>
+</html>

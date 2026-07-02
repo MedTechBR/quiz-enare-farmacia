@@ -1,0 +1,306 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Infecção Hospitalar &amp; Uso Racional de Antimicrobianos — Guia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@500;600;700;800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#E7E1D2;--surface:#FBF8F0;--surface-2:#F3EEE1;
+    --ink:#143C42;--ink-soft:#4E5F5C;--vermilion:#D6492A;--ochre:#B98220;--green:#3C6E47;--blue:#2C5A74;
+    --line:rgba(20,60,66,.22);--line-strong:rgba(20,60,66,.55);
+    --font-display:'Anton',Impact,sans-serif;--font-head:'Archivo',system-ui,sans-serif;--font-body:'IBM Plex Sans',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+  body{margin:0;background:radial-gradient(circle at 100% -2%, rgba(214,73,42,.06), transparent 38%),var(--paper);
+    color:var(--ink);font-family:var(--font-body);line-height:1.55;padding:clamp(16px,3.5vw,44px) clamp(12px,4vw,40px) 80px}
+  .wrap{max-width:1080px;margin:0 auto}
+  .top-rule{height:6px;background:var(--ink)}
+  .kicker{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-family:var(--font-head);font-weight:700;text-transform:uppercase;letter-spacing:.15em;font-size:11px;color:var(--ink-soft);padding:9px 2px;border-bottom:1px solid var(--line)}
+  .kicker .dot{color:var(--vermilion)}
+  h1{font-family:var(--font-display);font-weight:400;line-height:.92;font-size:clamp(30px,6.4vw,68px);margin:16px 0 8px;text-transform:uppercase;letter-spacing:.5px}
+  h1 .accent{color:var(--vermilion)}
+  .dek{font-size:clamp(15px,2vw,17.5px);color:var(--ink-soft);max-width:66ch;border-top:3px double var(--line-strong);padding-top:12px}
+  .dek b{color:var(--ink);font-weight:600}
+  nav.toc{position:sticky;top:0;z-index:20;background:rgba(231,225,210,.94);backdrop-filter:blur(6px);margin:18px 0 8px;padding:10px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  nav.toc ul{list-style:none;display:flex;gap:7px;flex-wrap:wrap;margin:0;padding:0}
+  nav.toc a{font-family:var(--font-head);font-weight:600;font-size:12px;text-decoration:none;color:var(--ink);border:1.5px solid var(--line-strong);border-radius:2px;padding:5px 10px;transition:background .12s,color .12s}
+  nav.toc a:hover{background:var(--ink);color:var(--surface)}
+  section{margin:38px 0 0;scroll-margin-top:64px}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:14px;border-bottom:2px solid var(--ink);padding-bottom:8px}
+  .sec-num{font-family:var(--font-display);font-size:clamp(26px,4vw,40px);color:var(--vermilion);line-height:.8}
+  .sec-head h2{font-family:var(--font-head);font-weight:800;font-size:clamp(18px,3vw,25px);margin:0;letter-spacing:-.01em}
+  p{margin:0 0 12px}.lead{font-size:16px}
+  strong,b{color:var(--ink);font-weight:600}.hl{color:var(--vermilion);font-weight:600}
+  ul.clean{margin:0 0 12px;padding-left:18px}ul.clean li{margin:5px 0}
+  .box{background:var(--surface);border:1.5px solid var(--ink);border-radius:3px;box-shadow:4px 4px 0 var(--ink);padding:16px 18px;margin:14px 0}
+  .grid2{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+  .bizu{border:1.5px dashed var(--green);background:rgba(60,110,71,.06);border-radius:3px;padding:13px 16px;margin:14px 0}
+  .bizu .tag{font-family:var(--font-head);font-weight:700;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--green);display:block;margin-bottom:5px}
+  .bizu b{color:var(--green)}
+  .trap{border:1.5px solid var(--vermilion);background:rgba(214,73,42,.05);border-radius:3px;padding:13px 16px;margin:14px 0}
+  .trap .tag{font-family:var(--font-head);font-weight:700;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--vermilion);display:block;margin-bottom:5px}
+  .tbl{width:100%;border-collapse:collapse;margin:14px 0;font-size:13px;background:var(--surface)}
+  .tbl th,.tbl td{border:1px solid var(--line-strong);padding:8px 10px;text-align:left;vertical-align:top}
+  .tbl thead th{background:var(--ink);color:var(--surface);font-family:var(--font-head);font-weight:700;font-size:11.5px;text-transform:uppercase;letter-spacing:.03em}
+  .tbl tbody th{background:var(--surface-2);font-family:var(--font-head);font-weight:700;white-space:nowrap}
+  .tbl-scroll{overflow-x:auto}
+  .pill{display:inline-block;font-family:var(--font-head);font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:.06em;padding:2px 7px;border-radius:2px;color:#fff}
+  .p-contato{background:var(--vermilion)}.p-got{background:var(--ochre)}.p-aero{background:var(--blue)}.p-padrao{background:var(--green)}
+  .fc-grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));margin-top:14px}
+  .fc{background:var(--surface);border:1.5px solid var(--ink);border-radius:3px;box-shadow:4px 4px 0 var(--ink);padding:16px 17px;cursor:pointer;text-align:left;width:100%;font-family:var(--font-body);color:var(--ink);display:flex;flex-direction:column;gap:9px;transition:transform .12s,box-shadow .12s}
+  .fc:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--vermilion)}
+  .fc:focus-visible{outline:3px solid var(--vermilion);outline-offset:3px}
+  .fc .q{font-family:var(--font-head);font-weight:700;font-size:15px;line-height:1.28}
+  .fc .hint{font-family:var(--font-head);font-weight:600;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--vermilion)}
+  .fc .ans{font-size:13.5px;color:var(--ink-soft)}
+  .fc:not(.open) .ans{display:none}.fc.open .hint{display:none}
+  .case .q::before{content:"CASO ";font-family:var(--font-display);color:var(--vermilion);font-size:12px;letter-spacing:.1em}
+  footer{margin:46px 0 0;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--ink-soft)}
+  footer b{color:var(--ink)}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="top-rule"></div>
+    <div class="kicker">
+      <span>Farmácia Hospitalar <span class="dot">·</span> Infectologia</span>
+      <span>Resmulti · ENARE · EBSERH · HUs</span>
+    </div>
+    <h1>Infecção Hospitalar &amp; <span class="accent">Antimicrobianos</span></h1>
+    <p class="dek">Guia de revisão de alto rendimento com forte ênfase em <b>casos clínicos</b>: controle de IRAS, precauções, stewardship (PGA), <b>PK/PD</b>, patógenos resistentes e dispensação.</p>
+  </header>
+
+  <nav class="toc" aria-label="Índice">
+    <ul>
+      <li><a href="#conceitos">1 · Conceitos</a></li>
+      <li><a href="#estrutura">2 · CCIH &amp; marco legal</a></li>
+      <li><a href="#precaucoes">3 · Precauções ★</a></li>
+      <li><a href="#maos">4 · Higiene das mãos</a></li>
+      <li><a href="#iras">5 · IRAS &amp; bundles</a></li>
+      <li><a href="#profilaxia">6 · Profilaxia cirúrgica</a></li>
+      <li><a href="#stewardship">7 · Stewardship (PGA)</a></li>
+      <li><a href="#pkpd">8 · PK/PD ★</a></li>
+      <li><a href="#resistencia">9 · Resistência ★</a></li>
+      <li><a href="#dispensacao">10 · Dispensação (RDC 471)</a></li>
+      <li><a href="#pegadinhas">11 · Pegadinhas</a></li>
+      <li><a href="#casos">12 · Casos clínicos ★</a></li>
+    </ul>
+  </nav>
+
+  <!-- 1 -->
+  <section id="conceitos">
+    <div class="sec-head"><span class="sec-num">01</span><h2>Conceitos fundamentais</h2></div>
+    <div class="grid2">
+      <div class="box"><p><b>IRAS</b></p><p>Infecção Relacionada à Assistência à Saúde — terminologia atual, mais ampla que “infecção hospitalar”. Abrange qualquer infecção adquirida durante a assistência (inclui ambulatório, APS, home care).</p></div>
+      <div class="box"><p><b>Infecção comunitária × hospitalar</b></p><p>Hospitalar (IH): manifesta-se <span class="hl">≥ 48–72h após a admissão</span>, ou relacionada à internação/procedimentos. ISC pode contar até <b>30 dias</b> (ou <b>90 dias</b> com implante/prótese).</p></div>
+    </div>
+    <div class="trap"><span class="tag">⚠ Pegadinha</span> Infecção presente/incubada <b>na admissão</b> = comunitária. O corte clássico é <b>48–72h</b>; antes disso (sem relação com procedimento), não é hospitalar.</div>
+  </section>
+
+  <!-- 2 -->
+  <section id="estrutura">
+    <div class="sec-head"><span class="sec-num">02</span><h2>CCIH &amp; marco legal</h2></div>
+    <ul class="clean">
+      <li><b>Lei nº 9.431/1997</b> — torna <b>obrigatório</b> o Programa de Controle de Infecções Hospitalares (PCIH) em todos os hospitais.</li>
+      <li><b>Portaria MS nº 2.616/1998</b> — diretrizes do PCIH; define infecção hospitalar e obriga a <b>CCIH</b>.</li>
+      <li><b>CCIH</b> (Comissão) — órgão de <b>assessoria</b> à direção, com membros <b>consultores</b> e <b>executores</b>. O <b>SCIH</b> (Serviço/núcleo) é o braço executor.</li>
+      <li><b>ANVISA (GVIMS/GGTES)</b> — coordena nacionalmente a prevenção de IRAS e o stewardship; publica critérios diagnósticos de IRAS e a Diretriz do PGA.</li>
+      <li><b>Segurança do paciente</b> — RDC nº 36/2013 cria o Núcleo de Segurança do Paciente (NSP).</li>
+    </ul>
+    <div class="bizu"><span class="tag">★ Bizu</span> <b>Lei 9.431/97</b> obriga o programa; <b>Portaria 2.616/98</b> diz como fazer; <b>CCIH</b> assessora (consultores + executores).</div>
+  </section>
+
+  <!-- 3 -->
+  <section id="precaucoes">
+    <div class="sec-head"><span class="sec-num">03</span><h2>Precauções ★</h2></div>
+    <p class="lead">Tema campeão de caso clínico: dado o agente, qual a precaução e o EPI?</p>
+    <div class="tbl-scroll">
+    <table class="tbl">
+      <thead><tr><th>Precaução</th><th>Barreira / quarto</th><th>Exemplos típicos</th></tr></thead>
+      <tbody>
+        <tr><th><span class="pill p-padrao">Padrão</span></th><td>Para <b>todos</b> os pacientes: higiene das mãos, EPI conforme risco de exposição, etiqueta respiratória, descarte seguro.</td><td>Aplicável sempre, independente de diagnóstico.</td></tr>
+        <tr><th><span class="pill p-contato">Contato</span></th><td>Luvas + avental; <b>quarto privativo</b> (ou coorte); equipamentos exclusivos.</td><td><b>MRSA, VRE, KPC/MDR</b>, <b>C. difficile</b>, escabiose, rotavírus, ESBL.</td></tr>
+        <tr><th><span class="pill p-got">Gotículas</span></th><td>Máscara <b>cirúrgica</b>; quarto privativo; distância ~1 m. Partículas &gt; 5 µm.</td><td>Meningococo, <b>influenza</b>, coqueluche, caxumba, rubéola, difteria.</td></tr>
+        <tr><th><span class="pill p-aero">Aerossóis</span></th><td>Máscara <b>N95/PFF2</b>; <b>quarto com pressão negativa</b>. Partículas &lt; 5 µm.</td><td><b>Tuberculose</b>, <b>sarampo</b>, <b>varicela</b> (aerossol + contato).</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="bizu"><span class="tag">★ Bizu</span>
+      <b>“Ar = N95 + pressão negativa” (TB, Sarampo, Varicela)</b> — mnemônico <b>“Sa-Va-TB voam”</b>. Gotícula = máscara cirúrgica. <b>Varicela e Herpes-zóster disseminado</b> = aerossol <b>+</b> contato.</div>
+    <div class="trap"><span class="tag">⚠ Pegadinha</span> <b>C. difficile</b>: precaução de <b>contato</b> e higiene das mãos com <span class="hl">água e sabão</span> — o álcool gel <b>não</b> elimina os esporos.</div>
+  </section>
+
+  <!-- 4 -->
+  <section id="maos">
+    <div class="sec-head"><span class="sec-num">04</span><h2>Higiene das mãos — 5 momentos (OMS)</h2></div>
+    <ol class="clean">
+      <li><b>Antes</b> de contato com o paciente</li>
+      <li><b>Antes</b> de procedimento asséptico/limpo</li>
+      <li><b>Após</b> risco de exposição a fluidos corporais</li>
+      <li><b>Após</b> contato com o paciente</li>
+      <li><b>Após</b> contato com áreas próximas ao paciente</li>
+    </ol>
+    <div class="bizu"><span class="tag">★ Bizu</span> <b>2 “antes” e 3 “após”.</b> Preferir <b>álcool gel 70%</b>; usar <b>água e sabão</b> quando mãos visivelmente sujas, fluidos corporais ou <b>esporos (C. difficile)</b>.</div>
+  </section>
+
+  <!-- 5 -->
+  <section id="iras">
+    <div class="sec-head"><span class="sec-num">05</span><h2>Principais IRAS &amp; bundles</h2></div>
+    <div class="tbl-scroll">
+    <table class="tbl">
+      <thead><tr><th>IRAS</th><th>Medidas-chave (bundle)</th></tr></thead>
+      <tbody>
+        <tr><th>PAV<br>(pneumonia / VM)</th><td>Cabeceira <b>30–45°</b>, higiene oral com <b>clorexidina</b>, despertar diário e teste de extubação, profilaxia de TEV e de úlcera de estresse, aspiração subglótica.</td></tr>
+        <tr><th>ICS / CLABSI<br>(cateter central)</th><td>Higiene das mãos, <b>barreira máxima</b> na inserção, <b>clorexidina alcoólica</b> na pele, evitar sítio femoral, <b>revisão diária</b> da necessidade do cateter.</td></tr>
+        <tr><th>ITU-AC<br>(cateter vesical)</th><td>Inserção asséptica, <b>sistema fechado</b>, fixação, <b>retirada precoce</b>.</td></tr>
+        <tr><th>ISC<br>(sítio cirúrgico)</th><td>Profilaxia adequada, <b>tricotomizador</b> (nunca lâmina), normotermia, controle glicêmico, antissepsia da pele.</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="bizu"><span class="tag">★ Bizu</span> O fator comum a quase todo bundle: <b>retirar o dispositivo o quanto antes</b>. Dispositivo invasivo = porta de entrada.</div>
+  </section>
+
+  <!-- 6 -->
+  <section id="profilaxia">
+    <div class="sec-head"><span class="sec-num">06</span><h2>Profilaxia antibiótica cirúrgica</h2></div>
+    <ul class="clean">
+      <li><b>Quando:</b> dentro de <span class="hl">60 min antes da incisão</span> (até <b>120 min</b> para <b>vancomicina</b> e <b>fluoroquinolonas</b>, por infusão lenta).</li>
+      <li><b>Qual:</b> <b>cefazolina</b> cobre a maioria; ajustar conforme cirurgia e perfil de resistência.</li>
+      <li><b>Redose</b> intraoperatória se cirurgia longa (&gt; 2 meias-vidas do fármaco) ou sangramento volumoso.</li>
+      <li><b>Duração:</b> geralmente <b>dose única</b>; não ultrapassar 24h. <span class="hl">Prolongar não reduz ISC</span> e aumenta resistência/C. difficile.</li>
+    </ul>
+    <div class="trap"><span class="tag">⚠ Pegadinha</span> Manter antibiótico “profilático” por dias após a cirurgia é <b>erro</b> — vira uso inadequado. Profilaxia ≠ tratamento.</div>
+  </section>
+
+  <!-- 7 -->
+  <section id="stewardship">
+    <div class="sec-head"><span class="sec-num">07</span><h2>Uso racional &amp; Stewardship (PGA)</h2></div>
+    <p><b>PGA</b> — Programa de Gerenciamento de Antimicrobianos (ANVISA, Diretriz 2017, atualizada 2023). Objetivo: máximo efeito terapêutico, menos dano e menos resistência.</p>
+    <div class="grid2">
+      <div class="box"><p><b>Princípios — “os D’s”</b></p>
+        <p>Diagnóstico correto · <b>D</b>roga certa · <b>D</b>ose certa · <b>D</b>uração adequada · via correta · <span class="hl">Descalonamento</span> (de-escalation).</p></div>
+      <div class="box"><p><b>Intervenções clássicas</b></p>
+        <p>Auditoria prospectiva com <b>feedback</b>; pré-autorização/restrição; <b>antibiotic time-out</b> (reavaliar em 48–72h); otimização de dose por PK/PD; <b>switch IV→VO</b>.</p></div>
+    </div>
+    <ul class="clean">
+      <li><b>Empírica × direcionada:</b> inicia-se empírico (amplo espectro) e, após cultura/antibiograma, <b>descalona</b> para o menor espectro eficaz.</li>
+      <li><b>Terapia sequencial (IV→VO):</b> trocar para via oral quando o paciente está <b>estável, afebril, tolerando VO</b> e o fármaco tem boa biodisponibilidade (ex.: fluoroquinolonas, linezolida, metronidazol, sulfametoxazol-trimetoprima). Reduz flebite, custo e tempo de internação.</li>
+    </ul>
+    <div class="bizu"><span class="tag">★ Bizu</span> <b>Descalonar ≠ suspender.</b> Descalonamento é <b>estreitar o espectro</b> guiado pela cultura, mantendo a eficácia. É a intervenção mais cobrada de stewardship.</div>
+  </section>
+
+  <!-- 8 -->
+  <section id="pkpd">
+    <div class="sec-head"><span class="sec-num">08</span><h2>PK/PD dos antimicrobianos ★</h2></div>
+    <div class="tbl-scroll">
+    <table class="tbl">
+      <thead><tr><th>Padrão</th><th>Índice PK/PD</th><th>Classes</th><th>Estratégia de dose</th></tr></thead>
+      <tbody>
+        <tr><th>Tempo-dependente</th><td><b>T &gt; CIM</b> (tempo acima da CIM)</td><td><b>β-lactâmicos</b> (penicilinas, cefalosporinas, <b>carbapenêmicos</b>), aztreonam.</td><td><b>Infusão estendida/contínua</b>, doses fracionadas (mais frequentes).</td></tr>
+        <tr><th>Concentração-dependente</th><td><b>Cmáx / CIM</b></td><td><b>Aminoglicosídeos</b>, <b>fluoroquinolonas</b>, daptomicina, metronidazol.</td><td><b>Dose alta, intervalo maior</b> (ex.: aminoglicosídeo em <b>dose única diária</b>); efeito pós-antibiótico.</td></tr>
+        <tr><th>AUC-dependente</th><td><b>AUC / CIM</b></td><td><b>Vancomicina</b>, linezolida, tigeciclina, azitromicina.</td><td>Alvo de exposição (vanco: <b>AUC/CIM ≥ 400</b>); monitorização sérica.</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="bizu"><span class="tag">★ Bizu</span>
+      <b>β-lactâmico = TEMPO</b> (infusão estendida). <b>Aminoglicosídeo/quinolona = CONCENTRAÇÃO</b> (pico alto, dose única diária). <b>Vancomicina = AUC</b> (monitorar).</div>
+    <div class="trap"><span class="tag">⚠ Pegadinha</span> <b>Síndrome do homem vermelho (vancomicina)</b> = reação à <b>infusão rápida</b> (liberação de histamina) — <b>não é alergia</b>; corrige-se <b>diminuindo a velocidade</b> da infusão.</div>
+  </section>
+
+  <!-- 9 -->
+  <section id="resistencia">
+    <div class="sec-head"><span class="sec-num">09</span><h2>Patógenos resistentes ★</h2></div>
+    <div class="tbl-scroll">
+    <table class="tbl">
+      <thead><tr><th>Mecanismo / patógeno</th><th>O que resiste</th><th>Opção terapêutica</th></tr></thead>
+      <tbody>
+        <tr><th><b>ESBL</b><br>(E. coli, Klebsiella)</th><td>β-lactamase de espectro estendido → resiste a <b>cefalosporinas</b>.</td><td><b>Carbapenêmicos</b> (meropenem, ertapenem).</td></tr>
+        <tr><th><b>KPC</b> / carbapenemases</th><td>Resiste a <b>carbapenêmicos</b>.</td><td>Polimixina B/colistina, <b>ceftazidima-avibactam</b>, combinações.</td></tr>
+        <tr><th><b>MRSA</b><br>(S. aureus)</th><td>Resistente à <b>oxacilina/meticilina</b> (todos os β-lactâmicos clássicos).</td><td><b>Vancomicina</b>, linezolida, daptomicina, teicoplanina.</td></tr>
+        <tr><th><b>VRE</b><br>(Enterococcus)</th><td>Resistente à <b>vancomicina</b>.</td><td><b>Linezolida</b>, daptomicina.</td></tr>
+        <tr><th><b>C. difficile</b></th><td>Diarreia associada a antibiótico (disbiose).</td><td><b>Vancomicina VO</b> ou fidaxomicina; metronidazol em casos leves. Suspender o antibiótico desencadeante.</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="bizu"><span class="tag">★ Bizu</span> <b>ESBL → carbapenêmico. KPC → polimixina/ceftazidima-avibactam. MRSA → vancomicina. VRE → linezolida.</b> Memorize essas 4 setas.</div>
+  </section>
+
+  <!-- 10 -->
+  <section id="dispensacao">
+    <div class="sec-head"><span class="sec-num">10</span><h2>Dispensação — RDC nº 471/2021</h2></div>
+    <ul class="clean">
+      <li>Prescrição em <b>receituário privativo</b> do prescritor ou do estabelecimento — <b>não há modelo específico</b>; emitida em <b>2 vias</b>.</li>
+      <li><b>Validade: 10 dias</b> da emissão; aviada <b>uma única vez</b>.</li>
+      <li>Retém-se a <b>2ª via</b>; a <b>1ª via</b> é devolvida ao paciente.</li>
+      <li>Sem limite de itens, mas <b>não pode conter medicamento de controle especial</b> na mesma receita.</li>
+      <li><b>Uso prolongado:</b> a receita pode ser usada por até <b>90 dias</b> (uso contínuo, quantidade para cada 30 dias).</li>
+      <li>Escrituração no <b>SNGPC</b>; lista de substâncias na <b>IN nº 83/2021</b>.</li>
+      <li>Tarja: “VENDA SOB PRESCRIÇÃO — COM RETENÇÃO DA RECEITA”.</li>
+    </ul>
+    <div class="trap"><span class="tag">⚠ Pegadinha</span> A receita de antimicrobiano <b>não tem modelo oficial próprio</b> (diferente das notificações de receita da Portaria 344/98) — basta o receituário comum, em 2 vias, com retenção.</div>
+  </section>
+
+  <!-- 11 -->
+  <section id="pegadinhas">
+    <div class="sec-head"><span class="sec-num">11</span><h2>Pegadinhas consolidadas</h2></div>
+    <div class="trap"><span class="tag">⚠ Top pegadinhas</span>
+      <ul class="clean" style="margin:0">
+        <li><b>C. difficile</b>: contato + <b>água e sabão</b> (álcool não mata esporo).</li>
+        <li><b>TB, sarampo, varicela</b> = aerossol (<b>N95 + pressão negativa</b>); varicela é <b>aerossol + contato</b>.</li>
+        <li><b>β-lactâmico = tempo</b> (T&gt;CIM); <b>aminoglicosídeo/quinolona = concentração</b>; <b>vancomicina = AUC</b>.</li>
+        <li><b>Red man</b> da vancomicina = infusão rápida, <b>não é alergia</b>.</li>
+        <li><b>Descalonar</b> = estreitar espectro guiado por cultura (não é suspender).</li>
+        <li><b>Profilaxia cirúrgica</b>: 60 min antes (120 para vanco/quinolona); não prolongar &gt; 24h.</li>
+        <li><b>ESBL → carbapenêmico</b>; <b>KPC → polimixina/ceftazidima-avibactam</b>.</li>
+        <li><b>IH</b> = início ≥ 48–72h da admissão; ISC até 30 dias (90 com implante).</li>
+        <li><b>RDC 471/2021</b>: receita comum, 2 vias, validade 10 dias, retém a 2ª via.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 12 -->
+  <section id="casos">
+    <div class="sec-head"><span class="sec-num">12</span><h2>Casos clínicos — autoteste ★</h2></div>
+    <p>Leia o caso, decida a conduta e clique para conferir o raciocínio.</p>
+    <div class="fc-grid" id="caseGrid"></div>
+  </section>
+
+  <footer>
+    <b>Fontes-base:</b> Lei 9.431/1997; Portaria MS 2.616/1998; ANVISA — Diretriz Nacional de Programa de Gerenciamento de Antimicrobianos (2017, atual. 2023) e critérios de IRAS; RDC 36/2013; RDC 471/2021 e IN 83/2021; diretrizes OMS/CDC de higiene das mãos e precauções. Material de estudo — confronte com o edital e a bibliografia da sua banca.
+  </footer>
+
+</div>
+
+<script>
+  const cases = [
+    {q:"Paciente em VM há 6 dias evolui com febre, secreção purulenta e novo infiltrado. Qual o conjunto de medidas que reduz esse evento?", a:"Trata-se de PAV. Bundle: cabeceira 30–45°, higiene oral com clorexidina, despertar diário + teste de extubação, profilaxia de TEV e de úlcera de estresse, aspiração subglótica. Reduzir o tempo de VM é central."},
+    {q:"Cultura de hemocultura de cateter central cresce S. aureus resistente à oxacilina (MRSA). Conduta antimicrobiana e de precaução?", a:"MRSA → vancomicina (ou linezolida/daptomicina). Precaução de CONTATO (luvas + avental, quarto privativo). Avaliar remoção do cateter."},
+    {q:"Paciente internado há 5 dias inicia diarreia após uso de clindamicina; pesquisa de toxina positiva para C. difficile. Conduta?", a:"Suspender o antibiótico desencadeante quando possível; tratar com vancomicina VO (ou fidaxomicina). Precaução de CONTATO e higiene das mãos com ÁGUA E SABÃO (álcool não elimina esporos)."},
+    {q:"Urocultura com E. coli produtora de ESBL, resistente a ceftriaxona. Melhor escolha empírica?", a:"ESBL hidrolisa cefalosporinas → tratar com carbapenêmico (ex.: meropenem; ertapenem se sem Pseudomonas). Descalonar conforme antibiograma."},
+    {q:"Prescrição de piperacilina-tazobactam para infecção grave. Como otimizar a eficácia pelo PK/PD?", a:"β-lactâmico é tempo-dependente (T>CIM) → infusão estendida/prolongada (3–4h) ou contínua, mantendo a concentração acima da CIM o maior tempo possível."},
+    {q:"Durante infusão de vancomicina, paciente apresenta rubor e prurido em face/tronco. Conduta?", a:"Síndrome do homem vermelho — reação à infusão rápida (liberação de histamina), NÃO é alergia. Reduzir a velocidade de infusão (e considerar anti-histamínico). Não é necessário suspender definitivamente a vanco."},
+    {q:"Paciente com pneumonia, no 4º dia, afebril há 48h, estável e aceitando dieta VO. Que intervenção de stewardship cabe?", a:"Terapia sequencial: switch IV→VO (descalonamento de via). Reduz flebite, custo e tempo de internação, desde que o fármaco tenha boa biodisponibilidade oral."},
+    {q:"Cirurgia eletiva limpa marcada para 8h. Quando administrar a cefazolina profilática?", a:"Dentro de 60 minutos antes da incisão (até 120 min se fosse vancomicina/fluoroquinolona). Dose única costuma bastar; não prolongar além de 24h."},
+    {q:"Paciente com suspeita de tuberculose pulmonar bacilífera é internado. Qual precaução e EPI?", a:"Precaução para AEROSSÓIS: quarto com pressão negativa e máscara N95/PFF2 para os profissionais. Manter porta fechada."},
+    {q:"A equipe inicia meropenem empírico amplo; no 3º dia, cultura mostra germe sensível a cefuroxima. O que fazer?", a:"Descalonar: trocar o carbapenêmico pelo antimicrobiano de menor espectro eficaz (cefuroxima), guiado pela cultura. Reavaliar duração (antibiotic time-out)."},
+    {q:"Balcão de farmácia: receita de amoxicilina em receituário comum, 2 vias, emitida há 4 dias. Posso dispensar?", a:"Sim. Pela RDC 471/2021, basta receituário comum em 2 vias, válido por 10 dias. Retém-se a 2ª via, devolve-se a 1ª, com registro e escrituração no SNGPC."},
+    {q:"Enterococcus em hemocultura resistente à vancomicina (VRE). Opção terapêutica?", a:"Linezolida (ou daptomicina). Precaução de CONTATO. Revisar necessidade de dispositivos invasivos."}
+  ];
+  const grid = document.getElementById('caseGrid');
+  cases.forEach(c=>{
+    const b=document.createElement('button');b.className='fc case';b.type='button';
+    b.innerHTML=`<span class="q">${c.q}</span><span class="hint">Ver conduta</span><span class="ans">${c.a}</span>`;
+    b.addEventListener('click',()=>b.classList.toggle('open'));
+    grid.appendChild(b);
+  });
+</script>
+</body>
+</html>

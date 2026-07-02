@@ -1,0 +1,471 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Antimicrobianos — Mapa Mental em Cards</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f5f6f4;
+    --ink:#16201c;
+    --muted:#5b6b63;
+    --line:#dfe3df;
+    --card:#ffffff;
+
+    /* paleta por grupo (mecanismo) */
+    --g1:#0f8a7e;  --g1-soft:#e3f4f1;  /* parede celular */
+    --g2:#2f5fb0;  --g2-soft:#e6edf8;  /* síntese proteica */
+    --g3:#7c4bc4;  --g3-soft:#efe8f9;  /* ácidos nucleicos */
+    --g4:#c87a16;  --g4-soft:#fbeede;  /* folato / antimetabólitos */
+    --g5:#c0395a;  --g5-soft:#fbe6ec;  /* membrana */
+
+    --bcida:#0f8a7e;
+    --bstat:#c87a16;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:
+      radial-gradient(circle at 12% -5%, #ffffff 0%, transparent 38%),
+      var(--bg);
+    color:var(--ink);
+    font-family:"Inter",system-ui,sans-serif;
+    line-height:1.5;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1180px;margin:0 auto;padding:40px 22px 90px;}
+
+  /* ---------- HEADER ---------- */
+  .head{
+    position:relative;
+    border-radius:22px;
+    padding:38px 36px 34px;
+    background:linear-gradient(135deg,#10221d 0%,#143b34 55%,#0f5a4f 100%);
+    color:#eaf3f0;
+    overflow:hidden;
+  }
+  .head::after{
+    content:"℞";
+    position:absolute;right:24px;top:-14px;
+    font-family:"Space Grotesk",serif;
+    font-size:170px;line-height:1;color:#ffffff0f;
+    pointer-events:none;
+  }
+  .kicker{
+    font-family:"JetBrains Mono",monospace;
+    font-size:11.5px;letter-spacing:.28em;text-transform:uppercase;
+    color:#8fd6c6;margin:0 0 12px;
+  }
+  .head h1{
+    font-family:"Space Grotesk",sans-serif;
+    font-weight:700;font-size:clamp(28px,5vw,46px);
+    line-height:1.04;margin:0 0 14px;letter-spacing:-.01em;
+  }
+  .head p{margin:0;max-width:640px;color:#cfe6df;font-size:15px;}
+
+  /* ---------- LEGENDA ---------- */
+  .legend{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(190px,1fr));
+    gap:10px;margin:26px 0 8px;
+  }
+  .legend a{
+    display:flex;align-items:center;gap:10px;
+    text-decoration:none;color:var(--ink);
+    background:var(--card);border:1px solid var(--line);
+    border-radius:12px;padding:11px 14px;
+    font-size:13px;font-weight:600;
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .legend a:hover{transform:translateY(-2px);box-shadow:0 8px 20px #1a2c2611;}
+  .dot{width:13px;height:13px;border-radius:50%;flex:0 0 auto;}
+  .legend small{display:block;font-weight:400;color:var(--muted);font-size:11px;}
+
+  .howto{
+    margin:18px 0 0;font-size:12.5px;color:var(--muted);
+    display:flex;flex-wrap:wrap;gap:18px;align-items:center;
+  }
+  .chip-demo{
+    display:inline-flex;align-items:center;gap:7px;
+    font-family:"JetBrains Mono",monospace;font-size:11px;font-weight:600;
+    padding:4px 9px;border-radius:999px;
+  }
+  .demo-cida{background:var(--g1-soft);color:var(--bcida);}
+  .demo-stat{background:var(--g4-soft);color:var(--bstat);}
+
+  /* ---------- SEÇÃO / BRANCH ---------- */
+  .branch{margin-top:46px;}
+  .branch-head{
+    display:flex;align-items:center;gap:16px;
+    padding:14px 20px;border-radius:14px;color:#fff;
+    box-shadow:0 10px 26px -12px var(--accent);
+  }
+  .branch-num{
+    font-family:"Space Grotesk",sans-serif;font-weight:700;
+    font-size:26px;width:46px;height:46px;flex:0 0 auto;
+    display:grid;place-items:center;border-radius:12px;
+    background:#ffffff26;
+  }
+  .branch-head h2{
+    margin:0;font-family:"Space Grotesk",sans-serif;
+    font-weight:600;font-size:clamp(18px,3vw,24px);letter-spacing:-.01em;
+  }
+  .branch-head span{display:block;font-size:12.5px;font-weight:400;opacity:.9;font-family:"Inter";}
+
+  /* ---------- GRID DE CARDS ---------- */
+  .grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fill,minmax(330px,1fr));
+    gap:16px;margin-top:18px;
+  }
+  .card{
+    background:var(--card);
+    border:1px solid var(--line);
+    border-top:4px solid var(--accent);
+    border-radius:14px;
+    padding:18px 18px 16px;
+    display:flex;flex-direction:column;
+    transition:transform .15s ease, box-shadow .15s ease;
+  }
+  .card:hover{transform:translateY(-3px);box-shadow:0 14px 30px -16px #1a2c2633;}
+  .card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:4px;}
+  .card h3{
+    margin:0;font-family:"Space Grotesk",sans-serif;
+    font-weight:600;font-size:17px;color:var(--ink);letter-spacing:-.01em;
+  }
+  .tag{
+    flex:0 0 auto;
+    font-family:"JetBrains Mono",monospace;font-size:9.5px;font-weight:600;
+    text-transform:uppercase;letter-spacing:.06em;
+    padding:4px 8px;border-radius:999px;white-space:nowrap;
+  }
+  .t-cida{background:var(--g1-soft);color:var(--bcida);}
+  .t-stat{background:var(--g4-soft);color:var(--bstat);}
+  .t-mix{background:#eef0ee;color:#5b6b63;}
+
+  .row{margin-top:11px;}
+  .row .lab{
+    font-family:"JetBrains Mono",monospace;
+    font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;
+    color:var(--accent);display:flex;align-items:center;gap:6px;margin-bottom:4px;
+  }
+  .row .lab::before{content:"";width:6px;height:6px;border-radius:2px;background:var(--accent);}
+  .row p{margin:0;font-size:13.2px;color:#2c3a34;}
+  .row p b{color:var(--ink);font-weight:600;}
+
+  .drugs{display:flex;flex-wrap:wrap;gap:6px;margin-top:5px;}
+  .drug{
+    font-size:11.5px;font-weight:500;
+    background:var(--accent-soft);color:var(--accent);
+    padding:3px 9px;border-radius:7px;
+  }
+  .res{
+    margin-top:11px;background:#fbf6f1;border:1px dashed #e7d9c9;
+    border-radius:10px;padding:9px 11px;
+  }
+  .res .lab{color:#b06a1a;}
+  .res .lab::before{background:#b06a1a;}
+  .res p{font-size:12.6px;color:#5b4a36;}
+
+  /* cor por grupo aplicada via classe na branch */
+  .b1{--accent:var(--g1);--accent-soft:var(--g1-soft);}
+  .b2{--accent:var(--g2);--accent-soft:var(--g2-soft);}
+  .b3{--accent:var(--g3);--accent-soft:var(--g3-soft);}
+  .b4{--accent:var(--g4);--accent-soft:var(--g4-soft);}
+  .b5{--accent:var(--g5);--accent-soft:var(--g5-soft);}
+  .b1 .branch-head{background:linear-gradient(120deg,#0c6b61,var(--g1));}
+  .b2 .branch-head{background:linear-gradient(120deg,#244a8a,var(--g2));}
+  .b3 .branch-head{background:linear-gradient(120deg,#5f37a0,var(--g3));}
+  .b4 .branch-head{background:linear-gradient(120deg,#a45f0c,var(--g4));}
+  .b5 .branch-head{background:linear-gradient(120deg,#9a2c49,var(--g5));}
+
+  /* nota didática dentro de seção */
+  .note{
+    grid-column:1/-1;
+    background:var(--accent-soft);
+    border-radius:12px;padding:12px 16px;font-size:12.8px;color:#33433c;
+  }
+  .note b{color:var(--accent);}
+
+  footer{
+    margin-top:60px;padding-top:22px;border-top:1px solid var(--line);
+    font-size:12px;color:var(--muted);
+  }
+
+  @media (max-width:560px){
+    .wrap{padding:24px 14px 70px;}
+    .head{padding:28px 22px;}
+    .grid{grid-template-columns:1fr;}
+  }
+  @media print{
+    body{background:#fff;}
+    .legend a:hover,.card:hover{transform:none;box-shadow:none;}
+    .card,.branch{break-inside:avoid;}
+    .head::after{display:none;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HEADER -->
+  <header class="head">
+    <p class="kicker">Farmacologia clínica · revisão estruturada</p>
+    <h1>Antimicrobianos<br>Mapa mental em cards</h1>
+    <p>Organizados pela espinha do raciocínio clínico — o <b>mecanismo de ação</b>. Cada card traz espectro, mecanismo, fármacos representativos e os mecanismos de resistência bacteriana mais relevantes.</p>
+  </header>
+
+  <!-- LEGENDA / NAVEGAÇÃO -->
+  <nav class="legend">
+    <a href="#g1"><span class="dot" style="background:var(--g1)"></span><span>1 · Parede celular<small>β-lactâmicos, glicopeptídeos…</small></span></a>
+    <a href="#g2"><span class="dot" style="background:var(--g2)"></span><span>2 · Síntese proteica<small>30S e 50S</small></span></a>
+    <a href="#g3"><span class="dot" style="background:var(--g3)"></span><span>3 · Ácidos nucleicos<small>DNA/RNA</small></span></a>
+    <a href="#g4"><span class="dot" style="background:var(--g4)"></span><span>4 · Via do folato<small>antimetabólitos</small></span></a>
+    <a href="#g5"><span class="dot" style="background:var(--g5)"></span><span>5 · Membrana celular<small>polimixinas, daptomicina</small></span></a>
+  </nav>
+
+  <div class="howto">
+    <span>Como ler:</span>
+    <span class="chip-demo demo-cida">BACTERICIDA</span>
+    <span class="chip-demo demo-stat">BACTERIOSTÁTICO</span>
+    <span>· o bloco pontilhado destaca a <b>resistência bacteriana</b>.</span>
+  </div>
+
+  <!-- =========================================================== -->
+  <!-- GRUPO 1 — PAREDE CELULAR -->
+  <!-- =========================================================== -->
+  <section class="branch b1" id="g1">
+    <div class="branch-head">
+      <div class="branch-num">1</div>
+      <h2>Inibidores da síntese da parede celular<span>Atacam o peptidoglicano → lise osmótica. Em geral bactericidas.</span></h2>
+    </div>
+    <div class="grid">
+
+      <article class="card">
+        <div class="card-top"><h3>Penicilinas</h3><span class="tag t-cida">bactericida</span></div>
+        <div class="row"><div class="lab">Espectro</div><p>Varia por subgrupo: de <b>Gram+ </b>(estreptococos, anaeróbios orais, espiroquetas) até <b>Gram−</b> e <b>Pseudomonas</b> nas de amplo espectro.</p></div>
+        <div class="row"><div class="lab">Mecanismo</div><p>Ligam-se às <b>PBP</b> (transpeptidases) e bloqueiam o cross-linking do peptidoglicano → ativam autolisinas. Tempo-dependente.</p></div>
+        <div class="row"><div class="lab">Fármacos</div>
+          <div class="drugs"><span class="drug">Penicilina G/V</span><span class="drug">Amoxicilina</span><span class="drug">Ampicilina</span><span class="drug">Oxacilina</span><span class="drug">Piperacilina</span><span class="drug">+ clavulanato/tazobactam</span></div>
+        </div>
+        <div class="res"><div class="lab">Resistência</div><p><b>β-lactamases / penicilinases</b> (incl. ESBL), alteração de PBP (<b>PBP2a → MRSA</b>), porinas reduzidas, efluxo.</p></div>
+      </article>
+
+      <article class="card">
+        <div class="card-top"><h3>Cefalosporinas</h3><span class="tag t-cida">bactericida</span></div>
+        <div class="row"><div class="lab">Espectro</div><p><b>1ª→4ª:</b> mais Gram+ → mais Gram−. <b>3ª</b> cruza a BHE; <b>ceftazidima/cefepima</b> cobrem Pseudomonas; <b>5ª (ceftarolina)</b> cobre <b>MRSA</b>.</p></div>
+        <div class="row"><div class="lab">Mecanismo</div><p>Igual às penicilinas — inibição das <b>PBP</b>. Não cobrem (clássicas): <b>Enterococcus, Listeria, MRSA</b>.</p></div>
+        <div class="row"><div class="lab">Fármacos</div>
+          <div class="drugs"><span class="drug">Cefazolina / cefalexina</span><span class="drug">Cefuroxima</span><span class="drug">Ceftriaxona</span><span class="drug">Ceftazidima</span><span class="drug">Cefepima</span><span class="drug">Ceftarolina</span><span class="drug">Ceftazidima-avibactam</span></div>
+        </div>
+        <div class="res"><div class="lab">Resistência</div><p><b>ESBL, AmpC, carbapenemases</b>, alteração de PBP.</p></div>
+      </article>
+
+      <article class="card">
+        <div class="card-top"><h3>Carbapenêmicos</h3><span class="tag t-cida">bactericida</span></div>
+        <div class="row"><div class="lab">Espectro</div><p>O <b>mais amplo</b> dos β-lactâmicos: Gram+, Gram−, anaeróbios e Pseudomonas (exceto ertapenem). Reservados a <b>infecções graves / MDR / ESBL</b>.</p></div>
+        <div class="row"><div class="lab">Mecanismo</div><p>Inibem PBP; resistentes à maioria das β-lactamases. <b>Não cobrem</b> MRSA, <i>E. faecium</i>, <i>Stenotrophomonas</i>, atípicos.</p></div>
+        <div class="row"><div class="lab">Fármacos</div>
+          <div class="drugs"><span class="drug">Meropenem</span><span class="drug">Imipenem-cilastatina</span><span class="drug">Ertapenem</span><span class="drug">Doripenem</span></div>
+        </div>
+        <div class="res"><div class="lab">Resistência</div><p><b>Carbapenemases</b> (KPC, NDM, OXA-48, VIM/IMP) e perda de porinas associada a AmpC/ESBL.</p></div>
+      </article>
+
+      <article class="card">
+        <div class="card-top"><h3>Monobactâmico — Aztreonam</h3><span class="tag t-cida">bactericida</span></div>
+        <div class="row"><div class="lab">Espectro</div><p>Apenas <b>Gram− aeróbios</b>, incluindo Pseudomonas. Inativo contra Gram+ e anaeróbios.</p></div>
+        <div class="row"><div class="lab">Mecanismo</div><p>Liga-se à PBP3. <b>Sem reação cruzada</b> com penicilinas (exceto ceftazidima) → opção em alérgicos a β-lactâmicos.</p></div>
+        <div class="row"><div class="lab">Fármaco</div><div class="drugs"><span class="drug">Aztreonam</span></div></div>
+        <div class="res"><div class="lab">Resistência</div><p>Hidrólise por <b>metalo-β-lactamases</b> e ESBL.</p></div>
+      </article>
+
+      <article class="card">
+        <div class="card-top"><h3>Glicopeptídeos</h3><span class="tag t-cida">bactericida lento</span></div>
+        <div class="row"><div class="lab">Espectro</div><p>Exclusivamente <b>Gram+</b>: MRSA, Enterococcus, <i>C. difficile</i> (vancomicina VO).</p></div>
+        <div class="row"><div class="lab">Mecanismo</div><p>Ligam-se ao terminal <b>D-Ala-D-Ala</b> do precursor, bloqueando a polimerização do peptidoglicano (molécula grande não entra em Gram−).</p></div>
+        <div class="row"><div class="lab">Fármacos</div><div class="drugs"><span class="drug">Vancomicina</span><span class="drug">Teicoplanina</span></div></div>
+        <div class="res"><div class="lab">Resistência</div><p><b>VRE/VRSA</b> — genes <i>van</i> trocam o alvo para <b>D-Ala-D-Lac</b>, reduzindo a afinidade.</p></div>
+      </article>
+
+      <article class="card">
+        <div class="card-top"><h3>Lipoglicopeptídeos · Fosfomicina · Bacitracina</h3><span class="tag t-cida">bactericida</span></div>
+        <div class="row"><div class="lab">Lipoglicopeptídeos</div><p><b>Dalbavancina, oritavancina, telavancina</b> — Gram+/MRSA, meia-vida longa (dose única/semanal).</p></div>
+        <div class="row"><div class="lab">Fosfomicina</div><p>Inibe a <b>MurA (enolpiruvil-transferase)</b> — etapa precoce. ITU não complicada, inclusive E. coli ESBL.</p></div>
+        <div class="row"><div class="lab">Bacitracina</div><p>Bloqueia o reciclo do <b>bactoprenol</b>. Uso tópico (Gram+).</p></div>
+        <div class="res"><div class="lab">Resistência</div><p>Modificação do alvo; em fosfomicina, mutações no transporte (<i>uhp/glpT</i>).</p></div>
+      </article>
+
+      <div class="note"><b>Memória rápida:</b> β-lactâmicos = ataque às PBP; glicopeptídeos = bloqueio do substrato D-Ala-D-Ala. A resistência aqui é quase sempre <b>enzimática (β-lactamases)</b> ou por <b>troca do alvo</b>.</div>
+    </div>
+  </section>
+
+  <!-- =========================================================== -->
+  <!-- GRUPO 2 — SÍNTESE PROTEICA -->
+  <!-- =========================================================== -->
+  <section class="branch b2" id="g2">
+    <div class="branch-head">
+      <div class="branch-num">2</div>
+      <h2>Inibidores da síntese proteica<span>Atacam o ribossomo bacteriano 70S (subunidades 30S e 50S).</span></h2>
+    </div>
+    <div class="grid">
+
+      <article class="card">
+        <div class="card-top"><h3>Aminoglicosídeos <small style="font-weight:400;color:var(--muted)">· 30S</small></h3><span class="tag t-cida">bactericida</span></div>
+        <div class="row"><div class="lab">Espectro</div><p><b>Gram− aeróbios</b>; sinergia com β-lactâmico/vanco para Gram+ (endocardite). <b>Inativos em anaeróbios</b> (captação O₂-dependente).</p></div>
+        <div class="row"><div class="lab">Mecanismo</div><p>Ligam a 30S → <b>erro de leitura</b> e bloqueio da iniciação. Concentração-dependente, efeito pós-antibiótico.</p></div>
+        <div class="row"><div class="lab">Fármacos</div><div class="drugs"><span class="drug">Gentamicina</span><span class="drug">Amicacina</span><span class="drug">Tobramicina</span><span class="drug">Estreptomicina</span></div></div>
+        <div class="res"><div class="lab">Resistência</div><p><b>Enzimas modificadoras</b> (acetil/fosforil/nucleotidil-transferases), metilação ribossomal, menor captação. <i>Nefro e ototoxicidade.</i></p></div>
+      </article>
+
+      <article class="card">
+        <div class="card-top"><h3>Tetraciclinas e Glicilciclinas <small style="font-weight:400;color:var(--muted)">· 30S</small></h3><span class="tag t-stat">bacteriostático</span></div>
+        <div class="row"><div class="lab">Espectro</div><p>Amplo: <b>atípicos</b> (Chlamydia, Mycoplasma, Rickettsia), espiroquetas, Vibrio, MRSA comunitário (doxi). <b>Tigeciclina</b>: MDR amplo, incl. Acinetobacter (não cobre Pseudomonas/Proteus).</p></div>
+        <div class="row"><div class="lab">Mecanismo</div><p>Bloqueiam a ligação do <b>aminoacil-tRNA ao sítio A</b> da 30S.</p></div>
+        <div class="row"><div class="lab">Fármacos</div><div class="drugs"><span class="drug">Doxiciclina</span><span class="drug">Minociclina</span><span class="drug">Tigeciclina</span></div></div>
+        <div class="res"><div class="lab">Resistência</div><p><b>Bombas de efluxo</b> e proteção ribossomal (Tet). Quelação por cátions reduz absorção (não é resistência, mas afeta uso).</p></div>
+      </article>
+
+      <article class="card">
+        <div class="card-top"><h3>Macrolídeos <small style="font-weight:400;color:var(--muted)">· 50S</small></h3><span class="tag t-stat">bacteriostático</span></div>
+        <div class="row"><div class="lab">Espectro</div><p>Gram+, <b>atípicos</b> e patógenos respiratórios; azitromicina também cobre alguns Gram− e DSTs.</p></div>
+        <div class="row"><div class="lab">Mecanismo</div><p>Ligam-se ao <b>rRNA 23S da 50S</b> → bloqueiam a translocação do peptídeo.</p></div>
+        <div class="row"><div class="lab">Fármacos</div><div class="drugs"><span class="drug">Azitromicina</span><span class="drug">Claritromicina</span><span class="drug">Eritromicina</span></div></div>
+        <div class="res"><div class="lab">Resistência</div><p><b>Metilação ribossomal</b> (<i>erm</i> → fenótipo MLSb) e <b>efluxo</b> (<i>mef</i>). Prolonga QT.</p></div>
+      </article>
+
+      <article class="card">
+        <div class="card-top"><h3>Lincosamidas <small style="font-weight:400;color:var(--muted)">· 50S</small></h3><span class="tag t-stat">bacteriostático</span></div>
+        <div class="row"><div class="lab">Espectro</div><p>Gram+ e <b>anaeróbios</b> (sobretudo acima do diafragma). Inibe produção de <b>toxinas</b> (útil em S. aureus/Strep necrosante).</p></div>
+        <div class="row"><div class="lab">Mecanismo</div><p>Mesmo sítio dos macrolídeos na 50S.</p></div>
+        <div class="row"><div class="lab">Fármaco</div><div class="drugs"><span class="drug">Clindamicina</span></div></div>
+        <div class="res"><div class="lab">Resistência</div><p>Cruzada <b>MLSb</b> (<i>erm</i>) — pesquisar com o <b>teste D</b>. Risco de <i>C. difficile</i>.</p></div>
+      </article>
+
+      <article class="card">
+        <div class="card-top"><h3>Oxazolidinonas <small style="font-weight:400;color:var(--muted)">· 50S</small></h3><span class="tag t-stat">bacteriostático</span></div>
+        <div class="row"><div class="lab">Espectro</div><p><b>Gram+ resistentes</b>: MRSA, <b>VRE</b>, pneumococo resistente. Boa penetração pulmonar.</p></div>
+        <div class="row"><div class="lab">Mecanismo</div><p>Ligam-se à 50S impedindo a formação do <b>complexo de iniciação 70S</b>.</p></div>
+        <div class="row"><div class="lab">Fármacos</div><div class="drugs"><span class="drug">Linezolida</span><span class="drug">Tedizolida</span></div></div>
+        <div class="res"><div class="lab">Resistência</div><p>Rara — mutação no <b>23S</b> ou gene <i>cfr</i>. Toxicidade: mielossupressão, neuropatia, <b>síndrome serotoninérgica</b> (IMAO fraco).</p></div>
+      </article>
+
+      <article class="card">
+        <div class="card-top"><h3>Cloranfenicol · Estreptograminas <small style="font-weight:400;color:var(--muted)">· 50S</small></h3><span class="tag t-mix">variável</span></div>
+        <div class="row"><div class="lab">Cloranfenicol</div><p>Amplo, bacteriostático; inibe a <b>peptidil-transferase</b>. Uso restrito por <b>aplasia medular</b> e síndrome do bebê cinzento.</p></div>
+        <div class="row"><div class="lab">Estreptograminas</div><p><b>Quinupristina-dalfopristina</b> — Gram+, incl. <i>E. faecium</i> VRE (não cobre <i>E. faecalis</i>); a combinação é bactericida.</p></div>
+        <div class="res"><div class="lab">Resistência</div><p>Cloranfenicol: <b>acetiltransferase (CAT)</b>. Estreptograminas: <i>erm</i>/efluxo/enzimas.</p></div>
+      </article>
+
+      <div class="note"><b>Truque:</b> <b>30S</b> → "buy AT 30" (Aminoglicosídeos + Tetraciclinas). <b>50S</b> → macrolídeos, lincosamidas, oxazolidinonas, cloranfenicol, estreptograminas. Aminoglicosídeos são a exceção bactericida do grupo.</div>
+    </div>
+  </section>
+
+  <!-- =========================================================== -->
+  <!-- GRUPO 3 — ÁCIDOS NUCLEICOS -->
+  <!-- =========================================================== -->
+  <section class="branch b3" id="g3">
+    <div class="branch-head">
+      <div class="branch-num">3</div>
+      <h2>Inibidores da síntese de ácidos nucleicos<span>Interferem na replicação/transcrição do DNA e do RNA.</span></h2>
+    </div>
+    <div class="grid">
+
+      <article class="card">
+        <div class="card-top"><h3>Fluoroquinolonas</h3><span class="tag t-cida">bactericida</span></div>
+        <div class="row"><div class="lab">Espectro</div><p><b>Cipro</b>: Gram−/Pseudomonas. <b>Levo/moxi ("respiratórias")</b>: + Gram+, pneumococo e atípicos; <b>moxi</b> cobre anaeróbios.</p></div>
+        <div class="row"><div class="lab">Mecanismo</div><p>Inibem a <b>DNA-girase (topo II)</b> em Gram− e a <b>topoisomerase IV</b> em Gram+. Concentração-dependente.</p></div>
+        <div class="row"><div class="lab">Fármacos</div><div class="drugs"><span class="drug">Ciprofloxacino</span><span class="drug">Levofloxacino</span><span class="drug">Moxifloxacino</span></div></div>
+        <div class="res"><div class="lab">Resistência</div><p>Mutações na <b>região QRDR</b> da girase/topo IV, efluxo e plasmídio <b>qnr</b>. Tendinopatia, QT, neurotoxicidade.</p></div>
+      </article>
+
+      <article class="card">
+        <div class="card-top"><h3>Rifamicinas</h3><span class="tag t-cida">bactericida</span></div>
+        <div class="row"><div class="lab">Espectro</div><p><b>Micobactérias</b> (TB, hanseníase), profilaxia de meningococo/H. influenzae, ótimas em <b>biofilme</b> (prótese).</p></div>
+        <div class="row"><div class="lab">Mecanismo</div><p>Inibem a <b>RNA-polimerase DNA-dependente</b> (bloqueia transcrição).</p></div>
+        <div class="row"><div class="lab">Fármacos</div><div class="drugs"><span class="drug">Rifampicina</span><span class="drug">Rifabutina</span><span class="drug">Rifaximina</span></div></div>
+        <div class="res"><div class="lab">Resistência</div><p><b>Mutação rpoB</b> — surge rapidamente em monoterapia → usar <b>sempre em associação</b>. Indutor potente do CYP450.</p></div>
+      </article>
+
+      <article class="card">
+        <div class="card-top"><h3>Nitroimidazóis — Metronidazol</h3><span class="tag t-cida">bactericida</span></div>
+        <div class="row"><div class="lab">Espectro</div><p><b>Anaeróbios</b> (abaixo do diafragma), <b>protozoários</b> (Giardia, Entamoeba, Trichomonas), <i>C. difficile</i>, esquema de <i>H. pylori</i>.</p></div>
+        <div class="row"><div class="lab">Mecanismo</div><p>Em meio anaeróbio é reduzido a <b>radicais tóxicos</b> que fragmentam o DNA.</p></div>
+        <div class="row"><div class="lab">Fármacos</div><div class="drugs"><span class="drug">Metronidazol</span><span class="drug">Tinidazol</span></div></div>
+        <div class="res"><div class="lab">Resistência</div><p>Redução da ativação do pró-fármaco (genes <i>nim</i>). Efeito <b>dissulfiram-símile</b> com álcool.</p></div>
+      </article>
+
+      <article class="card">
+        <div class="card-top"><h3>Nitrofurantoína</h3><span class="tag t-cida">bactericida</span></div>
+        <div class="row"><div class="lab">Espectro</div><p><b>ITU baixa</b> não complicada (E. coli, Enterococcus, S. saprophyticus). Não atinge níveis sistêmicos/renais altos.</p></div>
+        <div class="row"><div class="lab">Mecanismo</div><p>Intermediários reativos atacam <b>múltiplos alvos</b> (ribossomo, DNA, enzimas) → resistência rara.</p></div>
+        <div class="row"><div class="lab">Fármaco</div><div class="drugs"><span class="drug">Nitrofurantoína</span></div></div>
+        <div class="res"><div class="lab">Resistência</div><p>Incomum. Evitar em <b>ClCr baixo</b> e em pielonefrite.</p></div>
+      </article>
+
+      <div class="note"><b>Ponto-chave:</b> quinolonas = enzimas que desenrolam o DNA (girase/topo IV); rifampicina = RNA-polimerase; metronidazol = dano direto ao DNA em anaeróbios. Rifampicina e quinolonas selecionam resistência <b>por mutação</b>, então cuidado com monoterapia.</div>
+    </div>
+  </section>
+
+  <!-- =========================================================== -->
+  <!-- GRUPO 4 — FOLATO -->
+  <!-- =========================================================== -->
+  <section class="branch b4" id="g4">
+    <div class="branch-head">
+      <div class="branch-num">4</div>
+      <h2>Antimetabólitos — via do folato<span>Bloqueiam a síntese de ácido fólico, essencial para os nucleotídeos.</span></h2>
+    </div>
+    <div class="grid">
+
+      <article class="card">
+        <div class="card-top"><h3>Sulfonamidas + Trimetoprima (SMX-TMP)</h3><span class="tag t-cida">bactericida (combinado)</span></div>
+        <div class="row"><div class="lab">Espectro</div><p>Amplo: ITU, <b>MRSA comunitário</b>, <i>Pneumocystis jirovecii</i> (tto/profilaxia), <b>Nocardia</b>, <i>Stenotrophomonas</i>, Listeria (em alérgicos).</p></div>
+        <div class="row"><div class="lab">Mecanismo</div><p><b>Bloqueio sequencial</b> da via: sulfa inibe a <b>di-hidropteroato-sintetase</b> (análogo do PABA) e trimetoprima inibe a <b>di-hidrofolato-redutase</b>.</p></div>
+        <div class="row"><div class="lab">Fármacos</div><div class="drugs"><span class="drug">Sulfametoxazol</span><span class="drug">Trimetoprima</span><span class="drug">Cotrimoxazol (SMX-TMP)</span><span class="drug">Sulfadiazina</span></div></div>
+        <div class="res"><div class="lab">Resistência</div><p><b>Enzimas-alvo alteradas</b> ou via alternativa de captação de folato; hiperprodução de PABA. Risco: hipersensibilidade, hipercalemia, kernicterus no RN.</p></div>
+      </article>
+
+      <div class="note"><b>Por que a combinação?</b> Isoladas são bacteriostáticas; juntas, o bloqueio em <b>dois pontos</b> da mesma via torna o efeito <b>bactericida</b> e dificulta a seleção de resistência.</div>
+    </div>
+  </section>
+
+  <!-- =========================================================== -->
+  <!-- GRUPO 5 — MEMBRANA -->
+  <!-- =========================================================== -->
+  <section class="branch b5" id="g5">
+    <div class="branch-head">
+      <div class="branch-num">5</div>
+      <h2>Disruptores da membrana celular<span>"Detergentes" que desorganizam a membrana — espectro espelhado (um só Gram−, outro só Gram+).</span></h2>
+    </div>
+    <div class="grid">
+
+      <article class="card">
+        <div class="card-top"><h3>Polimixinas</h3><span class="tag t-cida">bactericida</span></div>
+        <div class="row"><div class="lab">Espectro</div><p>Apenas <b>Gram−</b>, incluindo <b>MDR</b> (Acinetobacter, Pseudomonas, enterobactérias produtoras de KPC). Droga de resgate.</p></div>
+        <div class="row"><div class="lab">Mecanismo</div><p>Catiônicas, ligam-se ao <b>lipídio A do LPS</b> e rompem a membrana externa (ação tipo detergente).</p></div>
+        <div class="row"><div class="lab">Fármacos</div><div class="drugs"><span class="drug">Colistina (polimixina E)</span><span class="drug">Polimixina B</span></div></div>
+        <div class="res"><div class="lab">Resistência</div><p>Modificação do LPS; gene plasmidial <b>mcr-1</b> (transferível). <i>Nefro e neurotoxicidade.</i></p></div>
+      </article>
+
+      <article class="card">
+        <div class="card-top"><h3>Daptomicina (lipopeptídeo)</h3><span class="tag t-cida">bactericida</span></div>
+        <div class="row"><div class="lab">Espectro</div><p>Apenas <b>Gram+</b>: MRSA, <b>VRE</b>, bacteremia e endocardite. <b>Não usar em pneumonia</b> — é inativada pelo surfactante pulmonar.</p></div>
+        <div class="row"><div class="lab">Mecanismo</div><p>Insere-se na membrana de forma <b>Ca²⁺-dependente</b> → despolarização e morte celular rápida.</p></div>
+        <div class="row"><div class="lab">Fármaco</div><div class="drugs"><span class="drug">Daptomicina</span></div></div>
+        <div class="res"><div class="lab">Resistência</div><p>Alterações na carga/composição da membrana (genes <i>mprF</i>). Monitorar <b>CPK</b> (miopatia).</p></div>
+      </article>
+
+      <div class="note"><b>Espelho útil:</b> <b>polimixinas só Gram−</b> (atacam o LPS, que só existe na membrana externa Gram−); <b>daptomicina só Gram+</b> (a molécula grande não atravessa a membrana externa Gram−).</div>
+    </div>
+  </section>
+
+  <footer>
+    Material de estudo · organizado por mecanismo de ação. Espectros e indicações descritos de forma didática — sempre confirmar dose, ajuste renal e cobertura com o antibiograma local e os protocolos institucionais antes da prescrição.
+  </footer>
+
+</div>
+</body>
+</html>

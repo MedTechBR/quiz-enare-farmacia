@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Processo de Cuidado ao Paciente — Guia de revisão</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@500;600;700;800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#E7E1D2;--surface:#FBF8F0;--surface-2:#F3EEE1;
+    --ink:#143C42;--ink-soft:#4E5F5C;--vermilion:#D6492A;--ochre:#B98220;--green:#3C6E47;--blue:#2C5A74;
+    --line:rgba(20,60,66,.22);--line-strong:rgba(20,60,66,.55);
+    --font-display:'Anton',Impact,sans-serif;--font-head:'Archivo',system-ui,sans-serif;--font-body:'IBM Plex Sans',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+  body{margin:0;background:radial-gradient(circle at 100% -2%, rgba(214,73,42,.06), transparent 38%),var(--paper);
+    color:var(--ink);font-family:var(--font-body);line-height:1.55;padding:clamp(16px,3.5vw,44px) clamp(12px,4vw,40px) 80px}
+  .wrap{max-width:1080px;margin:0 auto}
+  .top-rule{height:6px;background:var(--ink)}
+  .kicker{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-family:var(--font-head);font-weight:700;text-transform:uppercase;letter-spacing:.15em;font-size:11px;color:var(--ink-soft);padding:9px 2px;border-bottom:1px solid var(--line)}
+  .kicker .dot{color:var(--vermilion)}
+  h1{font-family:var(--font-display);font-weight:400;line-height:.92;font-size:clamp(28px,5.4vw,60px);margin:16px 0 8px;text-transform:uppercase;letter-spacing:.5px}
+  h1 .accent{color:var(--vermilion)}
+  .dek{font-size:clamp(15px,2vw,17.5px);color:var(--ink-soft);max-width:66ch;border-top:3px double var(--line-strong);padding-top:12px}
+  .dek b{color:var(--ink);font-weight:600}
+  nav.toc{position:sticky;top:0;z-index:20;background:rgba(231,225,210,.94);backdrop-filter:blur(6px);margin:18px 0 8px;padding:10px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  nav.toc ul{list-style:none;display:flex;gap:7px;flex-wrap:wrap;margin:0;padding:0}
+  nav.toc a{font-family:var(--font-head);font-weight:600;font-size:12px;text-decoration:none;color:var(--ink);border:1.5px solid var(--line-strong);border-radius:2px;padding:5px 10px;transition:background .12s,color .12s}
+  nav.toc a:hover{background:var(--ink);color:var(--surface)}
+  section{margin:38px 0 0;scroll-margin-top:64px}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:14px;border-bottom:2px solid var(--ink);padding-bottom:8px}
+  .sec-num{font-family:var(--font-display);font-size:clamp(26px,4vw,40px);color:var(--vermilion);line-height:.8}
+  .sec-head h2{font-family:var(--font-head);font-weight:800;font-size:clamp(18px,3vw,25px);margin:0;letter-spacing:-.01em}
+  p{margin:0 0 12px}.lead{font-size:16px}
+  strong,b{color:var(--ink);font-weight:600}.hl{color:var(--vermilion);font-weight:600}
+  ul.clean{margin:0 0 12px;padding-left:18px}ul.clean li{margin:5px 0}
+  .box{background:var(--surface);border:1.5px solid var(--ink);border-radius:3px;box-shadow:4px 4px 0 var(--ink);padding:16px 18px;margin:14px 0}
+  .grid2{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+  .bizu{border:1.5px dashed var(--green);background:rgba(60,110,71,.06);border-radius:3px;padding:13px 16px;margin:14px 0}
+  .bizu .tag{font-family:var(--font-head);font-weight:700;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--green);display:block;margin-bottom:5px}
+  .bizu b{color:var(--green)}
+  .trap{border:1.5px solid var(--vermilion);background:rgba(214,73,42,.05);border-radius:3px;padding:13px 16px;margin:14px 0}
+  .trap .tag{font-family:var(--font-head);font-weight:700;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--vermilion);display:block;margin-bottom:5px}
+  .tbl{width:100%;border-collapse:collapse;margin:14px 0;font-size:12.5px;background:var(--surface)}
+  .tbl th,.tbl td{border:1px solid var(--line-strong);padding:8px 10px;text-align:left;vertical-align:top}
+  .tbl thead th{background:var(--ink);color:var(--surface);font-family:var(--font-head);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.03em}
+  .tbl tbody th{background:var(--surface-2);font-family:var(--font-head);font-weight:700;white-space:nowrap}
+  .tbl-scroll{overflow-x:auto}
+  .flow{counter-reset:step;margin:14px 0}
+  .fstep{position:relative;background:var(--surface);border:1.5px solid var(--ink);border-radius:3px;box-shadow:3px 3px 0 var(--ink);padding:13px 16px 13px 54px;margin:0 0 12px}
+  .fstep::before{counter-increment:step;content:counter(step);position:absolute;left:12px;top:12px;width:30px;height:30px;background:var(--vermilion);color:#fff;font-family:var(--font-display);font-size:18px;display:flex;align-items:center;justify-content:center;border-radius:50%}
+  .fstep h4{font-family:var(--font-head);font-weight:700;margin:0 0 4px;font-size:15.5px}
+  .fstep p{margin:0;font-size:13.5px;color:var(--ink-soft)}
+  .soap{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));margin:14px 0}
+  .soap .card{background:var(--surface);border:1.5px solid var(--ink);border-radius:3px;box-shadow:3px 3px 0 var(--ink);padding:12px 14px}
+  .soap .letter{font-family:var(--font-display);color:var(--vermilion);font-size:24px;line-height:1}
+  .soap h4{font-family:var(--font-head);font-weight:700;margin:4px 0;font-size:14px}
+  .soap p{font-size:12.5px;color:var(--ink-soft);margin:0}
+  .fc-grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));margin-top:14px}
+  .fc{background:var(--surface);border:1.5px solid var(--ink);border-radius:3px;box-shadow:4px 4px 0 var(--ink);padding:16px 17px;cursor:pointer;text-align:left;width:100%;font-family:var(--font-body);color:var(--ink);display:flex;flex-direction:column;gap:9px;transition:transform .12s,box-shadow .12s}
+  .fc:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--vermilion)}
+  .fc:focus-visible{outline:3px solid var(--vermilion);outline-offset:3px}
+  .fc .q{font-family:var(--font-head);font-weight:700;font-size:15px;line-height:1.28}
+  .fc .hint{font-family:var(--font-head);font-weight:600;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--vermilion)}
+  .fc .ans{font-size:13.5px;color:var(--ink-soft)}
+  .fc:not(.open) .ans{display:none}.fc.open .hint{display:none}
+  .case .q::before{content:"CASO ";font-family:var(--font-display);color:var(--vermilion);font-size:12px;letter-spacing:.1em}
+  footer{margin:46px 0 0;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--ink-soft)}
+  footer b{color:var(--ink)}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="top-rule"></div>
+    <div class="kicker">
+      <span>Farmácia Clínica <span class="dot">·</span> Cuidado ao Paciente</span>
+      <span>Resmulti · ENARE · EBSERH · HUs</span>
+    </div>
+    <h1>Processo de <span class="accent">Cuidado</span> ao Paciente</h1>
+    <p class="dek">Método clínico do farmacêutico no <b>ambulatório e na internação</b>: as 5 etapas do cuidado, avaliação da farmacoterapia, <b>PRM × RNM</b>, métodos de seguimento e registro <b>SOAP</b>. Guia com bizus, tabelas e casos.</p>
+  </header>
+
+  <nav class="toc" aria-label="Índice">
+    <ul>
+      <li><a href="#conceitos">1 · Conceitos</a></li>
+      <li><a href="#etapas">2 · As 5 etapas ★</a></li>
+      <li><a href="#avaliacao">3 · Avaliar a farmacoterapia ★</a></li>
+      <li><a href="#prm">4 · PRM × RNM ★</a></li>
+      <li><a href="#metodos">5 · Métodos de seguimento</a></li>
+      <li><a href="#soap">6 · Registro SOAP ★</a></li>
+      <li><a href="#coleta">7 · Anamnese / coleta</a></li>
+      <li><a href="#niveis">8 · Ambulatorial × internado ★</a></li>
+      <li><a href="#intervencao">9 · Intervenções</a></li>
+      <li><a href="#pegadinhas">10 · Pegadinhas</a></li>
+      <li><a href="#casos">11 · Casos ★</a></li>
+    </ul>
+  </nav>
+
+  <!-- 1 -->
+  <section id="conceitos">
+    <div class="sec-head"><span class="sec-num">01</span><h2>Conceitos fundamentais</h2></div>
+    <p class="lead">O <b>processo de cuidado</b> é o método <b>sistemático e centrado no paciente</b> pelo qual o farmacêutico avalia necessidades relacionadas a medicamentos, planeja e executa intervenções e <b>monitora resultados</b>.</p>
+    <div class="bizu"><span class="tag">★ Bizu</span> Cuidado/atenção farmacêutica = a <b>filosofia/prática</b>; o processo de cuidado = o <b>método operacional</b>. É contínuo, colaborativo (equipe) e <b>documentado</b>.</div>
+  </section>
+
+  <!-- 2 -->
+  <section id="etapas">
+    <div class="sec-head"><span class="sec-num">02</span><h2>As 5 etapas do processo de cuidado ★</h2></div>
+    <div class="flow">
+      <div class="fstep"><h4>Coletar</h4><p>Dados <b>subjetivos e objetivos</b>: história clínica e medicamentosa, alergias, adesão, exames, sinais/sintomas e <b>metas do paciente</b>.</p></div>
+      <div class="fstep"><h4>Avaliar</h4><p>Analisar <b>indicação, efetividade, segurança e adesão</b> de cada medicamento; identificar <b>PRM/RNM</b> e o estado de saúde.</p></div>
+      <div class="fstep"><h4>Planejar</h4><p>Plano de cuidado <b>individualizado e pactuado</b>: metas terapêuticas, intervenções, monitorização, encaminhamentos e educação.</p></div>
+      <div class="fstep"><h4>Implementar</h4><p>Executar o plano: intervenções, prescrição farmacêutica (quando cabível), orientação, encaminhamento e comunicação à equipe.</p></div>
+      <div class="fstep"><h4>Acompanhar (monitorar e avaliar)</h4><p>Reavaliar <b>efetividade e segurança</b>, verificar metas e <b>ajustar o plano</b>. Fecha e reinicia o ciclo.</p></div>
+    </div>
+    <div class="bizu"><span class="tag">★ Bizu</span>
+      Sequência <b>“CA-PI-A”</b>: <b>C</b>oletar → <b>A</b>valiar → <b>P</b>lanejar → <b>I</b>mplementar → <b>A</b>companhar. Transversais a tudo: <b>colaborar, comunicar e documentar</b>. É um <b>ciclo</b>, não uma linha reta.</div>
+  </section>
+
+  <!-- 3 -->
+  <section id="avaliacao">
+    <div class="sec-head"><span class="sec-num">03</span><h2>Avaliar a farmacoterapia — as 4 perguntas ★</h2></div>
+    <p>Para cada medicamento/problema de saúde, na ordem:</p>
+    <div class="tbl-scroll">
+    <table class="tbl">
+      <thead><tr><th>Pergunta</th><th>O que verificar</th></tr></thead>
+      <tbody>
+        <tr><th>1. Necessidade / Indicação</th><td>O medicamento é <b>necessário</b>? Há indicação? Há <b>problema sem tratamento</b>? Há medicamento <b>desnecessário</b>?</td></tr>
+        <tr><th>2. Efetividade</th><td>Está atingindo a <b>meta terapêutica</b>? (fármaco inadequado ou <b>dose insuficiente</b>)</td></tr>
+        <tr><th>3. Segurança</th><td>Está causando <b>dano</b>? (RAM, dose excessiva, interação)</td></tr>
+        <tr><th>4. Adesão</th><td>O paciente está <b>usando como acordado</b>?</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="bizu"><span class="tag">★ Bizu</span> Ordem <b>“N-E-S-A”</b>: Necessidade → Efetividade → Segurança → Adesão. Sempre nessa lógica: só faz sentido avaliar efetividade do que é <b>necessário</b>.</div>
+  </section>
+
+  <!-- 4 -->
+  <section id="prm">
+    <div class="sec-head"><span class="sec-num">04</span><h2>PRM × RNM ★</h2></div>
+    <div class="grid2">
+      <div class="box"><p><b>PRM</b> — Problemas Relacionados a Medicamentos</p><p>As <span class="hl">CAUSAS</span>: circunstâncias do processo de uso que causam ou podem causar um RNM (dose inadequada, interação, <b>não adesão</b>, erro de administração, conservação, contraindicação).</p></div>
+      <div class="box"><p><b>RNM</b> — Resultados Negativos associados à Medicação</p><p>Os <span class="hl">RESULTADOS</span>: desfechos de saúde não condizentes com os objetivos da farmacoterapia.</p></div>
+    </div>
+    <p><b>Classificação dos RNM (3º Consenso de Granada)</b> — 3 grupos:</p>
+    <div class="tbl-scroll">
+    <table class="tbl">
+      <thead><tr><th>Grupo</th><th>Tipos</th></tr></thead>
+      <tbody>
+        <tr><th>Necessidade</th><td>Problema de saúde <b>não tratado</b>; efeito de medicamento <b>desnecessário</b>.</td></tr>
+        <tr><th>Efetividade</th><td>Inefetividade <b>não quantitativa</b> (fármaco inadequado); inefetividade <b>quantitativa</b> (dose baixa).</td></tr>
+        <tr><th>Segurança</th><td>Insegurança <b>não quantitativa</b> (RAM idiossincrásica); insegurança <b>quantitativa</b> (dose alta).</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="trap"><span class="tag">⚠ Pegadinha</span> <b>PRM = causa (problema no processo); RNM = consequência (resultado clínico).</b> Ex.: a <b>não adesão</b> (PRM) pode gerar uma <b>inefetividade</b> (RNM).</div>
+  </section>
+
+  <!-- 5 -->
+  <section id="metodos">
+    <div class="sec-head"><span class="sec-num">05</span><h2>Métodos de seguimento farmacoterapêutico</h2></div>
+    <div class="grid2">
+      <div class="box"><p><b>Método Dáder</b> (Granada)</p><p>Etapas: oferta do serviço → 1ª entrevista → <b>estado de situação</b> → fase de estudo → fase de avaliação (identificar RNM) → intervenção → entrevistas sucessivas.</p></div>
+      <div class="box"><p><b>Pharmacotherapy Workup</b> (Cipolle, Strand &amp; Morley)</p><p>Ciclo: <b>assessment → care plan → follow-up</b>; avalia indicação, efetividade, segurança e adesão; identifica os <b>Drug Therapy Problems</b> (DTP).</p></div>
+    </div>
+    <div class="bizu"><span class="tag">★ Bizu</span> O termo <b>“estado de situação”</b> é a marca do <b>Método Dáder</b>. Ambos são processos <b>cíclicos</b> de seguimento.</div>
+  </section>
+
+  <!-- 6 -->
+  <section id="soap">
+    <div class="sec-head"><span class="sec-num">06</span><h2>Registro clínico — SOAP ★</h2></div>
+    <div class="soap">
+      <div class="card"><span class="letter">S</span><h4>Subjetivo</h4><p>O que o <b>paciente relata</b>: queixas, sintomas, história referida.</p></div>
+      <div class="card"><span class="letter">O</span><h4>Objetivo</h4><p>Dados <b>mensuráveis</b>: exame físico, sinais vitais, exames laboratoriais, medicamentos em uso.</p></div>
+      <div class="card"><span class="letter">A</span><h4>Avaliação</h4><p>Análise/interpretação; identificação dos <b>PRM/RNM</b>; julgamento clínico.</p></div>
+      <div class="card"><span class="letter">P</span><h4>Plano</h4><p>Condutas: intervenções, metas, <b>monitorização</b>, educação, encaminhamentos.</p></div>
+    </div>
+    <div class="trap"><span class="tag">⚠ Pegadinha</span> <b>S = relatado pelo paciente</b> (subjetivo); <b>O = mensurável/exames</b> (objetivo). A banca troca os dois: “PA 160/100” é <b>O</b>; “refere tontura” é <b>S</b>.</div>
+  </section>
+
+  <!-- 7 -->
+  <section id="coleta">
+    <div class="sec-head"><span class="sec-num">07</span><h2>Anamnese farmacêutica / coleta</h2></div>
+    <ul class="clean">
+      <li><b>História de medicamentos:</b> atuais e pregressos, <b>MIPs</b>, fitoterápicos e suplementos.</li>
+      <li><b>Alergias</b> e eventos adversos prévios.</li>
+      <li><b>Adesão</b> e técnica de uso (dispositivos).</li>
+      <li><b>Condições clínicas</b>, função renal/hepática, hábitos (álcool, tabaco).</li>
+      <li><b>Metas e preferências</b> do paciente (essencial para um plano pactuado).</li>
+    </ul>
+  </section>
+
+  <!-- 8 -->
+  <section id="niveis">
+    <div class="sec-head"><span class="sec-num">08</span><h2>Ambulatorial × internado ★</h2></div>
+    <div class="tbl-scroll">
+    <table class="tbl">
+      <thead><tr><th></th><th>Ambulatorial</th><th>Internado</th></tr></thead>
+      <tbody>
+        <tr><th>Tempo / ritmo</th><td><b>Longitudinal</b> e contínuo (consultas seriadas).</td><td><b>Intensivo</b> e de curta duração.</td></tr>
+        <tr><th>Foco</th><td>Doenças <b>crônicas</b>, autocuidado, <b>adesão</b> e metas de longo prazo.</td><td>Farmacoterapia complexa, <b>validação de prescrição</b>, ajuste por função orgânica, prevenção de eventos.</td></tr>
+        <tr><th>Transições</th><td>Continuidade do cuidado e encaminhamentos.</td><td><b>Conciliação</b> na admissão, transferência e <b>alta</b>.</td></tr>
+        <tr><th>Quem gerencia</th><td>O <b>próprio paciente</b>, em casa.</td><td>A <b>equipe</b>, ao redor do leito.</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="bizu"><span class="tag">★ Bizu</span> <b>Ambulatorial = maratona</b> (seguimento longo, adesão). <b>Internado = corrida</b> (intensivo + conciliação nas transições). O <b>método</b> (as 5 etapas) é o mesmo; muda a ênfase.</div>
+  </section>
+
+  <!-- 9 -->
+  <section id="intervencao">
+    <div class="sec-head"><span class="sec-num">09</span><h2>Intervenções farmacêuticas</h2></div>
+    <p>Tipos: ajuste de dose, substituição, suspensão, sugestão de início de medicamento, educação, <b>conciliação</b>, encaminhamento e monitorização. Toda intervenção deve ser <b>comunicada</b> ao prescritor/equipe e ter o <b>desfecho registrado</b> (aceita/não aceita, resultado).</p>
+  </section>
+
+  <!-- 10 -->
+  <section id="pegadinhas">
+    <div class="sec-head"><span class="sec-num">10</span><h2>Pegadinhas consolidadas</h2></div>
+    <div class="trap"><span class="tag">⚠ Top pegadinhas</span>
+      <ul class="clean" style="margin:0">
+        <li><b>PRM = causa</b> (processo); <b>RNM = resultado</b> (clínico).</li>
+        <li>RNM se classifica em <b>necessidade, efetividade e segurança</b> (Granada).</li>
+        <li><b>SOAP:</b> S = relatado pelo paciente; O = mensurável/exames.</li>
+        <li>O processo é <b>cíclico e centrado no paciente</b>; o <b>acompanhamento</b> é parte essencial.</li>
+        <li>Avaliação cobre <b>necessidade, efetividade, segurança e adesão</b> (N-E-S-A).</li>
+        <li><b>“Estado de situação”</b> = Método Dáder.</li>
+        <li><b>Ambulatorial</b> = longitudinal/crônico; <b>internado</b> = intensivo + conciliação.</li>
+        <li>Ordem das etapas: <b>coletar antes de avaliar antes de planejar</b>.</li>
+        <li>Plano de cuidado deve ser <b>pactuado</b> com o paciente (metas).</li>
+        <li>Toda intervenção precisa ser <b>documentada</b> e ter desfecho registrado.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 11 -->
+  <section id="casos">
+    <div class="sec-head"><span class="sec-num">11</span><h2>Casos clínicos — autoteste ★</h2></div>
+    <p>Leia, classifique/decida e clique para conferir.</p>
+    <div class="fc-grid" id="caseGrid"></div>
+  </section>
+
+  <footer>
+    <b>Fontes-base:</b> Pharmacist's Patient Care Process (JCPP/ASHP); Pharmacotherapy Workup (Cipolle, Strand &amp; Morley); Método Dáder e 3º Consenso de Granada (PRM/RNM); registro SOAP; literatura de cuidado farmacêutico e Ministério da Saúde; Resoluções CFF 585 e 586/2013. Material de estudo — confronte com o edital e a bibliografia da sua banca.
+  </footer>
+
+</div>
+
+<script>
+  const cases = [
+    {q:"Paciente diabético tem hipertensão documentada, mas nenhum anti-hipertensivo prescrito. Que RNM é esse?", a:"RNM de necessidade: problema de saúde não tratado (há indicação sem tratamento). Conduta: sugerir início de anti-hipertensivo conforme protocolo."},
+    {q:"Paciente em dose subterapêutica de levotiroxina permanece com TSH elevado. Classifique o RNM.", a:"RNM de efetividade quantitativa (inefetividade por dose insuficiente). Conduta: sugerir ajuste de dose e remonitorar o TSH."},
+    {q:"Paciente apresenta lesão renal por dose excessiva de um aminoglicosídeo. Que RNM é?", a:"RNM de segurança quantitativa (insegurança por dose alta). Conduta: ajustar dose à função renal e monitorar (níveis séricos, creatinina)."},
+    {q:"Paciente usa dois IBPs simultaneamente sem indicação para ambos. Que RNM e conduta?", a:"RNM de necessidade: efeito de medicamento desnecessário (duplicidade). Conduta: sugerir suspensão de um dos itens."},
+    {q:"O farmacêutico está colhendo a história medicamentosa e as alergias na primeira consulta. Em qual etapa do processo ele está?", a:"Etapa Coletar (dados subjetivos e objetivos). Vem antes de Avaliar e Planejar."},
+    {q:"No registro SOAP, onde lançar 'PA 165/100 mmHg' e 'paciente refere tontura ao levantar'?", a:"'PA 165/100' é dado Objetivo (O — mensurável); 'refere tontura' é Subjetivo (S — relatado pelo paciente)."},
+    {q:"Qual a diferença entre PRM e RNM em uma frase?", a:"PRM é a causa (uma circunstância do processo de uso que pode levar a um problema); RNM é o resultado clínico negativo dela na saúde do paciente."},
+    {q:"Na admissão hospitalar, o farmacêutico compara os medicamentos de uso domiciliar com a prescrição internado. Que atividade é essa?", a:"Conciliação medicamentosa (parte da coleta/avaliação do processo de cuidado). Visa resolver discrepâncias e evitar omissões/duplicidades."},
+    {q:"Como se caracteriza o processo de cuidado de um paciente crônico no ambulatório?", a:"Longitudinal e contínuo, com consultas seriadas, foco em adesão, autocuidado e metas de longo prazo, com o paciente gerenciando o tratamento em casa."},
+    {q:"O farmacêutico já implementou as intervenções. Qual a etapa seguinte e por quê?", a:"Acompanhar (monitorar e avaliar): reavaliar efetividade e segurança, verificar se as metas foram atingidas e ajustar o plano. O seguimento é parte essencial, não o fim."},
+    {q:"Qual método de seguimento farmacoterapêutico utiliza o conceito de 'estado de situação'?", a:"O Método Dáder (Universidade de Granada), que organiza os problemas de saúde e medicamentos em um 'estado de situação' antes do estudo e da avaliação."},
+    {q:"Paciente não toma o anti-hipertensivo e segue com PA descontrolada. Identifique o PRM e o RNM.", a:"PRM (causa) = não adesão; RNM (resultado) = inefetividade do tratamento (PA fora da meta). Conduta: investigar o motivo da não adesão e intervir conforme o tipo."}
+  ];
+  const grid = document.getElementById('caseGrid');
+  cases.forEach(c=>{
+    const b=document.createElement('button');b.className='fc case';b.type='button';
+    b.innerHTML=`<span class="q">${c.q}</span><span class="hint">Ver conduta</span><span class="ans">${c.a}</span>`;
+    b.addEventListener('click',()=>b.classList.toggle('open'));
+    grid.appendChild(b);
+  });
+</script>
+</body>
+</html>

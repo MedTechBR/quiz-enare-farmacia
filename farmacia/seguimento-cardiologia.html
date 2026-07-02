@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seguimento de Pacientes em Cardiologia — Guia de revisão</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@500;600;700;800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#E7E1D2;--surface:#FBF8F0;--surface-2:#F3EEE1;
+    --ink:#143C42;--ink-soft:#4E5F5C;--vermilion:#D6492A;--ochre:#B98220;--green:#3C6E47;--blue:#2C5A74;
+    --line:rgba(20,60,66,.22);--line-strong:rgba(20,60,66,.55);
+    --font-display:'Anton',Impact,sans-serif;--font-head:'Archivo',system-ui,sans-serif;--font-body:'IBM Plex Sans',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+  body{margin:0;background:radial-gradient(circle at 100% -2%, rgba(214,73,42,.06), transparent 38%),var(--paper);
+    color:var(--ink);font-family:var(--font-body);line-height:1.55;padding:clamp(16px,3.5vw,44px) clamp(12px,4vw,40px) 80px}
+  .wrap{max-width:1080px;margin:0 auto}
+  .top-rule{height:6px;background:var(--ink)}
+  .kicker{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-family:var(--font-head);font-weight:700;text-transform:uppercase;letter-spacing:.15em;font-size:11px;color:var(--ink-soft);padding:9px 2px;border-bottom:1px solid var(--line)}
+  .kicker .dot{color:var(--vermilion)}
+  h1{font-family:var(--font-display);font-weight:400;line-height:.92;font-size:clamp(26px,5vw,56px);margin:16px 0 8px;text-transform:uppercase;letter-spacing:.5px}
+  h1 .accent{color:var(--vermilion)}
+  .dek{font-size:clamp(15px,2vw,17.5px);color:var(--ink-soft);max-width:66ch;border-top:3px double var(--line-strong);padding-top:12px}
+  .dek b{color:var(--ink);font-weight:600}
+  nav.toc{position:sticky;top:0;z-index:20;background:rgba(231,225,210,.94);backdrop-filter:blur(6px);margin:18px 0 8px;padding:10px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  nav.toc ul{list-style:none;display:flex;gap:7px;flex-wrap:wrap;margin:0;padding:0}
+  nav.toc a{font-family:var(--font-head);font-weight:600;font-size:12px;text-decoration:none;color:var(--ink);border:1.5px solid var(--line-strong);border-radius:2px;padding:5px 10px;transition:background .12s,color .12s}
+  nav.toc a:hover{background:var(--ink);color:var(--surface)}
+  section{margin:38px 0 0;scroll-margin-top:64px}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:14px;border-bottom:2px solid var(--ink);padding-bottom:8px}
+  .sec-num{font-family:var(--font-display);font-size:clamp(26px,4vw,40px);color:var(--vermilion);line-height:.8}
+  .sec-head h2{font-family:var(--font-head);font-weight:800;font-size:clamp(18px,3vw,25px);margin:0;letter-spacing:-.01em}
+  p{margin:0 0 12px}.lead{font-size:16px}
+  strong,b{color:var(--ink);font-weight:600}.hl{color:var(--vermilion);font-weight:600}
+  ul.clean{margin:0 0 12px;padding-left:18px}ul.clean li{margin:5px 0}
+  .box{background:var(--surface);border:1.5px solid var(--ink);border-radius:3px;box-shadow:4px 4px 0 var(--ink);padding:16px 18px;margin:14px 0}
+  .grid2{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+  .bizu{border:1.5px dashed var(--green);background:rgba(60,110,71,.06);border-radius:3px;padding:13px 16px;margin:14px 0}
+  .bizu .tag{font-family:var(--font-head);font-weight:700;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--green);display:block;margin-bottom:5px}
+  .bizu b{color:var(--green)}
+  .trap{border:1.5px solid var(--vermilion);background:rgba(214,73,42,.05);border-radius:3px;padding:13px 16px;margin:14px 0}
+  .trap .tag{font-family:var(--font-head);font-weight:700;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--vermilion);display:block;margin-bottom:5px}
+  .note{border:1.5px solid var(--blue);background:rgba(44,90,116,.06);border-radius:3px;padding:13px 16px;margin:14px 0}
+  .note .tag{font-family:var(--font-head);font-weight:700;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--blue);display:block;margin-bottom:5px}
+  .tbl{width:100%;border-collapse:collapse;margin:14px 0;font-size:12.5px;background:var(--surface)}
+  .tbl th,.tbl td{border:1px solid var(--line-strong);padding:8px 10px;text-align:left;vertical-align:top}
+  .tbl thead th{background:var(--ink);color:var(--surface);font-family:var(--font-head);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.03em}
+  .tbl tbody th{background:var(--surface-2);font-family:var(--font-head);font-weight:700;white-space:nowrap}
+  .tbl-scroll{overflow-x:auto}
+  .pillars{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));margin:14px 0;counter-reset:pil}
+  .pillar{position:relative;background:var(--surface);border:1.5px solid var(--ink);border-radius:3px;box-shadow:3px 3px 0 var(--ink);padding:12px 14px 12px 44px}
+  .pillar::before{counter-increment:pil;content:counter(pil);position:absolute;left:11px;top:11px;width:26px;height:26px;background:var(--green);color:#fff;font-family:var(--font-display);font-size:15px;display:flex;align-items:center;justify-content:center;border-radius:50%}
+  .pillar h4{font-family:var(--font-head);font-weight:700;margin:0 0 3px;font-size:14px}
+  .pillar p{margin:0;font-size:12px;color:var(--ink-soft)}
+  .fc-grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));margin-top:14px}
+  .fc{background:var(--surface);border:1.5px solid var(--ink);border-radius:3px;box-shadow:4px 4px 0 var(--ink);padding:16px 17px;cursor:pointer;text-align:left;width:100%;font-family:var(--font-body);color:var(--ink);display:flex;flex-direction:column;gap:9px;transition:transform .12s,box-shadow .12s}
+  .fc:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--vermilion)}
+  .fc:focus-visible{outline:3px solid var(--vermilion);outline-offset:3px}
+  .fc .q{font-family:var(--font-head);font-weight:700;font-size:15px;line-height:1.28}
+  .fc .hint{font-family:var(--font-head);font-weight:600;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--vermilion)}
+  .fc .ans{font-size:13.5px;color:var(--ink-soft)}
+  .fc:not(.open) .ans{display:none}.fc.open .hint{display:none}
+  .case .q::before{content:"CASO ";font-family:var(--font-display);color:var(--vermilion);font-size:12px;letter-spacing:.1em}
+  footer{margin:46px 0 0;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--ink-soft)}
+  footer b{color:var(--ink)}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="top-rule"></div>
+    <div class="kicker">
+      <span>Farmácia Clínica <span class="dot">·</span> Cardiologia</span>
+      <span>Resmulti · ENARE · EBSERH · HUs</span>
+    </div>
+    <h1>Seguimento em <span class="accent">Cardiologia</span></h1>
+    <p class="dek">Farmacoterapia das principais condições cardiovasculares na ótica do <b>seguimento farmacêutico</b>: metas, parâmetros de monitorização, <b>eletrólitos, interações</b> e adesão. Guia com bizus, tabelas e casos.</p>
+  </header>
+
+  <nav class="toc" aria-label="Índice">
+    <ul>
+      <li><a href="#conceitos">1 · Panorama</a></li>
+      <li><a href="#has">2 · Hipertensão ★</a></li>
+      <li><a href="#ic">3 · Insuf. cardíaca ★</a></li>
+      <li><a href="#coronaria">4 · Coronariopatia/SCA ★</a></li>
+      <li><a href="#fa">5 · FA &amp; anticoagulação ★</a></li>
+      <li><a href="#lipides">6 · Dislipidemia ★</a></li>
+      <li><a href="#eletrolitos">7 · Eletrólitos ★</a></li>
+      <li><a href="#interacoes">8 · Interações ★</a></li>
+      <li><a href="#adesao">9 · Adesão &amp; educação</a></li>
+      <li><a href="#pegadinhas">10 · Pegadinhas</a></li>
+      <li><a href="#casos">11 · Casos ★</a></li>
+    </ul>
+  </nav>
+
+  <!-- 1 -->
+  <section id="conceitos">
+    <div class="sec-head"><span class="sec-num">01</span><h2>Panorama do seguimento</h2></div>
+    <p class="lead">As doenças cardiovasculares são a <b>principal causa de morte</b> no Brasil e no mundo. O seguimento farmacêutico mira quatro eixos: <b>efetividade</b> (atingir metas: PA, FC, LDL, INR, sintomas), <b>segurança</b> (RAM, eletrólitos, função renal, interações), <b>adesão</b> (doenças crônicas e assintomáticas) e <b>educação</b>.</p>
+    <div class="bizu"><span class="tag">★ Bizu</span> Pense por <b>parâmetro-alvo</b>: HAS→PA; IC→peso/congestão e mortalidade; coronária→LDL e eventos; FA→INR/frequência e prevenção de AVC; dislipidemia→LDL. Cada classe tem seu “número” a monitorar.</div>
+  </section>
+
+  <!-- 2 -->
+  <section id="has">
+    <div class="sec-head"><span class="sec-num">02</span><h2>Hipertensão arterial ★</h2></div>
+    <div class="tbl-scroll">
+    <table class="tbl">
+      <thead><tr><th>Classe</th><th>Pontos de monitorização / RAM</th></tr></thead>
+      <tbody>
+        <tr><th>Diurético tiazídico</th><td>1ª linha. <b>↓ K⁺, ↓ Na⁺</b>, ↑ glicemia, ↑ ácido úrico. Monitorar eletrólitos.</td></tr>
+        <tr><th>IECA (–pril)</th><td><b>Tosse seca, angioedema, hipercalemia, ↑ creatinina.</b> <span class="hl">Contraindicado na gestação.</span></td></tr>
+        <tr><th>BRA (–sartana)</th><td>Alternativa ao IECA <b>sem tosse</b>; também ↑ K⁺. Contraindicado na gestação.</td></tr>
+        <tr><th>BCC diidropiridínico (anlodipino)</th><td><b>Edema</b> de MMII, cefaleia, rubor.</td></tr>
+        <tr><th>BCC não-diidro (verapamil/diltiazem)</th><td><b>Bradicardia</b>, constipação. <b>Não associar a betabloqueador.</b></td></tr>
+        <tr><th>Betabloqueador</th><td>Bradicardia, broncoespasmo, fadiga. Não 1ª linha isolada (exceto comorbidade).</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="bizu"><span class="tag">★ Bizu</span> 1ª linha = <b>tiazídico, IECA/BRA, BCC</b>. Metildopa é a escolha clássica na <b>gestante</b>. A meta de PA segue a diretriz vigente e o risco do paciente.</div>
+  </section>
+
+  <!-- 3 -->
+  <section id="ic">
+    <div class="sec-head"><span class="sec-num">03</span><h2>Insuficiência cardíaca (FE reduzida) ★</h2></div>
+    <p>Os <b>4 pilares</b> que <span class="hl">reduzem mortalidade</span> na ICFER:</p>
+    <div class="pillars">
+      <div class="pillar"><h4>IECA/BRA ou INRA</h4><p>Sacubitril-valsartana (INRA) é preferencial em muitos casos. Não associar IECA + INRA.</p></div>
+      <div class="pillar"><h4>Betabloqueador</h4><p>Carvedilol, bisoprolol, metoprolol succinato. <b>Titular devagar</b>; não iniciar na descompensação aguda.</p></div>
+      <div class="pillar"><h4>Antagonista mineralocorticoide</h4><p>Espironolactona/eplerenona. Vigiar <b>hipercalemia</b> e função renal.</p></div>
+      <div class="pillar"><h4>iSGLT2</h4><p>Dapagliflozina/empagliflozina. Benefício mesmo sem diabetes.</p></div>
+    </div>
+    <p><b>Sintomáticos:</b> diuréticos de alça (furosemida) aliviam a congestão, mas <b>não mudam mortalidade</b>; digoxina para sintomas/controle de FC (janela estreita).</p>
+    <div class="trap"><span class="tag">⚠ Pegadinha</span> <b>AINEs pioram a IC</b> (retêm sódio/água, ↓ resposta a diuréticos e IECA) e devem ser evitados. <b>BCC não-diidro</b> (verapamil/diltiazem) também são contraindicados na ICFER.</div>
+    <div class="bizu"><span class="tag">★ Bizu</span> Oriente o paciente a <b>pesar-se diariamente</b>: ganho rápido de peso = congestão/descompensação. É o parâmetro caseiro mais útil na IC.</div>
+  </section>
+
+  <!-- 4 -->
+  <section id="coronaria">
+    <div class="sec-head"><span class="sec-num">04</span><h2>Doença coronariana &amp; SCA ★</h2></div>
+    <p>Prevenção secundária — mnemônico <b>“BASE”</b>:</p>
+    <div class="tbl-scroll">
+    <table class="tbl">
+      <thead><tr><th>Letra</th><th>Pilar</th><th>Observações</th></tr></thead>
+      <tbody>
+        <tr><th>B</th><td>Betabloqueador</td><td>↓ FC e consumo de O₂; pós-IAM.</td></tr>
+        <tr><th>A</th><td>Antiagregante</td><td>AAS para todos; na SCA, <b>dupla antiagregação (DAPT)</b>: AAS + inibidor P2Y12 (clopidogrel, ticagrelor, prasugrel).</td></tr>
+        <tr><th>S</th><td>Estatina (Statin)</td><td>Alta potência; meta de <b>LDL</b> agressiva.</td></tr>
+        <tr><th>E</th><td>IECA (ECA)</td><td>IECA/BRA, sobretudo com disfunção de VE, HAS, DM.</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <p><b>Angina/isquemia:</b> nitratos (alívio), com <b>intervalo livre</b> para evitar tolerância.</p>
+    <div class="trap"><span class="tag">⚠ Pegadinha</span> <b>Nitrato + inibidor de PDE5</b> (sildenafila, tadalafila) = <span class="hl">hipotensão grave — contraindicado</span>. Sempre pergunte sobre uso de “estimulantes da ereção”.</div>
+    <div class="bizu"><span class="tag">★ Bizu</span> Na DAPT, o farmacêutico vigia <b>sangramento</b> e <b>adesão</b> (a interrupção precoce do P2Y12 após stent é perigosa). Oriente a não suspender por conta própria.</div>
+  </section>
+
+  <!-- 5 -->
+  <section id="fa">
+    <div class="sec-head"><span class="sec-num">05</span><h2>Fibrilação atrial &amp; anticoagulação ★</h2></div>
+    <p><b>FA:</b> controle de <b>frequência</b> (BB, BCC não-diidro, digoxina) × controle de <b>ritmo</b> (amiodarona, propafenona); <b>anticoagulação</b> conforme escore de risco (CHA₂DS₂-VASc).</p>
+    <div class="tbl-scroll">
+    <table class="tbl">
+      <thead><tr><th></th><th>Varfarina</th><th>DOACs (dabigatrana, rivaroxabana, apixabana, edoxabana)</th></tr></thead>
+      <tbody>
+        <tr><th>Mecanismo</th><td>Antagonista da vitamina K.</td><td>Inibidores diretos (trombina ou fator Xa).</td></tr>
+        <tr><th>Monitorização</th><td><b>INR</b> (alvo geralmente <b>2–3</b>).</td><td><b>Sem INR de rotina</b>; ajuste pela <b>função renal</b>.</td></tr>
+        <tr><th>Interações</th><td><b>Muitas</b> (CYP, antibióticos, amiodarona) e <b>dieta</b> (vit. K).</td><td>Menos interações alimentares; ainda há interações medicamentosas.</td></tr>
+        <tr><th>Antídoto</th><td>Vitamina K (e complexo protrombínico).</td><td>Idarucizumabe (dabigatrana); andexanet (anti-Xa).</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="bizu"><span class="tag">★ Bizu</span> Varfarina: <b>dieta de vitamina K constante</b> (não “cortar” verduras, mas manter regularidade), início lento (sobreposição com heparina). <b>Amiodarona</b> tem RAM em vários órgãos (tireoide, pulmão, fígado, QT) e <b>↑ varfarina e digoxina</b>.</div>
+  </section>
+
+  <!-- 6 -->
+  <section id="lipides">
+    <div class="sec-head"><span class="sec-num">06</span><h2>Dislipidemia ★</h2></div>
+    <ul class="clean">
+      <li><b>Estatinas</b> (1ª linha): reduzem LDL e eventos. RAM: <b>mialgia/miopatia</b> (raramente rabdomiólise), ↑ transaminases. Monitorar perfil lipídico e <b>sintomas musculares</b> (CK se sintomas).</li>
+      <li><b>Ezetimiba</b>: add-on à estatina. <b>Inibidores de PCSK9</b>: alto custo, grande redução de LDL.</li>
+      <li><b>Fibratos</b>: triglicérides; cuidado <b>fibrato + estatina</b> (↑ miopatia; genfibrozila é a pior combinação).</li>
+    </ul>
+    <div class="trap"><span class="tag">⚠ Pegadinha</span> <b>Sinvastatina e atorvastatina</b> são metabolizadas pelo <b>CYP3A4</b>: associadas a inibidores (claritromicina, azólicos, suco de toranja) ↑ o risco de <b>miopatia/rabdomiólise</b>. Pravastatina/rosuvastatina dependem menos do CYP3A4.</div>
+  </section>
+
+  <!-- 7 -->
+  <section id="eletrolitos">
+    <div class="sec-head"><span class="sec-num">07</span><h2>Eletrólitos — quem sobe e quem desce o K⁺ ★</h2></div>
+    <div class="grid2">
+      <div class="box"><p><b>↓ Potássio (hipocalemia)</b></p><p>Diuréticos <b>tiazídicos</b> e de <b>alça</b> (furosemida). A hipocalemia <span class="hl">potencializa a toxicidade da digoxina</span>.</p></div>
+      <div class="box"><p><b>↑ Potássio (hipercalemia)</b></p><p><b>IECA, BRA, espironolactona/eplerenona</b>, poupadores de K⁺. Risco maior se combinados ou com ↓ função renal.</p></div>
+    </div>
+    <div class="bizu"><span class="tag">★ Bizu</span> Combinações que exigem vigiar o K⁺ e a creatinina: <b>IECA/BRA + espironolactona</b> (↑ K) e <b>digoxina + diurético</b> (↓ K → intoxicação digitálica).</div>
+  </section>
+
+  <!-- 8 -->
+  <section id="interacoes">
+    <div class="sec-head"><span class="sec-num">08</span><h2>Interações de ouro ★</h2></div>
+    <div class="tbl-scroll">
+    <table class="tbl">
+      <thead><tr><th>Combinação</th><th>Consequência</th></tr></thead>
+      <tbody>
+        <tr><th>Nitrato + inibidor PDE5</th><td><b>Hipotensão grave</b> — contraindicado.</td></tr>
+        <tr><th>Betabloqueador + verapamil/diltiazem</th><td><b>Bradicardia / bloqueio AV</b>.</td></tr>
+        <tr><th>Digoxina + amiodarona/verapamil</th><td>↑ nível de digoxina → <b>toxicidade</b>.</td></tr>
+        <tr><th>Digoxina + diurético (hipocalemia)</th><td>↑ toxicidade digitálica.</td></tr>
+        <tr><th>Varfarina + amiodarona/antibióticos/AINE</th><td>↑ INR / <b>sangramento</b>.</td></tr>
+        <tr><th>Sinvastatina/atorvastatina + inibidor CYP3A4</th><td><b>Miopatia / rabdomiólise</b>.</td></tr>
+        <tr><th>IECA/BRA/espironolactona + AINE</th><td>↓ função renal e ↓ efeito anti-hipertensivo; ↑ K⁺.</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </section>
+
+  <!-- 9 -->
+  <section id="adesao">
+    <div class="sec-head"><span class="sec-num">09</span><h2>Adesão &amp; educação</h2></div>
+    <ul class="clean">
+      <li><b>HAS e dislipidemia são assintomáticas</b> → adesão tende a ser baixa. Simplificar o esquema (dose fixa combinada, 1×/dia), educar sobre o risco silencioso.</li>
+      <li>Ensinar <b>sinais de alerta</b>: sangramento (anticoagulante), ganho de peso/edema (IC), sintomas de hipo/hipercalemia, hipotensão.</li>
+      <li><b>Automonitorização</b>: PA, peso diário (IC), INR (varfarina), glicemia se DM.</li>
+      <li>Orientar <b>interações alimentares</b> (vit. K com varfarina; moderar sal/álcool) e a <b>não suspender</b> antiagregantes por conta própria.</li>
+    </ul>
+  </section>
+
+  <!-- 10 -->
+  <section id="pegadinhas">
+    <div class="sec-head"><span class="sec-num">10</span><h2>Pegadinhas consolidadas</h2></div>
+    <div class="trap"><span class="tag">⚠ Top pegadinhas</span>
+      <ul class="clean" style="margin:0">
+        <li><b>IECA</b>: tosse seca, hipercalemia, ↑ creatinina; <b>contraindicado na gestação</b>.</li>
+        <li><b>4 pilares da ICFER</b>: IECA/BRA/INRA + betabloqueador + antagonista mineralocorticoide + iSGLT2.</li>
+        <li><b>AINEs</b> pioram IC e HAS e reduzem o efeito de anti-hipertensivos.</li>
+        <li><b>Tiazídico/alça ↓ K⁺</b>; <b>IECA/BRA/espironolactona ↑ K⁺</b>.</li>
+        <li><b>Varfarina</b>: INR 2–3, muitas interações e dieta de vit. K constante.</li>
+        <li><b>DOACs</b>: sem INR de rotina, mas ajustar pela função renal.</li>
+        <li><b>Nitrato + sildenafila</b> = contraindicado (hipotensão).</li>
+        <li><b>Betabloqueador + verapamil/diltiazem</b> = bradicardia/bloqueio.</li>
+        <li><b>Sinvastatina + inibidor CYP3A4</b> = miopatia.</li>
+        <li><b>Digoxina</b>: janela estreita; hipocalemia aumenta a toxicidade.</li>
+        <li>Betabloqueador na IC é <b>titulado devagar</b>, não iniciado na descompensação aguda.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 11 -->
+  <section id="casos">
+    <div class="sec-head"><span class="sec-num">11</span><h2>Casos clínicos — autoteste ★</h2></div>
+    <p>Leia, decida a conduta e clique para conferir.</p>
+    <div class="fc-grid" id="caseGrid"></div>
+  </section>
+
+  <footer>
+    <b>Fontes-base:</b> farmacoterapia cardiovascular (HAS, IC, doença coronariana/SCA, FA, dislipidemia); diretrizes da Sociedade Brasileira de Cardiologia (metas seguem a versão vigente); farmacologia clínica e interações medicamentosas. Material de estudo — confronte com o edital e a bibliografia da sua banca.
+  </footer>
+
+</div>
+
+<script>
+  const cases = [
+    {q:"Paciente hipertenso em uso de enalapril desenvolve tosse seca persistente, sem outra causa. Qual a conduta?", a:"A tosse seca é RAM clássica dos IECA (acúmulo de bradicinina). Conduta: substituir por um BRA (–sartana), que controla a PA sem causar tosse. Manter a vigilância de potássio e função renal."},
+    {q:"Quais classes de medicamentos reduzem a mortalidade na insuficiência cardíaca com fração de ejeção reduzida?", a:"Os '4 pilares': IECA/BRA ou INRA (sacubitril-valsartana) + betabloqueador + antagonista mineralocorticoide (espironolactona) + iSGLT2 (dapagliflozina/empagliflozina). Diuréticos de alça aliviam congestão, mas não mudam mortalidade."},
+    {q:"Paciente com IC compensada começa a usar ibuprofeno por conta própria para dor no joelho. Por que isso é um problema?", a:"AINEs retêm sódio e água, elevam a PA, reduzem a resposta a diuréticos e IECA e podem descompensar a IC e piorar a função renal. Conduta: suspender o AINE e oferecer alternativa analgésica mais segura."},
+    {q:"Paciente em uso de enalapril e espironolactona apresenta K⁺ = 6,0 mEq/L. Como interpretar?", a:"Hipercalemia por efeito aditivo (ambos retêm potássio), agravada se houver disfunção renal. Conduta: comunicar à equipe, reavaliar doses/associação, checar função renal e orientar sobre sinais de hipercalemia."},
+    {q:"Paciente em varfarina estável inicia claritromicina para uma infecção. Qual o risco e a conduta?", a:"Risco de aumento do INR e sangramento (interação que potencializa a varfarina). Conduta: monitorar INR mais de perto, alertar para sinais de sangramento e considerar antibiótico alternativo com a equipe."},
+    {q:"Qual o alvo usual de INR para anticoagulação na fibrilação atrial não valvar com varfarina?", a:"Em geral, INR entre 2 e 3. A decisão de anticoagular baseia-se no risco tromboembólico (CHA₂DS₂-VASc) versus o risco de sangramento."},
+    {q:"Homem com angina e nitrato sublingual de resgate relata uso de sildenafila. Qual a orientação crítica?", a:"A associação nitrato + inibidor de PDE5 causa hipotensão grave e é contraindicada. Orientar a não usar os dois juntos e respeitar o intervalo de segurança; comunicar ao prescritor."},
+    {q:"Paciente em sinvastatina inicia claritromicina e passa a ter dor muscular intensa. O que considerar?", a:"Interação via CYP3A4: a claritromicina inibe o metabolismo da sinvastatina, elevando o risco de miopatia/rabdomiólise. Conduta: suspender/segurar a estatina durante o antibiótico, dosar CK se indicado e reavaliar a escolha da estatina."},
+    {q:"Idoso em digoxina e furosemida apresenta náusea, visão turva e arritmia. Qual o mecanismo provável?", a:"Intoxicação digitálica favorecida pela hipocalemia induzida pela furosemida (a digoxina tem janela estreita). Conduta: avaliar nível de digoxina e potássio, corrigir o K⁺ e ajustar a terapia com a equipe."},
+    {q:"Para controle de frequência na FA, o médico cogita associar betabloqueador a verapamil. Qual o alerta farmacêutico?", a:"A combinação betabloqueador + verapamil/diltiazem causa bradicardia e bloqueio AV. Deve-se evitar a associação e escolher uma única estratégia de controle de frequência com monitorização."},
+    {q:"Paciente hipertenso assintomático abandona a medicação porque 'não sente nada'. Como melhorar a adesão?", a:"Educar sobre o caráter silencioso e o risco cardiovascular da HAS, simplificar o esquema (associação em dose fixa, 1×/dia), usar lembretes e automonitorização da PA, e pactuar metas (concordância)."},
+    {q:"Que parâmetro caseiro o farmacêutico deve ensinar o paciente com IC a monitorar, e por quê?", a:"O peso diário: ganho rápido de peso (ex.: 2 kg em poucos dias) sinaliza retenção de líquidos/congestão e descompensação iminente, permitindo intervenção precoce antes da piora dos sintomas."}
+  ];
+  const grid = document.getElementById('caseGrid');
+  cases.forEach(c=>{
+    const b=document.createElement('button');b.className='fc case';b.type='button';
+    b.innerHTML=`<span class="q">${c.q}</span><span class="hint">Ver conduta</span><span class="ans">${c.a}</span>`;
+    b.addEventListener('click',()=>b.classList.toggle('open'));
+    grid.appendChild(b);
+  });
+</script>
+</body>
+</html>

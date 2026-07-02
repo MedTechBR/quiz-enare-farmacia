@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Erros de Medicação — Segurança do Paciente | Guia de revisão</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@500;600;700;800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#E7E1D2;--surface:#FBF8F0;--surface-2:#F3EEE1;
+    --ink:#143C42;--ink-soft:#4E5F5C;--vermilion:#D6492A;--ochre:#B98220;--green:#3C6E47;--blue:#2C5A74;
+    --line:rgba(20,60,66,.22);--line-strong:rgba(20,60,66,.55);
+    --font-display:'Anton',Impact,sans-serif;--font-head:'Archivo',system-ui,sans-serif;--font-body:'IBM Plex Sans',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+  body{margin:0;background:radial-gradient(circle at 100% -2%, rgba(214,73,42,.06), transparent 38%),var(--paper);
+    color:var(--ink);font-family:var(--font-body);line-height:1.55;padding:clamp(16px,3.5vw,44px) clamp(12px,4vw,40px) 80px}
+  .wrap{max-width:1080px;margin:0 auto}
+  .top-rule{height:6px;background:var(--ink)}
+  .kicker{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-family:var(--font-head);font-weight:700;text-transform:uppercase;letter-spacing:.15em;font-size:11px;color:var(--ink-soft);padding:9px 2px;border-bottom:1px solid var(--line)}
+  .kicker .dot{color:var(--vermilion)}
+  h1{font-family:var(--font-display);font-weight:400;line-height:.92;font-size:clamp(32px,6.6vw,70px);margin:16px 0 8px;text-transform:uppercase;letter-spacing:.5px}
+  h1 .accent{color:var(--vermilion)}
+  .dek{font-size:clamp(15px,2vw,17.5px);color:var(--ink-soft);max-width:66ch;border-top:3px double var(--line-strong);padding-top:12px}
+  .dek b{color:var(--ink);font-weight:600}
+  nav.toc{position:sticky;top:0;z-index:20;background:rgba(231,225,210,.94);backdrop-filter:blur(6px);margin:18px 0 8px;padding:10px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  nav.toc ul{list-style:none;display:flex;gap:7px;flex-wrap:wrap;margin:0;padding:0}
+  nav.toc a{font-family:var(--font-head);font-weight:600;font-size:12px;text-decoration:none;color:var(--ink);border:1.5px solid var(--line-strong);border-radius:2px;padding:5px 10px;transition:background .12s,color .12s}
+  nav.toc a:hover{background:var(--ink);color:var(--surface)}
+  section{margin:38px 0 0;scroll-margin-top:64px}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:14px;border-bottom:2px solid var(--ink);padding-bottom:8px}
+  .sec-num{font-family:var(--font-display);font-size:clamp(26px,4vw,40px);color:var(--vermilion);line-height:.8}
+  .sec-head h2{font-family:var(--font-head);font-weight:800;font-size:clamp(18px,3vw,25px);margin:0;letter-spacing:-.01em}
+  p{margin:0 0 12px}.lead{font-size:16px}
+  strong,b{color:var(--ink);font-weight:600}.hl{color:var(--vermilion);font-weight:600}
+  ul.clean{margin:0 0 12px;padding-left:18px}ul.clean li{margin:5px 0}
+  .box{background:var(--surface);border:1.5px solid var(--ink);border-radius:3px;box-shadow:4px 4px 0 var(--ink);padding:16px 18px;margin:14px 0}
+  .grid2{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+  .bizu{border:1.5px dashed var(--green);background:rgba(60,110,71,.06);border-radius:3px;padding:13px 16px;margin:14px 0}
+  .bizu .tag{font-family:var(--font-head);font-weight:700;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--green);display:block;margin-bottom:5px}
+  .bizu b{color:var(--green)}
+  .trap{border:1.5px solid var(--vermilion);background:rgba(214,73,42,.05);border-radius:3px;padding:13px 16px;margin:14px 0}
+  .trap .tag{font-family:var(--font-head);font-weight:700;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--vermilion);display:block;margin-bottom:5px}
+  .tbl{width:100%;border-collapse:collapse;margin:14px 0;font-size:12.5px;background:var(--surface)}
+  .tbl th,.tbl td{border:1px solid var(--line-strong);padding:8px 10px;text-align:left;vertical-align:top}
+  .tbl thead th{background:var(--ink);color:var(--surface);font-family:var(--font-head);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.03em}
+  .tbl tbody th{background:var(--surface-2);font-family:var(--font-head);font-weight:700;white-space:nowrap}
+  .tbl-scroll{overflow-x:auto}
+  .chip{display:inline-block;font-family:var(--font-head);font-weight:700;font-size:10px;text-transform:uppercase;letter-spacing:.05em;padding:2px 7px;border-radius:2px;color:#fff;background:var(--blue)}
+  .fc-grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));margin-top:14px}
+  .fc{background:var(--surface);border:1.5px solid var(--ink);border-radius:3px;box-shadow:4px 4px 0 var(--ink);padding:16px 17px;cursor:pointer;text-align:left;width:100%;font-family:var(--font-body);color:var(--ink);display:flex;flex-direction:column;gap:9px;transition:transform .12s,box-shadow .12s}
+  .fc:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--vermilion)}
+  .fc:focus-visible{outline:3px solid var(--vermilion);outline-offset:3px}
+  .fc .q{font-family:var(--font-head);font-weight:700;font-size:15px;line-height:1.28}
+  .fc .hint{font-family:var(--font-head);font-weight:600;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--vermilion)}
+  .fc .ans{font-size:13.5px;color:var(--ink-soft)}
+  .fc:not(.open) .ans{display:none}.fc.open .hint{display:none}
+  .case .q::before{content:"CASO ";font-family:var(--font-display);color:var(--vermilion);font-size:12px;letter-spacing:.1em}
+  footer{margin:46px 0 0;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--ink-soft)}
+  footer b{color:var(--ink)}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="top-rule"></div>
+    <div class="kicker">
+      <span>Segurança do Paciente <span class="dot">·</span> Farmácia Clínica</span>
+      <span>Resmulti · ENARE · EBSERH · HUs</span>
+    </div>
+    <h1>Erros de <span class="accent">Medicação</span></h1>
+    <p class="dek">Tipos, causas, prevenção e <b>quase falha</b> (near miss). Guia de revisão com forte ênfase em <b>casos clínicos</b> e nas definições que a banca mais confunde.</p>
+  </header>
+
+  <nav class="toc" aria-label="Índice">
+    <ul>
+      <li><a href="#definicoes">1 · Definições ★</a></li>
+      <li><a href="#incidentes">2 · Classificar incidentes ★</a></li>
+      <li><a href="#etapas">3 · Erro por etapa</a></li>
+      <li><a href="#natureza">4 · Erro por natureza</a></li>
+      <li><a href="#gravidade">5 · Gravidade (NCC MERP)</a></li>
+      <li><a href="#causas">6 · Causas / Reason ★</a></li>
+      <li><a href="#cultura">7 · Cultura de segurança</a></li>
+      <li><a href="#prevencao">8 · Prevenção ★</a></li>
+      <li><a href="#marco">9 · Marco brasileiro ★</a></li>
+      <li><a href="#pegadinhas">10 · Pegadinhas</a></li>
+      <li><a href="#casos">11 · Casos clínicos ★</a></li>
+    </ul>
+  </nav>
+
+  <!-- 1 -->
+  <section id="definicoes">
+    <div class="sec-head"><span class="sec-num">01</span><h2>Definições fundamentais ★</h2></div>
+    <p class="lead">A distinção mais cobrada: o que é evitável e o que não é.</p>
+    <div class="tbl-scroll">
+    <table class="tbl">
+      <thead><tr><th>Termo</th><th>Definição</th><th>Evitável?</th></tr></thead>
+      <tbody>
+        <tr><th>Erro de medicação</th><td>Qualquer evento <b>evitável</b> que pode causar uso inapropriado ou dano, enquanto o medicamento está sob controle do profissional, paciente ou consumidor. Ocorre em qualquer etapa.</td><td><span class="hl">Sim</span></td></tr>
+        <tr><th>RAM<br>(reação adversa)</th><td>Resposta nociva e não intencional a um medicamento em <b>doses usuais</b>. Inerente ao fármaco.</td><td><b>Não</b> (não é erro)</td></tr>
+        <tr><th>EAM<br>(evento adverso a medicamento)</th><td>Qualquer <b>dano</b> causado pelo uso de um medicamento. Engloba RAM + erros que causaram dano.</td><td>Parcial</td></tr>
+        <tr><th>Quase erro / quase falha<br>(near miss)</th><td>Erro que foi <b>detectado e corrigido antes de atingir o paciente</b> (ou atingiu sem causar dano).</td><td>—</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="bizu"><span class="tag">★ Bizu</span> <b>Erro é evitável; RAM não.</b> Todo EAM é dano; nem todo erro vira dano (pode ser near miss). A interseção “erro que causou dano” = <b>EAM evitável</b>.</div>
+  </section>
+
+  <!-- 2 -->
+  <section id="incidentes">
+    <div class="sec-head"><span class="sec-num">02</span><h2>Classificação dos incidentes (OMS) ★</h2></div>
+    <div class="tbl-scroll">
+    <table class="tbl">
+      <thead><tr><th>Categoria</th><th>O que é</th></tr></thead>
+      <tbody>
+        <tr><th>Circunstância notificável</th><td>Há <b>potencial</b> para dano, mas ainda não ocorreu incidente (ex.: bomba de infusão com defeito guardada).</td></tr>
+        <tr><th>Near miss (quase erro)</th><td>Incidente que <b>não atingiu</b> o paciente.</td></tr>
+        <tr><th>Incidente sem dano</th><td><b>Atingiu</b> o paciente, mas <b>não causou dano</b>.</td></tr>
+        <tr><th>Incidente com dano<br>(evento adverso)</th><td>Atingiu o paciente e <b>causou dano</b>.</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="trap"><span class="tag">⚠ Pegadinha</span> <b>Near miss não atinge o paciente; “incidente sem dano” atinge, mas sem lesão.</b> A banca troca os dois. Ambos <b>devem ser notificados</b> — são ouro para o aprendizado.</div>
+  </section>
+
+  <!-- 3 -->
+  <section id="etapas">
+    <div class="sec-head"><span class="sec-num">03</span><h2>Erro por etapa do processo</h2></div>
+    <div class="tbl-scroll">
+    <table class="tbl">
+      <thead><tr><th>Etapa</th><th>Exemplos de erro</th></tr></thead>
+      <tbody>
+        <tr><th>Prescrição</th><td>Dose/via/frequência incorreta, medicamento errado, alergia ignorada, interação não checada, <b>abreviatura perigosa</b>, prescrição ilegível.</td></tr>
+        <tr><th>Transcrição</th><td>Cópia incorreta para o sistema/aprazamento.</td></tr>
+        <tr><th>Dispensação</th><td>Troca de medicamento (<b>LASA</b>), concentração/dose errada, paciente errado.</td></tr>
+        <tr><th>Preparo</th><td>Diluição/reconstituição incorreta, cálculo errado, contaminação.</td></tr>
+        <tr><th>Administração</th><td>Paciente/via/hora errada, técnica incorreta, omissão ou dose extra, velocidade de infusão errada.</td></tr>
+        <tr><th>Monitorização</th><td>Falha em acompanhar resposta/efeitos adversos.</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="bizu"><span class="tag">★ Bizu</span> A etapa de <b>prescrição</b> concentra grande parte dos erros, mas a de <b>administração</b> é a última barreira (e a que mais chega ao paciente). Cada etapa é uma “fatia” do queijo suíço.</div>
+  </section>
+
+  <!-- 4 -->
+  <section id="natureza">
+    <div class="sec-head"><span class="sec-num">04</span><h2>Erro por natureza</h2></div>
+    <p>Tipos clássicos (NCC MERP): <span class="chip">omissão</span> <span class="chip">dose errada</span> <span class="chip">medicamento errado</span> <span class="chip">via errada</span> <span class="chip">horário errado</span> <span class="chip">velocidade errada</span> <span class="chip">forma errada</span> <span class="chip">técnica errada</span> <span class="chip">paciente errado</span> <span class="chip">preparo errado</span> <span class="chip">medicamento deteriorado</span></p>
+    <div class="bizu"><span class="tag">★ Bizu</span> <b>Erro de omissão</b> (não administrar a dose devida) é o tipo mais frequentemente subnotificado — “não fazer” também é erro.</div>
+  </section>
+
+  <!-- 5 -->
+  <section id="gravidade">
+    <div class="sec-head"><span class="sec-num">05</span><h2>Gravidade — NCC MERP (A–I)</h2></div>
+    <div class="tbl-scroll">
+    <table class="tbl">
+      <thead><tr><th>Faixa</th><th>Significado</th></tr></thead>
+      <tbody>
+        <tr><th>A</th><td>Circunstância com <b>capacidade</b> de causar erro (nenhum erro ocorreu).</td></tr>
+        <tr><th>B–D</th><td>Erro <b>sem dano</b> (B: não atingiu; C: atingiu sem dano; D: atingiu e exigiu monitorização).</td></tr>
+        <tr><th>E–H</th><td>Erro <b>com dano</b> (temporário → permanente → risco de vida).</td></tr>
+        <tr><th>I</th><td>Erro que contribuiu para a <b>morte</b> do paciente.</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="bizu"><span class="tag">★ Bizu</span> <b>A</b> = só risco. <b>B–D</b> = erro sem dano. <b>E–H</b> = com dano. <b>I</b> = óbito. Quanto mais perto de I, mais grave.</div>
+  </section>
+
+  <!-- 6 -->
+  <section id="causas">
+    <div class="sec-head"><span class="sec-num">06</span><h2>Causas — modelo de Reason ★</h2></div>
+    <div class="grid2">
+      <div class="box"><p><b>Queijo suíço (James Reason)</b></p><p>O acidente acontece quando os <b>“buracos”</b> de várias barreiras se <b>alinham</b>. Foco no <span class="hl">sistema</span>, não na culpa individual.</p></div>
+      <div class="box"><p><b>Falhas ativas × latentes</b></p><p><b>Ativas:</b> erros/violações de quem está na ponta (executa). <b>Latentes:</b> decisões organizacionais (escala, sobrecarga, processos) que ficam “adormecidas” até se alinharem.</p></div>
+    </div>
+    <p><b>Tipos de erro humano (Reason):</b></p>
+    <ul class="clean">
+      <li><b>Deslize (slip):</b> falha na <b>execução</b> de uma ação automática (distração) — “peguei o frasco errado sem perceber”.</li>
+      <li><b>Lapso (lapse):</b> falha de <b>memória</b> — “esqueci de administrar”.</li>
+      <li><b>Engano (mistake):</b> falha no <b>planejamento</b> (regra ou conhecimento errado) — “escolhi a conduta errada achando estar certa”.</li>
+      <li><b>Violação:</b> desvio <b>intencional</b> de uma norma.</li>
+    </ul>
+    <div class="trap"><span class="tag">⚠ Pegadinha</span> <b>Deslize/lapso</b> = a ação não saiu como planejada (planejamento certo, execução falha). <b>Engano</b> = o plano em si estava errado. <b>Violação</b> = consciente e deliberada.</div>
+  </section>
+
+  <!-- 7 -->
+  <section id="cultura">
+    <div class="sec-head"><span class="sec-num">07</span><h2>Cultura de segurança &amp; cultura justa</h2></div>
+    <ul class="clean">
+      <li><b>Cultura de segurança:</b> ambiente em que se <b>aprende com o erro</b>, com notificação <b>voluntária e não punitiva</b>.</li>
+      <li><b>Cultura justa (just culture):</b> equilíbrio entre não punir o erro honesto e responsabilizar a imprudência. Distingue:
+        <ul class="clean">
+          <li><b>Erro humano</b> (deslize/lapso) → <b>acolher/consolar</b> e corrigir o sistema.</li>
+          <li><b>Comportamento de risco</b> → <b>orientar/treinar (coach)</b>.</li>
+          <li><b>Imprudência/violação</b> deliberada → <b>responsabilizar</b>.</li>
+        </ul>
+      </li>
+    </ul>
+    <div class="trap"><span class="tag">⚠ Pegadinha</span> Cultura justa <b>não</b> é “nunca responsabilizar”. É não punir o <b>erro honesto</b> (senão ninguém notifica), mas responsabilizar a <b>imprudência</b>.</div>
+  </section>
+
+  <!-- 8 -->
+  <section id="prevencao">
+    <div class="sec-head"><span class="sec-num">08</span><h2>Estratégias de prevenção ★</h2></div>
+    <div class="grid2">
+      <div class="box"><p><b>Medicamentos de alta vigilância (MPP)</b></p><p>Erro com eles = alto risco de dano grave: <b>insulina, anticoagulantes</b> (heparina, varfarina), <b>opioides</b>, <b>eletrólitos concentrados</b> (KCl, NaCl hipertônico), quimioterápicos, bloqueadores neuromusculares, hipoglicemiantes. Estratégia: <b>dupla checagem</b>, restrição de acesso, padronização, alertas.</p></div>
+      <div class="box"><p><b>LASA — nomes/embalagens parecidas</b></p><p>Look-alike, sound-alike. Estratégias: <b>tall man lettering</b> (DOPAmina × DOBUTamina), separação física, alertas no sistema.</p></div>
+    </div>
+    <p><b>Outras barreiras de alto rendimento:</b></p>
+    <ul class="clean">
+      <li><b>Os “certos” da administração</b> (de 5 a 9): paciente, medicamento, dose, via e hora certos + registro, orientação, forma e <b>resposta/monitorização</b> certos.</li>
+      <li><b>Prescrição segura:</b> legível/eletrônica; evitar abreviaturas perigosas (<b>“U”</b> de unidade, “IU”); <b>nunca zero à direita</b> (1,0 mg → 1 mg) e <b>sempre zero à esquerda</b> (,5 → 0,5 mg).</li>
+      <li><b>Conciliação medicamentosa</b> nas <b>transições de cuidado</b> (admissão, transferência, alta).</li>
+      <li><b>Tecnologia:</b> prescrição eletrônica (CPOE), <b>código de barras</b> na administração, bombas inteligentes, <b>dose unitária</b>.</li>
+      <li><b>Notificação de incidentes</b> e farmacovigilância (NOTIVISA/VigiMed).</li>
+    </ul>
+    <div class="bizu"><span class="tag">★ Bizu</span> Barreira boa é a que <b>não depende da memória</b> do profissional (automação, padronização, restrição física). Educar é necessário, mas é a barreira <b>mais fraca</b>.</div>
+  </section>
+
+  <!-- 9 -->
+  <section id="marco">
+    <div class="sec-head"><span class="sec-num">09</span><h2>Marco brasileiro &amp; metas ★</h2></div>
+    <ul class="clean">
+      <li><b>PNSP</b> — Programa Nacional de Segurança do Paciente (<b>Portaria GM/MS nº 529/2013</b>).</li>
+      <li><b>RDC ANVISA nº 36/2013</b> — institui ações para a segurança do paciente; cria o <b>Núcleo de Segurança do Paciente (NSP)</b> e obriga o Plano de Segurança e a notificação de eventos adversos.</li>
+      <li><b>Protocolos básicos (MS/Anvisa/Fiocruz, 2013):</b> identificação do paciente; <b>segurança na prescrição, uso e administração de medicamentos</b>; cirurgia segura; higiene das mãos; prevenção de quedas; prevenção de lesão por pressão.</li>
+      <li><b>3º Desafio Global da OMS (2017): “Medicação sem Danos”</b> — reduzir danos graves evitáveis por medicamentos. Focos: situações de alto risco, polifarmácia e transições de cuidado.</li>
+    </ul>
+    <p><b>6 Metas Internacionais de Segurança do Paciente:</b></p>
+    <ol class="clean">
+      <li>Identificar corretamente o paciente (<b>2 identificadores</b>)</li>
+      <li>Comunicação efetiva</li>
+      <li>Segurança dos <b>medicamentos de alta vigilância</b></li>
+      <li>Cirurgia segura (local/procedimento/paciente corretos)</li>
+      <li>Higiene das mãos / reduzir infecções</li>
+      <li>Reduzir o risco de quedas (e lesão por pressão)</li>
+    </ol>
+    <div class="bizu"><span class="tag">★ Bizu</span> A <b>Meta 3</b> é a “sua” no tema de medicação: medicamentos de alta vigilância. E a <b>Meta 1</b> (identificar o paciente) entra em quase todo caso de “paciente errado”.</div>
+  </section>
+
+  <!-- 10 -->
+  <section id="pegadinhas">
+    <div class="sec-head"><span class="sec-num">10</span><h2>Pegadinhas consolidadas</h2></div>
+    <div class="trap"><span class="tag">⚠ Top pegadinhas</span>
+      <ul class="clean" style="margin:0">
+        <li><b>Erro = evitável; RAM = não evitável</b> (inerente ao fármaco).</li>
+        <li><b>Near miss</b> não atinge o paciente; <b>incidente sem dano</b> atinge, mas sem lesão.</li>
+        <li>Foco no <b>sistema</b> (queijo suíço, falhas latentes), não na culpa individual.</li>
+        <li><b>Cultura justa</b> ≠ impunidade: pune-se a imprudência, não o erro honesto.</li>
+        <li><b>Deslize/lapso</b> (execução) ≠ <b>engano</b> (planejamento) ≠ <b>violação</b> (deliberada).</li>
+        <li><b>KCl e eletrólitos concentrados</b> = alta vigilância (nunca soltos na enfermaria).</li>
+        <li>Prescrição: não abreviar <b>“U”</b>; sem zero à direita (1,0), com zero à esquerda (0,5).</li>
+        <li><b>Conciliação medicamentosa</b> nas transições de cuidado.</li>
+        <li><b>Dose unitária</b> e <b>código de barras</b> reduzem erros.</li>
+        <li>Notificação deve ser <b>voluntária e não punitiva</b>.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 11 -->
+  <section id="casos">
+    <div class="sec-head"><span class="sec-num">11</span><h2>Casos clínicos — autoteste ★</h2></div>
+    <p>Leia, classifique/decida a conduta e clique para conferir.</p>
+    <div class="fc-grid" id="caseGrid"></div>
+  </section>
+
+  <footer>
+    <b>Fontes-base:</b> PNSP (Portaria GM/MS 529/2013); RDC ANVISA 36/2013; Protocolos de Segurança MS/Anvisa/Fiocruz (2013); taxonomia NCC MERP; classificação de incidentes e “Medicação sem Danos” (OMS); modelo de James Reason; listas de medicamentos potencialmente perigosos (ISMP). Material de estudo — confronte com o edital e a bibliografia da sua banca.
+  </footer>
+
+</div>
+
+<script>
+  const cases = [
+    {q:"Enfermeira prepara insulina, percebe que aspirou 10× a dose e descarta antes de aplicar no paciente. Como classificar?", a:"Near miss (quase erro): o erro não atingiu o paciente. Deve ser notificado — é oportunidade de aprendizado e revela uma fragilidade do sistema (ex.: insulina de alta vigilância sem dupla checagem)."},
+    {q:"Prescrição manuscrita: 'Insulina 10U'. O 'U' é lido como zero e administram 100 unidades. Qual a falha e a prevenção?", a:"Abreviatura perigosa: 'U' deve ser escrito 'unidades'. Prevenção: proibir a abreviação, prescrição eletrônica, dupla checagem de medicamento de alta vigilância."},
+    {q:"Farmácia dispensa DOBUTAMINA no lugar de DOPAMINA por nomes parecidos. Que estratégia previne isso?", a:"Erro LASA (look-alike/sound-alike). Estratégias: tall man lettering (DOBUTamina × DOPAmina), separação física no estoque e alertas no sistema de dispensação."},
+    {q:"Paciente recebe medicamento aprazado para o leito vizinho. Qual meta de segurança falhou?", a:"Meta 1 — identificação correta do paciente (usar 2 identificadores, ex.: nome completo + data de nascimento; conferir pulseira). É erro de 'paciente errado'."},
+    {q:"Paciente faz anafilaxia a um antibiótico prescrito e administrado corretamente, sem alergia prévia conhecida. É erro de medicação?", a:"Não. É uma RAM (reação adversa) — resposta nociva em dose usual, não evitável. Conduta: tratar a reação e notificar farmacovigilância (não é erro)."},
+    {q:"KCl concentrado é diluído e infundido rápido em bolus, causando arritmia. Que princípio de prevenção foi violado?", a:"Eletrólitos concentrados são medicamentos de alta vigilância — não devem ficar disponíveis soltos na unidade e exigem dupla checagem/padronização de diluição e velocidade."},
+    {q:"Residente exausto no fim do plantão troca a dose de um fármaco. A instituição deve focar em punir o residente?", a:"Não. A falha ativa (troca de dose) tem uma condição latente por trás (sobrecarga/escala). O foco é o sistema (queijo suíço) e a cultura justa — corrigir o processo, não culpar o indivíduo."},
+    {q:"Paciente em jejum tem a dose do anti-hipertensivo suspensa e ninguém a reprograma depois. Que tipo de erro é?", a:"Erro de omissão (dose devida não administrada). Frequentemente subnotificado. Prevenção: protocolos de reprogramação e checagem do aprazamento."},
+    {q:"Na alta, o paciente não recebe a prescrição de um anti-hipertensivo que usava em casa. Que processo falhou?", a:"Conciliação medicamentosa nas transições de cuidado — comparar a lista de medicamentos de uso prévio com a prescrição de alta para evitar discrepâncias/omissões."},
+    {q:"Um técnico notifica espontaneamente um erro que ele mesmo cometeu, sem dano. A chefia o adverte formalmente. Qual o problema?", a:"Punir a notificação honesta destrói a cultura de segurança — inibe relatos futuros. Na cultura justa, o erro honesto é acolhido; pune-se a imprudência deliberada, não quem notifica."},
+    {q:"Um medicamento errado chega a ser administrado, mas o paciente não sofre nenhum dano. Categoria?", a:"Incidente sem dano (atingiu o paciente, sem lesão) — na escala NCC MERP, categoria C. Diferente de near miss, que não chega a atingir."},
+    {q:"Farmacêutico experiente, distraído, pega o frasco ao lado por engano. Slip, mistake ou violação?", a:"Deslize (slip): falha na execução de uma ação automática por distração — o plano estava correto. Não é engano (planejamento) nem violação (intencional)."}
+  ];
+  const grid = document.getElementById('caseGrid');
+  cases.forEach(c=>{
+    const b=document.createElement('button');b.className='fc case';b.type='button';
+    b.innerHTML=`<span class="q">${c.q}</span><span class="hint">Ver conduta</span><span class="ans">${c.a}</span>`;
+    b.addEventListener('click',()=>b.classList.toggle('open'));
+    grid.appendChild(b);
+  });
+</script>
+</body>
+</html>

@@ -140,6 +140,11 @@
   .topic h3{font-size:1rem;color:var(--ink);line-height:1.25;font-weight:700}
   .topic p{font-size:.82rem;color:var(--ink-soft);line-height:1.4}
   .topic .kind{font-size:.68rem;font-weight:700;letter-spacing:.03em;color:var(--amber);text-transform:uppercase}
+  .group-head{grid-column:1/-1;font-weight:700;color:var(--teal-deep);font-size:.95rem;
+    margin:10px 0 -2px;padding-bottom:6px;border-bottom:1px solid var(--line);
+    display:flex;align-items:baseline;gap:8px;flex-wrap:wrap}
+  .group-head:first-child{margin-top:0}
+  .group-head small{font-weight:500;color:var(--ink-soft);font-size:.8rem}
   .viewer-bar{display:flex;align-items:center;gap:10px;margin-bottom:12px;flex-wrap:wrap}
   .viewer-bar .vt{font-weight:700;color:var(--teal-deep);font-size:.95rem;flex:1;min-width:130px}
   .libframe{width:100%;height:calc(100vh - 200px);min-height:480px;border:1px solid var(--line);
@@ -160,7 +165,7 @@
     <div class="brand">
       <h1>Banca ENARE</h1>
       <span class="tag">Farmácia Multiprofissional</span>
-      <p>Banco de questões no padrão FGV/ENARE + guias de estudo. Aba <b>Questões</b>: responda e acompanhe sua taxa de acerto. Aba <b>Saúde Pública</b>: revise o SUS por tema. Aba <b>Farmácia</b>: apostila, mapas mentais e questões comentadas.</p>
+      <p>Banco de questões no padrão FGV/ENARE + guias de estudo. Aba <b>Questões</b>: responda e acompanhe sua taxa de acerto. Aba <b>Saúde Pública</b>: revise o SUS por tema. Aba <b>Farmácia</b>: apostila, mapas mentais, guias de revisão e questões comentadas.</p>
     </div>
   </div>
 </header>
@@ -218,7 +223,7 @@
 
   <div id="panel-farmacia" class="panel" hidden>
     <div class="lib-list">
-      <p class="topics-intro">Material de <b>Farmácia</b> para a residência — apostila de revisão, mapas mentais e caderno de questões comentadas. Toque em um item para abrir.</p>
+      <p class="topics-intro">Material de <b>Farmácia</b> para a residência — apostila de revisão, mapas mentais, guias de revisão por tema e caderno de questões comentadas. Toque em um item para abrir.</p>
       <div class="topics" data-grid="farmacia"><!-- preenchido via JS --></div>
     </div>
     <div class="lib-view" hidden>
@@ -4438,12 +4443,41 @@ const LIBRARIES = {
   },
   farmacia: {
     folder: "farmacia/",
-    label: "Material",
     items: [
+      {header:"Apostila & questões", sub:"comece por aqui"},
       {f:"apostila-revisao-residencia-farmacia.pdf", kind:"Apostila · PDF", t:"Apostila de Revisão — Residência em Farmácia", s:"Revisão completa: antimicrobianos, Portaria 344/98, interações/CYP450 e SNC (46 páginas)."},
+      {f:"caderno-questoes-comentadas.html", kind:"Questões comentadas", t:"Caderno de Questões Comentadas", s:"24 questões estilo banca com gabarito comentado, nos 4 temas da apostila."},
+
+      {header:"Mapas mentais", sub:"visão rápida em cards"},
+      {f:"antimicrobianos-mapa-mental.html", kind:"Mapa mental", t:"Antimicrobianos", s:"Classes por mecanismo, espectro, fármacos e resistência."},
+      {f:"bacterias_resistentes.html", kind:"Mapa mental", t:"Bactérias de Alta Resistência", s:"MRSA, VRE, KPC, ESBL, Pseudomonas e mais: mecanismos e tratamento."},
       {f:"interacoes-cyp450-mapa-mental.html", kind:"Mapa mental", t:"Interações Medicamentosas & CYP450", s:"Inibidores × indutores, pró-fármacos, interações PK/PD e alimentares."},
       {f:"medicamentos-snc-mapa-mental.html", kind:"Mapa mental", t:"Medicamentos do SNC", s:"Antidepressivos, antipsicóticos, ansiolíticos, anticonvulsivantes, opioides e mais."},
-      {f:"caderno-questoes-comentadas.html", kind:"Questões comentadas", t:"Caderno de Questões Comentadas", s:"24 questões estilo banca com gabarito comentado, nos 4 temas da apostila."}
+      {f:"portaria-344-mapa-mental.html", kind:"Mapa mental", t:"Portaria 344/98", s:"Listas A–F, receituários, cores, validade e adendos de prova."},
+
+      {header:"Farmácia clínica & cuidado ao paciente", sub:"guias de revisão"},
+      {f:"processo-cuidado-paciente.html", kind:"Guia de revisão", t:"Processo de Cuidado ao Paciente", s:"5 etapas, PRM × RNM, método Dáder e registro SOAP."},
+      {f:"orientacao-farmaceutica-adesao.html", kind:"Guia de revisão", t:"Orientação Farmacêutica & Adesão", s:"Tipos de não adesão, 5 dimensões da OMS, como medir e melhorar."},
+      {f:"interacoes-medicamentosas.html", kind:"Guia de revisão", t:"Interpretação das Interações Medicamentosas", s:"PK × PD, CYP450, interações clássicas e manejo clínico."},
+      {f:"monitorizacao-terapeutica-it-estreito.html", kind:"Guia de revisão", t:"Monitorização Terapêutica (IT estreito)", s:"Quando/como colher (vale × pico), faixas e manejo da toxicidade."},
+
+      {header:"Seguimento por população/especialidade", sub:"guias de revisão"},
+      {f:"seguimento-cardiologia.html", kind:"Guia de revisão", t:"Seguimento em Cardiologia", s:"HAS, IC (4 pilares), SCA, FA/anticoagulação, dislipidemia, eletrólitos."},
+      {f:"seguimento-paciente-idoso.html", kind:"Guia de revisão", t:"Seguimento do Paciente Idoso", s:"PK/PD, polifarmácia, cascata iatrogênica, Beers e STOPP/START."},
+      {f:"seguimento-pediatria.html", kind:"Guia de revisão", t:"Seguimento em Pediatria", s:"Maturação, cálculo de dose, fármacos a evitar e excipientes."},
+      {f:"oncologia-terapia-nutricional.html", kind:"Guia de revisão", t:"Oncologia & Terapia Nutricional", s:"Quimioterápicos, toxicidades, manipulação, NE/NP e realimentação."},
+
+      {header:"Farmácia hospitalar & segurança", sub:"guias de revisão"},
+      {f:"infeccao-hospitalar-antimicrobianos.html", kind:"Guia de revisão", t:"Infecção Hospitalar & Antimicrobianos", s:"IRAS, precauções, stewardship, PK/PD e patógenos resistentes."},
+      {f:"gestao-logistica-medicamentos.html", kind:"Guia de revisão", t:"Gestão & Logística de Medicamentos", s:"Ciclo, curvas ABC/XYZ, estoque, licitação e distribuição."},
+      {f:"erros-de-medicacao.html", kind:"Guia de revisão", t:"Erros de Medicação", s:"Tipos, near miss, modelo de Reason, alta vigilância e prevenção."},
+      {f:"protocolo-seguranca-medicamentos.html", kind:"Guia de revisão", t:"Protocolo de Segurança de Medicamentos", s:"3 eixos, escrita segura da dose e os 9 certos da administração."},
+
+      {header:"Legislação & farmacoepidemiologia", sub:"guias de revisão"},
+      {f:"resolucoes-cff-585-586.html", kind:"Guia de revisão", t:"Resoluções CFF 585 e 586/2013", s:"Atribuições clínicas e prescrição farmacêutica (o que se pode prescrever)."},
+      {f:"farmacoepidemiologia.html", kind:"Guia de revisão", t:"Princípios de Farmacoepidemiologia", s:"Desenhos de estudo, RR/OR/NNT, viés × confusão e DDD/ATC."},
+      {f:"estudos-medicamentos-fases-eum.html", kind:"Guia de revisão", t:"Estudos, Fases da Farmacovigilância & EUM", s:"Desenhos, fases I–IV, farmacovigilância e uso de medicamentos."},
+      {f:"farmacovigilancia-ram.html", kind:"Guia de revisão", t:"Farmacovigilância & RAM", s:"Classificação A–F, tipo A × B, causalidade (Naranjo) e VigiMed."}
     ]
   }
 };
@@ -4457,11 +4491,21 @@ function initLibrary(name){
   const title = document.querySelector(`[data-title="${name}"]`);
   const open  = document.querySelector(`[data-open="${name}"]`);
 
-  cfg.items.forEach((it, i)=>{
+  let n = 0;
+  cfg.items.forEach((it)=>{
+    if(it.header){
+      const h = document.createElement("div");
+      h.className = "group-head";
+      h.innerHTML = `<span>${it.header}</span>${it.sub?`<small>${it.sub}</small>`:""}`;
+      grid.appendChild(h);
+      return;
+    }
+    n++;
     const b = document.createElement("button");
     b.className = "topic"; b.type = "button";
+    const numLabel = cfg.label ? `<span class="n">${cfg.label} ${n}</span>` : "";
     const badge = it.kind ? `<span class="kind">${it.kind}</span>` : "";
-    b.innerHTML = `<span class="n">${cfg.label} ${i+1}</span>${badge}<h3>${it.t}</h3><p>${it.s}</p>`;
+    b.innerHTML = `${numLabel}${badge}<h3>${it.t}</h3><p>${it.s}</p>`;
     b.onclick = ()=>{
       const url = cfg.folder + it.f;
       title.textContent = it.t;

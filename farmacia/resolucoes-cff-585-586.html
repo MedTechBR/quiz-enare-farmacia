@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Resoluções CFF 585 e 586/2013 — Guia de revisão</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@500;600;700;800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#E7E1D2;--surface:#FBF8F0;--surface-2:#F3EEE1;
+    --ink:#143C42;--ink-soft:#4E5F5C;--vermilion:#D6492A;--ochre:#B98220;--green:#3C6E47;--blue:#2C5A74;
+    --line:rgba(20,60,66,.22);--line-strong:rgba(20,60,66,.55);
+    --font-display:'Anton',Impact,sans-serif;--font-head:'Archivo',system-ui,sans-serif;--font-body:'IBM Plex Sans',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+  body{margin:0;background:radial-gradient(circle at 100% -2%, rgba(214,73,42,.06), transparent 38%),var(--paper);
+    color:var(--ink);font-family:var(--font-body);line-height:1.55;padding:clamp(16px,3.5vw,44px) clamp(12px,4vw,40px) 80px}
+  .wrap{max-width:1080px;margin:0 auto}
+  .top-rule{height:6px;background:var(--ink)}
+  .kicker{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-family:var(--font-head);font-weight:700;text-transform:uppercase;letter-spacing:.15em;font-size:11px;color:var(--ink-soft);padding:9px 2px;border-bottom:1px solid var(--line)}
+  .kicker .dot{color:var(--vermilion)}
+  h1{font-family:var(--font-display);font-weight:400;line-height:.92;font-size:clamp(28px,5.4vw,60px);margin:16px 0 8px;text-transform:uppercase;letter-spacing:.5px}
+  h1 .accent{color:var(--vermilion)}
+  .dek{font-size:clamp(15px,2vw,17.5px);color:var(--ink-soft);max-width:66ch;border-top:3px double var(--line-strong);padding-top:12px}
+  .dek b{color:var(--ink);font-weight:600}
+  nav.toc{position:sticky;top:0;z-index:20;background:rgba(231,225,210,.94);backdrop-filter:blur(6px);margin:18px 0 8px;padding:10px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  nav.toc ul{list-style:none;display:flex;gap:7px;flex-wrap:wrap;margin:0;padding:0}
+  nav.toc a{font-family:var(--font-head);font-weight:600;font-size:12px;text-decoration:none;color:var(--ink);border:1.5px solid var(--line-strong);border-radius:2px;padding:5px 10px;transition:background .12s,color .12s}
+  nav.toc a:hover{background:var(--ink);color:var(--surface)}
+  section{margin:38px 0 0;scroll-margin-top:64px}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:14px;border-bottom:2px solid var(--ink);padding-bottom:8px}
+  .sec-num{font-family:var(--font-display);font-size:clamp(26px,4vw,40px);color:var(--vermilion);line-height:.8}
+  .sec-head h2{font-family:var(--font-head);font-weight:800;font-size:clamp(18px,3vw,25px);margin:0;letter-spacing:-.01em}
+  p{margin:0 0 12px}.lead{font-size:16px}
+  strong,b{color:var(--ink);font-weight:600}.hl{color:var(--vermilion);font-weight:600}
+  ul.clean{margin:0 0 12px;padding-left:18px}ul.clean li{margin:5px 0}
+  .box{background:var(--surface);border:1.5px solid var(--ink);border-radius:3px;box-shadow:4px 4px 0 var(--ink);padding:16px 18px;margin:14px 0}
+  .grid2{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+  .bizu{border:1.5px dashed var(--green);background:rgba(60,110,71,.06);border-radius:3px;padding:13px 16px;margin:14px 0}
+  .bizu .tag{font-family:var(--font-head);font-weight:700;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--green);display:block;margin-bottom:5px}
+  .bizu b{color:var(--green)}
+  .trap{border:1.5px solid var(--vermilion);background:rgba(214,73,42,.05);border-radius:3px;padding:13px 16px;margin:14px 0}
+  .trap .tag{font-family:var(--font-head);font-weight:700;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--vermilion);display:block;margin-bottom:5px}
+  .note{border:1.5px solid var(--blue);background:rgba(44,90,116,.06);border-radius:3px;padding:13px 16px;margin:14px 0}
+  .note .tag{font-family:var(--font-head);font-weight:700;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--blue);display:block;margin-bottom:5px}
+  .tbl{width:100%;border-collapse:collapse;margin:14px 0;font-size:12.5px;background:var(--surface)}
+  .tbl th,.tbl td{border:1px solid var(--line-strong);padding:8px 10px;text-align:left;vertical-align:top}
+  .tbl thead th{background:var(--ink);color:var(--surface);font-family:var(--font-head);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.03em}
+  .tbl tbody th{background:var(--surface-2);font-family:var(--font-head);font-weight:700;white-space:nowrap}
+  .tbl-scroll{overflow-x:auto}
+  .ynbox{display:grid;gap:12px;grid-template-columns:1fr 1fr;margin:12px 0}
+  .yn{border:1.5px solid var(--line-strong);border-radius:3px;padding:13px 15px}
+  .yn.no{border-color:var(--vermilion);background:rgba(214,73,42,.05)}
+  .yn.yes{border-color:var(--green);background:rgba(60,110,71,.06)}
+  .yn h4{font-family:var(--font-head);font-weight:800;margin:0 0 6px;font-size:14px;text-transform:uppercase;letter-spacing:.04em}
+  .yn.no h4{color:var(--vermilion)}.yn.yes h4{color:var(--green)}
+  .yn ul{margin:0;padding-left:16px;font-size:13px}.yn li{margin:4px 0}
+  .fc-grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));margin-top:14px}
+  .fc{background:var(--surface);border:1.5px solid var(--ink);border-radius:3px;box-shadow:4px 4px 0 var(--ink);padding:16px 17px;cursor:pointer;text-align:left;width:100%;font-family:var(--font-body);color:var(--ink);display:flex;flex-direction:column;gap:9px;transition:transform .12s,box-shadow .12s}
+  .fc:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--vermilion)}
+  .fc:focus-visible{outline:3px solid var(--vermilion);outline-offset:3px}
+  .fc .q{font-family:var(--font-head);font-weight:700;font-size:15px;line-height:1.28}
+  .fc .hint{font-family:var(--font-head);font-weight:600;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--vermilion)}
+  .fc .ans{font-size:13.5px;color:var(--ink-soft)}
+  .fc:not(.open) .ans{display:none}.fc.open .hint{display:none}
+  .case .q::before{content:"CASO ";font-family:var(--font-display);color:var(--vermilion);font-size:12px;letter-spacing:.1em}
+  footer{margin:46px 0 0;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--ink-soft)}
+  footer b{color:var(--ink)}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
+  @media (max-width:560px){.ynbox{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="top-rule"></div>
+    <div class="kicker">
+      <span>Legislação Farmacêutica <span class="dot">·</span> CFF</span>
+      <span>Resmulti · ENARE · EBSERH · HUs</span>
+    </div>
+    <h1>Resoluções CFF <span class="accent">585 &amp; 586</span>/2013</h1>
+    <p class="dek">As duas resoluções gêmeas (29/08/2013) que sustentam a prática clínica do farmacêutico: <b>585</b> (atribuições clínicas) e <b>586</b> (prescrição farmacêutica). Guia com o foco no que a banca cobra — sobretudo <b>o que se pode prescrever</b>.</p>
+  </header>
+
+  <nav class="toc" aria-label="Índice">
+    <ul>
+      <li><a href="#visao">1 · Visão geral ★</a></li>
+      <li><a href="#r585">2 · Res. 585 — atribuições ★</a></li>
+      <li><a href="#servicos">3 · Atribuição × serviço</a></li>
+      <li><a href="#r586">4 · Res. 586 — prescrição</a></li>
+      <li><a href="#prescrever">5 · O que pode prescrever ★</a></li>
+      <li><a href="#requisitos">6 · Requisitos &amp; vedações ★</a></li>
+      <li><a href="#status">7 · Status jurídico</a></li>
+      <li><a href="#pegadinhas">8 · Pegadinhas</a></li>
+      <li><a href="#casos">9 · Casos ★</a></li>
+    </ul>
+  </nav>
+
+  <!-- 1 -->
+  <section id="visao">
+    <div class="sec-head"><span class="sec-num">01</span><h2>Visão geral ★</h2></div>
+    <div class="grid2">
+      <div class="box"><p><b>Resolução CFF nº 585/2013</b></p><p>Regulamenta as <span class="hl">atribuições clínicas</span> do farmacêutico — direitos, responsabilidades e competências no <b>cuidado direto ao paciente</b>, promovendo o uso racional de medicamentos.</p></div>
+      <div class="box"><p><b>Resolução CFF nº 586/2013</b></p><p>Regula a <span class="hl">prescrição farmacêutica</span> — o ato pelo qual o farmacêutico seleciona e <b>documenta</b> terapias (farmacológicas e não) e intervenções no cuidado.</p></div>
+    </div>
+    <div class="bizu"><span class="tag">★ Bizu</span> Mesma data (29/08/2013) e complementares: a <b>585 dá o "guarda-chuva"</b> das atribuições clínicas; a <b>586 detalha uma delas</b> (a prescrição). Decore: <b>585 = atribuições; 586 = prescrição</b>.</div>
+  </section>
+
+  <!-- 2 -->
+  <section id="r585">
+    <div class="sec-head"><span class="sec-num">02</span><h2>Res. 585 — atribuições clínicas ★</h2></div>
+    <p>Principais atribuições do farmacêutico no cuidado ao paciente, família e comunidade:</p>
+    <ul class="clean">
+      <li>Realizar <b>anamnese farmacêutica</b>; verificar sinais e sintomas.</li>
+      <li>Acessar e <b>interpretar exames</b>; quando necessário, <b>solicitar exames</b> laboratoriais.</li>
+      <li><b>Monitorização terapêutica</b> e avaliação de resultados.</li>
+      <li><b>Acompanhamento/seguimento farmacoterapêutico</b>; <b>conciliação medicamentosa</b>; <b>revisão da farmacoterapia</b>.</li>
+      <li><b>Gestão da condição de saúde</b> e <b>manejo de problemas de saúde autolimitados</b>.</li>
+      <li><b>Prescrição farmacêutica</b> (nos termos da Res. 586) e <b>dispensação</b>.</li>
+      <li><b>Educação em saúde</b>; prover a <b>consulta farmacêutica</b> em <b>consultório farmacêutico</b> (com privacidade).</li>
+      <li><b>Registrar em prontuário</b>, elaborar <b>plano de cuidado</b> e emitir <b>declaração de serviços farmacêuticos</b>; encaminhar a outros profissionais.</li>
+    </ul>
+    <div class="box"><p><b>Anamnese farmacêutica</b> (definição da 585)</p><p>Procedimento de <b>coleta de dados</b> sobre o paciente, por <b>entrevista</b>, para conhecer sua história de saúde, elaborar o <b>perfil farmacoterapêutico</b> e identificar necessidades relacionadas à saúde.</p></div>
+  </section>
+
+  <!-- 3 -->
+  <section id="servicos">
+    <div class="sec-head"><span class="sec-num">03</span><h2>Atribuição × atividade × serviço</h2></div>
+    <div class="tbl-scroll">
+    <table class="tbl">
+      <thead><tr><th>Termo</th><th>Significado</th></tr></thead>
+      <tbody>
+        <tr><th>Atribuição</th><td>Direito/competência/responsabilidade do farmacêutico (o <b>escopo</b> da Res. 585).</td></tr>
+        <tr><th>Atividade</th><td>Ação do <b>processo de trabalho</b> (uma tarefa técnica específica).</td></tr>
+        <tr><th>Serviço</th><td>Conjunto de atividades reconhecido como serviço (ex.: <b>acompanhamento farmacoterapêutico, conciliação, revisão da farmacoterapia</b>).</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="trap"><span class="tag">⚠ Pegadinha</span> A Res. 585 deixa claro: <b>uma lista de atribuições não é uma lista de serviços</b>. Atribuição é a competência legal; o serviço é o produto entregue ao paciente.</div>
+  </section>
+
+  <!-- 4 -->
+  <section id="r586">
+    <div class="sec-head"><span class="sec-num">04</span><h2>Res. 586 — prescrição farmacêutica</h2></div>
+    <p><b>Conceito:</b> ato pelo qual o farmacêutico <b>seleciona e documenta</b> terapias farmacológicas e não farmacológicas e outras intervenções relativas ao cuidado, visando promoção, proteção e recuperação da saúde e prevenção de doenças. Prescrever inclui também <b>ofertar serviços farmacêuticos</b> ou <b>encaminhar</b> a outros profissionais.</p>
+    <div class="bizu"><span class="tag">★ Bizu</span> Prescrição farmacêutica ≠ “só escrever um medicamento”. Pode ser uma <b>medida não farmacológica</b>, a oferta de um serviço, ou um <b>encaminhamento</b>. O ato precisa ser <b>documentado</b>.</div>
+  </section>
+
+  <!-- 5 -->
+  <section id="prescrever">
+    <div class="sec-head"><span class="sec-num">05</span><h2>O que o farmacêutico pode prescrever ★</h2></div>
+    <div class="ynbox">
+      <div class="yn yes"><h4>✓ De forma autônoma (Art. 5º)</h4>
+        <ul>
+          <li>Medicamentos <b>isentos de prescrição (MIPs)</b></li>
+          <li>Industrializados e <b>magistrais</b> (alopáticos ou dinamizados)</li>
+          <li><b>Plantas medicinais e drogas vegetais</b></li>
+          <li>Outras categorias aprovadas pelo órgão sanitário federal</li>
+        </ul></div>
+      <div class="yn no"><h4>⚠ Condicionado (Art. 6º)</h4>
+        <ul>
+          <li>Medicamentos <b>sob prescrição médica (tarjados)</b></li>
+          <li><b>Somente</b> com <b>diagnóstico prévio</b></li>
+          <li><b>E</b> previsto em programa/protocolo/diretriz/norma técnica <b>ou</b> mediante <b>acordo de colaboração</b> com prescritor/instituição</li>
+          <li>Exige <b>título de especialista</b> na área clínica</li>
+        </ul></div>
+    </div>
+    <div class="trap"><span class="tag">⚠ Pegadinha</span>
+      O farmacêutico <b>não</b> pode prescrever medicamento tarjado “por conta própria”. Para tarjados (Art. 6º) são <b>obrigatórios</b>: diagnóstico prévio <b>+</b> protocolo institucional <b>ou</b> acordo de colaboração. Sem isso, só MIP (Art. 5º).</div>
+    <div class="bizu"><span class="tag">★ Bizu</span> <b>MIP = autônomo (Art. 5).</b> <b>Tarjado = condicionado (Art. 6): diagnóstico + protocolo/acordo + título de especialista.</b></div>
+  </section>
+
+  <!-- 6 -->
+  <section id="requisitos">
+    <div class="sec-head"><span class="sec-num">06</span><h2>Requisitos &amp; vedações da prescrição ★</h2></div>
+    <p><b>A prescrição deve conter (Art. 9º):</b></p>
+    <ul class="clean">
+      <li>Identificação do <b>estabelecimento/serviço</b>; nome e contato do <b>paciente</b>.</li>
+      <li>Terapia farmacológica: nome do medicamento/formulação, concentração/dinamização, forma farmacêutica, <b>via, dose, frequência e duração</b>, com instruções.</li>
+      <li>Terapia <b>não farmacológica</b> ou outra intervenção, quando houver.</li>
+      <li>Nome completo do farmacêutico, <b>assinatura e nº de registro no CRF</b>; <b>local e data</b>.</li>
+    </ul>
+    <ul class="clean">
+      <li><b>SUS (Art. 10):</b> <span class="hl">necessariamente</span> em conformidade com a <b>DCB</b> (ou DCI na falta).</li>
+      <li><b>Privado (Art. 11):</b> <span class="hl">preferentemente</span> conforme DCB/DCI.</li>
+    </ul>
+    <div class="trap"><span class="tag">⚠ Vedações (Art. 12)</span>
+      É <b>proibido</b> prescrever: sem identificação (sua ou do paciente); de forma <b>secreta, codificada, abreviada ou ilegível</b>; e <b>assinar receituário em branco</b>. Garante-se o <b>sigilo</b> dos dados (Art. 13) e a <b>autonomia/ética</b>, sem interesse comercial (Art. 14).</div>
+  </section>
+
+  <!-- 7 -->
+  <section id="status">
+    <div class="sec-head"><span class="sec-num">07</span><h2>Status jurídico — fique atento</h2></div>
+    <div class="note"><span class="tag">ℹ Atualização importante</span>
+      A <b>Res. 585</b> (atribuições clínicas) teve sua <b>legalidade reafirmada</b> na Justiça. Já a <b>Res. 586</b> (prescrição) foi alvo de <b>ação do CFM</b> e de <b>decisão judicial questionando/suspendendo sua aplicação</b> (com base na Lei do Ato Médico, nº 12.842/2013), em processo sujeito a recursos. <b>Para a prova, vale o texto da resolução</b>; mas confira o <b>status vigente</b>, pois a aplicabilidade da 586 está judicialmente disputada.</div>
+  </section>
+
+  <!-- 8 -->
+  <section id="pegadinhas">
+    <div class="sec-head"><span class="sec-num">08</span><h2>Pegadinhas consolidadas</h2></div>
+    <div class="trap"><span class="tag">⚠ Top pegadinhas</span>
+      <ul class="clean" style="margin:0">
+        <li><b>585 = atribuições clínicas; 586 = prescrição.</b> Mesma data (29/08/2013).</li>
+        <li><b>MIP → prescrição autônoma (Art. 5).</b></li>
+        <li><b>Tarjado → só com diagnóstico prévio + protocolo/acordo + título de especialista (Art. 6).</b></li>
+        <li>Farmacêutico <b>não</b> prescreve tarjado “por conta própria”.</li>
+        <li><b>SUS = DCB obrigatória</b>; privado = DCB preferencial.</li>
+        <li>Vedado prescrever <b>codificado, ilegível</b> ou assinar receita <b>em branco</b>.</li>
+        <li><b>Anamnese farmacêutica</b> = coleta de dados por entrevista (perfil farmacoterapêutico).</li>
+        <li><b>Consultório farmacêutico</b> exige <b>privacidade</b>.</li>
+        <li><b>Atribuição ≠ serviço</b> (a lista de atribuições não é lista de serviços).</li>
+        <li>Prescrição farmacêutica também pode ser <b>medida não farmacológica</b> ou <b>encaminhamento</b>.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 9 -->
+  <section id="casos">
+    <div class="sec-head"><span class="sec-num">09</span><h2>Casos — autoteste ★</h2></div>
+    <p>Leia, decida segundo as resoluções e clique para conferir.</p>
+    <div class="fc-grid" id="caseGrid"></div>
+  </section>
+
+  <footer>
+    <b>Fontes-base:</b> Resolução CFF nº 585/2013 (atribuições clínicas) e nº 586/2013 (prescrição farmacêutica); orientações dos CRFs; lista de MIPs (ANVISA). Conteúdo resumido e parafraseado para estudo. <b>Observação:</b> a aplicabilidade da Res. 586 está judicialmente disputada — confronte com o status vigente e com o edital da sua banca.
+  </footer>
+
+</div>
+
+<script>
+  const cases = [
+    {q:"Na farmácia, o farmacêutico avalia um paciente com sintomas de resfriado e prescreve um analgésico isento de prescrição. Isso é permitido?", a:"Sim. Pelo Art. 5º da Res. 586/2013, o farmacêutico pode prescrever de forma autônoma medicamentos isentos de prescrição (MIPs), desde que fundamentado em conhecimento clínico. Deve documentar o ato."},
+    {q:"Um farmacêutico quer prescrever, por conta própria, um antibiótico para um paciente com suspeita de infecção. Pode?", a:"Não. Antibiótico é tarjado (sob prescrição médica). Pelo Art. 6º, só seria possível com diagnóstico prévio E dentro de programa/protocolo institucional ou acordo de colaboração, além de título de especialista. Fora disso, a prescrição autônoma limita-se a MIPs."},
+    {q:"Em um programa institucional, com protocolo aprovado e acordo de colaboração, e havendo diagnóstico prévio, o farmacêutico ajusta a dose de um medicamento tarjado. É permitido?", a:"Sim — é exatamente a hipótese do Art. 6º: medicamento sob prescrição médica, com diagnóstico prévio e previsto em protocolo/acordo de colaboração (e com o profissional habilitado/especialista)."},
+    {q:"O que é a anamnese farmacêutica segundo a Res. 585?", a:"Procedimento de coleta de dados sobre o paciente, por entrevista, para conhecer a história de saúde, elaborar o perfil farmacoterapêutico e identificar necessidades relacionadas à saúde."},
+    {q:"Qual a diferença entre 'atribuição' e 'serviço' na Res. 585?", a:"Atribuição é o direito/competência legal do farmacêutico (escopo da resolução); serviço é o conjunto de atividades entregue ao paciente (ex.: acompanhamento farmacoterapêutico). Uma lista de atribuições não é uma lista de serviços."},
+    {q:"Numa prescrição farmacêutica no SUS, que nomenclatura deve ser usada para o medicamento?", a:"A Denominação Comum Brasileira (DCB), obrigatoriamente — ou a DCI na sua falta (Art. 10). No âmbito privado, a DCB é preferencial (Art. 11)."},
+    {q:"O farmacêutico pode assinar folhas de receituário em branco para agilizar o atendimento?", a:"Não. O Art. 12 veda assinar receituário em branco, bem como prescrever sem identificação (sua ou do paciente) ou de forma secreta, codificada, abreviada ou ilegível."},
+    {q:"O farmacêutico pode prescrever um fitoterápico isento de prescrição e uma planta medicinal?", a:"Sim. O Art. 5º inclui plantas medicinais, drogas vegetais e preparações magistrais (inclusive dinamizadas) entre os itens de prescrição autônoma, desde que isentos de prescrição médica e com fundamentação clínica."},
+    {q:"O que a Res. 585 exige quanto ao ambiente da consulta farmacêutica?", a:"A consulta deve ser provida em consultório farmacêutico ou outro ambiente que garanta a privacidade do atendimento ao paciente."},
+    {q:"A prescrição farmacêutica se resume a indicar um medicamento?", a:"Não. Pode incluir terapia não farmacológica, oferta de serviços farmacêuticos e encaminhamento a outros profissionais — tudo devidamente documentado."},
+    {q:"Diferencie, em uma frase, as Resoluções CFF 585 e 586.", a:"A 585 regulamenta as atribuições clínicas do farmacêutico (o conjunto de competências no cuidado ao paciente); a 586 regula especificamente a prescrição farmacêutica."},
+    {q:"Por que é importante saber o status jurídico atual da Res. 586?", a:"Porque a 586 (prescrição) foi alvo de ação judicial do CFM e de decisão questionando sua aplicação, com base na Lei do Ato Médico — diferentemente da 585, cuja legalidade foi reafirmada. Para a prova vale o texto, mas a aplicabilidade prática da 586 está disputada."}
+  ];
+  const grid = document.getElementById('caseGrid');
+  cases.forEach(c=>{
+    const b=document.createElement('button');b.className='fc case';b.type='button';
+    b.innerHTML=`<span class="q">${c.q}</span><span class="hint">Ver resposta</span><span class="ans">${c.a}</span>`;
+    b.addEventListener('click',()=>b.classList.toggle('open'));
+    grid.appendChild(b);
+  });
+</script>
+</body>
+</html>

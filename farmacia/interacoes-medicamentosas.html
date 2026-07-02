@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interpretação das Interações Medicamentosas — Guia de revisão</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@500;600;700;800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#E7E1D2;--surface:#FBF8F0;--surface-2:#F3EEE1;
+    --ink:#143C42;--ink-soft:#4E5F5C;--vermilion:#D6492A;--ochre:#B98220;--green:#3C6E47;--blue:#2C5A74;
+    --line:rgba(20,60,66,.22);--line-strong:rgba(20,60,66,.55);
+    --font-display:'Anton',Impact,sans-serif;--font-head:'Archivo',system-ui,sans-serif;--font-body:'IBM Plex Sans',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+  body{margin:0;background:radial-gradient(circle at 100% -2%, rgba(214,73,42,.06), transparent 38%),var(--paper);
+    color:var(--ink);font-family:var(--font-body);line-height:1.55;padding:clamp(16px,3.5vw,44px) clamp(12px,4vw,40px) 80px}
+  .wrap{max-width:1080px;margin:0 auto}
+  .top-rule{height:6px;background:var(--ink)}
+  .kicker{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-family:var(--font-head);font-weight:700;text-transform:uppercase;letter-spacing:.15em;font-size:11px;color:var(--ink-soft);padding:9px 2px;border-bottom:1px solid var(--line)}
+  .kicker .dot{color:var(--vermilion)}
+  h1{font-family:var(--font-display);font-weight:400;line-height:.92;font-size:clamp(28px,5.6vw,62px);margin:16px 0 8px;text-transform:uppercase;letter-spacing:.5px}
+  h1 .accent{color:var(--vermilion)}
+  .dek{font-size:clamp(15px,2vw,17.5px);color:var(--ink-soft);max-width:66ch;border-top:3px double var(--line-strong);padding-top:12px}
+  .dek b{color:var(--ink);font-weight:600}
+  nav.toc{position:sticky;top:0;z-index:20;background:rgba(231,225,210,.94);backdrop-filter:blur(6px);margin:18px 0 8px;padding:10px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  nav.toc ul{list-style:none;display:flex;gap:7px;flex-wrap:wrap;margin:0;padding:0}
+  nav.toc a{font-family:var(--font-head);font-weight:600;font-size:12px;text-decoration:none;color:var(--ink);border:1.5px solid var(--line-strong);border-radius:2px;padding:5px 10px;transition:background .12s,color .12s}
+  nav.toc a:hover{background:var(--ink);color:var(--surface)}
+  section{margin:38px 0 0;scroll-margin-top:64px}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:14px;border-bottom:2px solid var(--ink);padding-bottom:8px}
+  .sec-num{font-family:var(--font-display);font-size:clamp(26px,4vw,40px);color:var(--vermilion);line-height:.8}
+  .sec-head h2{font-family:var(--font-head);font-weight:800;font-size:clamp(18px,3vw,25px);margin:0;letter-spacing:-.01em}
+  p{margin:0 0 12px}.lead{font-size:16px}
+  strong,b{color:var(--ink);font-weight:600}.hl{color:var(--vermilion);font-weight:600}
+  ul.clean{margin:0 0 12px;padding-left:18px}ul.clean li{margin:5px 0}
+  .box{background:var(--surface);border:1.5px solid var(--ink);border-radius:3px;box-shadow:4px 4px 0 var(--ink);padding:16px 18px;margin:14px 0}
+  .grid2{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+  .bizu{border:1.5px dashed var(--green);background:rgba(60,110,71,.06);border-radius:3px;padding:13px 16px;margin:14px 0}
+  .bizu .tag{font-family:var(--font-head);font-weight:700;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--green);display:block;margin-bottom:5px}
+  .bizu b{color:var(--green)}
+  .trap{border:1.5px solid var(--vermilion);background:rgba(214,73,42,.05);border-radius:3px;padding:13px 16px;margin:14px 0}
+  .trap .tag{font-family:var(--font-head);font-weight:700;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--vermilion);display:block;margin-bottom:5px}
+  .tbl{width:100%;border-collapse:collapse;margin:14px 0;font-size:12.5px;background:var(--surface)}
+  .tbl th,.tbl td{border:1px solid var(--line-strong);padding:8px 10px;text-align:left;vertical-align:top}
+  .tbl thead th{background:var(--ink);color:var(--surface);font-family:var(--font-head);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.03em}
+  .tbl tbody th{background:var(--surface-2);font-family:var(--font-head);font-weight:700;white-space:nowrap}
+  .tbl-scroll{overflow-x:auto}
+  .up{color:var(--vermilion);font-weight:700}.down{color:var(--blue);font-weight:700}
+  .fc-grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));margin-top:14px}
+  .fc{background:var(--surface);border:1.5px solid var(--ink);border-radius:3px;box-shadow:4px 4px 0 var(--ink);padding:16px 17px;cursor:pointer;text-align:left;width:100%;font-family:var(--font-body);color:var(--ink);display:flex;flex-direction:column;gap:9px;transition:transform .12s,box-shadow .12s}
+  .fc:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--vermilion)}
+  .fc:focus-visible{outline:3px solid var(--vermilion);outline-offset:3px}
+  .fc .q{font-family:var(--font-head);font-weight:700;font-size:15px;line-height:1.28}
+  .fc .hint{font-family:var(--font-head);font-weight:600;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--vermilion)}
+  .fc .ans{font-size:13.5px;color:var(--ink-soft)}
+  .fc:not(.open) .ans{display:none}.fc.open .hint{display:none}
+  .case .q::before{content:"CASO ";font-family:var(--font-display);color:var(--vermilion);font-size:12px;letter-spacing:.1em}
+  footer{margin:46px 0 0;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--ink-soft)}
+  footer b{color:var(--ink)}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="top-rule"></div>
+    <div class="kicker">
+      <span>Farmácia Clínica <span class="dot">·</span> Farmacologia</span>
+      <span>Resmulti · ENARE · EBSERH · HUs</span>
+    </div>
+    <h1>Interações <span class="accent">Medicamentosas</span></h1>
+    <p class="dek">Interpretação para prova: <b>farmacocinéticas × farmacodinâmicas</b>, indução e inibição do <b>CYP450</b>, interações clássicas e manejo clínico. Guia com bizus, tabelas e casos.</p>
+  </header>
+
+  <nav class="toc" aria-label="Índice">
+    <ul>
+      <li><a href="#conceitos">1 · Conceitos ★</a></li>
+      <li><a href="#tipos">2 · Tipos</a></li>
+      <li><a href="#pk">3 · Farmacocinéticas ★</a></li>
+      <li><a href="#cyp">4 · CYP450 ★</a></li>
+      <li><a href="#pd">5 · Farmacodinâmicas ★</a></li>
+      <li><a href="#gravidade">6 · Gravidade</a></li>
+      <li><a href="#classicas">7 · Clássicas de prova ★</a></li>
+      <li><a href="#alimento">8 · Alimento &amp; fito</a></li>
+      <li><a href="#manejo">9 · Manejo</a></li>
+      <li><a href="#pegadinhas">10 · Pegadinhas</a></li>
+      <li><a href="#casos">11 · Casos clínicos ★</a></li>
+    </ul>
+  </nav>
+
+  <!-- 1 -->
+  <section id="conceitos">
+    <div class="sec-head"><span class="sec-num">01</span><h2>Conceitos fundamentais ★</h2></div>
+    <p class="lead">Interação medicamentosa (IM): quando o efeito de um fármaco é <b>alterado</b> pela presença de outro fármaco, alimento, bebida, fitoterápico ou agente químico.</p>
+    <div class="grid2">
+      <div class="box"><p><b>Objeto × precipitante</b></p><p>O <b>objeto</b> é o fármaco que <b>sofre</b> a alteração; o <b>precipitante</b> é o que a <b>provoca</b>. Identificar quem é quem é o 1º passo da interpretação.</p></div>
+      <div class="box"><p><b>Resultado</b></p><p><span class="up">↑ efeito/toxicidade</span> (sinergismo/potencialização) ou <span class="down">↓ efeito</span> (antagonismo). Pode ser <b>benéfica</b> (terapêutica) ou <b>prejudicial</b>.</p></div>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section id="tipos">
+    <div class="sec-head"><span class="sec-num">02</span><h2>Tipos de interação</h2></div>
+    <div class="tbl-scroll">
+    <table class="tbl">
+      <thead><tr><th>Tipo</th><th>Onde ocorre</th><th>O que muda</th></tr></thead>
+      <tbody>
+        <tr><th>Farmacêutica<br>(incompatibilidade)</th><td><b>Fora do organismo</b> (in vitro): seringa, equipo, soro, preparo.</td><td>Físico-química (precipitação, inativação). Não é IM “verdadeira”.</td></tr>
+        <tr><th>Farmacocinética (PK)</th><td>No organismo, na <b>ADME</b> (absorção, distribuição, metabolismo, excreção).</td><td>Altera a <b>concentração</b> do fármaco.</td></tr>
+        <tr><th>Farmacodinâmica (PD)</th><td>No <b>receptor/efeito</b>.</td><td>Altera o <b>efeito</b> sem mudar a concentração (sinergismo/antagonismo).</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="bizu"><span class="tag">★ Bizu</span> <b>PK muda a CONCENTRAÇÃO; PD muda o EFEITO.</b> Se a interação mexe em quanto fármaco há no sangue → PK. Se mexe na resposta com a mesma concentração → PD.</div>
+  </section>
+
+  <!-- 3 -->
+  <section id="pk">
+    <div class="sec-head"><span class="sec-num">03</span><h2>Interações farmacocinéticas ★</h2></div>
+    <div class="tbl-scroll">
+    <table class="tbl">
+      <thead><tr><th>Etapa</th><th>Mecanismo</th><th>Exemplos</th></tr></thead>
+      <tbody>
+        <tr><th>Absorção</th><td>Quelação/complexação; alteração do pH; motilidade GI; adsorção.</td><td>Tetraciclina/quinolona + <b>cátions</b> (Ca, Fe, Al, Mg, leite, antiácido) → <span class="down">↓ absorção</span>. IBP/antiácido ↓ absorção de cetoconazol.</td></tr>
+        <tr><th>Distribuição</th><td>Deslocamento da <b>ligação proteica</b> (↑ fração livre).</td><td>AINEs/sulfa deslocam varfarina; valproato desloca fenitoína. Relevante só em <b>IT estreito</b>.</td></tr>
+        <tr><th>Metabolismo</th><td><b>Indução</b> ou <b>inibição</b> enzimática (CYP450) — ver seção 4.</td><td>O grupo mais importante e mais cobrado.</td></tr>
+        <tr><th>Excreção</th><td>Competição na secreção tubular; pH urinário; P-glicoproteína.</td><td>Probenecida ↑ penicilina; AINEs ↑ metotrexato/lítio; amiodarona/verapamil ↑ digoxina (P-gp).</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="trap"><span class="tag">⚠ Pegadinha</span> O <b>deslocamento proteico</b> isolado raramente é clinicamente relevante (o organismo compensa) — exceto fármacos muito ligados, com <b>baixo Vd e IT estreito</b> (varfarina, fenitoína).</div>
+  </section>
+
+  <!-- 4 -->
+  <section id="cyp">
+    <div class="sec-head"><span class="sec-num">04</span><h2>CYP450 — indução × inibição ★</h2></div>
+    <div class="tbl-scroll">
+    <table class="tbl">
+      <thead><tr><th></th><th>Indução enzimática</th><th>Inibição enzimática</th></tr></thead>
+      <tbody>
+        <tr><th>Efeito no substrato</th><td><span class="down">↓ concentração → ↓ efeito</span> (↑ efeito se for pró-fármaco)</td><td><span class="up">↑ concentração → ↑ efeito/toxicidade</span></td></tr>
+        <tr><th>Início</th><td><b>Lento</b> (dias a semanas)</td><td><b>Rápido</b> (horas a dias)</td></tr>
+        <tr><th>Exemplos</th><td><b>Rifampicina</b>, fenitoína, carbamazepina, fenobarbital, <b>erva-de-são-joão</b>, tabaco (CYP1A2), etanol crônico.</td><td><b>Macrolídeos</b> (claritro/eritro), <b>azólicos</b> (cetoconazol, fluconazol), <b>suco de grapefruit</b>, ritonavir, amiodarona, cimetidina, fluoxetina/paroxetina, verapamil/diltiazem.</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="bizu"><span class="tag">★ Bizu</span>
+      <b>Indutor</b> = “acelera a saída” → menos fármaco, efeito cai, devagar. <b>Inibidor</b> = “trava a saída” → fármaco acumula, toxicidade, rápido. Mnemônico de indutores: <b>“Ri-Fe-Car-Feno + São João + Tabaco”</b>.</div>
+    <div class="trap"><span class="tag">⚠ Pegadinha</span> Com <b>pró-fármaco</b>, o inibidor <b>reduz</b> o efeito (bloqueia a ativação). Ex.: <b>clopidogrel + omeprazol</b> (↓ ativação via CYP2C19). E <b>grapefruit é inibidor</b> (não indutor); <b>erva-de-são-joão é indutor</b>.</div>
+  </section>
+
+  <!-- 5 -->
+  <section id="pd">
+    <div class="sec-head"><span class="sec-num">05</span><h2>Interações farmacodinâmicas ★</h2></div>
+    <div class="grid2">
+      <div class="box"><p><b>Sinergismo / adição</b> (mesmo sentido)</p>
+        <ul class="clean" style="margin:0">
+          <li>Depressores do SNC: benzodiazepínico + opioide + álcool → <b>depressão respiratória</b>.</li>
+          <li>Serotoninérgicos: ISRS + IMAO + tramadol + triptano → <b>síndrome serotoninérgica</b>.</li>
+          <li>AINE + anticoagulante → <b>sangramento</b>.</li>
+          <li>Fármacos que prolongam <b>QT</b> → torsades.</li>
+          <li>IECA + espironolactona + KCl → <b>hipercalemia</b>.</li>
+        </ul></div>
+      <div class="box"><p><b>Antagonismo</b> (sentido oposto)</p>
+        <ul class="clean" style="margin:0">
+          <li>AINE ↓ efeito de anti-hipertensivos.</li>
+          <li>Vitamina K antagoniza a varfarina.</li>
+          <li>Naloxona × opioide; flumazenil × benzodiazepínico.</li>
+          <li>Betabloqueador × beta-agonista.</li>
+        </ul></div>
+    </div>
+    <div class="bizu"><span class="tag">★ Bizu</span> PD não mexe na concentração: dois fármacos que “puxam para o mesmo lado” somam efeito (sinergia); para “lados opostos”, se anulam (antagonismo). Toxicidade aditiva (nefro, hipercalemia, QT) é PD.</div>
+  </section>
+
+  <!-- 6 -->
+  <section id="gravidade">
+    <div class="sec-head"><span class="sec-num">06</span><h2>Classificação por gravidade</h2></div>
+    <ul class="clean">
+      <li><b>Gravidade:</b> contraindicada/grave · moderada · leve.</li>
+      <li><b>Evidência:</b> estabelecida · provável · suspeita · possível · improvável.</li>
+      <li><b>Início:</b> rápido (&lt; 24 h) × tardio (dias a semanas — típico da indução).</li>
+    </ul>
+    <div class="bizu"><span class="tag">★ Bizu</span> Priorize as <b>graves + de início rápido + em fármacos de IT estreito</b> — é o trio que vira conduta clínica imediata.</div>
+  </section>
+
+  <!-- 7 -->
+  <section id="classicas">
+    <div class="sec-head"><span class="sec-num">07</span><h2>Interações clássicas de prova ★</h2></div>
+    <div class="tbl-scroll">
+    <table class="tbl">
+      <thead><tr><th>Combinação</th><th>Mecanismo</th><th>Resultado</th></tr></thead>
+      <tbody>
+        <tr><th>Varfarina + sulfa/metronidazol/amiodarona</th><td>Inibição do CYP2C9</td><td><span class="up">↑ INR / sangramento</span></td></tr>
+        <tr><th>Varfarina + rifampicina</th><td>Indução enzimática</td><td><span class="down">↓ efeito anticoagulante</span></td></tr>
+        <tr><th>Sinvastatina + claritromicina/azólico/grapefruit</th><td>Inibição do CYP3A4</td><td><span class="up">Rabdomiólise</span></td></tr>
+        <tr><th>Digoxina + amiodarona/verapamil</th><td>Inibição da P-gp</td><td><span class="up">Intoxicação digitálica</span></td></tr>
+        <tr><th>Lítio + AINE/tiazídico/IECA</th><td>↓ depuração renal</td><td><span class="up">Intoxicação por lítio</span></td></tr>
+        <tr><th>Metotrexato + AINE/SMX-TMP</th><td>↓ excreção renal</td><td><span class="up">Toxicidade do MTX</span></td></tr>
+        <tr><th>IMAO + tiramina (queijo/vinho)</th><td>↑ aminas vasoativas</td><td><span class="up">Crise hipertensiva</span></td></tr>
+        <tr><th>ISRS + tramadol/triptano/IMAO</th><td>Excesso serotoninérgico (PD)</td><td><span class="up">Síndrome serotoninérgica</span></td></tr>
+        <tr><th>Sildenafila + nitrato</th><td>Vasodilatação aditiva (PD)</td><td><span class="up">Hipotensão grave</span> (contraindicado)</td></tr>
+        <tr><th>Metronidazol + álcool</th><td>Bloqueio da aldeído-desidrogenase</td><td><span class="up">Efeito dissulfiram</span></td></tr>
+        <tr><th>Contraceptivo + rifampicina/anticonvulsivante</th><td>Indução enzimática</td><td><span class="down">Falha contraceptiva</span></td></tr>
+        <tr><th>Tetraciclina/quinolona + leite/antiácido/ferro</th><td>Quelação (absorção)</td><td><span class="down">↓ absorção do antibiótico</span></td></tr>
+      </tbody>
+    </table>
+    </div>
+  </section>
+
+  <!-- 8 -->
+  <section id="alimento">
+    <div class="sec-head"><span class="sec-num">08</span><h2>Fármaco–alimento &amp; fitoterápico</h2></div>
+    <ul class="clean">
+      <li><b>Grapefruit (toranja):</b> inibe CYP3A4 intestinal → ↑ estatinas, alguns antagonistas de cálcio, ciclosporina.</li>
+      <li><b>Tiramina</b> (queijos curados, vinho, embutidos) + <b>IMAO</b> → crise hipertensiva.</li>
+      <li><b>Vitamina K</b> (folhas verdes) → antagoniza a varfarina (manter consumo constante).</li>
+      <li><b>Leite/laticínios</b> → quelam tetraciclinas e quinolonas.</li>
+      <li><b>Erva-de-são-joão (Hypericum):</b> <b>indutor potente</b> → ↓ ciclosporina, contraceptivo, varfarina, antirretroviral.</li>
+      <li><b>Ginkgo / alho / ginseng:</b> risco aumentado de sangramento com antiagregantes/anticoagulantes.</li>
+    </ul>
+  </section>
+
+  <!-- 9 -->
+  <section id="manejo">
+    <div class="sec-head"><span class="sec-num">09</span><h2>Manejo / interpretação clínica</h2></div>
+    <ul class="clean">
+      <li>Identificar <b>objeto × precipitante</b> e avaliar a <b>relevância clínica</b> (gravidade, IT estreito, evidência).</li>
+      <li>Condutas: <b>separar horários</b> (quelação), <b>ajustar dose</b>, <b>monitorar</b> (INR, níveis séricos, ECG/QT), <b>substituir</b> ou <b>suspender</b> o fármaco.</li>
+      <li>Usar fontes confiáveis (Micromedex, UpToDate, Medscape) — papel do <b>farmacêutico clínico</b>.</li>
+      <li>Nem toda interação <b>teórica</b> é clinicamente relevante — interpretar no contexto do paciente.</li>
+    </ul>
+  </section>
+
+  <!-- 10 -->
+  <section id="pegadinhas">
+    <div class="sec-head"><span class="sec-num">10</span><h2>Pegadinhas consolidadas</h2></div>
+    <div class="trap"><span class="tag">⚠ Top pegadinhas</span>
+      <ul class="clean" style="margin:0">
+        <li><b>PK</b> muda concentração (ADME); <b>PD</b> muda efeito (mesma concentração).</li>
+        <li><b>Indução</b> = ↓ efeito, início lento; <b>inibição</b> = ↑ toxicidade, início rápido.</li>
+        <li><b>Pró-fármaco + inibidor</b> = ↓ efeito (ex.: clopidogrel + omeprazol).</li>
+        <li><b>Grapefruit = inibidor</b>; <b>erva-de-são-joão = indutor</b>.</li>
+        <li><b>Incompatibilidade farmacêutica</b> ocorre fora do corpo — não é IM “verdadeira”.</li>
+        <li><b>Deslocamento proteico</b> só importa em IT estreito (varfarina, fenitoína).</li>
+        <li><b>Digoxina</b> ↑ com amiodarona/verapamil (P-gp).</li>
+        <li><b>Lítio</b> ↑ com AINE/tiazídico/IECA.</li>
+        <li><b>Sildenafila + nitrato</b> = contraindicado (hipotensão grave).</li>
+        <li><b>Metronidazol + álcool</b> = efeito dissulfiram.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 11 -->
+  <section id="casos">
+    <div class="sec-head"><span class="sec-num">11</span><h2>Casos clínicos — autoteste ★</h2></div>
+    <p>Leia, identifique o mecanismo/conduta e clique para conferir.</p>
+    <div class="fc-grid" id="caseGrid"></div>
+  </section>
+
+  <footer>
+    <b>Fontes-base:</b> farmacologia clínica (Goodman &amp; Gilman, Rang &amp; Dale); bases de interações (Micromedex, UpToDate); literatura de farmácia clínica sobre CYP450 e P-glicoproteína. Material de estudo — confronte com o edital e a bibliografia da sua banca; interações devem ser sempre interpretadas no contexto clínico do paciente.
+  </footer>
+
+</div>
+
+<script>
+  const cases = [
+    {q:"Paciente em varfarina estável inicia sulfametoxazol-trimetoprima e o INR sobe para 6. Mecanismo e conduta?", a:"Inibição do CYP2C9 → ↑ varfarina → ↑ INR/sangramento. Conduta: suspender/ajustar dose, monitorar INR, considerar vitamina K se sangramento. Interação farmacocinética (metabolismo)."},
+    {q:"Paciente em sinvastatina inicia claritromicina e evolui com mialgia intensa e CPK elevada. O que houve?", a:"Inibição do CYP3A4 → acúmulo de sinvastatina → risco de rabdomiólise. Conduta: suspender a estatina (ou trocar o antibiótico), monitorar CPK/função renal."},
+    {q:"Mulher em uso de contraceptivo oral inicia rifampicina para tuberculose. Qual o risco?", a:"Indução enzimática → ↓ níveis do contraceptivo → falha contraceptiva. Conduta: método contraceptivo adicional/alternativo durante e após o uso."},
+    {q:"Paciente toma tetraciclina junto com leite e antiácido e a infecção não melhora. Por quê?", a:"Quelação com cátions (Ca, Al, Mg) reduz a absorção do antibiótico (interação de absorção). Conduta: separar os horários (2 h antes ou depois)."},
+    {q:"Paciente em fenelzina (IMAO) ingere queijo curado e vinho, evoluindo com cefaleia e pico hipertensivo. Causa?", a:"IMAO impede a degradação da tiramina dos alimentos → liberação de catecolaminas → crise hipertensiva. Orientar dieta pobre em tiramina."},
+    {q:"Paciente em sertralina (ISRS) recebe tramadol e apresenta agitação, hipertermia, hiper-reflexia e clônus. Diagnóstico?", a:"Síndrome serotoninérgica (interação farmacodinâmica/sinergismo). Conduta: suspender os agentes serotoninérgicos, suporte; casos graves → ciproheptadina."},
+    {q:"Paciente em digoxina inicia amiodarona e evolui com náusea, xantopsia e bradiarritmia. Mecanismo?", a:"Inibição da glicoproteína-P (e do clearance) → ↑ digoxina → intoxicação digitálica. Conduta: reduzir a dose de digoxina (em geral à metade) e monitorar nível e ECG."},
+    {q:"Paciente em lítio inicia ibuprofeno e desenvolve tremor e confusão. O que aconteceu?", a:"AINEs reduzem a depuração renal do lítio → ↑ nível → intoxicação. Conduta: suspender o AINE, hidratar e dosar o lítio (12 h pós-dose)."},
+    {q:"Paciente com angina usa nitrato e toma sildenafila. Por que isso é perigoso?", a:"Vasodilatação aditiva (potencialização farmacodinâmica via NO/GMPc) → hipotensão grave. Combinação contraindicada."},
+    {q:"Paciente em tratamento com metronidazol bebe cerveja e apresenta rubor, náusea e taquicardia. Causa?", a:"Efeito dissulfiram: o metronidazol bloqueia a aldeído-desidrogenase, acumulando acetaldeído. Orientar abstinência de álcool durante e após o uso."},
+    {q:"Cardiologista prescreve clopidogrel; o paciente já usa omeprazol. Qual a preocupação?", a:"Clopidogrel é pró-fármaco ativado pelo CYP2C19; o omeprazol inibe essa via → ↓ ativação → ↓ efeito antiagregante. Preferir pantoprazol ou avaliar a real necessidade do IBP."},
+    {q:"Dois medicamentos IV são misturados na mesma seringa e formam precipitado antes da infusão. Que tipo de interação é?", a:"Interação farmacêutica (incompatibilidade físico-química), que ocorre fora do organismo (in vitro) — não é interação farmacocinética nem farmacodinâmica. Não misturar; lavar o acesso entre fármacos."}
+  ];
+  const grid = document.getElementById('caseGrid');
+  cases.forEach(c=>{
+    const b=document.createElement('button');b.className='fc case';b.type='button';
+    b.innerHTML=`<span class="q">${c.q}</span><span class="hint">Ver conduta</span><span class="ans">${c.a}</span>`;
+    b.addEventListener('click',()=>b.classList.toggle('open'));
+    grid.appendChild(b);
+  });
+</script>
+</body>
+</html>

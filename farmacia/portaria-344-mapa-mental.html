@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Portaria 344/98 — Mapa Mental em Cards</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f4f5f7;
+    --ink:#161b22;
+    --muted:#5c6672;
+    --line:#dde1e6;
+    --card:#ffffff;
+
+    /* paleta por grupo de lista (cor do receituário) */
+    --gA:#c79100;  --gA-soft:#fbf0d2;  /* Lista A — amarela */
+    --gB:#2563b8;  --gB-soft:#e4edf9;  /* Lista B — azul */
+    --gC:#0f8a7e;  --gC-soft:#e1f3f0;  /* Lista C — controle especial */
+    --gD:#7c4bc4;  --gD-soft:#efe8f9;  /* Lista D — precursores */
+    --gF:#c0395a;  --gF-soft:#fbe5eb;  /* Listas E/F — proscritas */
+    --gX:#475569;  --gX-soft:#e8ebef;  /* adendos / escrituração */
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:radial-gradient(circle at 12% -5%, #ffffff 0%, transparent 40%), var(--bg);
+    color:var(--ink);
+    font-family:"Inter",system-ui,sans-serif;
+    line-height:1.5;-webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1180px;margin:0 auto;padding:40px 22px 90px;}
+
+  /* HEADER */
+  .head{
+    position:relative;border-radius:22px;padding:38px 36px 34px;
+    background:linear-gradient(135deg,#101826 0%,#16263d 55%,#0f3a5a 100%);
+    color:#e9f0f6;overflow:hidden;
+  }
+  .head::after{
+    content:"§344";position:absolute;right:20px;top:-6px;
+    font-family:"Space Grotesk",sans-serif;font-weight:700;
+    font-size:120px;line-height:1;color:#ffffff0d;pointer-events:none;letter-spacing:-.04em;
+  }
+  .kicker{font-family:"JetBrains Mono",monospace;font-size:11.5px;letter-spacing:.26em;text-transform:uppercase;color:#7fb6e0;margin:0 0 12px;}
+  .head h1{font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:clamp(27px,5vw,44px);line-height:1.05;margin:0 0 14px;letter-spacing:-.01em;}
+  .head p{margin:0;max-width:660px;color:#c9dcec;font-size:15px;}
+  .head .tagline{margin-top:14px;font-family:"JetBrains Mono",monospace;font-size:11.5px;color:#7fb6e0;}
+
+  /* LEGENDA / NAV */
+  .legend{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:10px;margin:26px 0 8px;}
+  .legend a{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:12px;padding:11px 14px;font-size:13px;font-weight:600;transition:transform .15s ease, box-shadow .15s ease;}
+  .legend a:hover{transform:translateY(-2px);box-shadow:0 8px 20px #1a263611;}
+  .dot{width:13px;height:13px;border-radius:50%;flex:0 0 auto;}
+  .legend small{display:block;font-weight:400;color:var(--muted);font-size:11px;}
+
+  /* SEÇÃO / BRANCH */
+  .branch{margin-top:46px;}
+  .branch-head{display:flex;align-items:center;gap:16px;padding:14px 20px;border-radius:14px;color:#fff;box-shadow:0 10px 26px -12px var(--accent);}
+  .branch-num{font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:24px;width:46px;height:46px;flex:0 0 auto;display:grid;place-items:center;border-radius:12px;background:#ffffff26;}
+  .branch-head h2{margin:0;font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:clamp(17px,3vw,23px);letter-spacing:-.01em;}
+  .branch-head span{display:block;font-size:12.5px;font-weight:400;opacity:.92;}
+
+  /* GRID DE CARDS */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:16px;margin-top:18px;}
+  .card{background:var(--card);border:1px solid var(--line);border-top:4px solid var(--accent);border-radius:14px;padding:18px 18px 16px;display:flex;flex-direction:column;transition:transform .15s ease, box-shadow .15s ease;}
+  .card:hover{transform:translateY(-3px);box-shadow:0 14px 30px -16px #1a263633;}
+  .card.wide{grid-column:1/-1;}
+  .card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:2px;}
+  .card h3{margin:0;font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:17px;letter-spacing:-.01em;}
+  .card h3 small{font-weight:400;color:var(--muted);font-size:12px;}
+  .tag{flex:0 0 auto;font-family:"JetBrains Mono",monospace;font-size:9.5px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;padding:4px 8px;border-radius:999px;white-space:nowrap;background:var(--accent-soft);color:var(--accent);}
+
+  .row{margin-top:11px;}
+  .row .lab{font-family:"JetBrains Mono",monospace;font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);display:flex;align-items:center;gap:6px;margin-bottom:4px;}
+  .row .lab::before{content:"";width:6px;height:6px;border-radius:2px;background:var(--accent);}
+  .row p{margin:0;font-size:13.2px;color:#2b333b;}
+  .row p b{color:var(--ink);font-weight:600;}
+
+  .drugs{display:flex;flex-wrap:wrap;gap:6px;margin-top:5px;}
+  .drug{font-size:11.5px;font-weight:500;background:var(--accent-soft);color:var(--accent);padding:3px 9px;border-radius:7px;}
+
+  .res{margin-top:11px;background:#fbf6f1;border:1px dashed #e7d9c9;border-radius:10px;padding:9px 11px;}
+  .res .lab{color:#b06a1a;}
+  .res .lab::before{background:#b06a1a;}
+  .res p{font-size:12.6px;color:#5b4a36;}
+  .res p b{color:#7a4d10;}
+
+  /* cor por grupo */
+  .bA{--accent:var(--gA);--accent-soft:var(--gA-soft);}
+  .bB{--accent:var(--gB);--accent-soft:var(--gB-soft);}
+  .bC{--accent:var(--gC);--accent-soft:var(--gC-soft);}
+  .bD{--accent:var(--gD);--accent-soft:var(--gD-soft);}
+  .bF{--accent:var(--gF);--accent-soft:var(--gF-soft);}
+  .bX{--accent:var(--gX);--accent-soft:var(--gX-soft);}
+  .bA .branch-head{background:linear-gradient(120deg,#a87a00,var(--gA));}
+  .bB .branch-head{background:linear-gradient(120deg,#1c4d92,var(--gB));}
+  .bC .branch-head{background:linear-gradient(120deg,#0c6b61,var(--gC));}
+  .bD .branch-head{background:linear-gradient(120deg,#5f37a0,var(--gD));}
+  .bF .branch-head{background:linear-gradient(120deg,#9a2c49,var(--gF));}
+  .bX .branch-head{background:linear-gradient(120deg,#374253,var(--gX));}
+
+  .note{grid-column:1/-1;background:var(--accent-soft);border-radius:12px;padding:12px 16px;font-size:12.8px;color:#33403a;}
+  .note b{color:var(--accent);}
+
+  /* tabela-resumo de receituários */
+  .recap{grid-column:1/-1;overflow-x:auto;border:1px solid var(--line);border-radius:14px;background:var(--card);}
+  table{border-collapse:collapse;width:100%;font-size:12.6px;min-width:640px;}
+  th,td{text-align:left;padding:10px 13px;border-bottom:1px solid var(--line);vertical-align:top;}
+  th{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:#56606b;background:#f7f8fa;}
+  td b{color:var(--ink);}
+  .pill{display:inline-block;font-size:10.5px;font-weight:600;padding:2px 8px;border-radius:999px;}
+  .p-am{background:var(--gA-soft);color:#9a7000;}
+  .p-az{background:var(--gB-soft);color:var(--gB);}
+  .p-br{background:#eef1f3;color:#3d4753;border:1px solid #d8dde2;}
+
+  footer{margin-top:60px;padding-top:22px;border-top:1px solid var(--line);font-size:12px;color:var(--muted);}
+
+  @media (max-width:560px){
+    .wrap{padding:24px 14px 70px;}
+    .head{padding:28px 22px;}
+    .grid{grid-template-columns:1fr;}
+  }
+  @media print{
+    body{background:#fff;}
+    .legend a:hover,.card:hover{transform:none;box-shadow:none;}
+    .card,.branch,.recap{break-inside:avoid;}
+    .head::after{display:none;}
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HEADER -->
+  <header class="head">
+    <p class="kicker">Legislação farmacêutica · revisão para residência</p>
+    <h1>Portaria SVS/MS nº 344/98<br>Substâncias sob controle especial</h1>
+    <p>Regulamento técnico das substâncias e medicamentos sujeitos a controle especial. Mapa em cards focado em <b>listas A–F</b>, <b>classificação</b>, <b>tipo de receituário</b> e os <b>adendos que mais caem em prova</b> de residência em farmácia.</p>
+    <p class="tagline">Base original: 12/05/1998 · atualizações periódicas por RDC (Anexo I) · novidades 2025–2026 incluídas</p>
+  </header>
+
+  <!-- NAV -->
+  <nav class="legend">
+    <a href="#recap"><span class="dot" style="background:var(--gX)"></span><span>Mapa dos receituários<small>tabela-resumo</small></span></a>
+    <a href="#gA"><span class="dot" style="background:var(--gA)"></span><span>Lista A<small>A1 · A2 · A3 — amarela</small></span></a>
+    <a href="#gB"><span class="dot" style="background:var(--gB)"></span><span>Lista B<small>B1 · B2 — azul</small></span></a>
+    <a href="#gC"><span class="dot" style="background:var(--gC)"></span><span>Lista C<small>C1 a C5 — especial</small></span></a>
+    <a href="#gD"><span class="dot" style="background:var(--gD)"></span><span>Listas D · E · F<small>precursores e proscritas</small></span></a>
+    <a href="#gX"><span class="dot" style="background:var(--gX)"></span><span>Adendos & escrituração<small>pegadinhas + SNGPC</small></span></a>
+  </nav>
+
+  <!-- =============== TABELA-RESUMO DOS RECEITUÁRIOS =============== -->
+  <section class="branch bX" id="recap">
+    <div class="branch-head"><div class="branch-num">★</div><h2>Mapa dos receituários<span>Relação lista → receita → cor → validade → quantidade (o coração da prova).</span></h2></div>
+    <div class="grid">
+      <div class="recap">
+        <table>
+          <thead><tr><th>Lista</th><th>Receituário</th><th>Cor / vias</th><th>Validade</th><th>Quantidade máxima</th></tr></thead>
+          <tbody>
+            <tr><td><b>A1 · A2 · A3</b></td><td>Notificação de Receita <b>A</b></td><td><span class="pill p-am">amarela</span></td><td>30 dias</td><td>30 dias de tratamento · 5 ampolas</td></tr>
+            <tr><td><b>B1</b></td><td>Notificação de Receita <b>B</b></td><td><span class="pill p-az">azul</span></td><td>30 dias</td><td>60 dias de tratamento · 5 ampolas</td></tr>
+            <tr><td><b>B2</b></td><td>Notificação de Receita <b>B</b></td><td><span class="pill p-az">azul</span></td><td>30 dias</td><td>30 dias de tratamento · 5 ampolas</td></tr>
+            <tr><td><b>C1 · C5</b></td><td>Receita de Controle Especial</td><td><span class="pill p-br">branca · 2 vias</span></td><td>30 dias</td><td>60 dias trat. · até 3 itens · 5 ampolas</td></tr>
+            <tr><td><b>C2</b> (retinoides)</td><td>Notificação de Receita Especial</td><td><span class="pill p-br">branca + ♀ gestante</span></td><td>30 dias</td><td>30 dias de tratamento · 5 ampolas</td></tr>
+            <tr><td><b>C3</b> (talidomida)</td><td>Notificação de Receita Especial</td><td><span class="pill p-br">branca</span></td><td>—</td><td>só farmácia do serviço público</td></tr>
+            <tr><td><b>C4</b> (antirretrovirais)</td><td>Receituário próprio do programa</td><td><span class="pill p-br">SUS · retida</span></td><td>30 dias</td><td>até 5 itens</td></tr>
+            <tr><td><b>D1</b> (precursores)</td><td>Receita médica comum</td><td><span class="pill p-br">sem retenção</span></td><td>—</td><td>—</td></tr>
+            <tr><td><b>E / F</b></td><td colspan="4">Plantas (E) e substâncias proscritas (F) — <b>uso proibido</b>, não podem ser prescritas nem manipuladas.</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="note"><b>Regra de ouro:</b> <b>1 substância por notificação</b> de receita — exceções: <b>C1</b> (até 3) e <b>C4</b> (até 5). Acima das quantidades-limite → o prescritor deve anexar <b>justificativa com CID/diagnóstico e posologia</b>, datada e assinada nas duas vias.</div>
+    </div>
+  </section>
+
+  <!-- =============== LISTA A =============== -->
+  <section class="branch bA" id="gA">
+    <div class="branch-head"><div class="branch-num">A</div><h2>Lista A — Notificação de Receita A (amarela)<span>O nível mais alto de controle: entorpecentes e psicotrópicos com alto potencial de dependência.</span></h2></div>
+    <div class="grid">
+
+      <article class="card">
+        <div class="card-top"><h3>A1 <small>· entorpecentes</small></h3><span class="tag">NR-A amarela</span></div>
+        <div class="row"><div class="lab">Classificação</div><p>Substâncias <b>entorpecentes</b> — alto potencial de dependência física e psíquica. Lista extensa (&gt;90 fármacos).</p></div>
+        <div class="row"><div class="lab">Uso típico</div><p>Dor moderada a intensa, cuidados paliativos e anestesia.</p></div>
+        <div class="row"><div class="lab">Exemplos</div><div class="drugs"><span class="drug">Morfina</span><span class="drug">Metadona</span><span class="drug">Fentanil</span><span class="drug">Petidina</span><span class="drug">Oxicodona</span><span class="drug">Hidromorfona</span></div></div>
+        <div class="res"><div class="lab">Adendo de prova</div><p><b>Oxicodona</b> de liberação controlada até <b>40 mg/unidade</b> migra para <b>Receita de Controle Especial (2 vias)</b>, não NR-A.</p></div>
+      </article>
+
+      <article class="card">
+        <div class="card-top"><h3>A2 <small>· entorpecentes</small></h3><span class="tag">NR-A amarela</span></div>
+        <div class="row"><div class="lab">Classificação</div><p>Entorpecentes de <b>uso permitido em concentrações especiais</b> (13 fármacos).</p></div>
+        <div class="row"><div class="lab">Exemplos</div><div class="drugs"><span class="drug">Codeína</span><span class="drug">Tramadol</span><span class="drug">Etilmorfina</span><span class="drug">Propiram</span></div></div>
+        <div class="res"><div class="lab">Adendo de prova ⭐</div><p><b>Codeína e tramadol até 100 mg</b> por unidade posológica → <b>Receita de Controle Especial em 2 vias</b> (e não NR-A). Acima disso, volta a exigir a NR-A.</p></div>
+      </article>
+
+      <article class="card">
+        <div class="card-top"><h3>A3 <small>· psicotrópicos</small></h3><span class="tag">NR-A amarela</span></div>
+        <div class="row"><div class="lab">Classificação</div><p>Substâncias <b>psicotrópicas</b> de maior controle.</p></div>
+        <div class="row"><div class="lab">Exemplos</div><div class="drugs"><span class="drug">Metilfenidato</span><span class="drug">Lisdexanfetamina</span><span class="drug">Anfetamina</span><span class="drug">Fenfluramina</span></div></div>
+        <div class="res"><div class="lab">Adendo de prova</div><p>Apesar do amplo uso, <b>metilfenidato</b> e <b>lisdexanfetamina</b> são A3 → sempre <b>NR-A amarela</b>.</p></div>
+      </article>
+
+      <article class="card">
+        <div class="card-top"><h3>Notificação de Receita A</h3><span class="tag">documento</span></div>
+        <div class="row"><div class="lab">Cor / validade</div><p><b>Amarela</b>, válida por <b>30 dias</b> a partir da emissão.</p></div>
+        <div class="row"><div class="lab">Quantidade</div><p><b>30 dias</b> de tratamento; injetáveis até <b>5 ampolas</b>. Acompanha a receita e fica <b>retida</b> na farmácia.</p></div>
+        <div class="row"><div class="lab">Numeração</div><p>Fornecida <b>gratuitamente</b> pela autoridade sanitária estadual ao profissional cadastrado.</p></div>
+        <div class="res"><div class="lab">Pegadinha de validade</div><p>O texto original restringia a NR-A à <b>UF emitente</b>; a <b>Lei 13.732/2018</b> passou a valer em <b>todo o território nacional</b>. Confira a banca.</p></div>
+      </article>
+
+      <div class="note"><b>Mnemônico:</b> Lista <b>A</b> = receita <b>A</b>marela. A1/A2 = entorpecentes; A3 = psicotrópico. É a única notificação cujo <b>talonário/numeração é fornecido pela VISA</b>.</div>
+    </div>
+  </section>
+
+  <!-- =============== LISTA B =============== -->
+  <section class="branch bB" id="gB">
+    <div class="branch-head"><div class="branch-num">B</div><h2>Lista B — Notificação de Receita B (azul)<span>Psicotrópicos de uso ambulatorial frequente: ansiolíticos, hipnóticos e anorexígenos.</span></h2></div>
+    <div class="grid">
+
+      <article class="card">
+        <div class="card-top"><h3>B1 <small>· psicotrópicos</small></h3><span class="tag">NR-B azul</span></div>
+        <div class="row"><div class="lab">Classificação</div><p>Substâncias <b>psicotrópicas</b> — sobretudo benzodiazepínicos e hipnóticos.</p></div>
+        <div class="row"><div class="lab">Exemplos</div><div class="drugs"><span class="drug">Diazepam</span><span class="drug">Clonazepam</span><span class="drug">Alprazolam</span><span class="drug">Midazolam</span><span class="drug">Zolpidem</span><span class="drug">Clobazam</span></div></div>
+        <div class="row"><div class="lab">Quantidade</div><p>Até <b>60 dias</b> de tratamento; <b>5 ampolas</b>. Validade <b>30 dias</b>.</p></div>
+        <div class="res"><div class="lab">Adendo de prova</div><p>Os <b>adendos da B1</b> são prescritos em <b>Receita de Controle Especial (2 vias)</b>, não na NR-B.</p></div>
+      </article>
+
+      <article class="card">
+        <div class="card-top"><h3>B2 <small>· psicotrópicos anorexígenos</small></h3><span class="tag">NR-B azul</span></div>
+        <div class="row"><div class="lab">Classificação</div><p>Psicotrópicos <b>anorexígenos</b> (inibidores de apetite).</p></div>
+        <div class="row"><div class="lab">Exemplos</div><div class="drugs"><span class="drug">Anfepramona</span><span class="drug">Femproporex</span><span class="drug">Mazindol</span><span class="drug">Sibutramina</span></div></div>
+        <div class="row"><div class="lab">Quantidade</div><p>Até <b>30 dias</b> de tratamento (mais restrito que a B1); <b>5 ampolas</b>. Validade <b>30 dias</b>.</p></div>
+        <div class="res"><div class="lab">Adendo de prova</div><p>Gera relação mensal própria — <b>RMNRB2</b>. Atenção à <b>dose diária recomendada</b> (ex.: sibutramina 15 mg/dia).</p></div>
+      </article>
+
+      <article class="card">
+        <div class="card-top"><h3>Notificação de Receita B</h3><span class="tag">documento</span></div>
+        <div class="row"><div class="lab">Cor / validade</div><p><b>Azul</b>, válida por <b>30 dias</b>. Numeração concedida pela VISA, impressa <b>às expensas do profissional/instituição</b>.</p></div>
+        <div class="row"><div class="lab">Diferença-chave</div><p><b>B1 = 60 dias</b> de tratamento × <b>B2 = 30 dias</b>. Ambas: 1 substância por notificação.</p></div>
+        <div class="res"><div class="lab">Atualização 2026 ⚡</div><p><b>RDC 1.000/2025</b> (vigência 13/02/2026) permite emissão <b>eletrônica</b> das NR-A e NR-B via SNCR.</p></div>
+      </article>
+
+      <div class="note"><b>Mnemônico:</b> Lista <b>B</b> = receita a<b>B</b>ul (azul). <b>B1</b> psicotrópico "comum" (60 dias) e <b>B2</b> anorexígeno (30 dias). Validade da notificação é sempre 30 dias — não confunda com o tempo de tratamento.</div>
+    </div>
+  </section>
+
+  <!-- =============== LISTA C =============== -->
+  <section class="branch bC" id="gC">
+    <div class="branch-head"><div class="branch-num">C</div><h2>Lista C — Outras substâncias sujeitas a controle especial<span>Cinco sublistas com receituários distintos. A mais cobrada e a mais "pegadinha".</span></h2></div>
+    <div class="grid">
+
+      <article class="card">
+        <div class="card-top"><h3>C1 <small>· outras substâncias</small></h3><span class="tag">controle especial · branca</span></div>
+        <div class="row"><div class="lab">Classificação</div><p>"Outras substâncias sujeitas a controle especial" — a maior lista. Antidepressivos, anticonvulsivantes, antipsicóticos e antiparkinsonianos.</p></div>
+        <div class="row"><div class="lab">Receita</div><p><b>Receita de Controle Especial</b> (branca, <b>2 vias</b>) — validade <b>30 dias</b>, até <b>3 itens</b>, 60 dias de tratamento.</p></div>
+        <div class="row"><div class="lab">Exemplos</div><div class="drugs"><span class="drug">Amitriptilina</span><span class="drug">Fluoxetina / Sertralina</span><span class="drug">Carbamazepina</span><span class="drug">Ác. valproico</span><span class="drug">Haloperidol</span><span class="drug">Misoprostol</span></div></div>
+        <div class="res"><div class="lab">Adendos de ouro ⭐</div><p>① <b>Anticonvulsivantes e antiparkinsonianos → até 6 meses</b> de tratamento (sem justificativa). ② <b>Misoprostol</b>: venda restrita a <b>hospitais cadastrados</b>.</p></div>
+      </article>
+
+      <article class="card">
+        <div class="card-top"><h3>C2 <small>· retinoides sistêmicos</small></h3><span class="tag">NR Especial · branca ♀</span></div>
+        <div class="row"><div class="lab">Classificação</div><p>Substâncias <b>retinoicas de uso sistêmico</b> — potencial <b>teratogênico</b>.</p></div>
+        <div class="row"><div class="lab">Receita</div><p><b>Notificação de Receita Especial</b> branca com <b>símbolo de gestante</b>. Validade 30 dias, 30 dias de tratamento.</p></div>
+        <div class="row"><div class="lab">Exemplos</div><div class="drugs"><span class="drug">Isotretinoína</span><span class="drug">Acitretina</span><span class="drug">Tretinoína</span><span class="drug">Adapaleno</span><span class="drug">Bexaroteno</span></div></div>
+        <div class="res"><div class="lab">Adendo de prova</div><p>É o <b>único</b> modelo de receita <b>branca com notificação numerada</b> e termo de consentimento por risco teratogênico.</p></div>
+      </article>
+
+      <article class="card">
+        <div class="card-top"><h3>C3 <small>· imunossupressora</small></h3><span class="tag">NR Especial · talidomida</span></div>
+        <div class="row"><div class="lab">Classificação</div><p>Substância <b>imunossupressora</b> — a icônica <b>talidomida</b>.</p></div>
+        <div class="row"><div class="lab">Receita</div><p><b>Notificação de Receita Especial para Talidomida</b> (branca), com termo de responsabilidade.</p></div>
+        <div class="row"><div class="lab">Exemplo</div><div class="drugs"><span class="drug">Talidomida</span></div></div>
+        <div class="res"><div class="lab">Adendo de prova ⭐</div><p>Dispensação <b>exclusiva em farmácias do serviço público</b> (RDC 11/2011 e RDC 735/2022). Forte controle pelo histórico de focomelia.</p></div>
+      </article>
+
+      <article class="card">
+        <div class="card-top"><h3>C4 <small>· antirretrovirais</small></h3><span class="tag">receituário do programa</span></div>
+        <div class="row"><div class="lab">Classificação</div><p>Substâncias <b>antirretrovirais</b> (terapia do HIV).</p></div>
+        <div class="row"><div class="lab">Receita</div><p>Prescrição <b>só por médico</b>, dispensada nas <b>farmácias do SUS</b> em <b>formulário próprio do programa de IST/Aids</b>, onde fica retida.</p></div>
+        <div class="row"><div class="lab">Exemplos</div><div class="drugs"><span class="drug">Tenofovir</span><span class="drug">Lamivudina</span><span class="drug">Dolutegravir</span><span class="drug">Efavirenz</span></div></div>
+        <div class="res"><div class="lab">Adendo de prova</div><p>Exceção à regra de "1 substância": pode conter <b>até 5</b> substâncias/medicamentos por receita.</p></div>
+      </article>
+
+      <article class="card">
+        <div class="card-top"><h3>C5 <small>· anabolizantes</small></h3><span class="tag">controle especial · branca</span></div>
+        <div class="row"><div class="lab">Classificação</div><p>Substâncias <b>anabolizantes</b> (esteroides androgênicos).</p></div>
+        <div class="row"><div class="lab">Receita</div><p><b>Receita de Controle Especial</b> (branca, <b>2 vias</b>) — mesmo rito da C1.</p></div>
+        <div class="row"><div class="lab">Exemplos</div><div class="drugs"><span class="drug">Testosterona</span><span class="drug">Nandrolona</span><span class="drug">Estanozolol</span><span class="drug">Oxandrolona</span></div></div>
+        <div class="res"><div class="lab">Adendo de prova</div><p>C1 e C5 partilham o mesmo receituário e os limites do Art. 59 (5 ampolas / 60 dias / até 3 itens).</p></div>
+      </article>
+
+      <article class="card">
+        <div class="card-top"><h3>Receita de Controle Especial</h3><span class="tag">documento · 2 vias</span></div>
+        <div class="row"><div class="lab">Aplicação</div><p>Listas <b>C1</b> e <b>C5</b> + <b>adendos das listas A1, A2 e B1</b>.</p></div>
+        <div class="row"><div class="lab">Vias</div><p><b>1ª via</b> — retenção da farmácia/drogaria; <b>2ª via</b> — orientação ao paciente.</p></div>
+        <div class="row"><div class="lab">Validade</div><p><b>30 dias</b>, válida em <b>todo o território nacional</b>.</p></div>
+        <div class="res"><div class="lab">Adendo de prova</div><p>Receitas C1/C5 vindas de <b>outra UF</b> devem ser apresentadas à VISA local em <b>72 horas</b> para visto.</p></div>
+      </article>
+
+      <div class="note"><b>Organize a Lista C:</b> <b>C1</b> "outras" + <b>C5</b> anabolizantes → Receita de Controle Especial (branca, 2 vias). <b>C2</b> retinoides + <b>C3</b> talidomida → Notificação de Receita Especial (branca). <b>C4</b> antirretrovirais → receituário do programa no SUS.</div>
+    </div>
+  </section>
+
+  <!-- =============== LISTAS D, E, F =============== -->
+  <section class="branch bD" id="gD">
+    <div class="branch-head"><div class="branch-num">D</div><h2>Listas D · E · F — precursores, plantas e proscritas<span>Saem do eixo "paciente" e entram no eixo "insumo / proibição".</span></h2></div>
+    <div class="grid">
+
+      <article class="card">
+        <div class="card-top"><h3>D1 <small>· precursores</small></h3><span class="tag">receita comum</span></div>
+        <div class="row"><div class="lab">Classificação</div><p>Substâncias <b>precursoras</b> de entorpecentes e/ou psicotrópicos (~20 fármacos).</p></div>
+        <div class="row"><div class="lab">Receita</div><p><b>Receita médica comum, SEM retenção</b> — mas com escrituração da substância.</p></div>
+        <div class="row"><div class="lab">Exemplos</div><div class="drugs"><span class="drug">Efedrina</span><span class="drug">Pseudoefedrina</span><span class="drug">Ergotamina</span><span class="drug">Ergometrina</span><span class="drug">Ác. lisérgico</span></div></div>
+        <div class="res"><div class="lab">Adendo de prova ⭐</div><p>É a <b>"pegadinha do sem retenção"</b>: substância controlada que <b>não</b> exige notificação nem retenção da receita.</p></div>
+      </article>
+
+      <article class="card">
+        <div class="card-top"><h3>D2 <small>· insumos químicos</small></h3><span class="tag">Min. Justiça / PF</span></div>
+        <div class="row"><div class="lab">Classificação</div><p>Insumos químicos usados como <b>precursores</b> para fabricação/síntese de entorpecentes e psicotrópicos.</p></div>
+        <div class="row"><div class="lab">Controle</div><p>Não é controle sanitário "de paciente" — fica sob o <b>Ministério da Justiça / Polícia Federal</b> (escrituração via <b>SIPROQUIM</b>).</p></div>
+        <div class="row"><div class="lab">Exemplos</div><div class="drugs"><span class="drug">Acetona</span><span class="drug">Tolueno</span><span class="drug">Ác. sulfúrico</span><span class="drug">Permanganato de potássio</span></div></div>
+        <div class="res"><div class="lab">Adendo de prova</div><p>Memorize: <b>D2 = Polícia Federal</b>, não Anvisa. Insumo industrial, não medicamento.</p></div>
+      </article>
+
+      <article class="card bF">
+        <div class="card-top"><h3>E <small>· plantas proscritas</small></h3><span class="tag">uso proibido</span></div>
+        <div class="row"><div class="lab">Classificação</div><p>Plantas que podem originar substâncias entorpecentes e/ou psicotrópicas.</p></div>
+        <div class="row"><div class="lab">Status</div><p><b>Proscritas</b> — não podem ser objeto de prescrição nem manipulação (Art. 61).</p></div>
+        <div class="row"><div class="lab">Exemplos</div><div class="drugs"><span class="drug">Cannabis sativa</span><span class="drug">Papaver somniferum</span><span class="drug">Erythroxylum (coca)</span><span class="drug">Salvia divinorum</span></div></div>
+        <div class="res"><div class="lab">Adendo de prova</div><p><b>E = plantas</b> proscritas; <b>F = substâncias</b> proscritas. Não confunda as duas.</p></div>
+      </article>
+
+      <article class="card bF">
+        <div class="card-top"><h3>F <small>· substâncias proscritas</small></h3><span class="tag">uso proibido</span></div>
+        <div class="row"><div class="lab">Subdivisões</div><p><b>F1</b> entorpecentes · <b>F2</b> psicotrópicos · <b>F3</b> e <b>F4</b> outras substâncias de uso proscrito no Brasil.</p></div>
+        <div class="row"><div class="lab">Status</div><p>Uso <b>proibido</b>: não podem ser prescritas nem manipuladas. Importação só para ensino/pesquisa, com autorização da Anvisa.</p></div>
+        <div class="row"><div class="lab">Exemplos</div><div class="drugs"><span class="drug">Heroína (F1)</span><span class="drug">LSD (F2)</span><span class="drug">MDMA/ecstasy (F2)</span><span class="drug">Metanfetamina (F2)</span></div></div>
+        <div class="res"><div class="lab">Adendo de prova</div><p>A <b>metanfetamina</b> já foi remanejada da A3 para a <b>F2</b> — exemplo clássico de migração de lista.</p></div>
+      </article>
+
+      <div class="note"><b>Eixo das listas D–F:</b> <b>D1</b> = remédio precursor (receita comum, sem retenção) · <b>D2</b> = insumo químico (Polícia Federal) · <b>E</b> = plantas proibidas · <b>F</b> = substâncias proibidas. Quanto mais avança no alfabeto, menos "paciente" e mais "proibição".</div>
+    </div>
+  </section>
+
+  <!-- =============== ADENDOS, ESCRITURAÇÃO E 2026 =============== -->
+  <section class="branch bX" id="gX">
+    <div class="branch-head"><div class="branch-num">§</div><h2>Adendos de ouro, escrituração e atualizações 2026<span>O bloco que decide questões: as exceções, os balanços e o que mudou agora.</span></h2></div>
+    <div class="grid">
+
+      <article class="card">
+        <div class="card-top"><h3>Adendos que mais caem</h3><span class="tag">exceções ⭐</span></div>
+        <div class="row"><div class="lab">Receituário trocado</div><p><b>Codeína/tramadol ≤100 mg</b> e <b>oxicodona LC ≤40 mg</b> → Receita de Controle Especial (2 vias), apesar de serem listas A.</p></div>
+        <div class="row"><div class="lab">Tempo de tratamento</div><p><b>Anticonvulsivantes e antiparkinsonianos (C1) → até 6 meses</b>, sem justificativa. Demais C1/C5 = 60 dias.</p></div>
+        <div class="row"><div class="lab">Nº de itens por receita</div><p>Notificação = 1 substância. Exceções: <b>C1 (até 3)</b> e <b>C4 (até 5)</b>.</p></div>
+        <div class="res"><div class="lab">Outras pegadinhas</div><p><b>Misoprostol</b> só em hospital cadastrado · <b>talidomida</b> só em farmácia pública · <b>D1</b> sem retenção · receitas C1/C5 de outra UF → VISA em <b>72 h</b>.</p></div>
+      </article>
+
+      <article class="card">
+        <div class="card-top"><h3>Escrituração e balanços</h3><span class="tag">SNGPC & livros</span></div>
+        <div class="row"><div class="lab">SNGPC</div><p>Sistema Nacional de Gerenciamento de Produtos Controlados — escrituração <b>eletrônica</b> de controlados e antimicrobianos.</p></div>
+        <div class="row"><div class="lab">Balanços (BSPO / BMPO)</div><p><b>BSPO</b> = substâncias (listas A, B, C, D1); <b>BMPO</b> = medicamentos (listas A e B2). Entrega <b>trimestral</b> + balanço <b>anual</b>.</p></div>
+        <div class="row"><div class="lab">Relações mensais</div><p><b>RMNRA</b> (Notificação de Receita A) e <b>RMNRB2</b> — entregues <b>mensalmente</b>, com as notificações correspondentes.</p></div>
+        <div class="res"><div class="lab">Guarda</div><p>Controlados <b>sob chave</b>, em local exclusivo, sob responsabilidade do <b>farmacêutico</b>. Livro de Registro Específico com termo de abertura visado pela VISA.</p></div>
+      </article>
+
+      <article class="card">
+        <div class="card-top"><h3>Atualizações 2025–2026</h3><span class="tag">quente ⚡</span></div>
+        <div class="row"><div class="lab">RDC 1.000/2025</div><p>Em vigor desde <b>13/02/2026</b>: permite <b>receita eletrônica</b> (NR-A, NR-B, talidomida, retinoides) via SNCR e torna <b>obrigatório o CPF do paciente</b> nas receitas de controle especial. Talonários podem ser impressos em gráfica pelo próprio profissional.</p></div>
+        <div class="row"><div class="lab">Análogos de GLP-1</div><p><b>Semaglutida, tirzepatida, liraglutida</b> (Ozempic, Wegovy, Mounjaro, Saxenda…) passaram a <b>controle especial</b>: receita em 2 vias com retenção, validade <b>90 dias</b> e registro no SNGPC.</p></div>
+        <div class="res"><div class="lab">Atenção</div><p>O <b>Anexo I</b> (listas) é atualizado por RDCs frequentes — sempre confira a versão vigente no portal da Anvisa antes da prova.</p></div>
+      </article>
+
+      <div class="note"><b>Fechamento:</b> entender a Portaria 344/98 é dominar três eixos — <b>qual lista</b> (classificação), <b>qual receita</b> (cor, vias, validade) e <b>quais exceções</b> (adendos). As bancas adoram cruzar lista × receituário e cobrar os adendos de codeína/tramadol, anticonvulsivantes (6 meses) e talidomida (farmácia pública).</div>
+    </div>
+  </section>
+
+  <footer>
+    Material de estudo para residência multiprofissional em farmácia · Portaria SVS/MS nº 344/1998 e atualizações (RDC 1.000/2025, RDC 784/2023 e posteriores). As listas do Anexo I sofrem revisões periódicas pela Anvisa — confirme sempre a versão vigente e as normas estaduais antes de dispensar.
+  </footer>
+
+</div>
+</body>
+</html>

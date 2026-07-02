@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Seguimento do Paciente Idoso — Guia de revisão</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@500;600;700;800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#E7E1D2;--surface:#FBF8F0;--surface-2:#F3EEE1;
+    --ink:#143C42;--ink-soft:#4E5F5C;--vermilion:#D6492A;--ochre:#B98220;--green:#3C6E47;--blue:#2C5A74;
+    --line:rgba(20,60,66,.22);--line-strong:rgba(20,60,66,.55);
+    --font-display:'Anton',Impact,sans-serif;--font-head:'Archivo',system-ui,sans-serif;--font-body:'IBM Plex Sans',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+  body{margin:0;background:radial-gradient(circle at 100% -2%, rgba(214,73,42,.06), transparent 38%),var(--paper);
+    color:var(--ink);font-family:var(--font-body);line-height:1.55;padding:clamp(16px,3.5vw,44px) clamp(12px,4vw,40px) 80px}
+  .wrap{max-width:1080px;margin:0 auto}
+  .top-rule{height:6px;background:var(--ink)}
+  .kicker{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-family:var(--font-head);font-weight:700;text-transform:uppercase;letter-spacing:.15em;font-size:11px;color:var(--ink-soft);padding:9px 2px;border-bottom:1px solid var(--line)}
+  .kicker .dot{color:var(--vermilion)}
+  h1{font-family:var(--font-display);font-weight:400;line-height:.92;font-size:clamp(28px,5.4vw,60px);margin:16px 0 8px;text-transform:uppercase;letter-spacing:.5px}
+  h1 .accent{color:var(--vermilion)}
+  .dek{font-size:clamp(15px,2vw,17.5px);color:var(--ink-soft);max-width:66ch;border-top:3px double var(--line-strong);padding-top:12px}
+  .dek b{color:var(--ink);font-weight:600}
+  nav.toc{position:sticky;top:0;z-index:20;background:rgba(231,225,210,.94);backdrop-filter:blur(6px);margin:18px 0 8px;padding:10px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  nav.toc ul{list-style:none;display:flex;gap:7px;flex-wrap:wrap;margin:0;padding:0}
+  nav.toc a{font-family:var(--font-head);font-weight:600;font-size:12px;text-decoration:none;color:var(--ink);border:1.5px solid var(--line-strong);border-radius:2px;padding:5px 10px;transition:background .12s,color .12s}
+  nav.toc a:hover{background:var(--ink);color:var(--surface)}
+  section{margin:38px 0 0;scroll-margin-top:64px}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:14px;border-bottom:2px solid var(--ink);padding-bottom:8px}
+  .sec-num{font-family:var(--font-display);font-size:clamp(26px,4vw,40px);color:var(--vermilion);line-height:.8}
+  .sec-head h2{font-family:var(--font-head);font-weight:800;font-size:clamp(18px,3vw,25px);margin:0;letter-spacing:-.01em}
+  p{margin:0 0 12px}.lead{font-size:16px}
+  strong,b{color:var(--ink);font-weight:600}.hl{color:var(--vermilion);font-weight:600}
+  ul.clean{margin:0 0 12px;padding-left:18px}ul.clean li{margin:5px 0}
+  .box{background:var(--surface);border:1.5px solid var(--ink);border-radius:3px;box-shadow:4px 4px 0 var(--ink);padding:16px 18px;margin:14px 0}
+  .grid2{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+  .bizu{border:1.5px dashed var(--green);background:rgba(60,110,71,.06);border-radius:3px;padding:13px 16px;margin:14px 0}
+  .bizu .tag{font-family:var(--font-head);font-weight:700;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--green);display:block;margin-bottom:5px}
+  .bizu b{color:var(--green)}
+  .trap{border:1.5px solid var(--vermilion);background:rgba(214,73,42,.05);border-radius:3px;padding:13px 16px;margin:14px 0}
+  .trap .tag{font-family:var(--font-head);font-weight:700;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--vermilion);display:block;margin-bottom:5px}
+  .note{border:1.5px solid var(--blue);background:rgba(44,90,116,.06);border-radius:3px;padding:13px 16px;margin:14px 0}
+  .note .tag{font-family:var(--font-head);font-weight:700;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--blue);display:block;margin-bottom:5px}
+  .tbl{width:100%;border-collapse:collapse;margin:14px 0;font-size:12.5px;background:var(--surface)}
+  .tbl th,.tbl td{border:1px solid var(--line-strong);padding:8px 10px;text-align:left;vertical-align:top}
+  .tbl thead th{background:var(--ink);color:var(--surface);font-family:var(--font-head);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.03em}
+  .tbl tbody th{background:var(--surface-2);font-family:var(--font-head);font-weight:700;white-space:nowrap}
+  .tbl-scroll{overflow-x:auto}
+  .pheap{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));margin:14px 0}
+  .pcard{background:var(--surface);border:1.5px solid var(--ink);border-radius:3px;box-shadow:3px 3px 0 var(--ink);padding:13px 15px}
+  .pcard .ph{font-family:var(--font-display);color:var(--vermilion);font-size:15px;letter-spacing:.05em}
+  .pcard h4{font-family:var(--font-head);font-weight:700;margin:3px 0 6px;font-size:14.5px}
+  .pcard p{margin:0;font-size:12.5px;color:var(--ink-soft)}
+  .fc-grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));margin-top:14px}
+  .fc{background:var(--surface);border:1.5px solid var(--ink);border-radius:3px;box-shadow:4px 4px 0 var(--ink);padding:16px 17px;cursor:pointer;text-align:left;width:100%;font-family:var(--font-body);color:var(--ink);display:flex;flex-direction:column;gap:9px;transition:transform .12s,box-shadow .12s}
+  .fc:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--vermilion)}
+  .fc:focus-visible{outline:3px solid var(--vermilion);outline-offset:3px}
+  .fc .q{font-family:var(--font-head);font-weight:700;font-size:15px;line-height:1.28}
+  .fc .hint{font-family:var(--font-head);font-weight:600;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--vermilion)}
+  .fc .ans{font-size:13.5px;color:var(--ink-soft)}
+  .fc:not(.open) .ans{display:none}.fc.open .hint{display:none}
+  .case .q::before{content:"CASO ";font-family:var(--font-display);color:var(--vermilion);font-size:12px;letter-spacing:.1em}
+  footer{margin:46px 0 0;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--ink-soft)}
+  footer b{color:var(--ink)}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="top-rule"></div>
+    <div class="kicker">
+      <span>Farmácia Clínica <span class="dot">·</span> Geriatria</span>
+      <span>Resmulti · ENARE · EBSERH · HUs</span>
+    </div>
+    <h1>Seguimento do Paciente <span class="accent">Idoso</span></h1>
+    <p class="dek">Como o envelhecimento altera a <b>farmacocinética e a farmacodinâmica</b>, por que a <b>polifarmácia</b> multiplica o risco de <b>reações adversas</b>, e as ferramentas (Beers, STOPP/START, desprescrição). Guia com bizus, tabelas e casos.</p>
+  </header>
+
+  <nav class="toc" aria-label="Índice">
+    <ul>
+      <li><a href="#conceitos">1 · Conceitos</a></li>
+      <li><a href="#pk">2 · Farmacocinética ★</a></li>
+      <li><a href="#pd">3 · Farmacodinâmica ★</a></li>
+      <li><a href="#poli">4 · Polifarmácia ★</a></li>
+      <li><a href="#ram">5 · Risco de RAM ★</a></li>
+      <li><a href="#cascata">6 · Cascata iatrogênica ★</a></li>
+      <li><a href="#beers">7 · Beers &amp; STOPP/START ★</a></li>
+      <li><a href="#despres">8 · Desprescrição</a></li>
+      <li><a href="#seguimento">9 · Seguimento &amp; marcos</a></li>
+      <li><a href="#pegadinhas">10 · Pegadinhas</a></li>
+      <li><a href="#casos">11 · Casos ★</a></li>
+    </ul>
+  </nav>
+
+  <!-- 1 -->
+  <section id="conceitos">
+    <div class="sec-head"><span class="sec-num">01</span><h2>Conceitos iniciais</h2></div>
+    <p class="lead">No Brasil, <b>idoso = 60 anos ou mais</b> (Estatuto do Idoso). O envelhecimento traz <b>senescência</b> (alterações fisiológicas normais) e maior vulnerabilidade — fragilidade, multimorbidade e <b>polifarmácia</b>, que tornam o idoso o paciente de <span class="hl">maior risco de eventos adversos a medicamentos</span>.</p>
+    <div class="bizu"><span class="tag">★ Bizu</span> Três “motores” do risco no idoso: <b>alterações PK/PD</b> (o corpo lida diferente com o fármaco) + <b>polifarmácia/multimorbidade</b> + <b>fragilidade</b>. O seguimento farmacêutico atua nos três.</div>
+  </section>
+
+  <!-- 2 -->
+  <section id="pk">
+    <div class="sec-head"><span class="sec-num">02</span><h2>Farmacocinética no envelhecimento ★</h2></div>
+    <p>O que o organismo faz com o fármaco — as 4 fases <b>ADME</b>:</p>
+    <div class="pheap">
+      <div class="pcard"><span class="ph">A</span><h4>Absorção</h4><p>↑ pH gástrico, ↓ motilidade e esvaziamento, ↓ superfície e fluxo esplâncnico. Em geral <b>pouco alterada</b> (extensão preservada; velocidade pode cair).</p></div>
+      <div class="pcard"><span class="ph">D</span><h4>Distribuição</h4><p>↑ <b>gordura corporal</b> → ↑ Vd e meia-vida de <b>lipossolúveis</b> (ex.: diazepam). ↓ <b>água corporal</b> → ↑ concentração de <b>hidrossolúveis</b> (ex.: lítio, digoxina). ↓ albumina → ↑ fração livre de ácidos (varfarina, fenitoína).</p></div>
+      <div class="pcard"><span class="ph">M</span><h4>Metabolismo</h4><p>↓ massa e fluxo <b>hepático</b> → ↓ metabolismo de <b>1ª passagem</b> e fase I (oxidação/CYP). Fase II (conjugação) relativamente preservada.</p></div>
+      <div class="pcard"><span class="ph">E</span><h4>Excreção</h4><p><span class="hl">A mais importante:</span> ↓ filtração glomerular e função renal. ↑ meia-vida de fármacos de <b>eliminação renal</b> (digoxina, aminoglicosídeos, lítio, AINEs).</p></div>
+    </div>
+    <div class="trap"><span class="tag">⚠ Pegadinha</span> A <b>creatinina sérica pode estar “normal”</b> mesmo com função renal reduzida (menor massa muscular). Estime a <b>depuração</b> (Cockcroft-Gault/CKD-EPI) para ajustar dose — não confie só na creatinina.</div>
+    <div class="bizu"><span class="tag">★ Bizu</span> <b>Lipossolúvel ↑ Vd e acumula</b> (efeito prolongado); <b>hidrossolúvel ↑ concentração</b> (mais pico). E o rim é o calcanhar de Aquiles: <b>reduza dose de fármacos renais</b>.</div>
+  </section>
+
+  <!-- 3 -->
+  <section id="pd">
+    <div class="sec-head"><span class="sec-num">03</span><h2>Farmacodinâmica no envelhecimento ★</h2></div>
+    <p>O que o fármaco faz no organismo — o idoso é, em regra, <b>mais sensível</b> a vários efeitos:</p>
+    <ul class="clean">
+      <li><b>↑ Sensibilidade do SNC</b>: maior efeito de benzodiazepínicos, opioides e anticolinérgicos → <b>sedação, confusão, delirium, quedas</b>.</li>
+      <li><b>↓ Reflexos homeostáticos</b>: barorreflexo reduzido → <b>hipotensão ortostática</b> (anti-hipertensivos, antidepressivos); termorregulação e resposta à hipoglicemia atenuadas.</li>
+      <li><b>↑ Risco com anticolinérgicos</b>: boca seca, constipação, retenção urinária, visão borrada, <b>confusão</b> (carga anticolinérgica cumulativa).</li>
+      <li><b>↑ Risco de sangramento</b> (anticoagulantes/antiagregantes) e de <b>distúrbios eletrolíticos</b> (diuréticos).</li>
+    </ul>
+    <div class="bizu"><span class="tag">★ Bizu</span> Regra de ouro da prescrição geriátrica: <b>“start low, go slow”</b> — iniciar com dose baixa e titular devagar, com meta e reavaliação. Menor dose eficaz, pelo menor tempo.</div>
+  </section>
+
+  <!-- 4 -->
+  <section id="poli">
+    <div class="sec-head"><span class="sec-num">04</span><h2>Polifarmácia ★</h2></div>
+    <div class="grid2">
+      <div class="box"><p><b>Definição</b></p><p>Uso simultâneo de <b>vários medicamentos</b> — o corte mais aceito é <b>≥ 5</b>. <b>Polifarmácia excessiva/maior</b> costuma ser <b>≥ 10</b>.</p></div>
+      <div class="box"><p><b>Por que importa</b></p><p>Cada medicamento a mais <b>aumenta</b> o risco de RAM, interações, baixa adesão, cascata iatrogênica, quedas, hospitalização e custo.</p></div>
+    </div>
+    <p><b>Tipos:</b> polifarmácia <b>apropriada</b> (todos os fármacos têm indicação e benefício) × <b>inapropriada</b> (há medicamentos sem indicação, duplicados, em cascata ou de risco maior que o benefício).</p>
+    <div class="trap"><span class="tag">⚠ Pegadinha</span> Polifarmácia não é “proibida”: um idoso com várias comorbidades pode <b>precisar</b> de muitos fármacos. O alvo do farmacêutico é a polifarmácia <b>inapropriada</b>, não o número em si.</div>
+  </section>
+
+  <!-- 5 -->
+  <section id="ram">
+    <div class="sec-head"><span class="sec-num">05</span><h2>Risco aumentado de RAM ★</h2></div>
+    <p>Por que o idoso sofre mais reações adversas — soma de fatores:</p>
+    <ul class="clean">
+      <li><b>PK alterada</b> (sobretudo ↓ excreção renal) → acúmulo e toxicidade.</li>
+      <li><b>PD alterada</b> → maior sensibilidade (SNC, hipotensão).</li>
+      <li><b>Polifarmácia</b> → mais interações medicamento–medicamento e medicamento–doença.</li>
+      <li><b>Multimorbidade e fragilidade</b>; menor reserva funcional.</li>
+      <li><b>Erros e baixa adesão</b> (déficit visual/cognitivo, esquemas complexos).</li>
+    </ul>
+    <div class="note"><span class="tag">ℹ Apresentação atípica</span> No idoso, a RAM costuma se manifestar de forma <b>inespecífica</b>: <b>queda, confusão/delirium, sonolência, tontura, incontinência, anorexia</b>. Sempre pergunte: “este novo sintoma pode ser do medicamento?”</div>
+    <div class="bizu"><span class="tag">★ Bizu</span> Classes campeãs de RAM/internação no idoso: <b>anticoagulantes, antiagregantes, hipoglicemiantes (insulina/sulfonilureia), AINEs, diuréticos, digoxina e psicotrópicos</b> (BZD, antipsicóticos).</div>
+  </section>
+
+  <!-- 6 -->
+  <section id="cascata">
+    <div class="sec-head"><span class="sec-num">06</span><h2>Cascata iatrogênica (prescrição em cascata) ★</h2></div>
+    <p>Ocorre quando uma <b>RAM é interpretada como uma nova doença</b> e tratada com <b>outro medicamento</b>, gerando nova RAM, e assim por diante.</p>
+    <div class="box"><p><b>Exemplos clássicos</b></p>
+      <ul class="clean" style="margin:0">
+        <li>AINE → ↑ pressão arterial → inicia-se anti-hipertensivo.</li>
+        <li>Bloqueador de canal de cálcio → edema → inicia-se diurético.</li>
+        <li>Metoclopramida/antipsicótico → parkinsonismo → inicia-se antiparkinsoniano.</li>
+        <li>Anticolinérgico → constipação → inicia-se laxante.</li>
+        <li>Donepezila → incontinência → inicia-se oxibutinina (anticolinérgico) → confusão.</li>
+      </ul></div>
+    <div class="bizu"><span class="tag">★ Bizu</span> Antes de adicionar um fármaco para um sintoma novo, <b>pergunte se ele não é efeito de outro já em uso</b>. Reconhecer a cascata é a forma de quebrá-la (desprescrever a causa).</div>
+  </section>
+
+  <!-- 7 -->
+  <section id="beers">
+    <div class="sec-head"><span class="sec-num">07</span><h2>Critérios: Beers &amp; STOPP/START ★</h2></div>
+    <div class="tbl-scroll">
+    <table class="tbl">
+      <thead><tr><th>Ferramenta</th><th>O que é / faz</th></tr></thead>
+      <tbody>
+        <tr><th>Critérios de Beers (AGS)</th><td>Lista de <b>medicamentos potencialmente inapropriados (MPI)</b> para idosos. Foco no que <b>evitar</b>. Ex.: benzodiazepínicos, anticolinérgicos, AINEs de uso crônico, antipsicóticos em demência, relaxantes musculares.</td></tr>
+        <tr><th>STOPP</th><td><i>Screening Tool of Older Persons' Prescriptions</i>: aponta medicamentos a <b>suspender</b> (potencialmente inapropriados/interações).</td></tr>
+        <tr><th>START</th><td><i>Screening Tool to Alert to Right Treatment</i>: aponta medicamentos <b>omitidos</b> que <b>deveriam ser iniciados</b> (subtratamento).</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="bizu"><span class="tag">★ Bizu</span> <b>STOPP = STOP</b> (retirar o inapropriado); <b>START = começar</b> (corrigir a omissão). Beers foca no “evitar”; STOPP/START avalia <b>os dois lados</b> (excesso e falta).</div>
+    <div class="trap"><span class="tag">⚠ Pegadinha</span> Não é só “excesso”: o idoso também sofre <b>subtratamento</b> (ex.: não receber anticoagulante na FA, estatina, vitamina D/cálcio com osteoporose). É o que o <b>START</b> captura.</div>
+  </section>
+
+  <!-- 8 -->
+  <section id="despres">
+    <div class="sec-head"><span class="sec-num">08</span><h2>Desprescrição</h2></div>
+    <p>Processo <b>planejado e supervisionado</b> de reduzir ou suspender medicamentos cujo <b>risco supera o benefício</b>, alinhado às metas e preferências do paciente. Não é “abandonar” o tratamento — é otimizá-lo.</p>
+    <ul class="clean">
+      <li>Levantar a lista <b>completa</b> (incluindo MIPs, fitoterápicos) e a indicação de cada item.</li>
+      <li>Identificar MPI, duplicidades, cascatas e fármacos sem indicação atual.</li>
+      <li>Priorizar o que desprescrever; <b>reduzir gradualmente</b> (desmame quando houver risco de retirada).</li>
+      <li><b>Monitorar</b> sintomas de retirada/recidiva e pactuar com paciente/cuidador e equipe.</li>
+    </ul>
+    <div class="bizu"><span class="tag">★ Bizu</span> Desprescrever exige a mesma seriedade de prescrever: <b>decisão compartilhada</b>, plano de monitorização e registro. Vários fármacos (BZD, opioides, IBP, antidepressivos, corticoides) pedem <b>retirada gradual</b>.</div>
+  </section>
+
+  <!-- 9 -->
+  <section id="seguimento">
+    <div class="sec-head"><span class="sec-num">09</span><h2>Seguimento farmacêutico &amp; marcos ★</h2></div>
+    <p>O método de cuidado (coletar → avaliar → planejar → implementar → acompanhar) aplicado ao idoso, com ênfase em:</p>
+    <ul class="clean">
+      <li><b>Conciliação medicamentosa</b> em todas as transições (admissão, alta, troca de nível).</li>
+      <li><b>Revisão da farmacoterapia</b> com Beers/STOPP-START; cálculo de função renal e ajuste de dose.</li>
+      <li><b>Avaliação da adesão e da técnica</b> (organizadores, calendário, letra grande, cuidador).</li>
+      <li><b>Rastreio de carga anticolinérgica</b> e de risco de quedas; educação do paciente e da família.</li>
+      <li>Atuação <b>multiprofissional</b> (avaliação geriátrica ampla).</li>
+    </ul>
+    <div class="note"><span class="tag">ℹ Marcos no Brasil</span>
+      <b>Estatuto do Idoso</b> (Lei nº 10.741/2003; idade ≥ 60 anos); <b>Política Nacional de Saúde da Pessoa Idosa – PNSPI</b> (Portaria nº 2.528/2006); <b>Caderno de Atenção Básica nº 19 — Envelhecimento e Saúde da Pessoa Idosa</b>. Princípio: cuidado centrado na <b>funcionalidade</b>, não só na doença.</div>
+  </section>
+
+  <!-- 10 -->
+  <section id="pegadinhas">
+    <div class="sec-head"><span class="sec-num">10</span><h2>Pegadinhas consolidadas</h2></div>
+    <div class="trap"><span class="tag">⚠ Top pegadinhas</span>
+      <ul class="clean" style="margin:0">
+        <li><b>Idoso no Brasil = ≥ 60 anos</b> (Estatuto do Idoso).</li>
+        <li>A alteração PK mais relevante é a <b>↓ excreção renal</b>; ajuste dose de fármacos renais.</li>
+        <li><b>Creatinina “normal” não exclui</b> queda da função renal — estime a depuração.</li>
+        <li><b>Lipossolúvel</b> ↑ Vd/meia-vida (acúmulo); <b>hidrossolúvel</b> ↑ concentração.</li>
+        <li>Idoso é <b>mais sensível</b> a BZD, opioides e anticolinérgicos (SNC, quedas).</li>
+        <li><b>Polifarmácia ≥ 5</b>; o alvo é a <b>inapropriada</b>, não o número.</li>
+        <li>RAM no idoso é <b>atípica</b>: queda, delirium, sonolência, anorexia.</li>
+        <li><b>Cascata iatrogênica</b>: RAM tratada como doença nova.</li>
+        <li><b>Beers</b> = MPI a evitar; <b>STOPP</b> = parar; <b>START</b> = iniciar (subtratamento).</li>
+        <li><b>“Start low, go slow”</b> e <b>desprescrição</b> com decisão compartilhada.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 11 -->
+  <section id="casos">
+    <div class="sec-head"><span class="sec-num">11</span><h2>Casos clínicos — autoteste ★</h2></div>
+    <p>Leia, decida a conduta e clique para conferir.</p>
+    <div class="fc-grid" id="caseGrid"></div>
+  </section>
+
+  <footer>
+    <b>Fontes-base:</b> farmacologia geriátrica (alterações PK/PD do envelhecimento); critérios de Beers (AGS) e STOPP/START; literatura de polifarmácia, cascata iatrogênica e desprescrição; Estatuto do Idoso (Lei 10.741/2003); PNSPI (Portaria 2.528/2006); Caderno de Atenção Básica nº 19. Material de estudo — confronte com o edital e a bibliografia da sua banca.
+  </footer>
+
+</div>
+
+<script>
+  const cases = [
+    {q:"Idoso de 82 anos, 50 kg, em uso de digoxina, com creatinina 1,1 mg/dL ('normal'). Por que isso preocupa?", a:"A creatinina pode parecer normal por causa da baixa massa muscular, mascarando função renal reduzida. A digoxina é de eliminação renal e janela estreita: deve-se estimar a depuração (Cockcroft-Gault) e ajustar a dose para evitar intoxicação digitálica."},
+    {q:"Mulher de 78 anos inicia anlodipino e, semanas depois, surge edema de membros inferiores; o médico cogita um diurético. Como o farmacêutico deve agir?", a:"Reconhecer cascata iatrogênica: o edema é RAM do bloqueador de canal de cálcio. Em vez de adicionar diurético, sugerir reavaliar/substituir o anlodipino. Quebrar a cascata na causa."},
+    {q:"Por que benzodiazepínicos de longa ação (ex.: diazepam) são especialmente perigosos em idosos?", a:"São lipossolúveis: aumento da gordura corporal eleva o Vd e a meia-vida, levando a acúmulo. Somado à maior sensibilidade do SNC, aumentam sedação, confusão, delirium e quedas. Constam nos critérios de Beers como MPI."},
+    {q:"Idoso assintomático com fibrilação atrial e alto risco de AVC não recebe anticoagulante. Que ferramenta aponta esse problema e qual é ele?", a:"É um caso de subtratamento (omissão), captado pelo critério START — que alerta para tratamentos indicados e ausentes. Deve-se avaliar a introdução de anticoagulação conforme risco/benefício."},
+    {q:"Como interpretar STOPP e START em uma frase cada?", a:"STOPP lista medicamentos potencialmente inapropriados que devem ser suspensos (excesso/risco); START lista medicamentos indicados que foram omitidos e deveriam ser iniciados (subtratamento)."},
+    {q:"Idoso em uso de oxibutinina (anticolinérgico) apresenta confusão, boca seca e constipação. O que considerar?", a:"Carga anticolinérgica: idosos são mais sensíveis a efeitos no SNC e periféricos. Avaliar desprescrição/substituição da oxibutinina (item de Beers) e checar se não há cascata (ex.: laxante para a constipação induzida)."},
+    {q:"Qual a principal alteração farmacocinética a considerar ao ajustar doses no idoso, e por quê?", a:"A redução da excreção renal (queda da filtração glomerular), que prolonga a meia-vida de fármacos eliminados pelos rins (digoxina, aminoglicosídeos, lítio, AINEs), exigindo redução de dose guiada pela depuração estimada."},
+    {q:"O que significa 'start low, go slow' na prática geriátrica?", a:"Iniciar com a menor dose eficaz e titular lentamente, monitorando resposta e efeitos adversos, dada a maior sensibilidade (PD) e o risco de acúmulo (PK) no idoso. Usar pelo menor tempo necessário."},
+    {q:"Paciente usa 11 medicamentos, todos com indicação clara e benefício comprovado. É polifarmácia inapropriada?", a:"Não necessariamente. É polifarmácia (≥5, e até excessiva ≥10), porém apropriada se cada item tem indicação e benefício. O foco do farmacêutico é a polifarmácia inapropriada, não o número isolado."},
+    {q:"Idoso frágil traz queda recente e sonolência diurna após início de um novo remédio para dormir. Como abordar?", a:"Suspeitar de RAM com apresentação atípica (queda/sonolência) por hipnótico/BZD. Avaliar desprescrição gradual, medidas não farmacológicas para o sono e rastrear risco de quedas. Reavaliar carga sedativa total."},
+    {q:"Diferencie alteração na distribuição de fármacos lipossolúveis e hidrossolúveis no idoso.", a:"Com o aumento da gordura e a redução da água corporais: lipossolúveis têm maior volume de distribuição e meia-vida (acúmulo/efeito prolongado); hidrossolúveis têm menor volume de distribuição e maior concentração plasmática (mais pico, ex.: lítio, digoxina)."},
+    {q:"Na alta hospitalar de um idoso com 9 medicamentos, qual a primeira intervenção farmacêutica essencial?", a:"Conciliação medicamentosa: comparar a lista pré-internação com a prescrição de alta, resolver discrepâncias, revisar com Beers/STOPP-START, ajustar doses pela função renal e orientar paciente/cuidador com lista escrita."}
+  ];
+  const grid = document.getElementById('caseGrid');
+  cases.forEach(c=>{
+    const b=document.createElement('button');b.className='fc case';b.type='button';
+    b.innerHTML=`<span class="q">${c.q}</span><span class="hint">Ver conduta</span><span class="ans">${c.a}</span>`;
+    b.addEventListener('click',()=>b.classList.toggle('open'));
+    grid.appendChild(b);
+  });
+</script>
+</body>
+</html>

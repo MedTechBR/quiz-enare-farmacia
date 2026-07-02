@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Monitorização Terapêutica — Índice Terapêutico Estreito</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@500;600;700;800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#E7E1D2;--surface:#FBF8F0;--surface-2:#F3EEE1;
+    --ink:#143C42;--ink-soft:#4E5F5C;--vermilion:#D6492A;--ochre:#B98220;--green:#3C6E47;--blue:#2C5A74;
+    --line:rgba(20,60,66,.22);--line-strong:rgba(20,60,66,.55);
+    --font-display:'Anton',Impact,sans-serif;--font-head:'Archivo',system-ui,sans-serif;--font-body:'IBM Plex Sans',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+  body{margin:0;background:radial-gradient(circle at 100% -2%, rgba(214,73,42,.06), transparent 38%),var(--paper);
+    color:var(--ink);font-family:var(--font-body);line-height:1.55;padding:clamp(16px,3.5vw,44px) clamp(12px,4vw,40px) 80px}
+  .wrap{max-width:1080px;margin:0 auto}
+  .top-rule{height:6px;background:var(--ink)}
+  .kicker{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-family:var(--font-head);font-weight:700;text-transform:uppercase;letter-spacing:.15em;font-size:11px;color:var(--ink-soft);padding:9px 2px;border-bottom:1px solid var(--line)}
+  .kicker .dot{color:var(--vermilion)}
+  h1{font-family:var(--font-display);font-weight:400;line-height:.92;font-size:clamp(30px,6.2vw,66px);margin:16px 0 8px;text-transform:uppercase;letter-spacing:.5px}
+  h1 .accent{color:var(--vermilion)}
+  .dek{font-size:clamp(15px,2vw,17.5px);color:var(--ink-soft);max-width:66ch;border-top:3px double var(--line-strong);padding-top:12px}
+  .dek b{color:var(--ink);font-weight:600}
+  nav.toc{position:sticky;top:0;z-index:20;background:rgba(231,225,210,.94);backdrop-filter:blur(6px);margin:18px 0 8px;padding:10px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  nav.toc ul{list-style:none;display:flex;gap:7px;flex-wrap:wrap;margin:0;padding:0}
+  nav.toc a{font-family:var(--font-head);font-weight:600;font-size:12px;text-decoration:none;color:var(--ink);border:1.5px solid var(--line-strong);border-radius:2px;padding:5px 10px;transition:background .12s,color .12s}
+  nav.toc a:hover{background:var(--ink);color:var(--surface)}
+  section{margin:38px 0 0;scroll-margin-top:64px}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:14px;border-bottom:2px solid var(--ink);padding-bottom:8px}
+  .sec-num{font-family:var(--font-display);font-size:clamp(26px,4vw,40px);color:var(--vermilion);line-height:.8}
+  .sec-head h2{font-family:var(--font-head);font-weight:800;font-size:clamp(18px,3vw,25px);margin:0;letter-spacing:-.01em}
+  p{margin:0 0 12px}.lead{font-size:16px}
+  strong,b{color:var(--ink);font-weight:600}.hl{color:var(--vermilion);font-weight:600}
+  ul.clean{margin:0 0 12px;padding-left:18px}ul.clean li{margin:5px 0}
+  .box{background:var(--surface);border:1.5px solid var(--ink);border-radius:3px;box-shadow:4px 4px 0 var(--ink);padding:16px 18px;margin:14px 0}
+  .grid2{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+  .bizu{border:1.5px dashed var(--green);background:rgba(60,110,71,.06);border-radius:3px;padding:13px 16px;margin:14px 0}
+  .bizu .tag{font-family:var(--font-head);font-weight:700;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--green);display:block;margin-bottom:5px}
+  .bizu b{color:var(--green)}
+  .trap{border:1.5px solid var(--vermilion);background:rgba(214,73,42,.05);border-radius:3px;padding:13px 16px;margin:14px 0}
+  .trap .tag{font-family:var(--font-head);font-weight:700;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--vermilion);display:block;margin-bottom:5px}
+  .tbl{width:100%;border-collapse:collapse;margin:14px 0;font-size:12.5px;background:var(--surface)}
+  .tbl th,.tbl td{border:1px solid var(--line-strong);padding:8px 10px;text-align:left;vertical-align:top}
+  .tbl thead th{background:var(--ink);color:var(--surface);font-family:var(--font-head);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.03em}
+  .tbl tbody th{background:var(--surface-2);font-family:var(--font-head);font-weight:700;white-space:nowrap}
+  .tbl-scroll{overflow-x:auto}
+  .formula{font-family:var(--font-head);font-weight:600;background:var(--surface-2);border:1.5px solid var(--line-strong);border-radius:3px;padding:10px 14px;margin:10px 0;font-size:14px}
+  .fc-grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));margin-top:14px}
+  .fc{background:var(--surface);border:1.5px solid var(--ink);border-radius:3px;box-shadow:4px 4px 0 var(--ink);padding:16px 17px;cursor:pointer;text-align:left;width:100%;font-family:var(--font-body);color:var(--ink);display:flex;flex-direction:column;gap:9px;transition:transform .12s,box-shadow .12s}
+  .fc:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--vermilion)}
+  .fc:focus-visible{outline:3px solid var(--vermilion);outline-offset:3px}
+  .fc .q{font-family:var(--font-head);font-weight:700;font-size:15px;line-height:1.28}
+  .fc .hint{font-family:var(--font-head);font-weight:600;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--vermilion)}
+  .fc .ans{font-size:13.5px;color:var(--ink-soft)}
+  .fc:not(.open) .ans{display:none}.fc.open .hint{display:none}
+  .case .q::before{content:"CASO ";font-family:var(--font-display);color:var(--vermilion);font-size:12px;letter-spacing:.1em}
+  footer{margin:46px 0 0;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--ink-soft)}
+  footer b{color:var(--ink)}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="top-rule"></div>
+    <div class="kicker">
+      <span>Farmácia Clínica <span class="dot">·</span> Farmacocinética</span>
+      <span>Resmulti · ENARE · EBSERH · HUs</span>
+    </div>
+    <h1>Monitorização <span class="accent">Terapêutica</span> de Medicamentos</h1>
+    <p class="dek">Índice terapêutico estreito (IT estreito / NTI). Guia de revisão com forte ênfase em <b>casos clínicos</b>: quando monitorar, <b>quando colher</b> (vale × pico), faixas de referência e manejo da toxicidade.</p>
+  </header>
+
+  <nav class="toc" aria-label="Índice">
+    <ul>
+      <li><a href="#conceitos">1 · Conceitos</a></li>
+      <li><a href="#quando">2 · Quando monitorar</a></li>
+      <li><a href="#coleta">3 · Quando colher ★</a></li>
+      <li><a href="#pk">4 · Parâmetros PK</a></li>
+      <li><a href="#tabela">5 · Tabela-mestra ★</a></li>
+      <li><a href="#amino">6 · Amino &amp; Vanco ★</a></li>
+      <li><a href="#fenitoina">7 · Fenitoína ★</a></li>
+      <li><a href="#litio">8 · Lítio &amp; Digoxina ★</a></li>
+      <li><a href="#efeito">9 · Monitorar por efeito</a></li>
+      <li><a href="#pegadinhas">10 · Pegadinhas</a></li>
+      <li><a href="#casos">11 · Casos clínicos ★</a></li>
+    </ul>
+  </nav>
+
+  <!-- 1 -->
+  <section id="conceitos">
+    <div class="sec-head"><span class="sec-num">01</span><h2>Conceitos fundamentais</h2></div>
+    <div class="grid2">
+      <div class="box"><p><b>Índice terapêutico (IT)</b></p><p>Relação entre dose tóxica e dose efetiva (DL50/DE50). <span class="hl">Quanto menor o IT, mais estreita a margem</span> entre tratar e intoxicar — e maior a necessidade de monitorar.</p></div>
+      <div class="box"><p><b>Janela / faixa terapêutica</b></p><p>Intervalo entre a <b>concentração efetiva mínima (CEM)</b> e a <b>concentração tóxica mínima (CTM)</b>. O objetivo da MTM é manter o nível dentro dessa faixa.</p></div>
+    </div>
+    <div class="bizu"><span class="tag">★ Bizu</span> <b>MTM</b> (monitorização terapêutica de medicamentos) = medir a <b>concentração sérica</b> para individualizar a dose. Só vale a pena quando a concentração se correlaciona com efeito/toxicidade <b>melhor</b> que a clínica isolada.</div>
+  </section>
+
+  <!-- 2 -->
+  <section id="quando">
+    <div class="sec-head"><span class="sec-num">02</span><h2>Quando monitorar (indicações)</h2></div>
+    <ul class="clean">
+      <li><b>Índice terapêutico estreito</b> (margem pequena).</li>
+      <li>Boa <b>correlação concentração–efeito</b> e ausência de marcador clínico fácil.</li>
+      <li>Grande <b>variabilidade farmacocinética</b> interindividual.</li>
+      <li>Suspeita de <b>toxicidade</b> ou de <b>falha/não adesão</b>.</li>
+      <li><b>Interações</b> medicamentosas relevantes.</li>
+      <li><b>Disfunção orgânica</b> (renal/hepática) e populações especiais (idoso, gestante, obeso, neonato).</li>
+    </ul>
+    <div class="trap"><span class="tag">⚠ Pegadinha</span> Não se monitora o que tem resposta clínica/laboratorial direta e fácil (ex.: anti-hipertensivo pela PA). MTM é para fármacos em que o <b>nível sérico guia melhor</b> que o sintoma.</div>
+  </section>
+
+  <!-- 3 -->
+  <section id="coleta">
+    <div class="sec-head"><span class="sec-num">03</span><h2>Quando colher a amostra ★</h2></div>
+    <p class="lead">O ponto mais cobrado na prática. Errar o tempo de coleta = interpretar errado.</p>
+    <div class="grid2">
+      <div class="box"><p><b>Estado de equilíbrio (steady state)</b></p><p>Atingido após <span class="hl">4–5 meias-vidas</span>. Níveis de manutenção só se interpretam no steady state (exceto suspeita de toxicidade).</p></div>
+      <div class="box"><p><b>Vale (trough / Cmín)</b></p><p>Colher <span class="hl">imediatamente antes da próxima dose</span> — é a menor concentração. <b>Regra geral da MTM.</b></p></div>
+      <div class="box"><p><b>Pico (peak / Cmáx)</b></p><p>Após absorção/distribuição. Aminoglicosídeo: <b>~30 min após o fim da infusão</b> IV.</p></div>
+      <div class="box"><p><b>Casos especiais</b></p><p>Digoxina: <b>≥ 6–8 h</b> após a dose (evitar a fase de distribuição). Lítio: <b>12 h</b> após a dose.</p></div>
+    </div>
+    <div class="bizu"><span class="tag">★ Bizu</span> <b>Quase tudo se mede no VALE.</b> Exceção clássica: <b>aminoglicosídeos</b> (pico <b>e</b> vale no esquema convencional). E sempre cheque se já está em <b>steady state</b>.</div>
+  </section>
+
+  <!-- 4 -->
+  <section id="pk">
+    <div class="sec-head"><span class="sec-num">04</span><h2>Parâmetros que alteram o nível</h2></div>
+    <ul class="clean">
+      <li><b>Volume de distribuição (Vd):</b> define a <b>dose de ataque</b>. Aumenta em edema/ascite (hidrofílicos).</li>
+      <li><b>Clearance (depuração):</b> define a <b>dose de manutenção</b>. Cai na disfunção renal/hepática → acúmulo.</li>
+      <li><b>Ligação proteica:</b> só a <b>fração livre</b> é ativa. Hipoalbuminemia ↑ fração livre (fenitoína, valproato).</li>
+      <li><b>Metabolismo (CYP450):</b> indutores/inibidores mudam o nível (carbamazepina autoinduz; macrolídeos inibem).</li>
+      <li><b>Função renal:</b> crucial para digoxina, lítio, aminoglicosídeos, vancomicina (eliminação renal).</li>
+    </ul>
+    <div class="bizu"><span class="tag">★ Bizu</span> <b>Ataque “enche o tanque” (Vd); manutenção “repõe o que sai” (clearance).</b> Dose de ataque independe da função renal; a de manutenção, não.</div>
+  </section>
+
+  <!-- 5 -->
+  <section id="tabela">
+    <div class="sec-head"><span class="sec-num">05</span><h2>Tabela-mestra dos fármacos de IT estreito ★</h2></div>
+    <p>Faixas de <b>referência</b> (variam por laboratório/indicação). Foque no fármaco, na coleta e na toxicidade.</p>
+    <div class="tbl-scroll">
+    <table class="tbl">
+      <thead><tr><th>Fármaco</th><th>Faixa de referência</th><th>Coleta</th><th>Toxicidade / observações</th></tr></thead>
+      <tbody>
+        <tr><th>Digoxina</th><td>0,5–2,0 ng/mL (IC: <b>0,5–0,9</b>)</td><td>Vale; <b>≥ 6–8 h</b> pós-dose</td><td>Náusea, <b>xantopsia</b> (visão amarelada), arritmia. Piora com <b>hipocalemia</b>, hipomagnesemia, IRC.</td></tr>
+        <tr><th>Lítio</th><td>0,6–1,2 mEq/L</td><td>Vale; <b>12 h</b> pós-dose</td><td>Tremor, ataxia, confusão. ↑ com <b>desidratação, AINEs, tiazídicos, IECA</b>. Tóxico &gt; 1,5.</td></tr>
+        <tr><th>Fenitoína</th><td>10–20 µg/mL (livre 1–2)</td><td>Vale</td><td><b>Cinética não linear</b>; corrigir pela albumina. Nistagmo, ataxia, diplopia.</td></tr>
+        <tr><th>Carbamazepina</th><td>4–12 µg/mL</td><td>Vale</td><td><b>Autoindução</b>; ataxia, diplopia, hiponatremia.</td></tr>
+        <tr><th>Ác. valproico</th><td>50–100 µg/mL</td><td>Vale</td><td>Ligação proteica saturável; hepatotoxicidade, hiperamonemia, trombocitopenia.</td></tr>
+        <tr><th>Fenobarbital</th><td>15–40 µg/mL</td><td>Vale</td><td>Sedação; indutor enzimático potente.</td></tr>
+        <tr><th>Teofilina</th><td>10–20 µg/mL</td><td>Vale</td><td>Taquicardia, convulsão; muitas interações (CYP1A2).</td></tr>
+        <tr><th>Vancomicina</th><td>Vale 15–20 µg/mL <b>ou AUC/CIM 400–600</b></td><td>Vale antes da <b>4ª dose</b></td><td>Nefrotoxicidade; tendência atual <b>guiada por AUC</b>. “Red man” = infusão rápida (não alergia).</td></tr>
+        <tr><th>Gentamicina / tobramicina</th><td>Pico 5–10 · Vale &lt; 2 µg/mL</td><td><b>Pico</b> 30 min pós-infusão · <b>Vale</b> antes da dose</td><td>Nefro/ototoxicidade; vale alto = risco de toxicidade.</td></tr>
+        <tr><th>Amicacina</th><td>Pico 20–30 · Vale &lt; 8 µg/mL</td><td>Pico e vale</td><td>Idem aminoglicosídeos.</td></tr>
+        <tr><th>Ciclosporina / Tacrolimo</th><td>Vale conforme transplante/fase</td><td>Vale</td><td>Nefrotoxicidade; muitas interações (CYP3A4). Imunossupressão.</td></tr>
+        <tr><th>Metotrexato (alta dose)</th><td>Monitorar para resgate</td><td>Seriado (24/48/72 h)</td><td>Nível guia o <b>resgate com leucovorin (ácido folínico)</b>; nefro/mielotoxicidade.</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </section>
+
+  <!-- 6 -->
+  <section id="amino">
+    <div class="sec-head"><span class="sec-num">06</span><h2>Aminoglicosídeos &amp; Vancomicina ★</h2></div>
+    <div class="grid2">
+      <div class="box"><p><b>Aminoglicosídeos</b></p>
+        <p>Concentração-dependentes (Cmáx/CIM) + efeito pós-antibiótico. <b>Esquema convencional:</b> medir <b>pico</b> (eficácia) e <b>vale</b> (toxicidade). <b>Dose única diária</b> (intervalo estendido): pico alto e vale praticamente indetectável → menos toxicidade; monitorização por <b>nomograma</b>.</p></div>
+      <div class="box"><p><b>Vancomicina</b></p>
+        <p>AUC-dependente. Histórico: <b>vale 15–20 µg/mL</b> em infecção grave. Atual (diretriz 2020): alvo <b>AUC/CIM 400–600</b>. Colher vale no <b>steady state</b> (antes da 4ª dose). Vigiar <b>função renal</b>.</p></div>
+    </div>
+    <div class="trap"><span class="tag">⚠ Pegadinha</span> Vale <b>alto</b> de aminoglicosídeo/vancomicina = risco de <b>toxicidade</b> (acúmulo), não de eficácia. A eficácia do aminoglicosídeo está no <b>pico</b>.</div>
+  </section>
+
+  <!-- 7 -->
+  <section id="fenitoina">
+    <div class="sec-head"><span class="sec-num">07</span><h2>Fenitoína — cinética não linear ★</h2></div>
+    <p>A fenitoína segue <b>cinética de saturação (não linear / Michaelis-Menten)</b>: perto da saturação enzimática, <span class="hl">pequenos aumentos de dose causam grandes aumentos do nível</span> — risco de toxicidade súbita.</p>
+    <p>Muito ligada à albumina → na <b>hipoalbuminemia</b> ou <b>IRC</b>, a fração livre (ativa) sobe mesmo com nível total “normal”. Corrigir:</p>
+    <div class="formula">Fenitoína corrigida = Nível medido ÷ [(0,2 × albumina) + 0,1]</div>
+    <div class="formula">Se ClCr &lt; 10: ÷ [(0,1 × albumina) + 0,1]</div>
+    <div class="bizu"><span class="tag">★ Bizu</span> Fenitoína = <b>“degrau”</b>: a dose-resposta não é reta. Sempre <b>corrija pela albumina</b> (ou meça a fração livre) antes de interpretar.</div>
+  </section>
+
+  <!-- 8 -->
+  <section id="litio">
+    <div class="sec-head"><span class="sec-num">08</span><h2>Lítio &amp; Digoxina ★</h2></div>
+    <div class="grid2">
+      <div class="box"><p><b>Lítio</b></p>
+        <p>Eliminação <b>renal</b>, manuseado como o sódio. <b>Aumentam o nível:</b> desidratação, dieta hipossódica, <b>AINEs, tiazídicos, IECA/BRA</b>. Toxicidade: tremor grosseiro, ataxia, confusão, convulsão. Colher <b>12 h</b> pós-dose.</p></div>
+      <div class="box"><p><b>Digoxina</b></p>
+        <p>Toxicidade potencializada por <b>hipocalemia</b>, hipomagnesemia, hipercalcemia e <b>IRC</b>. Sinais: anorexia, náusea, <b>xantopsia</b>, arritmias. Antídoto: <b>Fab antidigoxina</b>. Colher <b>≥ 6–8 h</b> pós-dose.</p></div>
+    </div>
+    <div class="trap"><span class="tag">⚠ Pegadinha</span> <b>Hipocalemia + digoxina = intoxicação</b> mesmo com nível “normal”. Sempre avalie o <b>potássio</b> junto. Diuréticos tiazídicos/alça espoliam K⁺ e precipitam toxicidade digitálica.</div>
+  </section>
+
+  <!-- 9 -->
+  <section id="efeito">
+    <div class="sec-head"><span class="sec-num">09</span><h2>Monitorados por EFEITO (não por nível sérico)</h2></div>
+    <div class="tbl-scroll">
+    <table class="tbl">
+      <thead><tr><th>Fármaco</th><th>Marcador</th><th>Alvo típico</th></tr></thead>
+      <tbody>
+        <tr><th>Varfarina</th><td><b>INR</b> (TP)</td><td>2,0–3,0 (2,5–3,5 em prótese valvar mecânica)</td></tr>
+        <tr><th>Heparina não fracionada</th><td><b>TTPa</b> (ou anti-Xa)</td><td>1,5–2,5× o controle</td></tr>
+        <tr><th>HBPM (enoxaparina)</th><td><b>Anti-Xa</b> (casos selecionados)</td><td>Conforme indicação</td></tr>
+        <tr><th>Insulina</th><td><b>Glicemia</b></td><td>Conforme meta clínica</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="trap"><span class="tag">⚠ Pegadinha</span> <b>Varfarina e heparina têm IT estreito, mas NÃO se medem por concentração plasmática</b> — e sim pelo efeito (INR / TTPa). Confundir isso é erro clássico de prova.</div>
+  </section>
+
+  <!-- 10 -->
+  <section id="pegadinhas">
+    <div class="sec-head"><span class="sec-num">10</span><h2>Pegadinhas consolidadas</h2></div>
+    <div class="trap"><span class="tag">⚠ Top pegadinhas</span>
+      <ul class="clean" style="margin:0">
+        <li><b>Regra geral = colher no VALE</b>; aminoglicosídeo é exceção (pico + vale).</li>
+        <li><b>Steady state</b> = 4–5 meias-vidas; só interprete manutenção depois disso.</li>
+        <li><b>Digoxina cedo</b> (&lt; 6 h) dá valor <b>falsamente alto</b> (fase de distribuição).</li>
+        <li><b>Fenitoína</b> = não linear; <b>corrigir pela albumina</b>.</li>
+        <li><b>Hipocalemia potencializa a toxicidade da digoxina.</b></li>
+        <li><b>Lítio</b> ↑ com desidratação, AINEs, tiazídicos, IECA.</li>
+        <li><b>Vancomicina</b>: tendência atual é alvo de <b>AUC/CIM</b> (não só vale).</li>
+        <li><b>Varfarina/heparina</b> = monitoradas por <b>INR/TTPa</b>, não por nível sérico.</li>
+        <li>Vale <b>alto</b> de amino/vanco = risco de <b>toxicidade</b>, não de eficácia.</li>
+        <li>Dose de <b>ataque</b> depende do <b>Vd</b>; de <b>manutenção</b>, do <b>clearance</b>.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 11 -->
+  <section id="casos">
+    <div class="sec-head"><span class="sec-num">11</span><h2>Casos clínicos — autoteste ★</h2></div>
+    <p>Leia, decida a conduta e clique para conferir o raciocínio.</p>
+    <div class="fc-grid" id="caseGrid"></div>
+  </section>
+
+  <footer>
+    <b>Observação:</b> faixas terapêuticas são valores de referência e variam conforme laboratório, método e indicação clínica. Use sempre o intervalo do laboratório local e o contexto do paciente. Material de estudo — confronte com o edital e a bibliografia da sua banca.
+  </footer>
+
+</div>
+
+<script>
+  const cases = [
+    {q:"Idoso em uso de digoxina inicia furosemida; evolui com náusea, visão amarelada e bradiarritmia. Digoxina 1,8 ng/mL. Qual o provável gatilho?", a:"Intoxicação digitálica precipitada por HIPOCALEMIA (furosemida espolia K+). Mesmo com nível 'na faixa', a hipocalemia potencializa a toxicidade. Corrigir K+/Mg2+, suspender digoxina; casos graves → Fab antidigoxina."},
+    {q:"Paciente com fenitoína 'normal' (12 µg/mL) mas albumina 2,0 g/dL apresenta nistagmo e ataxia. Como interpretar?", a:"Hipoalbuminemia aumenta a fração livre (ativa). Corrigir: 12 ÷ [(0,2×2,0)+0,1] = 12 ÷ 0,5 = 24 µg/mL → na verdade tóxico. Reduzir a dose / medir fenitoína livre."},
+    {q:"Vancomicina iniciada hoje. O médico pede nível 'agora' após a 1ª dose. Faz sentido?", a:"Não. O nível de manutenção deve ser colhido no steady state (geralmente vale antes da 4ª dose, ~4-5 meias-vidas). Coleta precoce não reflete o equilíbrio. Tendência atual: alvo AUC/CIM 400-600."},
+    {q:"Gentamicina em esquema convencional: vale = 3 µg/mL. O que isso indica?", a:"Vale acima do desejado (<2 µg/mL) sugere acúmulo e risco de nefro/ototoxicidade. Conduta: prolongar o intervalo entre doses (e/ou reduzir dose). A eficácia depende do PICO, não do vale."},
+    {q:"Paciente com lítio estável inicia ibuprofeno por lombalgia; dias depois, tremor e confusão. Causa?", a:"AINEs reduzem a depuração renal do lítio e elevam o nível → intoxicação. Outros: desidratação, tiazídicos, IECA. Suspender o AINE, hidratar, dosar lítio (12h pós-dose)."},
+    {q:"Quando colher o vale de um fármaco para guiar a dose de manutenção?", a:"Imediatamente antes da próxima dose, e somente após o estado de equilíbrio (4-5 meias-vidas). É a menor concentração do intervalo."},
+    {q:"Paciente em varfarina pede 'dosagem do nível de varfarina no sangue'. Qual exame realmente guia a dose?", a:"O INR (tempo de protrombina), não a concentração plasmática. Alvo usual 2,0-3,0 (2,5-3,5 em prótese mecânica). Varfarina tem IT estreito, mas é monitorada por efeito."},
+    {q:"Amicacina: pico 12 µg/mL, vale 10 µg/mL. Interpretação?", a:"Pico abaixo do ideal (alvo ~20-30) → pode ser subterapêutico; e vale alto (alvo <8) → risco de toxicidade. Ajuste: aumentar a dose para elevar o pico e prolongar o intervalo para baixar o vale."},
+    {q:"Por que a digoxina não deve ser colhida 2 horas após a dose?", a:"Porque ainda está na fase de distribuição, dando valor falsamente alto. Colher ≥ 6-8 h após a dose (idealmente no vale)."},
+    {q:"Paciente em quimioterapia com metotrexato em alta dose. Para que serve dosar o nível seriado?", a:"Para guiar o resgate com leucovorin (ácido folínico) e prevenir toxicidade (mielo/nefro). Níveis que não caem indicam eliminação lenta e necessidade de manter/intensificar o resgate e a hidratação."},
+    {q:"Carbamazepina com nível que cai semanas após início, sem mudança de dose. Por quê?", a:"Autoindução do metabolismo (induz o próprio CYP), reduzindo as concentrações com o tempo. Pode exigir reajuste de dose após 2-4 semanas."},
+    {q:"Como decidir a dose de ataque vs manutenção de um fármaco em paciente com IRC?", a:"A dose de ATAQUE depende do volume de distribuição (Vd) e geralmente não muda com a função renal. A de MANUTENÇÃO depende do clearance — reduzir/ajustar na IRC para fármacos de eliminação renal (digoxina, lítio, aminoglicosídeo, vancomicina)."}
+  ];
+  const grid = document.getElementById('caseGrid');
+  cases.forEach(c=>{
+    const b=document.createElement('button');b.className='fc case';b.type='button';
+    b.innerHTML=`<span class="q">${c.q}</span><span class="hint">Ver conduta</span><span class="ans">${c.a}</span>`;
+    b.addEventListener('click',()=>b.classList.toggle('open'));
+    grid.appendChild(b);
+  });
+</script>
+</body>
+</html>

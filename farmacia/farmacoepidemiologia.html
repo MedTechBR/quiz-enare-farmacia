@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Princípios de Farmacoepidemiologia — Guia de revisão</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@500;600;700;800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#E7E1D2;--surface:#FBF8F0;--surface-2:#F3EEE1;
+    --ink:#143C42;--ink-soft:#4E5F5C;--vermilion:#D6492A;--ochre:#B98220;--green:#3C6E47;--blue:#2C5A74;
+    --line:rgba(20,60,66,.22);--line-strong:rgba(20,60,66,.55);
+    --font-display:'Anton',Impact,sans-serif;--font-head:'Archivo',system-ui,sans-serif;--font-body:'IBM Plex Sans',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+  body{margin:0;background:radial-gradient(circle at 100% -2%, rgba(214,73,42,.06), transparent 38%),var(--paper);
+    color:var(--ink);font-family:var(--font-body);line-height:1.55;padding:clamp(16px,3.5vw,44px) clamp(12px,4vw,40px) 80px}
+  .wrap{max-width:1080px;margin:0 auto}
+  .top-rule{height:6px;background:var(--ink)}
+  .kicker{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-family:var(--font-head);font-weight:700;text-transform:uppercase;letter-spacing:.15em;font-size:11px;color:var(--ink-soft);padding:9px 2px;border-bottom:1px solid var(--line)}
+  .kicker .dot{color:var(--vermilion)}
+  h1{font-family:var(--font-display);font-weight:400;line-height:.92;font-size:clamp(28px,5.2vw,58px);margin:16px 0 8px;text-transform:uppercase;letter-spacing:.5px}
+  h1 .accent{color:var(--vermilion)}
+  .dek{font-size:clamp(15px,2vw,17.5px);color:var(--ink-soft);max-width:66ch;border-top:3px double var(--line-strong);padding-top:12px}
+  .dek b{color:var(--ink);font-weight:600}
+  nav.toc{position:sticky;top:0;z-index:20;background:rgba(231,225,210,.94);backdrop-filter:blur(6px);margin:18px 0 8px;padding:10px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  nav.toc ul{list-style:none;display:flex;gap:7px;flex-wrap:wrap;margin:0;padding:0}
+  nav.toc a{font-family:var(--font-head);font-weight:600;font-size:12px;text-decoration:none;color:var(--ink);border:1.5px solid var(--line-strong);border-radius:2px;padding:5px 10px;transition:background .12s,color .12s}
+  nav.toc a:hover{background:var(--ink);color:var(--surface)}
+  section{margin:38px 0 0;scroll-margin-top:64px}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:14px;border-bottom:2px solid var(--ink);padding-bottom:8px}
+  .sec-num{font-family:var(--font-display);font-size:clamp(26px,4vw,40px);color:var(--vermilion);line-height:.8}
+  .sec-head h2{font-family:var(--font-head);font-weight:800;font-size:clamp(18px,3vw,25px);margin:0;letter-spacing:-.01em}
+  p{margin:0 0 12px}.lead{font-size:16px}
+  strong,b{color:var(--ink);font-weight:600}.hl{color:var(--vermilion);font-weight:600}
+  ul.clean{margin:0 0 12px;padding-left:18px}ul.clean li{margin:5px 0}
+  .box{background:var(--surface);border:1.5px solid var(--ink);border-radius:3px;box-shadow:4px 4px 0 var(--ink);padding:16px 18px;margin:14px 0}
+  .grid2{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+  .bizu{border:1.5px dashed var(--green);background:rgba(60,110,71,.06);border-radius:3px;padding:13px 16px;margin:14px 0}
+  .bizu .tag{font-family:var(--font-head);font-weight:700;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--green);display:block;margin-bottom:5px}
+  .bizu b{color:var(--green)}
+  .trap{border:1.5px solid var(--vermilion);background:rgba(214,73,42,.05);border-radius:3px;padding:13px 16px;margin:14px 0}
+  .trap .tag{font-family:var(--font-head);font-weight:700;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--vermilion);display:block;margin-bottom:5px}
+  .tbl{width:100%;border-collapse:collapse;margin:14px 0;font-size:12.5px;background:var(--surface)}
+  .tbl th,.tbl td{border:1px solid var(--line-strong);padding:8px 10px;text-align:left;vertical-align:top}
+  .tbl thead th{background:var(--ink);color:var(--surface);font-family:var(--font-head);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.03em}
+  .tbl tbody th{background:var(--surface-2);font-family:var(--font-head);font-weight:700;white-space:nowrap}
+  .tbl-scroll{overflow-x:auto}
+  .tbl.matrix td,.tbl.matrix th{text-align:center;font-size:14px}
+  .formula{font-family:var(--font-head);font-weight:600;background:var(--surface-2);border:1.5px solid var(--line-strong);border-radius:3px;padding:10px 14px;margin:8px 0;font-size:14px}
+  .fc-grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));margin-top:14px}
+  .fc{background:var(--surface);border:1.5px solid var(--ink);border-radius:3px;box-shadow:4px 4px 0 var(--ink);padding:16px 17px;cursor:pointer;text-align:left;width:100%;font-family:var(--font-body);color:var(--ink);display:flex;flex-direction:column;gap:9px;transition:transform .12s,box-shadow .12s}
+  .fc:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--vermilion)}
+  .fc:focus-visible{outline:3px solid var(--vermilion);outline-offset:3px}
+  .fc .q{font-family:var(--font-head);font-weight:700;font-size:15px;line-height:1.28}
+  .fc .hint{font-family:var(--font-head);font-weight:600;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--vermilion)}
+  .fc .ans{font-size:13.5px;color:var(--ink-soft)}
+  .fc:not(.open) .ans{display:none}.fc.open .hint{display:none}
+  .case .q::before{content:"QUESTÃO ";font-family:var(--font-display);color:var(--vermilion);font-size:11px;letter-spacing:.08em}
+  footer{margin:46px 0 0;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--ink-soft)}
+  footer b{color:var(--ink)}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="top-rule"></div>
+    <div class="kicker">
+      <span>Saúde Coletiva <span class="dot">·</span> Epidemiologia</span>
+      <span>Resmulti · ENARE · EBSERH · HUs</span>
+    </div>
+    <h1>Princípios de <span class="accent">Farmacoepidemiologia</span></h1>
+    <p class="dek">Desenhos de estudo, <b>medidas de associação (RR, OR, NNT)</b>, viés e confusão, e estudos de utilização (<b>DDD/ATC</b>). Guia com fórmulas, bizus e questões de cálculo.</p>
+  </header>
+
+  <nav class="toc" aria-label="Índice">
+    <ul>
+      <li><a href="#conceitos">1 · Conceitos ★</a></li>
+      <li><a href="#frequencia">2 · Incidência × prevalência ★</a></li>
+      <li><a href="#desenhos">3 · Desenhos de estudo ★</a></li>
+      <li><a href="#hierarquia">4 · Hierarquia de evidência</a></li>
+      <li><a href="#associacao">5 · Medidas de associação ★</a></li>
+      <li><a href="#nnt">6 · RAR, RRR &amp; NNT ★</a></li>
+      <li><a href="#vies">7 · Viés &amp; confusão ★</a></li>
+      <li><a href="#eum">8 · EUM &amp; DDD/ATC ★</a></li>
+      <li><a href="#pegadinhas">9 · Pegadinhas</a></li>
+      <li><a href="#casos">10 · Questões ★</a></li>
+    </ul>
+  </nav>
+
+  <!-- 1 -->
+  <section id="conceitos">
+    <div class="sec-head"><span class="sec-num">01</span><h2>Conceitos fundamentais ★</h2></div>
+    <p class="lead">Farmacoepidemiologia: aplicação dos <b>métodos epidemiológicos</b> ao estudo do <b>uso e dos efeitos</b> (benéficos e adversos) dos medicamentos <b>em populações</b>. Interface entre farmacologia clínica e epidemiologia.</p>
+    <div class="grid2">
+      <div class="box"><p><b>Eficácia × Efetividade × Eficiência</b></p>
+        <p><b>Eficácia:</b> condições ideais/controladas (ensaio clínico). <b>Efetividade:</b> na <span class="hl">prática real</span>. <b>Eficiência:</b> relação custo–resultado.</p></div>
+      <div class="box"><p><b>Para que serve</b></p>
+        <p>Avaliar segurança e efetividade na vida real, padrões de uso, custo-efetividade; embasa a <b>farmacovigilância</b> (fase IV) e os estudos de utilização (EUM).</p></div>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section id="frequencia">
+    <div class="sec-head"><span class="sec-num">02</span><h2>Incidência × prevalência ★</h2></div>
+    <div class="grid2">
+      <div class="box"><p><b>Incidência</b></p><p>Casos <span class="hl">NOVOS</span> ÷ população em risco, num período. Mede <b>risco/velocidade</b> de adoecer. (Densidade = casos ÷ pessoas-tempo.)</p></div>
+      <div class="box"><p><b>Prevalência</b></p><p>Casos <span class="hl">EXISTENTES</span> (novos + antigos) ÷ população, num momento. Mede a <b>carga/magnitude</b>.</p></div>
+    </div>
+    <div class="formula">Prevalência ≈ Incidência × Duração média da doença</div>
+    <div class="bizu"><span class="tag">★ Bizu</span> <b>Incidência = novos; prevalência = todos os existentes.</b> Tratamento que prolonga a vida (sem curar) <b>aumenta a prevalência</b> sem mudar a incidência.</div>
+  </section>
+
+  <!-- 3 -->
+  <section id="desenhos">
+    <div class="sec-head"><span class="sec-num">03</span><h2>Desenhos de estudo ★</h2></div>
+    <div class="tbl-scroll">
+    <table class="tbl">
+      <thead><tr><th>Desenho</th><th>Como funciona</th><th>Medida / uso</th></tr></thead>
+      <tbody>
+        <tr><th>Relato / série de casos</th><td>Descrição de casos, sem grupo de comparação.</td><td>Gera hipóteses; detecta RAM novas.</td></tr>
+        <tr><th>Ecológico</th><td>Unidade de análise é a <b>população</b>, não o indivíduo.</td><td>Risco de <b>falácia ecológica</b>.</td></tr>
+        <tr><th>Transversal (seccional)</th><td>Exposição e desfecho medidos <b>ao mesmo tempo</b>.</td><td>Mede <b>prevalência</b>; <span class="hl">não estabelece temporalidade</span>.</td></tr>
+        <tr><th>Caso-controle</th><td>Parte do <b>DESFECHO</b> (doentes × não doentes) e olha a exposição <b>passada</b>. Retrospectivo.</td><td><b>Odds Ratio (OR)</b>. Bom para <b>doença/RAM rara</b>; sujeito a <b>viés de memória</b>.</td></tr>
+        <tr><th>Coorte</th><td>Parte da <b>EXPOSIÇÃO</b> (expostos × não expostos) e <b>segue no tempo</b>. Prospectivo (ou histórico).</td><td>Calcula <b>incidência</b> e <b>Risco Relativo (RR)</b>. Bom para <b>exposição rara</b>; caro, perdas.</td></tr>
+        <tr><th>Ensaio clínico randomizado (ECR)</th><td><b>Intervenção</b> + randomização + cegamento + controle/placebo.</td><td><b>Padrão-ouro</b> para eficácia/causalidade. Fases I–IV.</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="bizu"><span class="tag">★ Bizu</span>
+      <b>Caso-controle “olha para trás” (parte da doença → OR).</b> <b>Coorte “olha para frente” (parte da exposição → RR/incidência).</b> Doença rara → caso-controle; exposição rara → coorte.</div>
+    <div class="box"><p><b>Fases do ensaio clínico</b></p>
+      <p><b>I</b>: segurança (voluntários sadios). <b>II</b>: eficácia/dose (pequenos grupos de doentes). <b>III</b>: eficácia comparada em grande escala (base do registro). <b>IV</b>: pós-comercialização (farmacovigilância).</p></div>
+  </section>
+
+  <!-- 4 -->
+  <section id="hierarquia">
+    <div class="sec-head"><span class="sec-num">04</span><h2>Hierarquia da evidência</h2></div>
+    <p>Do <b>maior</b> para o <b>menor</b> nível:</p>
+    <div class="formula">Revisão sistemática / metanálise &gt; ECR &gt; Coorte &gt; Caso-controle &gt; Transversal &gt; Série/relato de casos &gt; Opinião de especialista</div>
+    <div class="bizu"><span class="tag">★ Bizu</span> Quanto mais perto do topo, menor o risco de viés e maior a força para inferir <b>causalidade</b>. Observacional gera associação; ECR sustenta causa.</div>
+  </section>
+
+  <!-- 5 -->
+  <section id="associacao">
+    <div class="sec-head"><span class="sec-num">05</span><h2>Medidas de associação ★</h2></div>
+    <p>Tabela 2×2 de referência:</p>
+    <div class="tbl-scroll">
+    <table class="tbl matrix">
+      <thead><tr><th></th><th>Doente</th><th>Não doente</th></tr></thead>
+      <tbody>
+        <tr><th>Exposto</th><td><b>a</b></td><td><b>b</b></td></tr>
+        <tr><th>Não exposto</th><td><b>c</b></td><td><b>d</b></td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="formula">Risco no exposto = a ÷ (a+b) · Risco no não exposto = c ÷ (c+d)</div>
+    <div class="formula">RR (coorte/ECR) = [a/(a+b)] ÷ [c/(c+d)]</div>
+    <div class="formula">OR (caso-controle) = (a × d) ÷ (b × c)</div>
+    <div class="formula">Risco atribuível (RA) = risco exposto − risco não exposto</div>
+    <div class="bizu"><span class="tag">★ Bizu</span>
+      <b>RR/OR = 1</b> → sem associação. <b>&gt; 1</b> → fator de <b>risco</b>. <b>&lt; 1</b> → fator de <b>proteção</b>. Se o <b>IC95% cruza o 1</b>, o resultado <b>não é significativo</b>.</div>
+    <div class="trap"><span class="tag">⚠ Pegadinha</span> <b>OR é do caso-controle</b> (não dá para calcular incidência/RR nele). <b>RR é de coorte/ECR.</b> Em doenças raras, OR ≈ RR.</div>
+  </section>
+
+  <!-- 6 -->
+  <section id="nnt">
+    <div class="sec-head"><span class="sec-num">06</span><h2>RAR, RRR &amp; NNT ★</h2></div>
+    <div class="formula">RAR (redução absoluta de risco) = risco no controle − risco no tratado</div>
+    <div class="formula">RRR (redução relativa de risco) = RAR ÷ risco no controle = 1 − RR</div>
+    <div class="formula">NNT = 1 ÷ RAR &nbsp;|&nbsp; NNH = 1 ÷ (aumento absoluto de risco)</div>
+    <ul class="clean">
+      <li><b>NNT</b> = nº de pacientes a tratar para <b>evitar 1 desfecho</b>. <span class="hl">Quanto menor, melhor</span> (mais eficaz).</li>
+      <li><b>NNH</b> = nº a tratar para <b>causar 1 dano</b>. <span class="hl">Quanto maior, mais seguro</span>.</li>
+    </ul>
+    <div class="trap"><span class="tag">⚠ Pegadinha</span> A <b>RRR</b> costuma “parecer” grande e impressionar; a <b>RAR</b> e o <b>NNT</b> mostram o benefício real na prática. Sempre olhe o risco absoluto.</div>
+  </section>
+
+  <!-- 7 -->
+  <section id="vies">
+    <div class="sec-head"><span class="sec-num">07</span><h2>Viés &amp; confusão ★</h2></div>
+    <div class="grid2">
+      <div class="box"><p><b>Validade</b></p><p><b>Interna:</b> o resultado está correto para a amostra. <b>Externa:</b> pode ser <b>generalizado</b> a outras populações.</p></div>
+      <div class="box"><p><b>Erro aleatório (acaso)</b></p><p>Avaliado pelo <b>valor-p</b> e pelo <b>intervalo de confiança (IC95%)</b>. Reduz-se aumentando o <b>tamanho amostral</b>.</p></div>
+    </div>
+    <p><b>Viés (erro sistemático):</b></p>
+    <ul class="clean">
+      <li><b>De seleção:</b> forma inadequada de selecionar os participantes (ex.: perdas diferenciais, viés do voluntário).</li>
+      <li><b>De informação/aferição:</b> medida incorreta da exposição/desfecho. <b>Viés de memória (recordação)</b> é típico do <b>caso-controle</b>.</li>
+    </ul>
+    <p><b>Confundimento (confounding):</b> terceira variável associada à exposição <b>e</b> ao desfecho, que distorce a associação. <b>Controle:</b> randomização (ECR), restrição, pareamento, estratificação e ajuste multivariado.</p>
+    <div class="trap"><span class="tag">⚠ Pegadinha</span> <b>Viés ≠ confusão.</b> Viés é <b>erro de método</b> (não se corrige na análise); confundidor é uma <b>variável real</b> que pode ser <b>ajustada</b>. A <b>randomização</b> controla até confundidores <b>desconhecidos</b>.</div>
+  </section>
+
+  <!-- 8 -->
+  <section id="eum">
+    <div class="sec-head"><span class="sec-num">08</span><h2>Estudos de utilização &amp; DDD/ATC ★</h2></div>
+    <ul class="clean">
+      <li><b>EUM (estudos de utilização de medicamentos):</b> descrevem comercialização, distribuição, prescrição e uso, com foco nas consequências sanitárias e econômicas.</li>
+      <li><b>DDD (Dose Diária Definida):</b> unidade técnica de medida da <b>OMS</b> = dose média diária de manutenção de um fármaco na sua indicação principal em adultos. Permite <b>comparar consumo</b> entre serviços/países. Expressa como <b>DDD/1000 habitantes/dia</b> ou <b>DDD/100 leitos-dia</b> (hospital).</li>
+      <li><b>ATC (Anatomical Therapeutic Chemical):</b> classificação dos fármacos por sistema/órgão e propriedades (sistema ATC/DDD da OMS).</li>
+    </ul>
+    <div class="trap"><span class="tag">⚠ Pegadinha</span> <b>DDD é unidade de MEDIDA de consumo, não a dose a prescrever.</b> A dose realmente prescrita é a <b>PDD</b> (dose diária prescrita) — podem diferir.</div>
+  </section>
+
+  <!-- 9 -->
+  <section id="pegadinhas">
+    <div class="sec-head"><span class="sec-num">09</span><h2>Pegadinhas consolidadas</h2></div>
+    <div class="trap"><span class="tag">⚠ Top pegadinhas</span>
+      <ul class="clean" style="margin:0">
+        <li><b>Incidência</b> = casos novos; <b>prevalência</b> = existentes (novos + antigos).</li>
+        <li><b>Caso-controle → OR</b> (retrospectivo, doença rara, viés de memória).</li>
+        <li><b>Coorte → RR/incidência</b> (segue exposição no tempo).</li>
+        <li><b>Transversal</b> não estabelece temporalidade (não prova causa).</li>
+        <li><b>ECR</b> = padrão-ouro; randomização controla confusão (até a desconhecida).</li>
+        <li><b>RR/OR = 1</b> → sem associação; <b>IC95% cruzando 1</b> → não significativo.</li>
+        <li><b>NNT menor = melhor; NNH maior = mais seguro.</b></li>
+        <li><b>DDD</b> é unidade de medida (OMS/ATC), não dose prescrita (PDD).</li>
+        <li><b>Viés ≠ confusão</b>: viés é erro de método; confundidor é variável ajustável.</li>
+        <li><b>Falácia ecológica</b>: inferir o indivíduo a partir de dado populacional.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 10 -->
+  <section id="casos">
+    <div class="sec-head"><span class="sec-num">10</span><h2>Questões — autoteste ★</h2></div>
+    <p>Resolva e clique para conferir o cálculo/raciocínio.</p>
+    <div class="fc-grid" id="caseGrid"></div>
+  </section>
+
+  <footer>
+    <b>Fontes-base:</b> epidemiologia e farmacoepidemiologia (Strom; Rothman); medidas de associação e medicina baseada em evidências; sistema ATC/DDD da OMS; metodologia de estudos de utilização de medicamentos. Material de estudo — confronte com o edital e a bibliografia da sua banca.
+  </footer>
+
+</div>
+
+<script>
+  const cases = [
+    {q:"Um estudo seleciona pessoas COM e SEM câncer de bexiga e pergunta sobre o uso pregresso de um fármaco. Que desenho é esse e qual a medida?", a:"Caso-controle (parte do desfecho e investiga a exposição passada, retrospectivo). Medida de associação: Odds Ratio (OR). Indicado para doenças raras; sujeito a viés de memória."},
+    {q:"Pesquisadores acompanham por 5 anos usuários e não usuários de um fármaco para ver quem desenvolve hepatopatia. Desenho e medida?", a:"Coorte (parte da exposição e segue no tempo). Permite calcular incidência e Risco Relativo (RR). Bom para exposições raras; limitação: custo e perdas de seguimento."},
+    {q:"Tabela 2×2: expostos 30 doentes e 70 não doentes; não expostos 10 doentes e 90 não doentes. Calcule o OR.", a:"OR = (a×d)/(b×c) = (30×90)/(70×10) = 2700/700 ≈ 3,86. Há associação positiva (fator de risco)."},
+    {q:"Na mesma tabela (30/70 e 10/90), calcule o RR.", a:"Risco exposto = 30/100 = 0,30; risco não exposto = 10/100 = 0,10. RR = 0,30/0,10 = 3,0 (o exposto tem 3× o risco)."},
+    {q:"Em um ensaio, o risco de evento no grupo controle é 20% e no tratado 15%. Calcule a RAR e o NNT.", a:"RAR = 0,20 − 0,15 = 0,05 (5%). NNT = 1/0,05 = 20 → é preciso tratar 20 pacientes para evitar 1 evento."},
+    {q:"Um estudo mostra RR = 0,70 para um fármaco e o desfecho. Como interpretar?", a:"RR < 1 indica fator de proteção: o fármaco reduz o risco do desfecho em 30% (RRR = 1 − 0,70 = 0,30)."},
+    {q:"O OR de uma associação é 1,4 com IC95% de 0,8 a 1,9. O resultado é estatisticamente significativo?", a:"Não. O intervalo de confiança cruza o 1 (vai de <1 a >1), então não se pode afirmar associação significativa."},
+    {q:"Para estudar uma RAM muito rara, qual desenho observacional é mais eficiente?", a:"Caso-controle — parte dos casos (que já são raros) e busca a exposição, sendo mais rápido e barato que acompanhar uma coorte enorme até surgirem poucos eventos."},
+    {q:"Pacientes com a doença lembram melhor de exposições passadas do que os controles saudáveis. Que erro é esse e em que estudo é típico?", a:"Viés de memória (recordação), um viés de informação típico dos estudos caso-controle."},
+    {q:"Como comparar o consumo de antimicrobianos entre dois hospitais de tamanhos diferentes?", a:"Pela DDD ajustada à ocupação: DDD/100 leitos-dia. Padroniza o consumo independentemente do número de leitos, preço ou apresentação."},
+    {q:"Um estudo transversal mediu, ao mesmo tempo, uso de um fármaco e presença de uma doença, achando associação. Pode afirmar que o fármaco causou a doença?", a:"Não. O estudo transversal mede exposição e desfecho simultaneamente, sem temporalidade — não permite estabelecer relação de causa e efeito."},
+    {q:"Qual a diferença entre viés e fator de confusão?", a:"Viés é um erro sistemático do método (seleção/informação) e não se corrige na análise; o fator de confusão é uma variável real associada à exposição e ao desfecho, que pode ser controlada (randomização, pareamento, ajuste)."}
+  ];
+  const grid = document.getElementById('caseGrid');
+  cases.forEach(c=>{
+    const b=document.createElement('button');b.className='fc case';b.type='button';
+    b.innerHTML=`<span class="q">${c.q}</span><span class="hint">Ver resposta</span><span class="ans">${c.a}</span>`;
+    b.addEventListener('click',()=>b.classList.toggle('open'));
+    grid.appendChild(b);
+  });
+</script>
+</body>
+</html>
