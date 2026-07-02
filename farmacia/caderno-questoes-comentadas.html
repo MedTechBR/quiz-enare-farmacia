@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Caderno de Questões Comentadas — Residência em Farmácia</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f4f5f7;--ink:#161b22;--muted:#5c6672;--line:#dde1e6;--card:#fff;
+    --t1:#0f8a7e;--t1s:#e1f3f0;  /* antimicrobianos */
+    --t2:#2563b8;--t2s:#e4edf9;  /* 344/98 */
+    --t3:#c0392b;--t3s:#fbe7e3;  /* interações/CYP */
+    --t4:#7c4bc4;--t4s:#efe8f9;  /* SNC */
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:radial-gradient(circle at 12% -4%,#fff 0%,transparent 40%),var(--bg);color:var(--ink);font-family:"Inter",system-ui,sans-serif;line-height:1.55;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:880px;margin:0 auto;padding:40px 22px 90px;}
+
+  .head{position:relative;border-radius:22px;padding:38px 36px 32px;background:linear-gradient(135deg,#141d2a 0%,#15303a 50%,#0f3a30 100%);color:#eaf2f0;overflow:hidden;}
+  .head::after{content:"?";position:absolute;right:34px;top:-30px;font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:180px;line-height:1;color:#ffffff0d;}
+  .kicker{font-family:"JetBrains Mono",monospace;font-size:11.5px;letter-spacing:.26em;text-transform:uppercase;color:#8fd6c6;margin:0 0 12px;}
+  .head h1{font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:clamp(26px,5vw,40px);line-height:1.06;margin:0 0 12px;letter-spacing:-.01em;}
+  .head p{margin:0;max-width:620px;color:#cfe0dc;font-size:15px;}
+  .head .meta{margin-top:14px;font-family:"JetBrains Mono",monospace;font-size:11.5px;color:#8fd6c6;}
+
+  .howto{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px 18px;margin-top:18px;font-size:13px;color:#3a444d;}
+  .howto b{color:var(--ink);}
+
+  .sec{margin-top:40px;}
+  .sec-head{display:flex;align-items:center;gap:14px;padding:13px 18px;border-radius:13px;color:#fff;}
+  .sec-head .ic{font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:15px;padding:4px 12px;border-radius:999px;background:#ffffff26;}
+  .sec-head h2{margin:0;font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:19px;letter-spacing:-.01em;}
+  .s1 .sec-head{background:linear-gradient(120deg,#0c6b61,var(--t1));}
+  .s2 .sec-head{background:linear-gradient(120deg,#1c4d92,var(--t2));}
+  .s3 .sec-head{background:linear-gradient(120deg,#8f2519,var(--t3));}
+  .s4 .sec-head{background:linear-gradient(120deg,#5f37a0,var(--t4));}
+  .s1{--ac:var(--t1);--acs:var(--t1s);}
+  .s2{--ac:var(--t2);--acs:var(--t2s);}
+  .s3{--ac:var(--t3);--acs:var(--t3s);}
+  .s4{--ac:var(--t4);--acs:var(--t4s);}
+
+  .q{background:var(--card);border:1px solid var(--line);border-left:4px solid var(--ac);border-radius:13px;padding:18px 20px 16px;margin-top:16px;break-inside:avoid;}
+  .qhead{display:flex;align-items:center;gap:10px;margin-bottom:9px;}
+  .qn{font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:15px;color:#fff;background:var(--ac);width:34px;height:34px;border-radius:9px;display:grid;place-items:center;flex:0 0 auto;}
+  .qtag{font-family:"JetBrains Mono",monospace;font-size:9.5px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;color:var(--ac);background:var(--acs);padding:3px 9px;border-radius:999px;}
+  .stem{margin:0 0 12px;font-size:14.5px;color:#222a31;}
+  .stem b{color:var(--ink);}
+  .alts{list-style:none;margin:0;padding:0;counter-reset:alt;}
+  .alts li{position:relative;padding:7px 10px 7px 40px;font-size:13.6px;color:#2b333b;border-radius:8px;margin-bottom:4px;}
+  .alts li::before{counter-increment:alt;content:counter(alt,upper-alpha);position:absolute;left:10px;top:7px;font-family:"JetBrains Mono",monospace;font-weight:600;font-size:12px;color:var(--ac);background:var(--acs);width:21px;height:21px;border-radius:6px;display:grid;place-items:center;}
+
+  details.gab{margin-top:12px;border-top:1px dashed var(--line);padding-top:10px;}
+  details.gab summary{cursor:pointer;font-family:"JetBrains Mono",monospace;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:var(--ac);list-style:none;}
+  details.gab summary::-webkit-details-marker{display:none;}
+  details.gab summary::before{content:"▸ ";}
+  details.gab[open] summary::before{content:"▾ ";}
+  .gab-body{margin-top:10px;background:var(--acs);border-radius:10px;padding:12px 14px;}
+  .ans{display:inline-block;font-family:"JetBrains Mono",monospace;font-weight:700;font-size:12px;color:#fff;background:var(--ac);padding:3px 11px;border-radius:999px;margin-bottom:8px;}
+  .gab-body p{margin:0;font-size:13px;color:#33403a;}
+  .gab-body p b{color:var(--ink);}
+  .gab-body p + p{margin-top:7px;}
+
+  footer{margin-top:54px;padding-top:22px;border-top:1px solid var(--line);font-size:12px;color:var(--muted);}
+  @media (max-width:560px){.wrap{padding:24px 14px 70px;}.head{padding:28px 22px;}}
+  @media print{body{background:#fff;}.q{break-inside:avoid;}.head::after{display:none;}details.gab summary{display:none;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="head">
+    <p class="kicker">Residência Multiprofissional em Farmácia</p>
+    <h1>Caderno de questões comentadas</h1>
+    <p>24 questões no estilo de banca cruzando os quatro temas da apostila: antimicrobianos, Portaria 344/98, interações/CYP450 e fármacos do SNC. Cada item traz <b>gabarito comentado</b> com a justificativa da correta e a armadilha das distratoras.</p>
+    <p class="meta">6 questões por bloco · clique em "ver gabarito" para testar-se antes</p>
+  </header>
+
+  <div class="howto"><b>Como usar:</b> responda primeiro sem olhar o gabarito; depois expanda o comentário. Na versão em PDF, os gabaritos já aparecem abertos para revisão corrida.</div>
+
+  <!-- ===================== ANTIMICROBIANOS ===================== -->
+  <section class="sec s1">
+    <div class="sec-head"><span class="ic">01</span><h2>Antimicrobianos</h2></div>
+
+    <div class="q">
+      <div class="qhead"><span class="qn">1</span><span class="qtag">mecanismo de ação</span></div>
+      <p class="stem">Paciente com infecção de corrente sanguínea por <i>S. aureus</i> resistente à meticilina (MRSA) recebe vancomicina. O mecanismo de ação desse fármaco é:</p>
+      <ol class="alts">
+        <li>Inibição da transpeptidase por ligação às PBP</li>
+        <li>Ligação ao terminal D-alanil-D-alanina do precursor da parede, impedindo a transpeptidação</li>
+        <li>Inibição da subunidade ribossomal 30S</li>
+        <li>Inibição da DNA-girase</li>
+        <li>Desorganização da membrana de forma cálcio-dependente</li>
+      </ol>
+      <details class="gab"><summary>Ver gabarito comentado</summary>
+        <div class="gab-body"><span class="ans">Resposta: B</span>
+          <p>A vancomicina é um <b>glicopeptídeo</b> que se liga ao <b>D-Ala-D-Ala</b>, bloqueando a polimerização do peptidoglicano — por ser uma molécula grande, só age em Gram+.</p>
+          <p><b>Distratoras:</b> A = β-lactâmicos; C = aminoglicosídeos/tetraciclinas; D = quinolonas; E = daptomicina. A resistência (VRE) troca o alvo para <b>D-Ala-D-Lac</b>.</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="q">
+      <div class="qhead"><span class="qn">2</span><span class="qtag">espectro de ação</span></div>
+      <p class="stem">Assinale o antimicrobiano que <b>NÃO</b> possui cobertura contra MRSA:</p>
+      <ol class="alts">
+        <li>Vancomicina</li>
+        <li>Linezolida</li>
+        <li>Daptomicina</li>
+        <li>Ceftriaxona</li>
+        <li>Ceftarolina</li>
+      </ol>
+      <details class="gab"><summary>Ver gabarito comentado</summary>
+        <div class="gab-body"><span class="ans">Resposta: D</span>
+          <p>As cefalosporinas <b>clássicas</b> (como a ceftriaxona, 3ª geração) <b>não cobrem MRSA</b>. A exceção é a <b>5ª geração (ceftarolina)</b>, desenhada justamente para o MRSA.</p>
+          <p>Vancomicina, linezolida e daptomicina são opções consagradas para Gram+ resistentes.</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="q">
+      <div class="qhead"><span class="qn">3</span><span class="qtag">aplicação clínica</span></div>
+      <p class="stem">Apesar de ativa contra MRSA, a daptomicina <b>não</b> deve ser usada no tratamento de pneumonia porque:</p>
+      <ol class="alts">
+        <li>Não tem ação contra Gram-positivos</li>
+        <li>É inativada pelo surfactante pulmonar</li>
+        <li>Não atinge concentração sérica adequada</li>
+        <li>Provoca pneumonite química</li>
+        <li>É antagonizada pelo oxigênio alveolar</li>
+      </ol>
+      <details class="gab"><summary>Ver gabarito comentado</summary>
+        <div class="gab-body"><span class="ans">Resposta: B</span>
+          <p>A daptomicina é <b>inativada pelo surfactante</b>, perdendo eficácia no pulmão — por isso é reservada a bacteremia/endocardite e pele. Monitorar <b>CPK</b> (miopatia).</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="q">
+      <div class="qhead"><span class="qn">4</span><span class="qtag">farmacologia</span></div>
+      <p class="stem">Sobre os aminoglicosídeos (ex.: gentamicina, amicacina), é correto afirmar:</p>
+      <ol class="alts">
+        <li>São bacteriostáticos de amplo espectro</li>
+        <li>São ativos contra anaeróbios estritos</li>
+        <li>São bactericidas concentração-dependentes, com risco de nefro e ototoxicidade</li>
+        <li>Atuam na subunidade ribossomal 50S</li>
+        <li>Não apresentam sinergia com β-lactâmicos</li>
+      </ol>
+      <details class="gab"><summary>Ver gabarito comentado</summary>
+        <div class="gab-body"><span class="ans">Resposta: C</span>
+          <p>Aminoglicosídeos atuam na <b>30S</b>, são <b>bactericidas concentração-dependentes</b> e têm como toxicidades clássicas a <b>nefro e a ototoxicidade</b>.</p>
+          <p>São <b>inativos em anaeróbios</b> (a captação depende de oxigênio) e fazem <b>sinergia</b> com β-lactâmicos (ex.: endocardite enterocócica).</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="q">
+      <div class="qhead"><span class="qn">5</span><span class="qtag">resistência bacteriana</span></div>
+      <p class="stem">A resistência do <i>S. aureus</i> à oxacilina (fenótipo MRSA) é mediada principalmente por:</p>
+      <ol class="alts">
+        <li>Produção de penicilinase</li>
+        <li>Alteração da proteína ligadora de penicilina (PBP2a, gene <i>mecA</i>)</li>
+        <li>Bomba de efluxo</li>
+        <li>Produção de carbapenemase</li>
+        <li>Perda de porinas</li>
+      </ol>
+      <details class="gab"><summary>Ver gabarito comentado</summary>
+        <div class="gab-body"><span class="ans">Resposta: B</span>
+          <p>O MRSA expressa a <b>PBP2a</b> (gene <i>mecA</i>), de baixa afinidade pelos β-lactâmicos — por isso é resistente a praticamente todos eles, exceto a <b>ceftarolina</b>.</p>
+          <p>A penicilinase (A) explica a resistência à penicilina G, não o fenótipo meticilino-resistente.</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="q">
+      <div class="qhead"><span class="qn">6</span><span class="qtag">integrativa · SNC</span></div>
+      <p class="stem">Paciente em uso de sertralina inicia linezolida para infecção por VRE. O principal risco dessa associação é:</p>
+      <ol class="alts">
+        <li>Síndrome serotoninérgica</li>
+        <li>Agranulocitose</li>
+        <li>Síndrome do homem vermelho</li>
+        <li>Crise hipertensiva por tiramina</li>
+        <li>Rabdomiólise</li>
+      </ol>
+      <details class="gab"><summary>Ver gabarito comentado</summary>
+        <div class="gab-body"><span class="ans">Resposta: A</span>
+          <p>A <b>linezolida</b> tem atividade <b>IMAO fraca</b>; associada a um ISRS (sertralina), pode desencadear <b>síndrome serotoninérgica</b> (alteração mental + hiperatividade autonômica + clônus).</p>
+          <p>A síndrome do homem vermelho (C) é da vancomicina por infusão rápida.</p>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- ===================== PORTARIA 344/98 ===================== -->
+  <section class="sec s2">
+    <div class="sec-head"><span class="ic">02</span><h2>Portaria SVS/MS nº 344/98</h2></div>
+
+    <div class="q">
+      <div class="qhead"><span class="qn">7</span><span class="qtag">receituário</span></div>
+      <p class="stem">Os medicamentos das listas A1, A2 (entorpecentes) e A3 (psicotrópicos) são dispensados mediante:</p>
+      <ol class="alts">
+        <li>Receita de Controle Especial branca em 2 vias</li>
+        <li>Notificação de Receita "A", de cor amarela</li>
+        <li>Notificação de Receita "B", de cor azul</li>
+        <li>Receita médica comum, sem retenção</li>
+        <li>Notificação de Receita Especial branca</li>
+      </ol>
+      <details class="gab"><summary>Ver gabarito comentado</summary>
+        <div class="gab-body"><span class="ans">Resposta: B</span>
+          <p>Lista <b>A</b> → Notificação de Receita <b>A</b>marela, validade de 30 dias, até 30 dias de tratamento e 5 ampolas. É a única cuja numeração/talonário é fornecida pela vigilância sanitária.</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="q">
+      <div class="qhead"><span class="qn">8</span><span class="qtag">adendo de prova</span></div>
+      <p class="stem">Um comprimido de tramadol 50 mg pertence à lista A2. O receituário correto para a dispensação é:</p>
+      <ol class="alts">
+        <li>Notificação de Receita A (amarela)</li>
+        <li>Notificação de Receita B (azul)</li>
+        <li>Receita de Controle Especial em 2 vias (branca)</li>
+        <li>Receita médica comum</li>
+        <li>Notificação de Receita Especial branca</li>
+      </ol>
+      <details class="gab"><summary>Ver gabarito comentado</summary>
+        <div class="gab-body"><span class="ans">Resposta: C</span>
+          <p>Adendo clássico: <b>codeína e tramadol até 100 mg</b> por unidade posológica migram para a <b>Receita de Controle Especial em 2 vias</b>, e não a NR-A. O mesmo vale para <b>oxicodona LC ≤ 40 mg</b> (lista A1).</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="q">
+      <div class="qhead"><span class="qn">9</span><span class="qtag">quantidade</span></div>
+      <p class="stem">Carbamazepina (lista C1) é prescrita para epilepsia. A quantidade máxima de tratamento que pode constar na receita é:</p>
+      <ol class="alts">
+        <li>30 dias</li>
+        <li>60 dias</li>
+        <li>Até 6 meses de tratamento</li>
+        <li>90 dias</li>
+        <li>Quantidade ilimitada</li>
+      </ol>
+      <details class="gab"><summary>Ver gabarito comentado</summary>
+        <div class="gab-body"><span class="ans">Resposta: C</span>
+          <p>Adendo do Art. 59: <b>anticonvulsivantes e antiparkinsonianos</b> da lista C1 podem ser prescritos para <b>até 6 meses</b> de tratamento, sem necessidade de justificativa. As demais substâncias C1/C5 ficam limitadas a 60 dias.</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="q">
+      <div class="qhead"><span class="qn">10</span><span class="qtag">classificação</span></div>
+      <p class="stem">As substâncias da lista D1 (precursoras de entorpecentes/psicotrópicos) exigem:</p>
+      <ol class="alts">
+        <li>Notificação de Receita A amarela</li>
+        <li>Receita de Controle Especial em 2 vias</li>
+        <li>Receita médica comum, sem retenção</li>
+        <li>Notificação de Receita Especial branca</li>
+        <li>Autorização do Ministério da Justiça para cada dispensação</li>
+      </ol>
+      <details class="gab"><summary>Ver gabarito comentado</summary>
+        <div class="gab-body"><span class="ans">Resposta: C</span>
+          <p>A "pegadinha do sem retenção": <b>D1</b> é controlada, porém dispensada com <b>receita comum, sem retenção</b>. Já a <b>D2</b> (insumos químicos) fica sob o <b>Ministério da Justiça/Polícia Federal</b> (SIPROQUIM).</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="q">
+      <div class="qhead"><span class="qn">11</span><span class="qtag">dispensação</span></div>
+      <p class="stem">A talidomida (lista C3) caracteriza-se por:</p>
+      <ol class="alts">
+        <li>Dispensação por receita comum</li>
+        <li>Notificação de Receita Especial, com dispensação exclusiva em farmácias do serviço público</li>
+        <li>Notificação de Receita B azul</li>
+        <li>Notificação de Receita A amarela</li>
+        <li>Venda livre em drogarias</li>
+      </ol>
+      <details class="gab"><summary>Ver gabarito comentado</summary>
+        <div class="gab-body"><span class="ans">Resposta: B</span>
+          <p>Pelo histórico de teratogenicidade (focomelia), a <b>talidomida</b> usa <b>Notificação de Receita Especial</b> e tem <b>dispensação restrita ao serviço público</b> (RDC 11/2011 e RDC 735/2022), com termo de responsabilidade.</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="q">
+      <div class="qhead"><span class="qn">12</span><span class="qtag">validade</span></div>
+      <p class="stem">Sobre a Notificação de Receita B (cor azul), assinale a alternativa correta:</p>
+      <ol class="alts">
+        <li>É de cor amarela e destina-se a entorpecentes</li>
+        <li>Tem validade de 30 dias; a B1 permite até 60 dias e a B2 até 30 dias de tratamento</li>
+        <li>É destinada a substâncias retinoicas</li>
+        <li>Tem validade de 6 meses</li>
+        <li>Dispensa retenção na farmácia</li>
+      </ol>
+      <details class="gab"><summary>Ver gabarito comentado</summary>
+        <div class="gab-body"><span class="ans">Resposta: B</span>
+          <p>A NR-B (azul) cobre <b>B1 (psicotrópicos)</b> e <b>B2 (anorexígenos)</b>, com validade de <b>30 dias</b>; o tempo de tratamento é de <b>60 dias na B1</b> e <b>30 dias na B2</b>. Não confunda validade da notificação com o tempo de tratamento.</p>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- ===================== INTERAÇÕES / CYP450 ===================== -->
+  <section class="sec s3">
+    <div class="sec-head"><span class="ic">03</span><h2>Interações medicamentosas & CYP450</h2></div>
+
+    <div class="q">
+      <div class="qhead"><span class="qn">13</span><span class="qtag">indução enzimática</span></div>
+      <p class="stem">Mulher em uso de contraceptivo oral combinado inicia rifampicina para tuberculose. A consequência farmacológica esperada é:</p>
+      <ol class="alts">
+        <li>Toxicidade estrogênica por acúmulo do contraceptivo</li>
+        <li>Aumento do nível sérico de estrogênio</li>
+        <li>Falha contraceptiva por indução do CYP3A4</li>
+        <li>Síndrome serotoninérgica</li>
+        <li>Ausência de interação clinicamente relevante</li>
+      </ol>
+      <details class="gab"><summary>Ver gabarito comentado</summary>
+        <div class="gab-body"><span class="ans">Resposta: C</span>
+          <p>A <b>rifampicina é indutor potente</b> do CYP3A4 → acelera o metabolismo do contraceptivo → <b>queda do nível</b> → <b>falha contraceptiva</b>. Orientar método adicional. Indução = efeito <b>lento</b> (1–2 semanas).</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="q">
+      <div class="qhead"><span class="qn">14</span><span class="qtag">pró-fármaco</span></div>
+      <p class="stem">Paciente coronariopata em uso de clopidogrel passa a usar omeprazol. O risco dessa associação é:</p>
+      <ol class="alts">
+        <li>Aumento do efeito antiagregante do clopidogrel</li>
+        <li>Redução da ativação do clopidogrel por inibição do CYP2C19, diminuindo a antiagregação</li>
+        <li>Sangramento por potencialização do clopidogrel</li>
+        <li>Rabdomiólise</li>
+        <li>Hipercalemia</li>
+      </ol>
+      <details class="gab"><summary>Ver gabarito comentado</summary>
+        <div class="gab-body"><span class="ans">Resposta: B</span>
+          <p>O clopidogrel é <b>pró-fármaco</b> ativado pelo <b>CYP2C19</b>; o omeprazol <b>inibe</b> essa enzima → menos fármaco ativo → <b>perda de efeito</b> (a lógica invertida dos pró-fármacos). Preferir pantoprazol se necessário.</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="q">
+      <div class="qhead"><span class="qn">15</span><span class="qtag">interação alimentar</span></div>
+      <p class="stem">O consumo de suco de toranja (grapefruit) por paciente em uso de sinvastatina pode causar:</p>
+      <ol class="alts">
+        <li>Redução da estatina por indução enzimática</li>
+        <li>Aumento da estatina por inibição do CYP3A4 intestinal, com risco de rabdomiólise</li>
+        <li>Nenhum efeito clínico</li>
+        <li>Antagonismo farmacodinâmico</li>
+        <li>Quelação e redução da absorção</li>
+      </ol>
+      <details class="gab"><summary>Ver gabarito comentado</summary>
+        <div class="gab-body"><span class="ans">Resposta: B</span>
+          <p>A toranja <b>inibe o CYP3A4 da parede intestinal</b> → ↑ biodisponibilidade da sinvastatina → risco de <b>miopatia/rabdomiólise</b>. O efeito dura até ~72 h (não basta espaçar horários).</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="q">
+      <div class="qhead"><span class="qn">16</span><span class="qtag">excreção renal</span></div>
+      <p class="stem">Paciente bipolar em uso de lítio inicia hidroclorotiazida para hipertensão. O principal risco é:</p>
+      <ol class="alts">
+        <li>Redução do nível de lítio e falha terapêutica</li>
+        <li>Intoxicação por lítio por redução da excreção renal</li>
+        <li>Síndrome serotoninérgica</li>
+        <li>Indução do metabolismo do lítio</li>
+        <li>Ausência de interação</li>
+      </ol>
+      <details class="gab"><summary>Ver gabarito comentado</summary>
+        <div class="gab-body"><span class="ans">Resposta: B</span>
+          <p><b>Tiazídicos, AINEs e IECA/BRA</b> reduzem a excreção renal do lítio → <b>intoxicação</b> (janela estreita 0,6–1,2 mEq/L): tremor, ataxia, confusão. Monitorar litemia.</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="q">
+      <div class="qhead"><span class="qn">17</span><span class="qtag">indução · tabagismo</span></div>
+      <p class="stem">Paciente esquizofrênico estável em uso de clozapina é internado e para de fumar abruptamente. Espera-se:</p>
+      <ol class="alts">
+        <li>Queda do nível sérico de clozapina</li>
+        <li>Aumento do nível de clozapina e risco de toxicidade, pela perda da indução do CYP1A2</li>
+        <li>Nenhuma alteração de nível</li>
+        <li>Indução adicional do metabolismo</li>
+        <li>Síndrome de abstinência da clozapina</li>
+      </ol>
+      <details class="gab"><summary>Ver gabarito comentado</summary>
+        <div class="gab-body"><span class="ans">Resposta: B</span>
+          <p>A fumaça do cigarro <b>induz o CYP1A2</b>. Ao <b>cessar</b>, a enzima reduz e a <b>clozapina sobe</b> → toxicidade (sedação, convulsão). Aplica-se também a <b>teofilina e olanzapina</b>. Requer ajuste de dose.</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="q">
+      <div class="qhead"><span class="qn">18</span><span class="qtag">interação alimentar</span></div>
+      <p class="stem">Paciente em uso de tranilcipromina (IMAO) apresenta cefaleia intensa e PA 220×120 mmHg após jantar com queijos curados e vinho tinto. A causa é:</p>
+      <ol class="alts">
+        <li>Síndrome serotoninérgica</li>
+        <li>Crise hipertensiva por tiramina</li>
+        <li>Efeito dissulfiram</li>
+        <li>Hipertensão essencial descompensada</li>
+        <li>Feocromocitoma</li>
+      </ol>
+      <details class="gab"><summary>Ver gabarito comentado</summary>
+        <div class="gab-body"><span class="ans">Resposta: B</span>
+          <p>O IMAO impede a degradação da <b>tiramina</b> dos alimentos fermentados → liberação maciça de noradrenalina → <b>crise hipertensiva</b> ("reação do queijo"). Por isso a dieta restrita é mandatória.</p>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <!-- ===================== SNC ===================== -->
+  <section class="sec s4">
+    <div class="sec-head"><span class="ic">04</span><h2>Medicamentos do SNC</h2></div>
+
+    <div class="q">
+      <div class="qhead"><span class="qn">19</span><span class="qtag">mecanismo de ação</span></div>
+      <p class="stem">O mecanismo de ação dos benzodiazepínicos consiste em:</p>
+      <ol class="alts">
+        <li>Aumentar a duração de abertura do canal de cloro</li>
+        <li>Modular alostericamente o receptor GABA-A, aumentando a frequência de abertura do canal de cloro</li>
+        <li>Antagonizar o receptor GABA</li>
+        <li>Agonizar o receptor NMDA</li>
+        <li>Bloquear canais de sódio dependentes de voltagem</li>
+      </ol>
+      <details class="gab"><summary>Ver gabarito comentado</summary>
+        <div class="gab-body"><span class="ans">Resposta: B</span>
+          <p>Benzodiazepínicos <b>aumentam a frequência</b> de abertura do canal de Cl⁻ (GABA-A); os <b>barbitúricos aumentam a duração</b> — por isso são mais letais em overdose. Antídoto do BZD: <b>flumazenil</b>.</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="q">
+      <div class="qhead"><span class="qn">20</span><span class="qtag">monitorização</span></div>
+      <p class="stem">A clozapina exige hemograma seriado pelo risco de:</p>
+      <ol class="alts">
+        <li>Hepatotoxicidade</li>
+        <li>Agranulocitose</li>
+        <li>Síndrome metabólica</li>
+        <li>Discinesia tardia</li>
+        <li>Nefrotoxicidade</li>
+      </ol>
+      <details class="gab"><summary>Ver gabarito comentado</summary>
+        <div class="gab-body"><span class="ans">Resposta: B</span>
+          <p>O risco de <b>agranulocitose</b> impõe monitorização do hemograma. A clozapina é reservada à <b>esquizofrenia refratária</b> (também: miocardite, convulsão, sialorreia), mas reduz suicídio.</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="q">
+      <div class="qhead"><span class="qn">21</span><span class="qtag">efeito adverso</span></div>
+      <p class="stem">A discinesia tardia, associada ao uso prolongado de antipsicóticos típicos, decorre de:</p>
+      <ol class="alts">
+        <li>Bloqueio agudo dos receptores D2</li>
+        <li>Hipersensibilidade (up-regulation) de receptores dopaminérgicos por bloqueio crônico</li>
+        <li>Excesso de acetilcolina estriatal</li>
+        <li>Bloqueio serotoninérgico</li>
+        <li>Excitotoxicidade glutamatérgica</li>
+      </ol>
+      <details class="gab"><summary>Ver gabarito comentado</summary>
+        <div class="gab-body"><span class="ans">Resposta: B</span>
+          <p>O bloqueio D2 <b>crônico</b> gera <b>hipersensibilidade</b> dos receptores → movimentos involuntários tardios, potencialmente <b>irreversíveis</b>. Já a distonia aguda (horas-dias) responde a anticolinérgico/biperideno.</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="q">
+      <div class="qhead"><span class="qn">22</span><span class="qtag">antiparkinsoniano</span></div>
+      <p class="stem">A carbidopa é associada à levodopa com o objetivo de:</p>
+      <ol class="alts">
+        <li>Aumentar a conversão de levodopa em dopamina no SNC</li>
+        <li>Inibir a dopa-descarboxilase periférica, elevando a levodopa que chega ao cérebro e reduzindo náuseas</li>
+        <li>Bloquear a enzima COMT</li>
+        <li>Inibir a MAO-B</li>
+        <li>Antagonizar receptores dopaminérgicos periféricos</li>
+      </ol>
+      <details class="gab"><summary>Ver gabarito comentado</summary>
+        <div class="gab-body"><span class="ans">Resposta: B</span>
+          <p>A carbidopa <b>não cruza a barreira hematoencefálica</b> e inibe a <b>dopa-descarboxilase periférica</b> → mais levodopa chega ao SNC e há menos náusea/efeitos periféricos. Atenção: <b>proteínas da dieta</b> competem na absorção da levodopa.</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="q">
+      <div class="qhead"><span class="qn">23</span><span class="qtag">toxicologia</span></div>
+      <p class="stem">A tríade clássica da intoxicação por opioides é composta por:</p>
+      <ol class="alts">
+        <li>Midríase, taquicardia e hipertensão</li>
+        <li>Rebaixamento do nível de consciência, depressão respiratória e miose puntiforme</li>
+        <li>Convulsão, febre e rigidez muscular</li>
+        <li>Hipertermia, clônus e agitação</li>
+        <li>Bradicardia, hipotermia e rubor</li>
+      </ol>
+      <details class="gab"><summary>Ver gabarito comentado</summary>
+        <div class="gab-body"><span class="ans">Resposta: B</span>
+          <p>A tríade opioide → antídoto <b>naloxona</b>. A alternativa D descreve a <b>síndrome serotoninérgica</b> e a C remete à <b>síndrome neuroléptica maligna</b>. Lembrar: a combinação <b>opioide + benzodiazepínico</b> é a mais letal.</p>
+        </div>
+      </details>
+    </div>
+
+    <div class="q">
+      <div class="qhead"><span class="qn">24</span><span class="qtag">integrativa · CYP · 344</span></div>
+      <p class="stem">Sobre o ácido valproico, assinale a alternativa correta:</p>
+      <ol class="alts">
+        <li>É indutor enzimático potente do CYP450</li>
+        <li>É inibidor enzimático, eleva o nível de lamotrigina (risco de Stevens-Johnson) e é teratogênico</li>
+        <li>Não apresenta interação com outros anticonvulsivantes</li>
+        <li>É considerado seguro na gestação</li>
+        <li>É indicado exclusivamente para crises de ausência</li>
+      </ol>
+      <details class="gab"><summary>Ver gabarito comentado</summary>
+        <div class="gab-body"><span class="ans">Resposta: B</span>
+          <p>Ao contrário de fenitoína, carbamazepina e fenobarbital (indutores), o <b>valproato é inibidor</b> enzimático → <b>aumenta a lamotrigina</b> (titular devagar pelo risco de SJS). É <b>teratogênico</b> (espinha bífida) e tem amplo espectro (não só ausência). Pertence à lista <b>C1</b> da Portaria 344/98.</p>
+        </div>
+      </details>
+    </div>
+  </section>
+
+  <footer>
+    Caderno de questões de revisão para residência multiprofissional em farmácia · elaborado para fixação dos quatro temas da apostila. Questões autorais de estudo, em estilo de banca — não reproduzem prova específica. Confirme sempre condutas e doses na referência clínica e nos protocolos vigentes.
+  </footer>
+
+</div>
+</body>
+</html>

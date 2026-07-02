@@ -5,7 +5,7 @@
    - Estáticos (ícones/manifest): cache-first.
    Obs.: o progresso do usuário fica no localStorage, que NÃO é tocado por este cache. */
 
-const CACHE = "enare-farma-v2";
+const CACHE = "enare-farma-v3";
 const ASSETS = [
   "./",
   "./index.html",
@@ -25,7 +25,12 @@ const ASSETS = [
   "./estudos/trabalho-equipe-multidisciplinar.html",
   "./estudos/programa-nacional-seguranca-paciente.html",
   "./estudos/nr32-seguranca-saude-trabalho-servicos-saude.html",
-  "./estudos/bioetica.html"
+  "./estudos/bioetica.html",
+  "./farmacia/interacoes-cyp450-mapa-mental.html",
+  "./farmacia/medicamentos-snc-mapa-mental.html",
+  "./farmacia/caderno-questoes-comentadas.html",
+  "./farmacia/apostila-revisao-residencia-farmacia.pdf",
+  "./farmacia/caderno-questoes-comentadas.pdf"
 ];
 
 self.addEventListener("install", (e) => {

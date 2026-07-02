@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Medicamentos do SNC — Mapa Mental em Cards</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f4f5f7;--ink:#161b22;--muted:#5c6672;--line:#dde1e6;--card:#ffffff;
+    --c1:#0f8a7e;--c1s:#e1f3f0;  /* antidepressivos */
+    --c2:#2f5fb0;--c2s:#e6edf8;  /* antipsicóticos */
+    --c3:#7c4bc4;--c3s:#efe8f9;  /* ansiolíticos/hipnóticos */
+    --c4:#c87a16;--c4s:#fbeede;  /* anticonvulsivantes */
+    --c5:#c0395a;--c5s:#fbe6ec;  /* estabilizadores do humor */
+    --c6:#0e7c8c;--c6s:#dff2f5;  /* neurodegenerativos/Alzheimer */
+    --c7:#4f8a2c;--c7s:#eaf4e1;  /* antiparkinsonianos */
+    --c8:#b23030;--c8s:#fbe5e3;  /* opioides */
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:radial-gradient(circle at 12% -5%,#fff 0%,transparent 40%),var(--bg);color:var(--ink);font-family:"Inter",system-ui,sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:1180px;margin:0 auto;padding:40px 22px 90px;}
+
+  .head{position:relative;border-radius:22px;padding:38px 36px 34px;background:linear-gradient(135deg,#16142a 0%,#241d44 50%,#2a2350 100%);color:#ece9f5;overflow:hidden;}
+  .head::after{content:"SNC";position:absolute;right:26px;top:0;font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:130px;line-height:1;color:#ffffff0d;letter-spacing:-.04em;pointer-events:none;}
+  .kicker{font-family:"JetBrains Mono",monospace;font-size:11.5px;letter-spacing:.26em;text-transform:uppercase;color:#a99be0;margin:0 0 12px;}
+  .head h1{font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:clamp(26px,5vw,43px);line-height:1.05;margin:0 0 14px;letter-spacing:-.01em;}
+  .head p{margin:0;max-width:680px;color:#cdc6e4;font-size:15px;}
+
+  /* faixa de neurotransmissores */
+  .nt{display:flex;flex-wrap:wrap;gap:8px;margin-top:18px;}
+  .nt span{font-family:"JetBrains Mono",monospace;font-size:11px;font-weight:600;background:#ffffff1a;border:1px solid #ffffff26;color:#e7e1f5;padding:5px 11px;border-radius:999px;}
+  .nt span b{color:#fff;}
+
+  .legend{display:grid;grid-template-columns:repeat(auto-fit,minmax(165px,1fr));gap:10px;margin:26px 0 8px;}
+  .legend a{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:12px;padding:11px 14px;font-size:13px;font-weight:600;transition:transform .15s,box-shadow .15s;}
+  .legend a:hover{transform:translateY(-2px);box-shadow:0 8px 20px #1a263611;}
+  .dot{width:13px;height:13px;border-radius:50%;flex:0 0 auto;}
+  .legend small{display:block;font-weight:400;color:var(--muted);font-size:11px;}
+
+  .branch{margin-top:46px;}
+  .branch-head{display:flex;align-items:center;gap:16px;padding:14px 20px;border-radius:14px;color:#fff;box-shadow:0 10px 26px -12px var(--accent);}
+  .branch-num{font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:22px;width:46px;height:46px;flex:0 0 auto;display:grid;place-items:center;border-radius:12px;background:#ffffff26;}
+  .branch-head h2{margin:0;font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:clamp(17px,3vw,23px);letter-spacing:-.01em;}
+  .branch-head span{display:block;font-size:12.5px;font-weight:400;opacity:.92;}
+
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(335px,1fr));gap:16px;margin-top:18px;}
+  .card{background:var(--card);border:1px solid var(--line);border-top:4px solid var(--accent);border-radius:14px;padding:18px 18px 16px;display:flex;flex-direction:column;transition:transform .15s,box-shadow .15s;}
+  .card:hover{transform:translateY(-3px);box-shadow:0 14px 30px -16px #1a263633;}
+  .card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:2px;}
+  .card h3{margin:0;font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:16.5px;letter-spacing:-.01em;}
+  .card h3 small{font-weight:400;color:var(--muted);font-size:12px;}
+  .tag{flex:0 0 auto;font-family:"JetBrains Mono",monospace;font-size:9.5px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;padding:4px 8px;border-radius:999px;white-space:nowrap;background:var(--accent-soft);color:var(--accent);}
+  .row{margin-top:11px;}
+  .row .lab{font-family:"JetBrains Mono",monospace;font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);display:flex;align-items:center;gap:6px;margin-bottom:4px;}
+  .row .lab::before{content:"";width:6px;height:6px;border-radius:2px;background:var(--accent);}
+  .row p{margin:0;font-size:13.2px;color:#2b333b;}
+  .row p b{color:var(--ink);font-weight:600;}
+  .drugs{display:flex;flex-wrap:wrap;gap:6px;margin-top:5px;}
+  .drug{font-size:11.5px;font-weight:500;background:var(--accent-soft);color:var(--accent);padding:3px 9px;border-radius:7px;}
+  .res{margin-top:11px;background:#fbf6f1;border:1px dashed #e7d9c9;border-radius:10px;padding:9px 11px;}
+  .res .lab{color:#b06a1a;}.res .lab::before{background:#b06a1a;}
+  .res p{font-size:12.6px;color:#5b4a36;}.res p b{color:#7a4d10;}
+
+  .b1{--accent:var(--c1);--accent-soft:var(--c1s);}.b2{--accent:var(--c2);--accent-soft:var(--c2s);}
+  .b3{--accent:var(--c3);--accent-soft:var(--c3s);}.b4{--accent:var(--c4);--accent-soft:var(--c4s);}
+  .b5{--accent:var(--c5);--accent-soft:var(--c5s);}.b6{--accent:var(--c6);--accent-soft:var(--c6s);}
+  .b7{--accent:var(--c7);--accent-soft:var(--c7s);}.b8{--accent:var(--c8);--accent-soft:var(--c8s);}
+  .b1 .branch-head{background:linear-gradient(120deg,#0c6b61,var(--c1));}
+  .b2 .branch-head{background:linear-gradient(120deg,#244a8a,var(--c2));}
+  .b3 .branch-head{background:linear-gradient(120deg,#5f37a0,var(--c3));}
+  .b4 .branch-head{background:linear-gradient(120deg,#a4620a,var(--c4));}
+  .b5 .branch-head{background:linear-gradient(120deg,#9a2c49,var(--c5));}
+  .b6 .branch-head{background:linear-gradient(120deg,#0a6271,var(--c6));}
+  .b7 .branch-head{background:linear-gradient(120deg,#3d6c21,var(--c7));}
+  .b8 .branch-head{background:linear-gradient(120deg,#8c2424,var(--c8));}
+
+  .note{grid-column:1/-1;background:var(--accent-soft);border-radius:12px;padding:12px 16px;font-size:12.8px;color:#33403a;}
+  .note b{color:var(--accent);}
+
+  footer{margin-top:60px;padding-top:22px;border-top:1px solid var(--line);font-size:12px;color:var(--muted);}
+  @media (max-width:560px){.wrap{padding:24px 14px 70px;}.head{padding:28px 22px;}.grid{grid-template-columns:1fr;}}
+  @media print{body{background:#fff;}.card:hover,.legend a:hover{transform:none;box-shadow:none;}.card,.branch{break-inside:avoid;}.head::after{display:none;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="head">
+    <p class="kicker">Psicofarmacologia · revisão para residência</p>
+    <h1>Medicamentos do SNC<br>entorpecentes e psicotrópicos</h1>
+    <p>Mapa em cards das grandes classes de ação central — cada card com <b>mecanismo resumido</b>, <b>principais fármacos</b>, <b>indicações clínicas</b> e <b>interações relevantes</b> para a prática farmacêutica.</p>
+    <div class="nt">
+      <span><b>5-HT/NA</b> · antidepressivos</span>
+      <span><b>Dopamina</b> · antipsicóticos · Parkinson</span>
+      <span><b>GABA</b> · ansiolíticos · anticonvulsivantes</span>
+      <span><b>ACh</b> · Alzheimer · antiparkinsonianos</span>
+      <span><b>Glutamato/NMDA</b> · memantina</span>
+      <span><b>Receptor μ</b> · opioides</span>
+    </div>
+  </header>
+
+  <nav class="legend">
+    <a href="#g1"><span class="dot" style="background:var(--c1)"></span><span>Antidepressivos<small>ISRS · IRSN · ADT · IMAO</small></span></a>
+    <a href="#g2"><span class="dot" style="background:var(--c2)"></span><span>Antipsicóticos<small>típicos · atípicos</small></span></a>
+    <a href="#g3"><span class="dot" style="background:var(--c3)"></span><span>Ansiolíticos/hipnóticos<small>BZD · Z · buspirona</small></span></a>
+    <a href="#g4"><span class="dot" style="background:var(--c4)"></span><span>Anticonvulsivantes<small>Na⁺ · GABA · Ca²⁺</small></span></a>
+    <a href="#g5"><span class="dot" style="background:var(--c5)"></span><span>Estabilizadores do humor<small>lítio</small></span></a>
+    <a href="#g6"><span class="dot" style="background:var(--c6)"></span><span>Alzheimer / neurodegen.<small>anti-AChE · NMDA</small></span></a>
+    <a href="#g7"><span class="dot" style="background:var(--c7)"></span><span>Antiparkinsonianos<small>levodopa · agonistas</small></span></a>
+    <a href="#g8"><span class="dot" style="background:var(--c8)"></span><span>Opioides<small>μ κ δ</small></span></a>
+  </nav>
+
+  <!-- ANTIDEPRESSIVOS -->
+  <section class="branch b1" id="g1">
+    <div class="branch-head"><div class="branch-num">①</div><h2>Antidepressivos<span>Elevam monoaminas (serotonina e noradrenalina) na fenda sináptica.</span></h2></div>
+    <div class="grid">
+
+      <article class="card">
+        <div class="card-top"><h3>ISRS</h3><span class="tag">1ª linha</span></div>
+        <div class="row"><div class="lab">Mecanismo</div><p>Bloqueiam o transportador de serotonina (<b>SERT</b>) → ↑ 5-HT. Perfil seguro e bem tolerado.</p></div>
+        <div class="row"><div class="lab">Fármacos</div><div class="drugs"><span class="drug">Fluoxetina</span><span class="drug">Sertralina</span><span class="drug">Paroxetina</span><span class="drug">Escitalopram</span><span class="drug">Citalopram</span><span class="drug">Fluvoxamina</span></div></div>
+        <div class="row"><div class="lab">Indicações</div><p>Depressão, TAG, <b>TOC</b>, pânico, TEPT, bulimia, TPM.</p></div>
+        <div class="res"><div class="lab">Interações ⭐</div><p><b>IMAO</b> → síndrome serotoninérgica (fluoxetina exige <b>5 sem</b> de washout). + tramadol/triptanos/linezolida. Fluox/parox inibem <b>2D6</b>; fluvoxamina inibe <b>1A2</b>. Risco de sangramento com AINE; <b>hiponatremia</b>; QT (citalopram).</p></div>
+      </article>
+
+      <article class="card">
+        <div class="card-top"><h3>IRSN (duais)</h3><span class="tag">5-HT + NA</span></div>
+        <div class="row"><div class="lab">Mecanismo</div><p>Inibem recaptação de <b>serotonina e noradrenalina</b> (SERT + NET).</p></div>
+        <div class="row"><div class="lab">Fármacos</div><div class="drugs"><span class="drug">Venlafaxina</span><span class="drug">Desvenlafaxina</span><span class="drug">Duloxetina</span></div></div>
+        <div class="row"><div class="lab">Indicações</div><p>Depressão, TAG, <b>dor neuropática/fibromialgia</b> e incontinência de esforço (duloxetina).</p></div>
+        <div class="res"><div class="lab">Interações</div><p>IMAO e serotoninérgicos. <b>Venlafaxina</b> ↑ PA dose-dependente; duloxetina inibe 2D6.</p></div>
+      </article>
+
+      <article class="card">
+        <div class="card-top"><h3>Tricíclicos (ADT)</h3><span class="tag">2ª linha</span></div>
+        <div class="row"><div class="lab">Mecanismo</div><p>Inibem recaptação 5-HT/NA + bloqueio <b>muscarínico, H1, α1 e canais de Na⁺ cardíacos</b>.</p></div>
+        <div class="row"><div class="lab">Fármacos</div><div class="drugs"><span class="drug">Amitriptilina</span><span class="drug">Nortriptilina</span><span class="drug">Imipramina</span><span class="drug">Clomipramina</span></div></div>
+        <div class="row"><div class="lab">Indicações</div><p>Depressão, <b>dor neuropática</b>, profilaxia de enxaqueca, enurese (imipramina), TOC (clomipramina).</p></div>
+        <div class="res"><div class="lab">Interações</div><p><b>Cardiotoxicidade</b> letal em overdose (QRS alargado). Efeitos anticolinérgicos somados; IMAO; potencia depressores do SNC.</p></div>
+      </article>
+
+      <article class="card">
+        <div class="card-top"><h3>IMAO</h3><span class="tag">refratários</span></div>
+        <div class="row"><div class="lab">Mecanismo</div><p>Inibem a <b>monoamina oxidase</b> → ↑ 5-HT, NA e DA. Irreversíveis (fenelzina, tranilcipromina) ou reversível A (moclobemida).</p></div>
+        <div class="row"><div class="lab">Indicações</div><p>Depressão atípica/refratária.</p></div>
+        <div class="res"><div class="lab">Interações ⭐</div><p><b>Tiramina</b> (queijos curados, vinho) → <b>crise hipertensiva</b>. Com ISRS/ADT/tramadol/simpaticomiméticos → síndrome serotoninérgica. Exige dieta e washout.</p></div>
+      </article>
+
+      <article class="card">
+        <div class="card-top"><h3>Atípicos</h3><span class="tag">outros alvos</span></div>
+        <div class="row"><div class="lab">Bupropiona</div><p>Inibe recaptação de <b>DA/NA</b>; sem disfunção sexual; ajuda na <b>cessação tabágica</b>; ↓ limiar convulsivo.</p></div>
+        <div class="row"><div class="lab">Mirtazapina</div><p>Antagonista <b>α2 + 5-HT2/3</b>; sedação, ↑ apetite — útil em insônia/idoso anoréxico.</p></div>
+        <div class="row"><div class="lab">Trazodona</div><p>Antagonista 5-HT2; usada como <b>hipnótico</b>; risco de priapismo.</p></div>
+        <div class="res"><div class="lab">Interações</div><p>Bupropiona <b>contraindicada</b> em epilepsia, bulimia/anorexia e suspensão de álcool; inibe 2D6.</p></div>
+      </article>
+
+      <div class="note"><b>Síndrome serotoninérgica</b> é o fio condutor das interações: tríade de alteração mental + hiperatividade autonômica + neuromuscular (clônus). Cuidado ao somar <b>ISRS/IRSN + IMAO + tramadol + linezolida + triptanos</b>.</div>
+    </div>
+  </section>
+
+  <!-- ANTIPSICÓTICOS -->
+  <section class="branch b2" id="g2">
+    <div class="branch-head"><div class="branch-num">②</div><h2>Antipsicóticos (neurolépticos)<span>Bloqueiam a dopamina (D2); os atípicos somam antagonismo 5-HT2A.</span></h2></div>
+    <div class="grid">
+
+      <article class="card">
+        <div class="card-top"><h3>Típicos (1ª geração)</h3><span class="tag">antagonista D2</span></div>
+        <div class="row"><div class="lab">Mecanismo</div><p>Antagonismo <b>D2</b> potente. Bloqueio nas vias extras gera <b>EPS</b> e <b>hiperprolactinemia</b>.</p></div>
+        <div class="row"><div class="lab">Fármacos</div><div class="drugs"><span class="drug">Haloperidol</span><span class="drug">Flufenazina</span><span class="drug">Clorpromazina</span><span class="drug">Levomepromazina</span></div></div>
+        <div class="row"><div class="lab">Indicações</div><p>Esquizofrenia (<b>sintomas positivos</b>), mania, agitação, soluço intratável.</p></div>
+        <div class="res"><div class="lab">Interações/EA</div><p><b>EPS</b> (distonia, acatisia, parkinsonismo, discinesia tardia), <b>síndrome neuroléptica maligna</b>, QT. Antagonizam levodopa; somam-se a depressores e QT-prolongadores.</p></div>
+      </article>
+
+      <article class="card">
+        <div class="card-top"><h3>Atípicos (2ª geração)</h3><span class="tag">D2 + 5-HT2A</span></div>
+        <div class="row"><div class="lab">Mecanismo</div><p>Antagonismo <b>D2 + 5-HT2A</b> → menos EPS, atua em <b>sintomas negativos</b>. Aripiprazol = agonista parcial D2.</p></div>
+        <div class="row"><div class="lab">Fármacos</div><div class="drugs"><span class="drug">Risperidona</span><span class="drug">Olanzapina</span><span class="drug">Quetiapina</span><span class="drug">Ziprasidona</span><span class="drug">Aripiprazol</span></div></div>
+        <div class="row"><div class="lab">Indicações</div><p>Esquizofrenia, <b>transtorno bipolar</b>, depressão (adjuvante), irritabilidade no autismo.</p></div>
+        <div class="res"><div class="lab">Interações/EA ⭐</div><p><b>Síndrome metabólica</b> (olanzapina/quetiapina = ↑ peso, dislipidemia, DM). Ziprasidona → QT. Risperidona → prolactina.</p></div>
+      </article>
+
+      <article class="card">
+        <div class="card-top"><h3>Clozapina</h3><span class="tag">refratários</span></div>
+        <div class="row"><div class="lab">Mecanismo</div><p>Antagonista D2 fraco + 5-HT2A forte; mais eficaz, <b>reduz suicídio</b>.</p></div>
+        <div class="row"><div class="lab">Indicação</div><p>Esquizofrenia <b>refratária</b> (após falha de 2 antipsicóticos).</p></div>
+        <div class="row"><div class="lab">Vigilância</div><p><b>Agranulocitose</b> (hemograma seriado), miocardite, convulsão, sialorreia, ↑ peso.</p></div>
+        <div class="res"><div class="lab">Interações ⭐</div><p><b>Tabagismo induz 1A2 → ↓ clozapina</b>; parar de fumar eleva o nível. Ciprofloxacino/fluvoxamina inibem → toxicidade.</p></div>
+      </article>
+
+      <div class="note"><b>EPS na linha do tempo:</b> <b>distonia aguda</b> (horas-dias) → <b>acatisia</b> (dias) → <b>parkinsonismo</b> (semanas) → <b>discinesia tardia</b> (meses-anos, pode ser irreversível). Distonia aguda responde a anticolinérgico/biperideno.</div>
+    </div>
+  </section>
+
+  <!-- ANSIOLÍTICOS / HIPNÓTICOS -->
+  <section class="branch b3" id="g3">
+    <div class="branch-head"><div class="branch-num">③</div><h2>Ansiolíticos e hipnóticos<span>Potencializam o GABA, o principal neurotransmissor inibitório.</span></h2></div>
+    <div class="grid">
+
+      <article class="card">
+        <div class="card-top"><h3>Benzodiazepínicos</h3><span class="tag">GABA-A · cloro</span></div>
+        <div class="row"><div class="lab">Mecanismo</div><p>Modulador alostérico do <b>GABA-A</b> → ↑ <b>frequência</b> de abertura do canal de Cl⁻. Ação ansiolítica, hipnótica, anticonvulsivante, miorrelaxante.</p></div>
+        <div class="row"><div class="lab">Fármacos</div><div class="drugs"><span class="drug">Diazepam</span><span class="drug">Clonazepam</span><span class="drug">Alprazolam</span><span class="drug">Lorazepam</span><span class="drug">Midazolam</span></div></div>
+        <div class="row"><div class="lab">Indicações</div><p>Ansiedade, insônia, <b>estado de mal epiléptico</b>, abstinência alcoólica, sedação.</p></div>
+        <div class="res"><div class="lab">Interações ⭐</div><p>+ <b>opioides/álcool/depressores</b> → depressão respiratória. Antídoto <b>flumazenil</b>. Lorazepam/oxazepam (glicuronidação) preferidos em <b>hepatopata/idoso</b>. Dependência e abstinência.</p></div>
+      </article>
+
+      <article class="card">
+        <div class="card-top"><h3>Z-drugs (não BZD)</h3><span class="tag">α1 seletivo</span></div>
+        <div class="row"><div class="lab">Mecanismo</div><p>Agonistas seletivos da subunidade <b>α1 do GABA-A</b> → efeito hipnótico com menos ansiolítico/miorrelaxante.</p></div>
+        <div class="row"><div class="lab">Fármacos</div><div class="drugs"><span class="drug">Zolpidem</span><span class="drug">Zopiclona</span><span class="drug">Eszopiclona</span><span class="drug">Zaleplona</span></div></div>
+        <div class="row"><div class="lab">Indicações</div><p>Insônia (curto prazo).</p></div>
+        <div class="res"><div class="lab">Interações/EA</div><p>Comportamentos do sono (sonambulismo, dirigir dormindo); somam-se a depressores do SNC.</p></div>
+      </article>
+
+      <article class="card">
+        <div class="card-top"><h3>Outros ansiolíticos</h3><span class="tag">sem dependência</span></div>
+        <div class="row"><div class="lab">Buspirona</div><p>Agonista parcial <b>5-HT1A</b>; sem sedação/dependência; início <b>lento</b> (1-2 sem). TAG.</p></div>
+        <div class="row"><div class="lab">Adjuvantes</div><p><b>Propranolol</b> (sintomas somáticos/desempenho), <b>hidroxizina</b>, <b>pregabalina/gabapentina</b> (TAG).</p></div>
+        <div class="res"><div class="lab">Interações</div><p>Buspirona com IMAO/serotoninérgicos; propranolol em asma e bloqueios.</p></div>
+      </article>
+
+      <div class="note"><b>Diferença que cai:</b> <b>benzodiazepínicos ↑ frequência</b> de abertura do canal de cloro; <b>barbitúricos ↑ duração</b> — por isso o barbitúrico é mais letal em overdose (deprime o SNC mesmo sem GABA).</div>
+    </div>
+  </section>
+
+  <!-- ANTICONVULSIVANTES -->
+  <section class="branch b4" id="g4">
+    <div class="branch-head"><div class="branch-num">④</div><h2>Anticonvulsivantes<span>Estabilizam o neurônio: bloqueiam Na⁺/Ca²⁺ ou reforçam o GABA.</span></h2></div>
+    <div class="grid">
+
+      <article class="card">
+        <div class="card-top"><h3>Bloqueadores de Na⁺</h3><span class="tag">canal de sódio</span></div>
+        <div class="row"><div class="lab">Mecanismo</div><p>Bloqueiam canais de <b>sódio</b> dependentes de voltagem → reduzem disparos repetitivos.</p></div>
+        <div class="row"><div class="lab">Fármacos</div><div class="drugs"><span class="drug">Fenitoína</span><span class="drug">Carbamazepina</span><span class="drug">Oxcarbazepina</span><span class="drug">Lamotrigina</span></div></div>
+        <div class="row"><div class="lab">Indicações</div><p>Crises focais; carbamazepina = <b>neuralgia do trigêmeo</b> e humor; lamotrigina = depressão bipolar.</p></div>
+        <div class="res"><div class="lab">Interações ⭐</div><p>Fenitoína (<b>cinética não linear</b>, hiperplasia gengival) e carbamazepina são <b>indutores potentes</b> → ↓ contraceptivos/varfarina. Carbamazepina: hiponatremia, <b>Stevens-Johnson</b> (HLA-B*1502). Lamotrigina: rash (titular lento, pior com valproato).</p></div>
+      </article>
+
+      <article class="card">
+        <div class="card-top"><h3>Ácido valproico</h3><span class="tag">amplo espectro</span></div>
+        <div class="row"><div class="lab">Mecanismo</div><p>Múltiplo: ↑ GABA, bloqueia Na⁺ e Ca²⁺. Cobre quase todos os tipos de crise.</p></div>
+        <div class="row"><div class="lab">Indicações</div><p>Epilepsia <b>generalizada/ausência/mioclonia</b>, <b>mania</b>, profilaxia de enxaqueca.</p></div>
+        <div class="row"><div class="lab">Eventos adversos</div><p><b>Hepatotoxicidade</b>, pancreatite, <b>teratogenicidade</b> (espinha bífida), trombocitopenia, ↑ peso, alopecia.</p></div>
+        <div class="res"><div class="lab">Interações ⭐</div><p>É <b>INIBIDOR</b> enzimático (contraste com os indutores): ↑ <b>lamotrigina</b> (risco de SJS) e fenobarbital.</p></div>
+      </article>
+
+      <article class="card">
+        <div class="card-top"><h3>Gabapentinoides</h3><span class="tag">canal Ca²⁺ α2δ</span></div>
+        <div class="row"><div class="lab">Mecanismo</div><p>Ligam-se à subunidade <b>α2δ</b> do canal de cálcio → ↓ liberação de neurotransmissores excitatórios.</p></div>
+        <div class="row"><div class="lab">Fármacos</div><div class="drugs"><span class="drug">Gabapentina</span><span class="drug">Pregabalina</span></div></div>
+        <div class="row"><div class="lab">Indicações</div><p><b>Dor neuropática</b>, fibromialgia, TAG (pregabalina), adjuvante em epilepsia.</p></div>
+        <div class="res"><div class="lab">Interações</div><p>Sedação somada a opioides/depressores; baixo potencial de interação hepática.</p></div>
+      </article>
+
+      <article class="card">
+        <div class="card-top"><h3>Outros</h3><span class="tag">alvos diversos</span></div>
+        <div class="row"><div class="lab">Levetiracetam</div><p>Modula vesícula sináptica <b>SV2A</b>; amplo, sem interação hepática; irritabilidade/humor.</p></div>
+        <div class="row"><div class="lab">Etossuximida</div><p>Bloqueia <b>Ca²⁺ tipo T</b> → exclusivo para <b>crises de ausência</b>.</p></div>
+        <div class="row"><div class="lab">Topiramato / Fenobarbital</div><p>Topiramato: enxaqueca, ↓ peso, litíase/parestesia. Fenobarbital: ↑ GABA, indutor.</p></div>
+        <div class="res"><div class="lab">Interações</div><p>Fenobarbital e topiramato (alta dose) induzem CYP; levetiracetam é o mais "limpo".</p></div>
+      </article>
+
+      <div class="note"><b>Memória rápida:</b> ausência → <b>etossuximida/valproato</b> · mioclonia/generalizada → <b>valproato</b> · focal → <b>carbamazepina/lamotrigina</b> · estado de mal → <b>benzodiazepínico</b>. Indutores (fenitoína, carbamazepina, fenobarbital) × inibidor (valproato).</div>
+    </div>
+  </section>
+
+  <!-- ESTABILIZADORES DO HUMOR -->
+  <section class="branch b5" id="g5">
+    <div class="branch-head"><div class="branch-num">⑤</div><h2>Estabilizadores do humor<span>Controle do transtorno bipolar — o lítio é o protótipo.</span></h2></div>
+    <div class="grid">
+
+      <article class="card">
+        <div class="card-top"><h3>Lítio</h3><span class="tag">padrão-ouro</span></div>
+        <div class="row"><div class="lab">Mecanismo</div><p>Incerto: inibe <b>inositol monofosfatase</b> e <b>GSK-3</b>, modulando a sinalização intracelular.</p></div>
+        <div class="row"><div class="lab">Indicações</div><p>Transtorno bipolar (mania e <b>profilaxia</b>); reduz <b>suicídio</b>.</p></div>
+        <div class="row"><div class="lab">Janela estreita ⭐</div><p>Alvo <b>0,6–1,2 mEq/L</b>. Toxicidade: tremor grosseiro, ataxia, confusão, convulsão. Crônico: <b>diabetes insipidus nefrogênico</b>, hipotireoidismo.</p></div>
+        <div class="res"><div class="lab">Interações ⭐</div><p><b>Tiazídicos, AINEs e IECA/BRA ↑ lítio</b> → intoxicação (↓ excreção renal). Cafeína/teofilina ↓ nível. Monitorar litemia.</p></div>
+      </article>
+
+      <article class="card">
+        <div class="card-top"><h3>Anticonvulsivantes estabilizadores</h3><span class="tag">alternativas</span></div>
+        <div class="row"><div class="lab">Valproato</div><p>Preferido na <b>mania aguda</b> e em ciclagem rápida/mania mista.</p></div>
+        <div class="row"><div class="lab">Carbamazepina</div><p>Alternativa na mania; lembrar do perfil <b>indutor</b>.</p></div>
+        <div class="row"><div class="lab">Lamotrigina</div><p>Melhor para a <b>fase depressiva</b> do bipolar e profilaxia.</p></div>
+        <div class="res"><div class="lab">Adendo</div><p>Antipsicóticos atípicos (<b>quetiapina, olanzapina, aripiprazol</b>) também estabilizam o humor.</p></div>
+      </article>
+
+      <div class="note"><b>Divisão prática:</b> <b>lítio</b> e <b>valproato</b> brilham na <b>mania</b>; <b>lamotrigina</b> brilha na <b>depressão bipolar</b>. Antidepressivo isolado no bipolar pode <b>virar mania</b> — usar com cautela e cobertura estabilizadora.</div>
+    </div>
+  </section>
+
+  <!-- ALZHEIMER -->
+  <section class="branch b6" id="g6">
+    <div class="branch-head"><div class="branch-num">⑥</div><h2>Distúrbios neurodegenerativos — Alzheimer<span>Repor acetilcolina e conter a excitotoxicidade do glutamato.</span></h2></div>
+    <div class="grid">
+
+      <article class="card">
+        <div class="card-top"><h3>Inibidores da acetilcolinesterase</h3><span class="tag">leve-moderada</span></div>
+        <div class="row"><div class="lab">Mecanismo</div><p>Inibem a <b>acetilcolinesterase</b> → ↑ ACh na fenda → melhora cognitiva sintomática.</p></div>
+        <div class="row"><div class="lab">Fármacos</div><div class="drugs"><span class="drug">Donepezila</span><span class="drug">Rivastigmina</span><span class="drug">Galantamina</span></div></div>
+        <div class="row"><div class="lab">Indicações</div><p>Alzheimer <b>leve a moderada</b>; rivastigmina também na demência de Parkinson (adesivo).</p></div>
+        <div class="res"><div class="lab">Interações/EA ⭐</div><p>Efeitos <b>colinérgicos</b>: náusea, diarreia, <b>bradicardia/síncope</b> (cuidado com betabloqueador/digoxina). <b>Anticolinérgicos antagonizam</b> o tratamento (associação ilógica).</p></div>
+      </article>
+
+      <article class="card">
+        <div class="card-top"><h3>Memantina</h3><span class="tag">moderada-grave</span></div>
+        <div class="row"><div class="lab">Mecanismo</div><p>Antagonista <b>NMDA</b> não competitivo → reduz a <b>excitotoxicidade</b> pelo glutamato.</p></div>
+        <div class="row"><div class="lab">Indicações</div><p>Alzheimer <b>moderada a grave</b>; pode ser combinada com anticolinesterásico.</p></div>
+        <div class="res"><div class="lab">Interações</div><p>Boa tolerância; cuidado com outros agentes que alteram pH urinário (afetam excreção).</p></div>
+      </article>
+
+      <div class="note"><b>Lógica do estágio:</b> <b>anti-AChE</b> nas fases leve-moderada, <b>memantina</b> na moderada-grave, combinação nas avançadas. Novos <b>anticorpos anti-amiloide</b> (lecanemabe) atuam na fisiopatologia, não só nos sintomas.</div>
+    </div>
+  </section>
+
+  <!-- ANTIPARKINSONIANOS -->
+  <section class="branch b7" id="g7">
+    <div class="branch-head"><div class="branch-num">⑦</div><h2>Antiparkinsonianos<span>Restaurar a dopamina nigroestriatal (ou frear a acetilcolina relativa).</span></h2></div>
+    <div class="grid">
+
+      <article class="card">
+        <div class="card-top"><h3>Levodopa + carbidopa</h3><span class="tag">padrão-ouro</span></div>
+        <div class="row"><div class="lab">Mecanismo</div><p><b>Levodopa</b> é precursor da dopamina e atravessa a BHE; <b>carbidopa</b> inibe a dopa-descarboxilase periférica (↑ chegada cerebral, ↓ náusea).</p></div>
+        <div class="row"><div class="lab">Indicações</div><p>Doença de Parkinson — controle motor mais eficaz.</p></div>
+        <div class="row"><div class="lab">Limitações</div><p>Flutuações <b>"wearing off"</b>, discinesias, náusea com o tempo.</p></div>
+        <div class="res"><div class="lab">Interações ⭐</div><p><b>Proteína da dieta</b> compete na absorção; <b>antipsicóticos/metoclopramida antagonizam</b>; IMAO não seletivo → crise; piridoxina (B6) ↓ efeito sem carbidopa.</p></div>
+      </article>
+
+      <article class="card">
+        <div class="card-top"><h3>Agonistas dopaminérgicos</h3><span class="tag">receptor D2</span></div>
+        <div class="row"><div class="lab">Mecanismo</div><p>Estimulam diretamente os receptores <b>D2</b> (não dependem de neurônio íntegro).</p></div>
+        <div class="row"><div class="lab">Fármacos</div><div class="drugs"><span class="drug">Pramipexol</span><span class="drug">Ropinirol</span><span class="drug">Rotigotina</span><span class="drug">Bromocriptina</span></div></div>
+        <div class="row"><div class="lab">Indicações</div><p>Parkinson inicial (jovem), poupando levodopa; síndrome das pernas inquietas.</p></div>
+        <div class="res"><div class="lab">Interações/EA ⭐</div><p><b>Sonolência súbita</b> e <b>transtorno do controle de impulsos</b> (jogo, compras, hipersexualidade); alucinações.</p></div>
+      </article>
+
+      <article class="card">
+        <div class="card-top"><h3>IMAO-B e inibidores da COMT</h3><span class="tag">prolongam DA</span></div>
+        <div class="row"><div class="lab">IMAO-B</div><p><b>Selegilina, rasagilina</b> — ↓ degradação central de dopamina.</p></div>
+        <div class="row"><div class="lab">COMT</div><p><b>Entacapona, tolcapona</b> — prolongam a levodopa, reduzem o <b>wearing off</b> (tolcapona é hepatotóxica).</p></div>
+        <div class="res"><div class="lab">Interações</div><p>IMAO-B + serotoninérgicos → risco de síndrome serotoninérgica; cuidado com associações de IMAO.</p></div>
+      </article>
+
+      <article class="card">
+        <div class="card-top"><h3>Anticolinérgicos e amantadina</h3><span class="tag">tremor / discinesia</span></div>
+        <div class="row"><div class="lab">Anticolinérgicos</div><p><b>Biperideno, triexifenidil</b> — controlam <b>tremor</b>; evitar no idoso (confusão, retenção, glaucoma).</p></div>
+        <div class="row"><div class="lab">Amantadina</div><p>Libera dopamina + antagonista <b>NMDA</b>; reduz <b>discinesia</b> induzida por levodopa.</p></div>
+        <div class="res"><div class="lab">Interações</div><p>Anticolinérgicos somam efeito a ADT, antipsicóticos de baixa potência e anti-histamínicos.</p></div>
+      </article>
+
+      <div class="note"><b>Equilíbrio dopamina × acetilcolina:</b> no Parkinson falta dopamina e "sobra" ACh relativa. Por isso <b>repõe-se DA</b> (levodopa/agonistas) ou se <b>bloqueia ACh</b> (anticolinérgicos, mais para tremor). Antipsicótico típico faz o oposto → pode causar parkinsonismo.</div>
+    </div>
+  </section>
+
+  <!-- OPIOIDES -->
+  <section class="branch b8" id="g8">
+    <div class="branch-head"><div class="branch-num">⑧</div><h2>Opioides<span>Agonistas dos receptores μ, κ e δ → analgesia (e depressão respiratória).</span></h2></div>
+    <div class="grid">
+
+      <article class="card">
+        <div class="card-top"><h3>Agonistas fortes</h3><span class="tag">receptor μ</span></div>
+        <div class="row"><div class="lab">Mecanismo</div><p>Agonistas <b>μ</b> → ↓ AMPc e ↓ liberação de neurotransmissores → analgesia, euforia, <b>miose</b>, depressão respiratória, constipação.</p></div>
+        <div class="row"><div class="lab">Fármacos</div><div class="drugs"><span class="drug">Morfina</span><span class="drug">Fentanil</span><span class="drug">Oxicodona</span><span class="drug">Hidromorfona</span><span class="drug">Metadona</span></div></div>
+        <div class="row"><div class="lab">Indicações</div><p>Dor moderada-intensa, dor oncológica, anestesia, edema agudo de pulmão (morfina).</p></div>
+        <div class="res"><div class="lab">Interações ⭐</div><p>+ <b>benzodiazepínicos/álcool</b> → depressão respiratória fatal. <b>Metadona prolonga QT</b>. Meperidina → metabólito neurotóxico (evitar em IR).</p></div>
+      </article>
+
+      <article class="card">
+        <div class="card-top"><h3>Agonistas fracos</h3><span class="tag">dor leve-moderada</span></div>
+        <div class="row"><div class="lab">Codeína</div><p><b>Pró-fármaco</b>: ativada a morfina pelo <b>CYP2D6</b> → inibidores de 2D6 <b>reduzem</b> a analgesia. Antitussígeno.</p></div>
+        <div class="row"><div class="lab">Tramadol</div><p>Agonista μ fraco + inibe recaptação de <b>5-HT/NA</b> → risco de <b>síndrome serotoninérgica</b> e convulsão.</p></div>
+        <div class="res"><div class="lab">Interações ⭐</div><p>Tramadol + ISRS/IMAO/triptanos → serotoninérgica; ↓ limiar convulsivo. Codeína inútil em metabolizadores lentos do 2D6.</p></div>
+      </article>
+
+      <article class="card">
+        <div class="card-top"><h3>Parciais e antagonistas</h3><span class="tag">reversão / dependência</span></div>
+        <div class="row"><div class="lab">Agonista parcial</div><p><b>Buprenorfina</b> — agonista parcial μ (teto de efeito, mais seguro); tratamento da dependência.</p></div>
+        <div class="row"><div class="lab">Antagonistas</div><p><b>Naloxona</b> — reversão aguda da <b>overdose</b> (curta duração). <b>Naltrexona</b> — dependência de álcool/opioide.</p></div>
+        <div class="row"><div class="lab">Periférico</div><p><b>Loperamida</b> — não cruza a BHE → antidiarreico sem efeito central.</p></div>
+        <div class="res"><div class="lab">Interações</div><p>Naloxona/naltrexona desencadeiam <b>abstinência</b> em dependentes; buprenorfina pode deslocar agonista pleno.</p></div>
+      </article>
+
+      <div class="note"><b>Tríade da intoxicação opioide:</b> <b>rebaixamento + depressão respiratória + miose puntiforme</b> → antídoto <b>naloxona</b>. A <b>constipação</b> é o único efeito sem tolerância — sempre prescrever laxante junto. Combinação <b>opioide + benzodiazepínico</b> é a mais letal.</div>
+    </div>
+  </section>
+
+  <footer>
+    Material de estudo para residência multiprofissional em farmácia · farmacologia do sistema nervoso central. Revisão didática e resumida — doses, ajustes e condutas devem seguir a referência clínica, a bula e os protocolos vigentes. Vários desses fármacos são controlados pela Portaria SVS/MS nº 344/98.
+  </footer>
+
+</div>
+</body>
+</html>

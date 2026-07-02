@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Interações Medicamentosas & CYP450 — Mapa Mental</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#f4f5f7;--ink:#161b22;--muted:#5c6672;--line:#dde1e6;--card:#ffffff;
+    --cC:#475569;--cC-soft:#e8ebef;   /* conceitos */
+    --cK:#2563b8;--cK-soft:#e4edf9;   /* farmacocinética */
+    --cI:#c0392b;--cI-soft:#fbe7e3;   /* inibidores */
+    --cN:#c87a16;--cN-soft:#fbeede;   /* indutores */
+    --cD:#7c4bc4;--cD-soft:#efe8f9;   /* farmacodinâmica */
+    --cF:#3f8a3f;--cF-soft:#e6f3e6;   /* alimentares */
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:radial-gradient(circle at 12% -5%,#fff 0%,transparent 40%),var(--bg);color:var(--ink);font-family:"Inter",system-ui,sans-serif;line-height:1.5;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:1180px;margin:0 auto;padding:40px 22px 90px;}
+
+  /* HEADER */
+  .head{position:relative;border-radius:22px;padding:38px 36px 34px;background:linear-gradient(135deg,#1a1426 0%,#2a1d3d 45%,#3a1f2e 100%);color:#efe9f2;overflow:hidden;}
+  .head::after{content:"CYP";position:absolute;right:26px;top:2px;font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:120px;line-height:1;color:#ffffff0d;letter-spacing:-.04em;pointer-events:none;}
+  .kicker{font-family:"JetBrains Mono",monospace;font-size:11.5px;letter-spacing:.26em;text-transform:uppercase;color:#c79be0;margin:0 0 12px;}
+  .head h1{font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:clamp(27px,5vw,44px);line-height:1.05;margin:0 0 14px;letter-spacing:-.01em;}
+  .head p{margin:0;max-width:670px;color:#d8cce4;font-size:15px;}
+
+  /* NAV */
+  .legend{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:10px;margin:26px 0 8px;}
+  .legend a{display:flex;align-items:center;gap:10px;text-decoration:none;color:var(--ink);background:var(--card);border:1px solid var(--line);border-radius:12px;padding:11px 14px;font-size:13px;font-weight:600;transition:transform .15s,box-shadow .15s;}
+  .legend a:hover{transform:translateY(-2px);box-shadow:0 8px 20px #1a263611;}
+  .dot{width:13px;height:13px;border-radius:50%;flex:0 0 auto;}
+  .legend small{display:block;font-weight:400;color:var(--muted);font-size:11px;}
+
+  /* SIGNATURE: inibidor x indutor */
+  .compare{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:26px;}
+  .side{border-radius:18px;padding:22px 22px 20px;color:#fff;position:relative;overflow:hidden;}
+  .side.inh{background:linear-gradient(150deg,#a5291c,#c0392b);}
+  .side.ind{background:linear-gradient(150deg,#a4620a,#c87a16);}
+  .side .arrow{font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:54px;line-height:.9;opacity:.9;}
+  .side h3{font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:20px;margin:6px 0 4px;}
+  .side .flow{font-family:"JetBrains Mono",monospace;font-size:12px;letter-spacing:.02em;margin:10px 0;line-height:1.7;color:#fff;}
+  .side .flow b{background:#ffffff2e;padding:1px 7px;border-radius:6px;}
+  .side .meta{font-size:12.5px;color:#ffffffe0;margin:0;}
+  .side .meta b{color:#fff;}
+  .side .clock{display:inline-block;margin-top:10px;font-family:"JetBrains Mono",monospace;font-size:11px;background:#0000002e;padding:4px 10px;border-radius:999px;}
+
+  /* SEÇÃO */
+  .branch{margin-top:46px;}
+  .branch-head{display:flex;align-items:center;gap:16px;padding:14px 20px;border-radius:14px;color:#fff;box-shadow:0 10px 26px -12px var(--accent);}
+  .branch-num{font-family:"Space Grotesk",sans-serif;font-weight:700;font-size:22px;width:46px;height:46px;flex:0 0 auto;display:grid;place-items:center;border-radius:12px;background:#ffffff26;}
+  .branch-head h2{margin:0;font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:clamp(17px,3vw,23px);letter-spacing:-.01em;}
+  .branch-head span{display:block;font-size:12.5px;font-weight:400;opacity:.92;}
+
+  /* CARDS */
+  .grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(330px,1fr));gap:16px;margin-top:18px;}
+  .card{background:var(--card);border:1px solid var(--line);border-top:4px solid var(--accent);border-radius:14px;padding:18px 18px 16px;display:flex;flex-direction:column;transition:transform .15s,box-shadow .15s;}
+  .card:hover{transform:translateY(-3px);box-shadow:0 14px 30px -16px #1a263633;}
+  .card.wide{grid-column:1/-1;}
+  .card-top{display:flex;justify-content:space-between;align-items:flex-start;gap:10px;margin-bottom:2px;}
+  .card h3{margin:0;font-family:"Space Grotesk",sans-serif;font-weight:600;font-size:16.5px;letter-spacing:-.01em;}
+  .card h3 small{font-weight:400;color:var(--muted);font-size:12px;}
+  .tag{flex:0 0 auto;font-family:"JetBrains Mono",monospace;font-size:9.5px;font-weight:600;text-transform:uppercase;letter-spacing:.05em;padding:4px 8px;border-radius:999px;white-space:nowrap;background:var(--accent-soft);color:var(--accent);}
+  .row{margin-top:11px;}
+  .row .lab{font-family:"JetBrains Mono",monospace;font-size:10px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--accent);display:flex;align-items:center;gap:6px;margin-bottom:4px;}
+  .row .lab::before{content:"";width:6px;height:6px;border-radius:2px;background:var(--accent);}
+  .row p{margin:0;font-size:13.2px;color:#2b333b;}
+  .row p b{color:var(--ink);font-weight:600;}
+  .drugs{display:flex;flex-wrap:wrap;gap:6px;margin-top:5px;}
+  .drug{font-size:11.5px;font-weight:500;background:var(--accent-soft);color:var(--accent);padding:3px 9px;border-radius:7px;}
+  .res{margin-top:11px;background:#fbf6f1;border:1px dashed #e7d9c9;border-radius:10px;padding:9px 11px;}
+  .res .lab{color:#b06a1a;}.res .lab::before{background:#b06a1a;}
+  .res p{font-size:12.6px;color:#5b4a36;}.res p b{color:#7a4d10;}
+
+  .bC{--accent:var(--cC);--accent-soft:var(--cC-soft);}
+  .bK{--accent:var(--cK);--accent-soft:var(--cK-soft);}
+  .bI{--accent:var(--cI);--accent-soft:var(--cI-soft);}
+  .bN{--accent:var(--cN);--accent-soft:var(--cN-soft);}
+  .bD{--accent:var(--cD);--accent-soft:var(--cD-soft);}
+  .bF{--accent:var(--cF);--accent-soft:var(--cF-soft);}
+  .bC .branch-head{background:linear-gradient(120deg,#374253,var(--cC));}
+  .bK .branch-head{background:linear-gradient(120deg,#1c4d92,var(--cK));}
+  .bI .branch-head{background:linear-gradient(120deg,#8f2519,var(--cI));}
+  .bN .branch-head{background:linear-gradient(120deg,#a4620a,var(--cN));}
+  .bD .branch-head{background:linear-gradient(120deg,#5f37a0,var(--cD));}
+  .bF .branch-head{background:linear-gradient(120deg,#2c6b2c,var(--cF));}
+
+  .note{grid-column:1/-1;background:var(--accent-soft);border-radius:12px;padding:12px 16px;font-size:12.8px;color:#33403a;}
+  .note b{color:var(--accent);}
+
+  /* tabela CYP */
+  .recap{grid-column:1/-1;overflow-x:auto;border:1px solid var(--line);border-radius:14px;background:var(--card);}
+  table{border-collapse:collapse;width:100%;font-size:12.4px;min-width:680px;}
+  th,td{text-align:left;padding:10px 13px;border-bottom:1px solid var(--line);vertical-align:top;}
+  th{font-family:"JetBrains Mono",monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:#56606b;background:#f7f8fa;}
+  td b{color:var(--ink);}
+  .enz{font-family:"JetBrains Mono",monospace;font-weight:700;color:#7c4bc4;}
+
+  footer{margin-top:60px;padding-top:22px;border-top:1px solid var(--line);font-size:12px;color:var(--muted);}
+  @media (max-width:620px){.compare{grid-template-columns:1fr;}}
+  @media (max-width:560px){.wrap{padding:24px 14px 70px;}.head{padding:28px 22px;}.grid{grid-template-columns:1fr;}}
+  @media print{body{background:#fff;}.card:hover,.legend a:hover{transform:none;box-shadow:none;}.card,.branch,.recap,.compare{break-inside:avoid;}.head::after{display:none;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="head">
+    <p class="kicker">Farmacologia clínica · revisão para residência</p>
+    <h1>Interações medicamentosas<br>& o sistema CYP450</h1>
+    <p>Mapa em cards das principais interações <b>farmacocinéticas</b>, <b>farmacodinâmicas</b> e <b>alimentares</b>, com foco no que mais cai em prova: os <b>inibidores</b> e <b>indutores</b> do citocromo P450 e suas consequências clínicas.</p>
+  </header>
+
+  <nav class="legend">
+    <a href="#conc"><span class="dot" style="background:var(--cC)"></span><span>Conceitos-chave<small>PK × PD · vítimas</small></span></a>
+    <a href="#pk"><span class="dot" style="background:var(--cK)"></span><span>Farmacocinéticas<small>ADME</small></span></a>
+    <a href="#inh"><span class="dot" style="background:var(--cI)"></span><span>Inibidores CYP<small>acúmulo → toxicidade</small></span></a>
+    <a href="#ind"><span class="dot" style="background:var(--cN)"></span><span>Indutores CYP<small>depuração → falha</small></span></a>
+    <a href="#pd"><span class="dot" style="background:var(--cD)"></span><span>Farmacodinâmicas<small>sinergia · antagonismo</small></span></a>
+    <a href="#food"><span class="dot" style="background:var(--cF)"></span><span>Alimentares<small>toranja · tiramina · vit. K</small></span></a>
+  </nav>
+
+  <!-- SIGNATURE -->
+  <div class="compare">
+    <div class="side inh">
+      <div class="arrow">↑</div>
+      <h3>Inibidor enzimático</h3>
+      <p class="flow"><b>freia o CYP</b> → o substrato <b>não é metabolizado</b> → <b>acumula no sangue</b></p>
+      <p class="meta">Consequência: <b>aumento do efeito e toxicidade</b> do substrato. Ex.: claritromicina + sinvastatina → rabdomiólise.</p>
+      <span class="clock">⏱ início RÁPIDO (horas–dias)</span>
+    </div>
+    <div class="side ind">
+      <div class="arrow">↓</div>
+      <h3>Indutor enzimático</h3>
+      <p class="flow"><b>acelera o CYP</b> → o substrato é <b>metabolizado mais rápido</b> → <b>cai no sangue</b></p>
+      <p class="meta">Consequência: <b>perda de efeito / falha terapêutica</b>. Ex.: rifampicina + contraceptivo → falha contraceptiva.</p>
+      <span class="clock">⏱ início LENTO (1–2 semanas)</span>
+    </div>
+  </div>
+
+  <!-- CONCEITOS -->
+  <section class="branch bC" id="conc">
+    <div class="branch-head"><div class="branch-num">①</div><h2>Conceitos-chave<span>Antes das listas: a lógica que organiza tudo.</span></h2></div>
+    <div class="grid">
+
+      <article class="card">
+        <div class="card-top"><h3>Farmacocinética × Farmacodinâmica</h3><span class="tag">PK vs PD</span></div>
+        <div class="row"><div class="lab">Farmacocinética (PK)</div><p>"O que o <b>corpo faz com o fármaco</b>" — absorção, distribuição, metabolismo e excreção (<b>ADME</b>). A interação muda a <b>concentração</b>.</p></div>
+        <div class="row"><div class="lab">Farmacodinâmica (PD)</div><p>"O que o <b>fármaco faz com o corpo</b>" — receptor e efeito. A interação muda a <b>resposta</b> sem mexer na concentração (sinergia/antagonismo).</p></div>
+        <div class="res"><div class="lab">Dica de prova</div><p>Se a interação altera <b>nível sérico</b> → PK. Se altera <b>efeito</b> com nível igual → PD.</p></div>
+      </article>
+
+      <article class="card">
+        <div class="card-top"><h3>Vítima × Perpetrador</h3><span class="tag">papéis</span></div>
+        <div class="row"><div class="lab">Perpetrador</div><p>O que <b>causa</b> a interação — o inibidor, o indutor ou o quelante.</p></div>
+        <div class="row"><div class="lab">Vítima (substrato)</div><p>O que <b>sofre</b> a interação. O risco é maior nos fármacos de <b>janela terapêutica estreita</b>.</p></div>
+        <div class="row"><div class="lab">Vítimas clássicas</div><div class="drugs"><span class="drug">Varfarina</span><span class="drug">Digoxina</span><span class="drug">Fenitoína</span><span class="drug">Lítio</span><span class="drug">Teofilina</span><span class="drug">Ciclosporina/tacrolimo</span><span class="drug">Contraceptivos</span></div></div>
+        <div class="res"><div class="lab">Dica de prova</div><p>Viu uma dessas "vítimas" na questão? A interação quase sempre é <b>clinicamente relevante</b>.</p></div>
+      </article>
+
+      <article class="card">
+        <div class="card-top"><h3>Pró-fármacos: a lógica invertida</h3><span class="tag">pegadinha ⭐</span></div>
+        <div class="row"><div class="lab">O conceito</div><p>Pró-fármaco precisa ser <b>ativado</b> por uma enzima. Aqui o efeito do inibidor/indutor <b>inverte</b>.</p></div>
+        <div class="row"><div class="lab">Inibidor</div><p>Bloqueia a ativação → <b>menos fármaco ativo</b> → <b>perda de efeito</b> (o oposto do habitual).</p></div>
+        <div class="row"><div class="lab">Exemplos</div><div class="drugs"><span class="drug">Codeína → morfina (2D6)</span><span class="drug">Tramadol (2D6)</span><span class="drug">Clopidogrel (2C19)</span><span class="drug">Tamoxifeno (2D6)</span><span class="drug">Losartana (2C9)</span></div></div>
+        <div class="res"><div class="lab">Dica de prova ⭐</div><p>Fluoxetina/paroxetina (inib. 2D6) <b>reduzem</b> a analgesia da codeína e a eficácia do tamoxifeno. Omeprazol (inib. 2C19) <b>reduz</b> o clopidogrel.</p></div>
+      </article>
+
+      <div class="note"><b>Espinha do raciocínio:</b> identifique o <b>papel</b> (vítima/perpetrador), o <b>mecanismo</b> (PK ou PD) e, se PK-metabólica, se é <b>inibição</b> (acúmulo, rápido) ou <b>indução</b> (falha, lento). Lembre da exceção dos <b>pró-fármacos</b>.</div>
+    </div>
+  </section>
+
+  <!-- FARMACOCINÉTICAS -->
+  <section class="branch bK" id="pk">
+    <div class="branch-head"><div class="branch-num">②</div><h2>Interações farmacocinéticas (ADME)<span>Mudam a concentração do fármaco em cada fase do trajeto pelo corpo.</span></h2></div>
+    <div class="grid">
+
+      <article class="card">
+        <div class="card-top"><h3>Absorção</h3><span class="tag">A · trato GI</span></div>
+        <div class="row"><div class="lab">Quelação (cátions)</div><p><b>Tetraciclinas, quinolonas, bifosfonatos e levotiroxina</b> formam complexos com <b>Ca²⁺, Mg²⁺, Al³⁺, Fe²⁺</b> → ↓ absorção. Separar 2–4 h.</p></div>
+        <div class="row"><div class="lab">pH gástrico</div><p>IBPs/antiácidos elevam o pH e ↓ absorção de <b>cetoconazol, atazanavir, ferro</b>.</p></div>
+        <div class="row"><div class="lab">Sequestro / motilidade</div><p><b>Colestiramina</b> sequestra fármacos; procinéticos alteram velocidade de absorção.</p></div>
+        <div class="res"><div class="lab">Dica de prova</div><p>"Não tome o antibiótico com leite/antiácido" = <b>quelação</b> de tetraciclina/quinolona.</p></div>
+      </article>
+
+      <article class="card">
+        <div class="card-top"><h3>Distribuição</h3><span class="tag">D · proteínas</span></div>
+        <div class="row"><div class="lab">Deslocamento proteico</div><p>Fármacos muito ligados à albumina competem pelo sítio; o deslocado ↑ sua <b>fração livre</b> (ativa).</p></div>
+        <div class="row"><div class="lab">Exemplos clássicos</div><div class="drugs"><span class="drug">Varfarina + AINE/sulfa</span><span class="drug">Fenitoína + valproato</span></div></div>
+        <div class="res"><div class="lab">Dica de prova</div><p>Efeito costuma ser <b>transitório</b> isolado, mas <b>perigoso</b> quando soma com inibição metabólica (ex.: varfarina + sulfametoxazol).</p></div>
+      </article>
+
+      <article class="card">
+        <div class="card-top"><h3>Metabolismo</h3><span class="tag">M · CYP450</span></div>
+        <div class="row"><div class="lab">O grande capítulo</div><p>A maior parte das interações graves ocorre no <b>fígado, via CYP450</b> — detalhado nas duas próximas seções (inibidores e indutores).</p></div>
+        <div class="row"><div class="lab">Metabolismo de 1ª passagem</div><p>CYP3A4 e P-glicoproteína da <b>parede intestinal</b> explicam o efeito do <b>suco de toranja</b>.</p></div>
+        <div class="res"><div class="lab">Dica de prova</div><p>CYP3A4 metaboliza ~50% dos fármacos → é o foco das interações de metabolismo.</p></div>
+      </article>
+
+      <article class="card">
+        <div class="card-top"><h3>Excreção</h3><span class="tag">E · rim</span></div>
+        <div class="row"><div class="lab">Competição tubular</div><p><b>Probenecida</b> ↓ secreção de penicilina (↑ nível — uso terapêutico). <b>AINEs/probenecida</b> ↑ toxicidade do <b>metotrexato</b>.</p></div>
+        <div class="row"><div class="lab">Lítio</div><p><b>Diuréticos tiazídicos, AINEs e IECA/BRA</b> ↓ excreção de lítio → <b>intoxicação</b>.</p></div>
+        <div class="row"><div class="lab">pH urinário</div><p>Alcalinizar a urina acelera a eliminação de ácidos fracos (ex.: salicilatos).</p></div>
+        <div class="res"><div class="lab">Dica de prova</div><p><b>Lítio + AINE/tiazídico/IECA</b> é tríade clássica de intoxicação por redução da excreção renal.</p></div>
+      </article>
+
+      <div class="note"><b>P-glicoproteína (P-gp):</b> transportador de efluxo que anda junto do CYP3A4. <b>Digoxina</b> é o substrato-modelo: inibidores de P-gp (verapamil, amiodarona, claritromicina, quinidina) <b>elevam</b> a digoxina; indutores (rifampicina, erva-de-são-joão) a <b>reduzem</b>.</div>
+    </div>
+  </section>
+
+  <!-- INIBIDORES -->
+  <section class="branch bI" id="inh">
+    <div class="branch-head"><div class="branch-num">③</div><h2>Inibidores do CYP450<span>Freiam a enzima → substrato acumula → toxicidade. Efeito rápido.</span></h2></div>
+    <div class="grid">
+
+      <article class="card">
+        <div class="card-top"><h3>Os grandes inibidores</h3><span class="tag">memorizar ⭐</span></div>
+        <div class="row"><div class="lab">Antifúngicos azólicos</div><p><b>Cetoconazol, itraconazol, fluconazol, voriconazol</b> — inibidores potentes de 3A4.</p></div>
+        <div class="row"><div class="lab">Macrolídeos</div><p><b>Claritromicina e eritromicina</b> (a <b>azitromicina não</b> inibe — pegadinha).</p></div>
+        <div class="row"><div class="lab">Outros campeões</div><div class="drugs"><span class="drug">Ritonavir</span><span class="drug">Amiodarona</span><span class="drug">Verapamil/diltiazem</span><span class="drug">Cimetidina</span><span class="drug">Metronidazol</span><span class="drug">Isoniazida</span><span class="drug">ISRS (fluox/parox/fluvox)</span><span class="drug">Ciprofloxacino</span><span class="drug">Suco de toranja</span></div></div>
+        <div class="res"><div class="lab">Mnemônico</div><p>"<b>SICKFACES.COM</b>": Sulfas/valproato, Isoniazida, Cimetidina, Cetoconazol, Fluconazol/Fluoxetina, Amiodarona, Cloranfenicol, Eritromicina, Sulfa, Cipro, Omeprazol, Metronidazol + <b>toranja</b>.</p></div>
+      </article>
+
+      <article class="card">
+        <div class="card-top"><h3>Consequências clássicas</h3><span class="tag">acúmulo → dano</span></div>
+        <div class="row"><div class="lab">Rabdomiólise</div><p><b>Sinvastatina/atorvastatina</b> + claritromicina, azólico ou toranja → miopatia.</p></div>
+        <div class="row"><div class="lab">Sangramento</div><p><b>Varfarina</b> + metronidazol, sulfametoxazol, fluconazol ou amiodarona → ↑ INR.</p></div>
+        <div class="row"><div class="lab">Toxicidade de imunossupressor</div><p><b>Ciclosporina/tacrolimo</b> + azólico/macrolídeo → nefrotoxicidade.</p></div>
+        <div class="res"><div class="lab">Dica de prova</div><p>O efeito do inibidor é <b>rápido</b> (competitivo) — pode aparecer já na 1ª dose.</p></div>
+      </article>
+
+      <article class="card">
+        <div class="card-top"><h3>Por enzima (inibidor-chave)</h3><span class="tag">fino</span></div>
+        <div class="row"><div class="lab">CYP3A4</div><p>Azólicos, macrolídeos, ritonavir, toranja, verapamil/diltiazem, amiodarona.</p></div>
+        <div class="row"><div class="lab">CYP2D6</div><p>Fluoxetina, paroxetina, bupropiona, quinidina (afeta pró-fármacos!).</p></div>
+        <div class="row"><div class="lab">CYP2C9 / 2C19 / 1A2</div><p>2C9: amiodarona, fluconazol, metronidazol · 2C19: omeprazol, fluvoxamina · 1A2: ciprofloxacino, fluvoxamina.</p></div>
+        <div class="res"><div class="lab">Dica de prova</div><p><b>Ciprofloxacino</b> (1A2) + <b>teofilina/cafeína</b> → toxicidade (tremor, convulsão, arritmia).</p></div>
+      </article>
+
+      <div class="note"><b>Resumo mental:</b> inibidor = "engarrafamento" no metabolismo. O substrato <b>sobe</b>, o efeito (e a toxicidade) <b>sobe</b>, e isso acontece <b>logo</b>. Pense sempre na <b>vítima de janela estreita</b>.</div>
+    </div>
+  </section>
+
+  <!-- INDUTORES -->
+  <section class="branch bN" id="ind">
+    <div class="branch-head"><div class="branch-num">④</div><h2>Indutores do CYP450<span>Aceleram a enzima → substrato cai → falha terapêutica. Efeito lento.</span></h2></div>
+    <div class="grid">
+
+      <article class="card">
+        <div class="card-top"><h3>Os grandes indutores</h3><span class="tag">memorizar ⭐</span></div>
+        <div class="row"><div class="lab">O "rei"</div><p><b>Rifampicina</b> — indutor potente e de amplo espectro (3A4, 2C9, 2C19, P-gp).</p></div>
+        <div class="row"><div class="lab">Anticonvulsivantes clássicos</div><p><b>Carbamazepina, fenitoína, fenobarbital</b> (a carbamazepina ainda <b>autoinduz</b> o próprio metabolismo).</p></div>
+        <div class="row"><div class="lab">Outros</div><div class="drugs"><span class="drug">Erva-de-são-joão</span><span class="drug">Efavirenz/nevirapina</span><span class="drug">Griseofulvina</span><span class="drug">Etanol crônico</span><span class="drug">Tabagismo (1A2)</span></div></div>
+        <div class="res"><div class="lab">Mnemônico</div><p>"<b>RIF-CARB-FENI-FENO-ESJ</b>": Rifampicina, Carbamazepina, Fenitoína, Fenobarbital, Erva-de-São-João. O <b>tabaco</b> induz seletivamente o <b>1A2</b>.</p></div>
+      </article>
+
+      <article class="card">
+        <div class="card-top"><h3>Consequências clássicas</h3><span class="tag">falha terapêutica</span></div>
+        <div class="row"><div class="lab">Falha contraceptiva</div><p><b>Rifampicina / carbamazepina / erva-de-são-joão</b> + <b>contraceptivo oral</b> → gravidez não planejada.</p></div>
+        <div class="row"><div class="lab">Subdose de anticoagulante</div><p>Indutor + <b>varfarina</b> → ↓ INR → risco trombótico.</p></div>
+        <div class="row"><div class="lab">Rejeição de transplante</div><p>Indutor + <b>ciclosporina/tacrolimo</b> → nível subterapêutico → rejeição.</p></div>
+        <div class="res"><div class="lab">Dica de prova ⭐</div><p>Tabagista metaboliza <b>teofilina, clozapina e olanzapina</b> mais rápido (1A2). Ao <b>parar de fumar</b>, o nível <b>sobe</b> → ajuste de dose.</p></div>
+      </article>
+
+      <article class="card">
+        <div class="card-top"><h3>Tempo: o detalhe que cai</h3><span class="tag">cinética temporal</span></div>
+        <div class="row"><div class="lab">Início lento</div><p>A indução exige <b>síntese de nova enzima</b> → efeito pleno em <b>1–2 semanas</b>.</p></div>
+        <div class="row"><div class="lab">Reversão lenta</div><p>Ao suspender o indutor, a enzima leva <b>dias a semanas</b> para normalizar → risco de <b>toxicidade tardia</b> do substrato.</p></div>
+        <div class="res"><div class="lab">Contraste com o inibidor</div><p><b>Inibição = rápida</b> (competitiva) · <b>Indução = lenta</b> (transcricional). Essa diferença é questão garantida.</p></div>
+      </article>
+
+      <div class="note"><b>Álcool — duas caras:</b> uso <b>crônico induz</b> o CYP2E1 (↑ ativação de paracetamol a metabólito hepatotóxico); uso <b>agudo inibe</b> o metabolismo de outros fármacos. Por isso o alcoolista crônico tem maior risco de <b>hepatotoxicidade por paracetamol</b>.</div>
+    </div>
+  </section>
+
+  <!-- TABELA CYP -->
+  <section class="branch bD">
+    <div class="branch-head"><div class="branch-num">⊞</div><h2>Tabela-síntese do CYP450<span>Substrato (vítima) × inibidor × indutor por isoenzima.</span></h2></div>
+    <div class="grid">
+      <div class="recap">
+        <table>
+          <thead><tr><th>Isoenzima</th><th>Substratos (vítimas)</th><th>Inibidores</th><th>Indutores</th></tr></thead>
+          <tbody>
+            <tr><td><span class="enz">CYP3A4</span><br><small>~50% dos fármacos</small></td><td>Sinvastatina, anlodipino, ciclosporina/tacrolimo, midazolam, contraceptivos, varfarina</td><td>Azólicos, claritromicina, ritonavir, <b>toranja</b>, verapamil/diltiazem, amiodarona</td><td>Rifampicina, carbamazepina, fenitoína, fenobarbital, erva-de-são-joão, efavirenz</td></tr>
+            <tr><td><span class="enz">CYP2D6</span><br><small>sem indução típica</small></td><td>Metoprolol, ADT, <b>codeína/tramadol*</b>, <b>tamoxifeno*</b>, antipsicóticos</td><td>Fluoxetina, paroxetina, bupropiona, quinidina, duloxetina</td><td>—</td></tr>
+            <tr><td><span class="enz">CYP2C9</span></td><td>Varfarina (S), fenitoína, AINEs, sulfonilureias, <b>losartana*</b></td><td>Amiodarona, fluconazol, metronidazol, sulfametoxazol</td><td>Rifampicina, carbamazepina</td></tr>
+            <tr><td><span class="enz">CYP2C19</span></td><td><b>Clopidogrel*</b>, omeprazol, diazepam, citalopram</td><td>Omeprazol, fluvoxamina, fluconazol</td><td>Rifampicina</td></tr>
+            <tr><td><span class="enz">CYP1A2</span></td><td>Teofilina, cafeína, clozapina, olanzapina</td><td>Ciprofloxacino, fluvoxamina</td><td><b>Tabagismo</b>, omeprazol</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div class="note"><b>*pró-fármacos:</b> codeína, tramadol, tamoxifeno, losartana e clopidogrel dependem da enzima para virar forma ativa — nesses, o <b>inibidor reduz</b> o efeito e o <b>indutor pode aumentar</b>.</div>
+    </div>
+  </section>
+
+  <!-- FARMACODINÂMICAS -->
+  <section class="branch bD" id="pd">
+    <div class="branch-head"><div class="branch-num">⑤</div><h2>Interações farmacodinâmicas<span>Mesmo nível sérico, efeito diferente: somam-se (sinergia) ou se anulam (antagonismo).</span></h2></div>
+    <div class="grid">
+
+      <article class="card">
+        <div class="card-top"><h3>Sinergia / aditividade</h3><span class="tag">efeitos somados</span></div>
+        <div class="row"><div class="lab">Depressão do SNC</div><p><b>Benzodiazepínicos + opioides + álcool</b> → sedação e <b>depressão respiratória</b>.</p></div>
+        <div class="row"><div class="lab">Síndrome serotoninérgica</div><p><b>ISRS + IMAO + tramadol + linezolida + triptanos</b> → agitação, hipertermia, clônus.</p></div>
+        <div class="row"><div class="lab">Sangramento</div><p><b>Varfarina/DOAC + AINE + antiagregante</b> → hemorragia.</p></div>
+        <div class="res"><div class="lab">Dica de prova</div><p><b>Linezolida</b> tem ação IMAO fraca → cuidado com serotoninérgicos.</p></div>
+      </article>
+
+      <article class="card">
+        <div class="card-top"><h3>Toxicidades que se somam</h3><span class="tag">mesmo órgão-alvo</span></div>
+        <div class="row"><div class="lab">Prolongamento do QT</div><p><b>Macrolídeos + quinolonas + antipsicóticos + ondansetrona + amiodarona</b> → torsades.</p></div>
+        <div class="row"><div class="lab">Nefrotoxicidade — "tríplice"</div><p><b>IECA/BRA + diurético + AINE</b> ("triple whammy") → IRA. Some-se aminoglicosídeo + vancomicina + contraste.</p></div>
+        <div class="row"><div class="lab">Hipercalemia</div><p><b>IECA/BRA + espironolactona + KCl</b> (ou + heparina/AINE) → ↑ K⁺.</p></div>
+        <div class="res"><div class="lab">Dica de prova</div><p>"Triple whammy" renal é citação frequente: <b>IECA + diurético + AINE</b>.</p></div>
+      </article>
+
+      <article class="card">
+        <div class="card-top"><h3>Antagonismo</h3><span class="tag">efeitos opostos</span></div>
+        <div class="row"><div class="lab">Antídotos diretos</div><p><b>Vitamina K</b> × varfarina · <b>naloxona</b> × opioide · <b>flumazenil</b> × benzodiazepínico.</p></div>
+        <div class="row"><div class="lab">Antagonismo fisiológico</div><p><b>Betabloqueador</b> × broncodilatador β₂ (piora asma) · <b>AINE</b> ↓ efeito anti-hipertensivo de IECA/diurético.</p></div>
+        <div class="res"><div class="lab">Dica de prova</div><p>AINE reduz a eficácia de <b>anti-hipertensivos e diuréticos</b> (retém sódio + inibe prostaglandina renal).</p></div>
+      </article>
+
+      <div class="note"><b>Como reconhecer PD:</b> não há mudança de concentração — os fármacos atuam na <b>mesma via/órgão</b> reforçando (sinergia) ou cancelando (antagonismo) o efeito. Os campeões de prova são <b>SNC, serotonina, QT, rim e potássio</b>.</div>
+    </div>
+  </section>
+
+  <!-- ALIMENTARES -->
+  <section class="branch bF" id="food">
+    <div class="branch-head"><div class="branch-num">⑥</div><h2>Interações alimentares<span>Comida e bebida como "perpetradores" — clássicos de banca.</span></h2></div>
+    <div class="grid">
+
+      <article class="card">
+        <div class="card-top"><h3>Suco de toranja (grapefruit)</h3><span class="tag">inibe 3A4 + P-gp</span></div>
+        <div class="row"><div class="lab">Mecanismo</div><p>Inibe <b>irreversivelmente</b> o CYP3A4 da <b>parede intestinal</b> → ↑ biodisponibilidade do substrato.</p></div>
+        <div class="row"><div class="lab">Vítimas</div><div class="drugs"><span class="drug">Sinvastatina/atorvastatina</span><span class="drug">Anlodipino/nifedipino</span><span class="drug">Ciclosporina</span><span class="drug">Midazolam</span></div></div>
+        <div class="res"><div class="lab">Dica de prova ⭐</div><p>Efeito dura <b>até ~72 h</b> (não basta "tomar em horário diferente"). Pravastatina é menos afetada.</p></div>
+      </article>
+
+      <article class="card">
+        <div class="card-top"><h3>Tiramina + IMAO</h3><span class="tag">crise hipertensiva</span></div>
+        <div class="row"><div class="lab">Mecanismo</div><p>IMAO impede a degradação da <b>tiramina</b> dos alimentos → liberação maciça de noradrenalina.</p></div>
+        <div class="row"><div class="lab">Alimentos-gatilho</div><div class="drugs"><span class="drug">Queijos curados</span><span class="drug">Vinho tinto</span><span class="drug">Embutidos</span><span class="drug">Chucrute/fermentados</span></div></div>
+        <div class="res"><div class="lab">Dica de prova</div><p>Conhecida como <b>"reação do queijo"</b> → cefaleia, crise hipertensiva, risco de AVC.</p></div>
+      </article>
+
+      <article class="card">
+        <div class="card-top"><h3>Vitamina K + varfarina</h3><span class="tag">antagonismo</span></div>
+        <div class="row"><div class="lab">Mecanismo</div><p>Folhosos verdes ricos em <b>vitamina K</b> antagonizam a varfarina → <b>↓ INR</b>.</p></div>
+        <div class="row"><div class="lab">Alimentos</div><div class="drugs"><span class="drug">Couve</span><span class="drug">Espinafre</span><span class="drug">Brócolis</span><span class="drug">Alface</span></div></div>
+        <div class="res"><div class="lab">Dica de prova</div><p>A orientação é <b>consistência</b>, não exclusão: manter a ingestão estável de verde.</p></div>
+      </article>
+
+      <article class="card">
+        <div class="card-top"><h3>Cátions e jejum</h3><span class="tag">quelação / absorção</span></div>
+        <div class="row"><div class="lab">Laticínios/minerais</div><p><b>Leite, cálcio, ferro</b> quelam <b>tetraciclinas, quinolonas, bifosfonatos, levotiroxina</b> → ↓ absorção.</p></div>
+        <div class="row"><div class="lab">Jejum obrigatório</div><p><b>Alendronato</b> e <b>levotiroxina</b>: em jejum, com água, longe do café da manhã.</p></div>
+        <div class="res"><div class="lab">Dica de prova</div><p>Separar fármaco e laticínio/cátion por <b>2–4 horas</b>.</p></div>
+      </article>
+
+      <article class="card">
+        <div class="card-top"><h3>Álcool agudo</h3><span class="tag">efeito dissulfiram</span></div>
+        <div class="row"><div class="lab">Mecanismo</div><p>Inibe a aldeído-desidrogenase → acúmulo de <b>acetaldeído</b> → rubor, náusea, taquicardia.</p></div>
+        <div class="row"><div class="lab">Fármacos</div><div class="drugs"><span class="drug">Metronidazol</span><span class="drug">Cefalosporinas (cefamandol)</span><span class="drug">Tinidazol</span></div></div>
+        <div class="res"><div class="lab">Dica de prova</div><p>Orientar evitar álcool <b>durante e até 72 h após</b> o metronidazol.</p></div>
+      </article>
+
+      <article class="card">
+        <div class="card-top"><h3>Potássio e cafeína</h3><span class="tag">diversos</span></div>
+        <div class="row"><div class="lab">Alimentos ricos em K⁺</div><p><b>Banana, laranja, água de coco</b> + IECA/BRA/poupador de potássio → risco de <b>hipercalemia</b>.</p></div>
+        <div class="row"><div class="lab">Cafeína</div><p>Substrato do 1A2: <b>ciprofloxacino/fluvoxamina</b> ↑ cafeína (insônia, palpitação).</p></div>
+        <div class="res"><div class="lab">Dica de prova</div><p>Toranja ≠ outras frutas cítricas: a <b>laranja comum</b> não inibe o 3A4 de forma relevante.</p></div>
+      </article>
+
+      <div class="note"><b>Os 4 nomes que não podem faltar:</b> <b>toranja</b> (inibe 3A4 → estatina/anlodipino), <b>tiramina</b> (IMAO → crise hipertensiva), <b>vitamina K</b> (antagoniza varfarina) e <b>cátions/laticínios</b> (quelam tetraciclina/quinolona). Some o <b>álcool</b> com metronidazol.</div>
+    </div>
+  </section>
+
+  <footer>
+    Material de estudo para residência multiprofissional em farmácia · interações medicamentosas e CYP450. Conteúdo de revisão didática — a conduta de manejo (suspender, ajustar dose, espaçar, monitorar) deve seguir a referência clínica, a bula e o protocolo institucional vigentes.
+  </footer>
+
+</div>
+</body>
+</html>
