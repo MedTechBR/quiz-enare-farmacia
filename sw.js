@@ -5,7 +5,7 @@
    - Estáticos (ícones/manifest): cache-first.
    Obs.: o progresso do usuário fica no localStorage, que NÃO é tocado por este cache. */
 
-const CACHE = "enare-farma-v1";
+const CACHE = "enare-farma-v2";
 const ASSETS = [
   "./",
   "./index.html",
@@ -13,7 +13,19 @@ const ASSETS = [
   "./icon-192.png",
   "./icon-512.png",
   "./icon-maskable-512.png",
-  "./apple-touch-icon.png"
+  "./apple-touch-icon.png",
+  "./estudos/historia-politicas-saude-reforma-sanitaria.html",
+  "./estudos/sus-principios-legislacao-controle-social.html",
+  "./estudos/redes-atencao-saude.html",
+  "./estudos/esf-pnab-atencao-basica.html",
+  "./estudos/politica-nacional-humanizacao-pnh.html",
+  "./estudos/politica-nacional-vigilancia-saude.html",
+  "./estudos/educacao-permanente-saude-pneps.html",
+  "./estudos/inclusao-grupos-vulnerabilizados-saude.html",
+  "./estudos/trabalho-equipe-multidisciplinar.html",
+  "./estudos/programa-nacional-seguranca-paciente.html",
+  "./estudos/nr32-seguranca-saude-trabalho-servicos-saude.html",
+  "./estudos/bioetica.html"
 ];
 
 self.addEventListener("install", (e) => {
@@ -38,15 +50,15 @@ self.addEventListener("fetch", (e) => {
     (req.headers.get("accept") || "").includes("text/html");
 
   if (isNav) {
-    // network-first para o HTML
+    // network-first para o HTML (app e guias de estudo), cada um sob a própria URL
     e.respondWith(
       fetch(req)
         .then((res) => {
           const copy = res.clone();
-          caches.open(CACHE).then((c) => c.put("./index.html", copy));
+          caches.open(CACHE).then((c) => c.put(req, copy));
           return res;
         })
-        .catch(() => caches.match("./index.html").then((r) => r || caches.match("./")))
+        .catch(() => caches.match(req).then((r) => r || caches.match("./index.html") || caches.match("./")))
     );
     return;
   }

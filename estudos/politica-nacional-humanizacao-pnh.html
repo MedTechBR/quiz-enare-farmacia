@@ -1,0 +1,267 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Política Nacional de Humanização (PNH) — Guia de revisão</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@500;600;700;800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#E7E1D2;--surface:#FBF8F0;--surface-2:#F3EEE1;
+    --ink:#143C42;--ink-soft:#4E5F5C;--vermilion:#D6492A;--ochre:#B98220;--green:#3C6E47;--blue:#2C5A74;
+    --line:rgba(20,60,66,.22);--line-strong:rgba(20,60,66,.55);
+    --font-display:'Anton',Impact,sans-serif;--font-head:'Archivo',system-ui,sans-serif;--font-body:'IBM Plex Sans',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+  body{margin:0;background:radial-gradient(circle at 100% -2%, rgba(214,73,42,.06), transparent 38%),var(--paper);
+    color:var(--ink);font-family:var(--font-body);line-height:1.55;padding:clamp(16px,3.5vw,44px) clamp(12px,4vw,40px) 80px}
+  .wrap{max-width:1080px;margin:0 auto}
+  .top-rule{height:6px;background:var(--ink)}
+  .kicker{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-family:var(--font-head);font-weight:700;text-transform:uppercase;letter-spacing:.15em;font-size:11px;color:var(--ink-soft);padding:9px 2px;border-bottom:1px solid var(--line)}
+  .kicker .dot{color:var(--vermilion)}
+  h1{font-family:var(--font-display);font-weight:400;line-height:.92;font-size:clamp(26px,5vw,56px);margin:16px 0 8px;text-transform:uppercase;letter-spacing:.5px}
+  h1 .accent{color:var(--vermilion)}
+  .dek{font-size:clamp(15px,2vw,17.5px);color:var(--ink-soft);max-width:68ch;border-top:3px double var(--line-strong);padding-top:12px}
+  .dek b{color:var(--ink);font-weight:600}
+  nav.toc{position:sticky;top:0;z-index:20;background:rgba(231,225,210,.94);backdrop-filter:blur(6px);margin:18px 0 8px;padding:10px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  nav.toc ul{list-style:none;display:flex;gap:7px;flex-wrap:wrap;margin:0;padding:0}
+  nav.toc a{font-family:var(--font-head);font-weight:600;font-size:12px;text-decoration:none;color:var(--ink);border:1.5px solid var(--line-strong);border-radius:2px;padding:5px 10px;transition:background .12s,color .12s}
+  nav.toc a:hover{background:var(--ink);color:var(--surface)}
+  section{margin:38px 0 0;scroll-margin-top:64px}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:14px;border-bottom:2px solid var(--ink);padding-bottom:8px}
+  .sec-num{font-family:var(--font-display);font-size:clamp(26px,4vw,40px);color:var(--vermilion);line-height:.8}
+  .sec-head h2{font-family:var(--font-head);font-weight:800;font-size:clamp(18px,3vw,25px);margin:0;letter-spacing:-.01em}
+  p{margin:0 0 12px}.lead{font-size:16px}
+  strong,b{color:var(--ink);font-weight:600}.hl{color:var(--vermilion);font-weight:600}
+  ul.clean{margin:0 0 12px;padding-left:18px}ul.clean li{margin:5px 0}
+  .box{background:var(--surface);border:1.5px solid var(--ink);border-radius:3px;box-shadow:4px 4px 0 var(--ink);padding:16px 18px;margin:14px 0}
+  .pillars{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));margin:14px 0}
+  .pillar{background:var(--surface);border:1.5px solid var(--ink);border-radius:3px;box-shadow:3px 3px 0 var(--ink);padding:13px 15px}
+  .pillar h4{font-family:var(--font-head);font-weight:700;margin:0 0 4px;font-size:14.5px;color:var(--vermilion)}
+  .pillar p{margin:0;font-size:12.5px;color:var(--ink-soft)}
+  .bizu{border:1.5px dashed var(--green);background:rgba(60,110,71,.06);border-radius:3px;padding:13px 16px;margin:14px 0}
+  .bizu .tag{font-family:var(--font-head);font-weight:700;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--green);display:block;margin-bottom:5px}
+  .bizu b{color:var(--green)}
+  .trap{border:1.5px solid var(--vermilion);background:rgba(214,73,42,.05);border-radius:3px;padding:13px 16px;margin:14px 0}
+  .trap .tag{font-family:var(--font-head);font-weight:700;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--vermilion);display:block;margin-bottom:5px}
+  .note{border:1.5px solid var(--blue);background:rgba(44,90,116,.06);border-radius:3px;padding:13px 16px;margin:14px 0}
+  .note .tag{font-family:var(--font-head);font-weight:700;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--blue);display:block;margin-bottom:5px}
+  .tbl{width:100%;border-collapse:collapse;margin:14px 0;font-size:12.5px;background:var(--surface)}
+  .tbl th,.tbl td{border:1px solid var(--line-strong);padding:8px 10px;text-align:left;vertical-align:top}
+  .tbl thead th{background:var(--ink);color:var(--surface);font-family:var(--font-head);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.03em}
+  .tbl tbody th{background:var(--surface-2);font-family:var(--font-head);font-weight:700;white-space:nowrap}
+  .tbl-scroll{overflow-x:auto}
+  .risco{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+  .rchip{font-family:var(--font-head);font-weight:700;font-size:11.5px;border-radius:2px;padding:6px 11px;color:#fff;border:1.5px solid var(--ink)}
+  .fc-grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));margin-top:14px}
+  .fc{background:var(--surface);border:1.5px solid var(--ink);border-radius:3px;box-shadow:4px 4px 0 var(--ink);padding:16px 17px;cursor:pointer;text-align:left;width:100%;font-family:var(--font-body);color:var(--ink);display:flex;flex-direction:column;gap:9px;transition:transform .12s,box-shadow .12s}
+  .fc:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--vermilion)}
+  .fc:focus-visible{outline:3px solid var(--vermilion);outline-offset:3px}
+  .fc .q{font-family:var(--font-head);font-weight:700;font-size:15px;line-height:1.28}
+  .fc .hint{font-family:var(--font-head);font-weight:600;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--vermilion)}
+  .fc .ans{font-size:13.5px;color:var(--ink-soft)}
+  .fc:not(.open) .ans{display:none}.fc.open .hint{display:none}
+  .case .q::before{content:"QUESTÃO ";font-family:var(--font-display);color:var(--vermilion);font-size:11px;letter-spacing:.08em}
+  footer{margin:46px 0 0;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--ink-soft)}
+  footer b{color:var(--ink)}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="top-rule"></div>
+    <div class="kicker">
+      <span>Saúde Coletiva <span class="dot">·</span> Gestão do Cuidado</span>
+      <span>FGV · EBSERH · ENARE</span>
+    </div>
+    <h1>Política Nacional de <span class="accent">Humanização</span></h1>
+    <p class="dek">O <b>HumanizaSUS</b> (2003) como política <b>transversal</b>: valorização de usuários, trabalhadores e gestores. Seus <b>3 princípios</b>, <b>6 diretrizes</b> e os <b>dispositivos</b> (acolhimento com classificação de risco, clínica ampliada, ambiência, cogestão, PTS). Guia objetivo com bizus, tabelas e questões.</p>
+  </header>
+
+  <nav class="toc" aria-label="Índice">
+    <ul>
+      <li><a href="#conceito">1 · O que é a PNH ★</a></li>
+      <li><a href="#principios">2 · Princípios ★★</a></li>
+      <li><a href="#diretrizes">3 · Diretrizes ★★</a></li>
+      <li><a href="#acolhimento">4 · Acolhimento/risco ★</a></li>
+      <li><a href="#clinica">5 · Clínica ampliada ★</a></li>
+      <li><a href="#ambiencia">6 · Ambiência</a></li>
+      <li><a href="#cogestao">7 · Cogestão</a></li>
+      <li><a href="#dispositivos">8 · Dispositivos ★★</a></li>
+      <li><a href="#pegadinhas">9 · Pegadinhas</a></li>
+      <li><a href="#casos">10 · Questões ★</a></li>
+    </ul>
+  </nav>
+
+  <!-- 1 -->
+  <section id="conceito">
+    <div class="sec-head"><span class="sec-num">01</span><h2>O que é a PNH / HumanizaSUS ★</h2></div>
+    <p class="lead">Lançada em <b>2003</b>, a PNH busca <b>qualificar a atenção e a gestão</b> no SUS por meio da <b>valorização dos sujeitos</b> — usuários, trabalhadores e gestores — estimulando <b>autonomia, protagonismo e corresponsabilidade</b>.</p>
+    <ul class="clean">
+      <li>Humanizar = construir <b>vínculos solidários</b> e participação coletiva no cuidado e na gestão.</li>
+      <li>É uma <b>política transversal</b>: atravessa todas as ações, programas e níveis do SUS (não é um setor isolado).</li>
+      <li>Não opõe “tecnologia” a “humanização”: integra <b>qualidade técnica e qualidade das relações</b>.</li>
+    </ul>
+    <div class="bizu"><span class="tag">★ Bizu</span> A PNH <b>não é um programa nem uma portaria isolada</b>: é uma <b>política transversal</b> de valorização dos sujeitos. Tríade central: <b>usuário + trabalhador + gestor</b>.</div>
+  </section>
+
+  <!-- 2 -->
+  <section id="principios">
+    <div class="sec-head"><span class="sec-num">02</span><h2>Os 3 princípios ★★</h2></div>
+    <div class="pillars">
+      <div class="pillar"><h4>Transversalidade</h4><p>Atravessa saberes, setores e práticas; aumenta o grau de comunicação entre sujeitos e serviços.</p></div>
+      <div class="pillar"><h4>Indissociabilidade entre atenção e gestão</h4><p>O modo de cuidar e o modo de gerir são inseparáveis; quem faz também participa de decidir.</p></div>
+      <div class="pillar"><h4>Protagonismo, corresponsabilidade e autonomia</h4><p>Dos sujeitos e dos coletivos: todos são atores ativos do processo de saúde.</p></div>
+    </div>
+    <div class="bizu"><span class="tag">★ Bizu</span> Decore os 3 princípios: <b>Transversalidade · Indissociabilidade atenção-gestão · Protagonismo/corresponsabilidade/autonomia</b>. Não confunda <b>princípios</b> (3) com <b>diretrizes</b> (6).</div>
+  </section>
+
+  <!-- 3 -->
+  <section id="diretrizes">
+    <div class="sec-head"><span class="sec-num">03</span><h2>As 6 diretrizes ★★</h2></div>
+    <div class="tbl-scroll">
+    <table class="tbl">
+      <thead><tr><th>Diretriz</th><th>Ideia central</th></tr></thead>
+      <tbody>
+        <tr><th>Acolhimento</th><td>Escuta qualificada de toda demanda, com responsabilização e avaliação de risco/vulnerabilidade.</td></tr>
+        <tr><th>Gestão participativa e cogestão</th><td>Incluir trabalhadores e usuários nas decisões (colegiados, GTH, rodas).</td></tr>
+        <tr><th>Ambiência</th><td>Espaços que confortam e favorecem o encontro e o cuidado.</td></tr>
+        <tr><th>Clínica ampliada e compartilhada</th><td>Olhar além da doença: sujeito, contexto e equipe interdisciplinar.</td></tr>
+        <tr><th>Valorização do trabalhador</th><td>Reconhecer e cuidar de quem cuida; participação e saúde do trabalhador.</td></tr>
+        <tr><th>Defesa dos direitos dos usuários</th><td>Garantir os direitos previstos (acompanhante, informação, escuta).</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="trap"><span class="tag">⚠ Pegadinha</span> A banca mistura princípios e diretrizes. Guarde: <b>princípios = 3</b> (transversalidade, indissociabilidade, protagonismo); <b>diretrizes = 6</b> (acolhimento, cogestão, ambiência, clínica ampliada, valorização do trabalhador, defesa dos direitos).</div>
+  </section>
+
+  <!-- 4 -->
+  <section id="acolhimento">
+    <div class="sec-head"><span class="sec-num">04</span><h2>Acolhimento &amp; Classificação de Risco ★</h2></div>
+    <ul class="clean">
+      <li><b>Acolhimento</b> é uma <b>postura/atitude</b> de escuta qualificada e responsabilização — <span class="hl">não é um lugar nem uma triagem</span>. Acontece em <b>todo</b> o encontro, por <b>qualquer</b> profissional.</li>
+      <li><b>Acolhimento com Classificação de Risco (ACCR):</b> organiza o atendimento por <b>gravidade/risco clínico</b>, e não por ordem de chegada — típico das urgências.</li>
+    </ul>
+    <div class="risco">
+      <span class="rchip" style="background:#C0392B">Vermelho · emergência</span>
+      <span class="rchip" style="background:#E67E22">Laranja · muito urgente</span>
+      <span class="rchip" style="background:#B98220">Amarelo · urgente</span>
+      <span class="rchip" style="background:#3C6E47">Verde · pouco urgente</span>
+      <span class="rchip" style="background:#2C5A74">Azul · não urgente</span>
+    </div>
+    <div class="trap"><span class="tag">⚠ Pegadinha</span> <b>Acolhimento ≠ triagem.</b> Triagem seleciona/exclui; acolhimento <b>inclui</b> e escuta todos. A <b>classificação de risco</b> (ex.: Protocolo de Manchester) prioriza por gravidade, não “quem chega primeiro”.</div>
+  </section>
+
+  <!-- 5 -->
+  <section id="clinica">
+    <div class="sec-head"><span class="sec-num">05</span><h2>Clínica ampliada ★</h2></div>
+    <ul class="clean">
+      <li>Amplia o <b>objeto de trabalho</b> para além da doença: considera o <b>sujeito</b>, sua história, seu contexto e a <b>singularidade</b>.</li>
+      <li>É <b>compartilhada</b>: construída por equipe interdisciplinar, com o usuário como corresponsável.</li>
+      <li>Materializa-se no <b>Projeto Terapêutico Singular (PTS)</b>.</li>
+    </ul>
+    <div class="bizu"><span class="tag">★ Bizu</span> Clínica ampliada = <b>“não tratar a doença, mas o sujeito que adoece”</b>, em equipe e com o usuário participando das decisões.</div>
+  </section>
+
+  <!-- 6 -->
+  <section id="ambiencia">
+    <div class="sec-head"><span class="sec-num">06</span><h2>Ambiência</h2></div>
+    <p>É o <b>espaço físico, social, profissional e de relações</b> que deve produzir conforto, privacidade e favorecer o <b>encontro</b> entre as pessoas e o cuidado. Vai além da arquitetura: inclui acústica, iluminação, cor, acessibilidade e a qualidade das interações.</p>
+  </section>
+
+  <!-- 7 -->
+  <section id="cogestao">
+    <div class="sec-head"><span class="sec-num">07</span><h2>Cogestão &amp; valorização do trabalhador</h2></div>
+    <ul class="clean">
+      <li><b>Cogestão:</b> incluir novos sujeitos nos processos de análise e decisão — <b>colegiados gestores</b>, <b>Grupos de Trabalho de Humanização (GTH)</b>, rodas de conversa.</li>
+      <li><b>Método da roda / apoio institucional</b> (Gastão Wagner de Sousa Campos): ampliar a capacidade de análise e gestão dos coletivos.</li>
+      <li><b>Valorização do trabalhador:</b> Programa de Formação em Saúde e Trabalho, saúde do trabalhador, participação e reconhecimento de quem cuida.</li>
+    </ul>
+  </section>
+
+  <!-- 8 -->
+  <section id="dispositivos">
+    <div class="sec-head"><span class="sec-num">08</span><h2>Dispositivos da PNH ★★</h2></div>
+    <p>Dispositivos são as <b>“tecnologias”/arranjos</b> que colocam a PNH em prática:</p>
+    <div class="tbl-scroll">
+    <table class="tbl">
+      <thead><tr><th>Dispositivo</th><th>Função</th></tr></thead>
+      <tbody>
+        <tr><th>Acolhimento com Classificação de Risco</th><td>Organiza o acesso por risco clínico.</td></tr>
+        <tr><th>Equipe de Referência &amp; Apoio Matricial</th><td>Vincula o usuário a uma equipe responsável, apoiada por especialistas (matriciamento).</td></tr>
+        <tr><th>Projeto Terapêutico Singular (PTS)</th><td>Conjunto de condutas para um sujeito/família, construído pela equipe.</td></tr>
+        <tr><th>Colegiado Gestor / GTH</th><td>Espaços de cogestão e de difusão da humanização nos serviços.</td></tr>
+        <tr><th>Visita Aberta e Direito a Acompanhante</th><td>Amplia o contato do usuário internado com sua rede social.</td></tr>
+        <tr><th>Ouvidoria / escuta qualificada</th><td>Canais de participação e avaliação por usuários e trabalhadores.</td></tr>
+        <tr><th>Ambiência &amp; Contrato de Gestão</th><td>Espaços acolhedores e compromissos pactuados de gestão.</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="bizu"><span class="tag">★ Bizu</span> O <b>PTS</b> e a <b>equipe de referência/apoio matricial</b> são dispositivos muito cobrados (e centrais na RAPS/saúde mental). O <b>GTH</b> é o coletivo que dissemina a humanização dentro da instituição.</div>
+  </section>
+
+  <!-- 9 -->
+  <section id="pegadinhas">
+    <div class="sec-head"><span class="sec-num">09</span><h2>Pegadinhas consolidadas</h2></div>
+    <div class="trap"><span class="tag">⚠ Top pegadinhas</span>
+      <ul class="clean" style="margin:0">
+        <li>PNH = <b>política transversal</b> (2003), não programa isolado.</li>
+        <li>Tríade: <b>usuário + trabalhador + gestor</b>.</li>
+        <li><b>Princípios (3):</b> transversalidade, indissociabilidade atenção-gestão, protagonismo/corresponsabilidade/autonomia.</li>
+        <li><b>Diretrizes (6):</b> acolhimento, cogestão, ambiência, clínica ampliada, valorização do trabalhador, defesa dos direitos.</li>
+        <li><b>Acolhimento ≠ triagem</b> (inclui x exclui); é postura, não lugar.</li>
+        <li><b>Classificação de risco</b> prioriza por gravidade (Manchester), não por chegada.</li>
+        <li><b>Clínica ampliada</b> = tratar o sujeito, não só a doença; vira <b>PTS</b>.</li>
+        <li><b>Ambiência</b> = espaço físico + relações; não é só “reforma predial”.</li>
+        <li><b>Cogestão</b>: colegiado gestor, GTH; método da roda (Gastão Wagner).</li>
+        <li>Dispositivos: ACCR, equipe de referência/apoio matricial, PTS, visita aberta/acompanhante.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 10 -->
+  <section id="casos">
+    <div class="sec-head"><span class="sec-num">10</span><h2>Questões — autoteste ★</h2></div>
+    <p>Leia, responda e clique para conferir.</p>
+    <div class="fc-grid" id="caseGrid"></div>
+  </section>
+
+  <footer>
+    <b>Fontes-base:</b> Política Nacional de Humanização — HumanizaSUS (Ministério da Saúde, 2003) e documentos da PNH (cartilhas de Acolhimento, Clínica Ampliada, Ambiência, Cogestão, Acolhimento com Classificação de Risco); referencial da cogestão e apoio institucional (Gastão Wagner de Sousa Campos). Material de revisão — confronte com o edital e a bibliografia da sua banca (FGV, EBSERH, ENARE).
+  </footer>
+
+</div>
+
+<script>
+  const cases = [
+    {q:"O que é a Política Nacional de Humanização e qual sua característica organizacional central?", a:"É o HumanizaSUS (2003), política que qualifica a atenção e a gestão do SUS pela valorização de usuários, trabalhadores e gestores, estimulando autonomia, protagonismo e corresponsabilidade. Sua característica central é ser uma política transversal, que atravessa todas as ações e níveis do SUS, e não um programa setorial isolado."},
+    {q:"Quais são os três princípios da PNH?", a:"Transversalidade; indissociabilidade entre atenção e gestão; e protagonismo, corresponsabilidade e autonomia dos sujeitos e coletivos."},
+    {q:"O que significa o princípio da indissociabilidade entre atenção e gestão?", a:"Que o modo de cuidar (atenção) e o modo de organizar/decidir (gestão) são inseparáveis: quem executa o cuidado deve participar das decisões sobre o processo de trabalho, e as mudanças na gestão repercutem diretamente na atenção."},
+    {q:"Quais são as seis diretrizes da PNH?", a:"Acolhimento; gestão participativa e cogestão; ambiência; clínica ampliada e compartilhada; valorização do trabalhador; e defesa dos direitos dos usuários."},
+    {q:"Qual a diferença entre acolhimento e triagem?", a:"O acolhimento é uma postura ética de escuta qualificada e responsabilização que inclui todos os que procuram o serviço, podendo ser feito por qualquer profissional e em qualquer momento. A triagem seleciona/exclui quem será atendido. Acolhimento não é um lugar nem um setor, é uma atitude."},
+    {q:"O que é o Acolhimento com Classificação de Risco e como ele organiza o atendimento?", a:"É um dispositivo que organiza o acesso, especialmente nas urgências, segundo a gravidade clínica e a vulnerabilidade, e não pela ordem de chegada. Costuma usar protocolos como o de Manchester, com cores (vermelho/emergência até azul/não urgente) para priorizar os casos mais graves."},
+    {q:"O que é a clínica ampliada?", a:"É a ampliação do objeto de trabalho para além da doença, considerando o sujeito, sua história, contexto e singularidade, de forma compartilhada por uma equipe interdisciplinar e com o usuário como corresponsável. Materializa-se no Projeto Terapêutico Singular (PTS)."},
+    {q:"O que é o Projeto Terapêutico Singular (PTS)?", a:"É um conjunto de propostas e condutas terapêuticas articuladas para um sujeito individual ou coletivo (família/grupo), construído pela equipe interdisciplinar a partir da clínica ampliada. É amplamente utilizado na atenção psicossocial (RAPS) e na atenção à saúde de casos complexos."},
+    {q:"O que é ambiência na PNH?", a:"É o espaço físico, social, profissional e de relações de trabalho que deve produzir conforto, privacidade, acolhimento e favorecer o encontro entre as pessoas. Vai além da arquitetura, incluindo iluminação, cor, acústica, acessibilidade e a qualidade das interações."},
+    {q:"O que é cogestão e quais dispositivos a viabilizam?", a:"É a inclusão de novos sujeitos (trabalhadores e usuários) nos processos de análise e decisão da gestão. É viabilizada por dispositivos como os colegiados gestores, os Grupos de Trabalho de Humanização (GTH) e o método da roda / apoio institucional, ampliando a capacidade de análise e gestão dos coletivos."},
+    {q:"O que são as equipes de referência e o apoio matricial na PNH?", a:"A equipe de referência é aquela que se responsabiliza longitudinalmente por um conjunto de usuários; o apoio matricial é a retaguarda técnico-pedagógica e assistencial oferecida por profissionais especializados a essa equipe. Juntos, garantem cuidado integrado e ampliam a resolutividade."},
+    {q:"Qual a diferença entre princípios e diretrizes na PNH, e por que isso é cobrado?", a:"Os princípios (3) são as bases conceituais (transversalidade, indissociabilidade atenção-gestão, protagonismo/corresponsabilidade/autonomia); as diretrizes (6) são as orientações de ação (acolhimento, cogestão, ambiência, clínica ampliada, valorização do trabalhador, defesa dos direitos). As bancas frequentemente trocam um pelo outro."},
+    {q:"Como a PNH trata a valorização do trabalhador?", a:"Reconhece que cuidar de quem cuida é essencial: prevê a participação dos trabalhadores nas decisões, ações de saúde do trabalhador e formação (como o Programa de Formação em Saúde e Trabalho), valorizando a experiência e o protagonismo das equipes."},
+    {q:"O que garante a diretriz de defesa dos direitos dos usuários?", a:"Que os usuários conheçam e exerçam seus direitos no SUS, como o direito a acompanhante, à informação clara sobre sua saúde, à visita aberta durante internação e a canais de escuta (ouvidoria), reforçando o protagonismo do usuário no cuidado."},
+    {q:"Quem é a principal referência teórica da cogestão e do apoio institucional na PNH?", a:"Gastão Wagner de Sousa Campos, com o método da roda (método Paidéia) e o conceito de apoio institucional, que buscam ampliar a capacidade de análise e de gestão compartilhada dos coletivos de trabalho."}
+  ];
+  const grid = document.getElementById('caseGrid');
+  cases.forEach(c=>{
+    const b=document.createElement('button');b.className='fc case';b.type='button';
+    b.innerHTML=`<span class="q">${c.q}</span><span class="hint">Ver resposta</span><span class="ans">${c.a}</span>`;
+    b.addEventListener('click',()=>b.classList.toggle('open'));
+    grid.appendChild(b);
+  });
+</script>
+</body>
+</html>

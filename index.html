@@ -119,6 +119,31 @@
   .foot{text-align:center;margin-top:22px;font-size:.78rem;color:var(--ink-soft)}
   .foot a{color:var(--teal);cursor:pointer;text-decoration:underline}
 
+  /* Tabs */
+  .tabs{display:flex;gap:8px;margin:0 0 16px}
+  .tab{flex:1;font:inherit;font-weight:700;font-size:.92rem;padding:11px 14px;border-radius:12px;
+    border:1px solid var(--line);background:var(--paper);color:var(--ink-soft);cursor:pointer;
+    display:flex;align-items:center;justify-content:center;gap:7px;transition:background .12s,color .12s,border-color .12s}
+  .tab:hover:not(.active){border-color:var(--teal);color:var(--teal)}
+  .tab.active{background:var(--teal);border-color:var(--teal);color:#fff;box-shadow:var(--shadow)}
+  .panel[hidden]{display:none}
+
+  /* Estudos */
+  .topics-intro{font-size:.9rem;color:var(--ink-soft);margin-bottom:14px}
+  .topics{display:grid;gap:12px;grid-template-columns:repeat(auto-fill,minmax(240px,1fr))}
+  .topic{display:flex;flex-direction:column;gap:7px;text-align:left;background:var(--paper);
+    border:1px solid var(--line);border-radius:14px;padding:15px 16px;cursor:pointer;
+    box-shadow:var(--shadow);transition:transform .12s,border-color .12s;font:inherit;color:var(--ink)}
+  .topic:hover{transform:translateY(-2px);border-color:var(--teal)}
+  .topic .n{font-size:.7rem;font-weight:700;letter-spacing:.04em;color:var(--teal-deep);
+    background:var(--teal-tint);border-radius:7px;padding:2px 8px;align-self:flex-start}
+  .topic h3{font-size:1rem;color:var(--ink);line-height:1.25;font-weight:700}
+  .topic p{font-size:.82rem;color:var(--ink-soft);line-height:1.4}
+  .viewer-bar{display:flex;align-items:center;gap:12px;margin-bottom:12px;flex-wrap:wrap}
+  .viewer-bar .vt{font-weight:700;color:var(--teal-deep);font-size:.95rem;flex:1;min-width:150px}
+  #estudosFrame{width:100%;height:calc(100vh - 200px);min-height:480px;border:1px solid var(--line);
+    border-radius:14px;background:#fff;box-shadow:var(--shadow);display:block}
+
   @media(max-width:480px){
     .metrics{gap:16px}
     .metric .v{font-size:1.1rem}
@@ -134,12 +159,18 @@
     <div class="brand">
       <h1>Banca ENARE</h1>
       <span class="tag">Farmácia Multiprofissional</span>
-      <p>Questões interativas no padrão FGV/ENARE · clique no item para conferir a resposta, ler o comentário e acompanhar sua taxa de acerto.</p>
+      <p>Banco de questões no padrão FGV/ENARE + guias de estudo por tema. Na aba <b>Questões</b>, responda e acompanhe sua taxa de acerto; na aba <b>Estudos</b>, revise o conteúdo por tema.</p>
     </div>
   </div>
 </header>
 
 <div class="wrap">
+  <div class="tabs" role="tablist">
+    <button class="tab active" id="tabBtnQ" data-tab="questoes" role="tab">Questões</button>
+    <button class="tab" id="tabBtnE" data-tab="estudos" role="tab">Estudos</button>
+  </div>
+
+  <div id="panel-questoes" class="panel">
   <div class="stats">
     <svg class="ring" viewBox="0 0 36 36" aria-hidden="true">
       <circle cx="18" cy="18" r="15.9" fill="none" stroke="var(--line)" stroke-width="3"></circle>
@@ -165,6 +196,21 @@
   <div class="foot">
     Leva atual: <b id="footCount">0</b> questões carregadas ·
     <a id="more">peça mais questões nesta conversa para avançar até 500</a>
+  </div>
+  </div><!-- /panel-questoes -->
+
+  <div id="panel-estudos" class="panel" hidden>
+    <div id="estudosList">
+      <p class="topics-intro">Guias de revisão por tema — conteúdo objetivo com linha do tempo, tabelas, bizus, pegadinhas e questões de autoteste. Toque em um tema para estudar.</p>
+      <div class="topics" id="topicsGrid"><!-- preenchido via JS --></div>
+    </div>
+    <div id="estudosView" hidden>
+      <div class="viewer-bar">
+        <button class="ghost" id="backTopics">← Voltar aos temas</button>
+        <span class="vt" id="viewerTitle"></span>
+      </div>
+      <iframe id="estudosFrame" title="Guia de estudo" loading="lazy"></iframe>
+    </div>
   </div>
 </div>
 
@@ -4349,6 +4395,66 @@ document.getElementById("reset").onclick = ()=>{
 /* ---- init ---- */
 buildFilter();
 applyFilter();
+
+/* ============================================================
+   ABA ESTUDOS — guias de revisão por tema
+   ============================================================ */
+const TOPICS = [
+  {f:"historia-politicas-saude-reforma-sanitaria.html", t:"História das Políticas de Saúde & Reforma Sanitária", s:"Do campanhismo ao SUS: CAPs, IAPs, INAMPS, 8ª CNS e CF/88."},
+  {f:"sus-principios-legislacao-controle-social.html", t:"SUS: Princípios, Legislação & Controle Social", s:"Leis 8.080 e 8.142, Decreto 7.508, conselhos e conferências."},
+  {f:"redes-atencao-saude.html", t:"Redes de Atenção à Saúde (RAS)", s:"Rede poliárquica, APS coordenadora e redes temáticas."},
+  {f:"esf-pnab-atencao-basica.html", t:"ESF & PNAB — Atenção Básica", s:"PNAB 2017, equipe da ESF, ACS, eMulti e financiamento."},
+  {f:"politica-nacional-humanizacao-pnh.html", t:"Política Nacional de Humanização (PNH)", s:"HumanizaSUS: princípios, diretrizes, acolhimento e PTS."},
+  {f:"politica-nacional-vigilancia-saude.html", t:"Política Nacional de Vigilância em Saúde", s:"As 4 vigilâncias, notificação, surto/epidemia e SINAN."},
+  {f:"educacao-permanente-saude-pneps.html", t:"Educação Permanente em Saúde (PNEPS)", s:"EPS × continuada, quadrilátero, CIES e Portarias 198 e 1.996."},
+  {f:"inclusao-grupos-vulnerabilizados-saude.html", t:"Inclusão de Grupos Vulnerabilizados", s:"Políticas de equidade: idoso, LGBT+, indígena, negra e mais."},
+  {f:"trabalho-equipe-multidisciplinar.html", t:"Trabalho em Equipe Multidisciplinar", s:"Multi/inter/trans, Peduzzi, núcleo × campo e apoio matricial."},
+  {f:"programa-nacional-seguranca-paciente.html", t:"Segurança do Paciente (PNSP)", s:"Portaria 529, RDC 36, as 6 metas e cultura de segurança."},
+  {f:"nr32-seguranca-saude-trabalho-servicos-saude.html", t:"NR 32 — Saúde do Trabalhador nos Serviços de Saúde", s:"Riscos biológicos/químicos, PGR, PCMSO e perfurocortantes."},
+  {f:"bioetica.html", t:"Bioética", s:"Principialismo, Nuremberg/Belmont, CEP/CONEP e fim de vida."}
+];
+
+const topicsGrid  = document.getElementById("topicsGrid");
+const estudosList = document.getElementById("estudosList");
+const estudosView = document.getElementById("estudosView");
+const estudosFrame= document.getElementById("estudosFrame");
+const viewerTitle = document.getElementById("viewerTitle");
+
+TOPICS.forEach((tp, i)=>{
+  const b = document.createElement("button");
+  b.className = "topic"; b.type = "button";
+  b.innerHTML = `<span class="n">Tema ${i+1}</span><h3>${tp.t}</h3><p>${tp.s}</p>`;
+  b.onclick = ()=> openTopic(tp);
+  topicsGrid.appendChild(b);
+});
+
+function openTopic(tp){
+  viewerTitle.textContent = tp.t;
+  if(estudosFrame.getAttribute("src") !== "estudos/"+tp.f){
+    estudosFrame.setAttribute("src", "estudos/"+tp.f);
+  }
+  estudosList.hidden = true;
+  estudosView.hidden = false;
+  window.scrollTo({top:0, behavior:"instant"});
+}
+document.getElementById("backTopics").onclick = ()=>{
+  estudosView.hidden = true;
+  estudosList.hidden = false;
+  window.scrollTo({top:0, behavior:"instant"});
+};
+
+/* ---- troca de abas ---- */
+function setTab(name){
+  const isQ = name === "questoes";
+  document.getElementById("panel-questoes").hidden = !isQ;
+  document.getElementById("panel-estudos").hidden  = isQ;
+  document.getElementById("tabBtnQ").classList.toggle("active", isQ);
+  document.getElementById("tabBtnE").classList.toggle("active", !isQ);
+  try{ localStorage.setItem("enareTab", name); }catch(e){}
+}
+document.getElementById("tabBtnQ").onclick = ()=> setTab("questoes");
+document.getElementById("tabBtnE").onclick = ()=> setTab("estudos");
+try{ if(localStorage.getItem("enareTab")==="estudos") setTab("estudos"); }catch(e){}
 </script>
 <script>
 /* ---- PWA: registro do service worker ---- */

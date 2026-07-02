@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Política Nacional de Vigilância em Saúde (PNVS) — Guia de revisão</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@500;600;700;800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#E7E1D2;--surface:#FBF8F0;--surface-2:#F3EEE1;
+    --ink:#143C42;--ink-soft:#4E5F5C;--vermilion:#D6492A;--ochre:#B98220;--green:#3C6E47;--blue:#2C5A74;
+    --line:rgba(20,60,66,.22);--line-strong:rgba(20,60,66,.55);
+    --font-display:'Anton',Impact,sans-serif;--font-head:'Archivo',system-ui,sans-serif;--font-body:'IBM Plex Sans',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+  body{margin:0;background:radial-gradient(circle at 100% -2%, rgba(214,73,42,.06), transparent 38%),var(--paper);
+    color:var(--ink);font-family:var(--font-body);line-height:1.55;padding:clamp(16px,3.5vw,44px) clamp(12px,4vw,40px) 80px}
+  .wrap{max-width:1080px;margin:0 auto}
+  .top-rule{height:6px;background:var(--ink)}
+  .kicker{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-family:var(--font-head);font-weight:700;text-transform:uppercase;letter-spacing:.15em;font-size:11px;color:var(--ink-soft);padding:9px 2px;border-bottom:1px solid var(--line)}
+  .kicker .dot{color:var(--vermilion)}
+  h1{font-family:var(--font-display);font-weight:400;line-height:.92;font-size:clamp(25px,4.6vw,52px);margin:16px 0 8px;text-transform:uppercase;letter-spacing:.5px}
+  h1 .accent{color:var(--vermilion)}
+  .dek{font-size:clamp(15px,2vw,17.5px);color:var(--ink-soft);max-width:68ch;border-top:3px double var(--line-strong);padding-top:12px}
+  .dek b{color:var(--ink);font-weight:600}
+  nav.toc{position:sticky;top:0;z-index:20;background:rgba(231,225,210,.94);backdrop-filter:blur(6px);margin:18px 0 8px;padding:10px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  nav.toc ul{list-style:none;display:flex;gap:7px;flex-wrap:wrap;margin:0;padding:0}
+  nav.toc a{font-family:var(--font-head);font-weight:600;font-size:12px;text-decoration:none;color:var(--ink);border:1.5px solid var(--line-strong);border-radius:2px;padding:5px 10px;transition:background .12s,color .12s}
+  nav.toc a:hover{background:var(--ink);color:var(--surface)}
+  section{margin:38px 0 0;scroll-margin-top:64px}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:14px;border-bottom:2px solid var(--ink);padding-bottom:8px}
+  .sec-num{font-family:var(--font-display);font-size:clamp(26px,4vw,40px);color:var(--vermilion);line-height:.8}
+  .sec-head h2{font-family:var(--font-head);font-weight:800;font-size:clamp(18px,3vw,25px);margin:0;letter-spacing:-.01em}
+  p{margin:0 0 12px}.lead{font-size:16px}
+  strong,b{color:var(--ink);font-weight:600}.hl{color:var(--vermilion);font-weight:600}
+  ul.clean{margin:0 0 12px;padding-left:18px}ul.clean li{margin:5px 0}
+  .box{background:var(--surface);border:1.5px solid var(--ink);border-radius:3px;box-shadow:4px 4px 0 var(--ink);padding:16px 18px;margin:14px 0}
+  .grid2{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+  .pillars{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));margin:14px 0}
+  .pillar{background:var(--surface);border:1.5px solid var(--ink);border-radius:3px;box-shadow:3px 3px 0 var(--ink);padding:13px 15px}
+  .pillar h4{font-family:var(--font-head);font-weight:700;margin:0 0 4px;font-size:14px;color:var(--vermilion)}
+  .pillar p{margin:0;font-size:12px;color:var(--ink-soft)}
+  .bizu{border:1.5px dashed var(--green);background:rgba(60,110,71,.06);border-radius:3px;padding:13px 16px;margin:14px 0}
+  .bizu .tag{font-family:var(--font-head);font-weight:700;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--green);display:block;margin-bottom:5px}
+  .bizu b{color:var(--green)}
+  .trap{border:1.5px solid var(--vermilion);background:rgba(214,73,42,.05);border-radius:3px;padding:13px 16px;margin:14px 0}
+  .trap .tag{font-family:var(--font-head);font-weight:700;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--vermilion);display:block;margin-bottom:5px}
+  .note{border:1.5px solid var(--blue);background:rgba(44,90,116,.06);border-radius:3px;padding:13px 16px;margin:14px 0}
+  .note .tag{font-family:var(--font-head);font-weight:700;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--blue);display:block;margin-bottom:5px}
+  .tbl{width:100%;border-collapse:collapse;margin:14px 0;font-size:12.5px;background:var(--surface)}
+  .tbl th,.tbl td{border:1px solid var(--line-strong);padding:8px 10px;text-align:left;vertical-align:top}
+  .tbl thead th{background:var(--ink);color:var(--surface);font-family:var(--font-head);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.03em}
+  .tbl tbody th{background:var(--surface-2);font-family:var(--font-head);font-weight:700;white-space:nowrap}
+  .tbl-scroll{overflow-x:auto}
+  .fc-grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));margin-top:14px}
+  .fc{background:var(--surface);border:1.5px solid var(--ink);border-radius:3px;box-shadow:4px 4px 0 var(--ink);padding:16px 17px;cursor:pointer;text-align:left;width:100%;font-family:var(--font-body);color:var(--ink);display:flex;flex-direction:column;gap:9px;transition:transform .12s,box-shadow .12s}
+  .fc:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--vermilion)}
+  .fc:focus-visible{outline:3px solid var(--vermilion);outline-offset:3px}
+  .fc .q{font-family:var(--font-head);font-weight:700;font-size:15px;line-height:1.28}
+  .fc .hint{font-family:var(--font-head);font-weight:600;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--vermilion)}
+  .fc .ans{font-size:13.5px;color:var(--ink-soft)}
+  .fc:not(.open) .ans{display:none}.fc.open .hint{display:none}
+  .case .q::before{content:"QUESTÃO ";font-family:var(--font-display);color:var(--vermilion);font-size:11px;letter-spacing:.08em}
+  footer{margin:46px 0 0;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--ink-soft)}
+  footer b{color:var(--ink)}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="top-rule"></div>
+    <div class="kicker">
+      <span>Saúde Coletiva <span class="dot">·</span> Vigilância em Saúde</span>
+      <span>FGV · EBSERH · ENARE</span>
+    </div>
+    <h1>Política Nacional de <span class="accent">Vigilância em Saúde</span></h1>
+    <p class="dek">A <b>PNVS</b> (Resolução CNS nº 588/2018) e as <b>quatro vigilâncias</b> — epidemiológica, sanitária, em saúde ambiental e do trabalhador — articuladas com laboratórios e análise de situação de saúde. Inclui notificação compulsória, conceitos epidemiológicos, princípios e diretrizes. Guia objetivo com bizus, tabelas e questões.</p>
+  </header>
+
+  <nav class="toc" aria-label="Índice">
+    <ul>
+      <li><a href="#pnvs">1 · O que é a PNVS ★★</a></li>
+      <li><a href="#componentes">2 · As 4 vigilâncias ★★</a></li>
+      <li><a href="#epi">3 · Epidemiológica ★★</a></li>
+      <li><a href="#conceitos">4 · Surto/epidemia ★</a></li>
+      <li><a href="#sanitaria">5 · Sanitária ★</a></li>
+      <li><a href="#ambiental">6 · Ambiental &amp; Trabalhador</a></li>
+      <li><a href="#principios">7 · Princípios/diretrizes ★</a></li>
+      <li><a href="#sistemas">8 · Sistemas de informação</a></li>
+      <li><a href="#emergencias">9 · Emergências/RSI</a></li>
+      <li><a href="#pegadinhas">10 · Pegadinhas</a></li>
+      <li><a href="#casos">11 · Questões ★</a></li>
+    </ul>
+  </nav>
+
+  <!-- 1 -->
+  <section id="pnvs">
+    <div class="sec-head"><span class="sec-num">01</span><h2>O que é a PNVS ★★</h2></div>
+    <p class="lead">A <b>Vigilância em Saúde</b> é o <b>processo contínuo e sistemático</b> de coleta, consolidação, análise de dados e disseminação de informações sobre eventos de saúde, para <b>planejar e implementar medidas de saúde pública</b> — atuando sobre determinantes, riscos, agravos e doenças, na <b>promoção e proteção</b> da saúde.</p>
+    <ul class="clean">
+      <li>A <b>PNVS</b> foi instituída pela <span class="hl">Resolução CNS nº 588, de 12 de julho de 2018</span>, a partir da <b>1ª Conferência Nacional de Vigilância em Saúde (1ª CNVS)</b>.</li>
+      <li>É uma <b>política pública de Estado</b> e <b>função essencial do SUS</b>, de caráter <b>universal, transversal e orientador</b> do modelo de atenção, com <b>gestão exclusiva do poder público</b>.</li>
+      <li>Define <b>princípios, diretrizes e estratégias</b> para as três esferas de gestão atuarem em vigilância em saúde.</li>
+    </ul>
+    <div class="bizu"><span class="tag">★ Bizu</span> Guarde o marco: <b>PNVS = Resolução CNS nº 588/2018</b> (não é portaria do MS; é resolução do <b>Conselho Nacional de Saúde</b>), fruto da <b>1ª CNVS</b>. Caráter: <b>universal, transversal e orientador</b>; gestão <b>exclusiva do poder público</b>.</div>
+  </section>
+
+  <!-- 2 -->
+  <section id="componentes">
+    <div class="sec-head"><span class="sec-num">02</span><h2>As 4 vigilâncias (componentes) ★★</h2></div>
+    <div class="tbl-scroll">
+    <table class="tbl">
+      <thead><tr><th>Vigilância</th><th>O que vigia</th><th>Exemplos</th></tr></thead>
+      <tbody>
+        <tr><th>Epidemiológica</th><td>Doenças e agravos (transmissíveis e não transmissíveis).</td><td>Notificação, surtos, imunização, DANT.</td></tr>
+        <tr><th>Sanitária</th><td>Riscos de <b>produtos, serviços e ambientes</b>.</td><td>Alimentos, medicamentos, serviços de saúde (ANVISA).</td></tr>
+        <tr><th>Saúde Ambiental</th><td>Fatores <b>ambientais</b> que afetam a saúde.</td><td>Água, ar, solo, contaminantes, desastres, zoonoses.</td></tr>
+        <tr><th>Saúde do Trabalhador</th><td>Relação <b>trabalho–saúde</b>; riscos ocupacionais.</td><td>Acidentes e doenças do trabalho (RENAST/CEREST).</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="note"><span class="tag">ℹ Transversais</span> Atravessam as quatro vigilâncias: as <b>ações laboratoriais</b> (Rede de Laboratórios de Saúde Pública — LACEN) e a <b>análise de situação de saúde</b> (perfil epidemiológico do território).</div>
+    <div class="bizu"><span class="tag">★ Bizu</span> Mnemônico das 4: <b>“EpiSan-Ambi-Trab”</b> → Epidemiológica, Sanitária, Ambiental, Trabalhador. A PNVS <b>integra</b> as quatro preservando as especificidades.</div>
+  </section>
+
+  <!-- 3 -->
+  <section id="epi">
+    <div class="sec-head"><span class="sec-num">03</span><h2>Vigilância Epidemiológica em foco ★★</h2></div>
+    <ul class="clean">
+      <li>Conhece, detecta ou prevê mudanças nos fatores determinantes/condicionantes, para <b>recomendar e adotar medidas de prevenção e controle</b>.</li>
+      <li><b>Notificação compulsória:</b> comunicação <b>obrigatória</b> de doenças/agravos/eventos (lista na <b>Portaria de Consolidação nº 4/2017</b>, atualizada). Pode ser <b>imediata (até 24h)</b> ou <b>semanal</b>.</li>
+      <li>A notificação é registrada no <b>SINAN</b> (Sistema de Informação de Agravos de Notificação).</li>
+      <li>Tipos de vigilância: <b>passiva</b> (notificação espontânea), <b>ativa</b> (busca pela equipe) e <b>sentinela</b> (unidades/eventos sentinela).</li>
+    </ul>
+    <div class="trap"><span class="tag">⚠ Pegadinha</span> <b>Notificar é obrigatório mesmo diante de SUSPEITA</b> (não exige confirmação) para as doenças de notificação compulsória. Notificação <b>imediata (24h)</b> é para eventos de maior potencial de disseminação/gravidade; a ausência de notificação é infração sanitária.</div>
+  </section>
+
+  <!-- 4 -->
+  <section id="conceitos">
+    <div class="sec-head"><span class="sec-num">04</span><h2>Conceitos: surto, epidemia, endemia, pandemia ★</h2></div>
+    <div class="tbl-scroll">
+    <table class="tbl">
+      <thead><tr><th>Termo</th><th>Definição</th></tr></thead>
+      <tbody>
+        <tr><th>Endemia</th><td>Ocorrência <b>habitual/esperada</b> de uma doença em determinada área (patamar de base).</td></tr>
+        <tr><th>Epidemia</th><td>Elevação <b>acima do esperado</b>, com disseminação rápida, numa região.</td></tr>
+        <tr><th>Surto</th><td>Epidemia <b>restrita a espaço delimitado</b> (creche, hospital, bairro).</td></tr>
+        <tr><th>Pandemia</th><td>Epidemia disseminada por <b>vários países/continentes</b>.</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="bizu"><span class="tag">★ Bizu</span> Pense em escala: <b>endemia</b> (esperado) → <b>surto</b> (localizado) → <b>epidemia</b> (região, acima do esperado) → <b>pandemia</b> (global). Endemia é sobre ser <b>habitual</b>; epidemia é sobre <b>exceder o esperado</b>.</div>
+  </section>
+
+  <!-- 5 -->
+  <section id="sanitaria">
+    <div class="sec-head"><span class="sec-num">05</span><h2>Vigilância Sanitária ★</h2></div>
+    <ul class="clean">
+      <li>Conjunto de ações para <b>eliminar, diminuir ou prevenir riscos</b> à saúde e intervir nos problemas decorrentes do <b>ambiente, da produção e circulação de bens</b> e da prestação de <b>serviços de interesse da saúde</b>.</li>
+      <li>Abrange desde <b>medicamentos, alimentos, cosméticos, saneantes</b> até <b>serviços de saúde</b> e portos/aeroportos/fronteiras.</li>
+      <li>Coordenada nacionalmente pela <b>ANVISA</b> (Agência Nacional de Vigilância Sanitária, autarquia vinculada ao MS).</li>
+    </ul>
+    <div class="bizu"><span class="tag">★ Bizu</span> A VISA é a vigilância do <b>“risco antes do dano”</b>: atua sobre produtos, serviços e ambientes. Para o farmacêutico, é o elo com a <b>RDC</b> da ANVISA, a farmacovigilância e a inspeção de serviços.</div>
+  </section>
+
+  <!-- 6 -->
+  <section id="ambiental">
+    <div class="sec-head"><span class="sec-num">06</span><h2>Saúde Ambiental &amp; Saúde do Trabalhador</h2></div>
+    <div class="grid2">
+      <div class="box"><p><b>Vigilância em Saúde Ambiental</b></p>
+        <ul class="clean" style="margin:0">
+          <li><b>VIGIAGUA</b> — qualidade da água para consumo.</li>
+          <li><b>VIGIAR</b> — qualidade do ar.</li>
+          <li><b>VIGISOLO/VIGIPEQ</b> — solo e populações expostas a contaminantes.</li>
+          <li><b>VIGIDESASTRES</b> — desastres; e vigilância de <b>zoonoses</b>.</li>
+        </ul></div>
+      <div class="box"><p><b>Vigilância em Saúde do Trabalhador (VISAT)</b></p>
+        <ul class="clean" style="margin:0">
+          <li>Atua sobre a relação <b>trabalho–saúde</b> e os riscos ocupacionais.</li>
+          <li><b>RENAST</b> — Rede Nacional de Atenção Integral à Saúde do Trabalhador.</li>
+          <li><b>CEREST</b> — Centros de Referência em Saúde do Trabalhador.</li>
+          <li>Notificação de <b>acidentes e doenças relacionados ao trabalho</b> (SINAN).</li>
+        </ul></div>
+    </div>
+  </section>
+
+  <!-- 7 -->
+  <section id="principios">
+    <div class="sec-head"><span class="sec-num">07</span><h2>Princípios &amp; diretrizes da PNVS ★</h2></div>
+    <div class="grid2">
+      <div class="box"><p><b>Princípios</b> (alinhados ao SUS)</p>
+        <ul class="clean" style="margin:0">
+          <li>Universalidade, equidade, integralidade.</li>
+          <li>Descentralização, regionalização e hierarquização.</li>
+          <li><b>Territorialização</b> e <b>intersetorialidade</b>.</li>
+          <li>Participação e <b>controle social</b>.</li>
+        </ul></div>
+      <div class="box"><p><b>Diretrizes</b> (destaques)</p>
+        <ul class="clean" style="margin:0">
+          <li>Pactuar responsabilidades das <b>3 esferas</b>.</li>
+          <li><b>Integrar</b> as práticas das vigilâncias e laboratórios.</li>
+          <li>Inserir a VS em <b>toda a RAS</b>, sobretudo na <b>APS (coordenadora)</b>.</li>
+          <li>Gestão de risco; resposta a <b>emergências</b> (RSI); análise de situação de saúde.</li>
+        </ul></div>
+    </div>
+    <div class="bizu"><span class="tag">★ Bizu</span> Diretriz muito cobrada: a vigilância deve estar <b>inserida em toda a Rede de Atenção à Saúde</b>, <b>especialmente na Atenção Primária</b>, como coordenadora do cuidado. Vigilância e assistência <b>não se separam</b>.</div>
+  </section>
+
+  <!-- 8 -->
+  <section id="sistemas">
+    <div class="sec-head"><span class="sec-num">08</span><h2>Sistemas de informação</h2></div>
+    <div class="tbl-scroll">
+    <table class="tbl">
+      <thead><tr><th>Sigla</th><th>O que registra</th></tr></thead>
+      <tbody>
+        <tr><th>SINAN</th><td>Agravos e doenças de <b>notificação</b>.</td></tr>
+        <tr><th>SIM</th><td><b>Mortalidade</b> (declaração de óbito).</td></tr>
+        <tr><th>SINASC</th><td><b>Nascidos vivos</b> (declaração de nascido vivo).</td></tr>
+        <tr><th>SIH / SIA</th><td>Internações / produção ambulatorial.</td></tr>
+        <tr><th>e-SUS VS / SIVEP</th><td>Estratégicos de vigilância (ex.: SIVEP-Gripe).</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="trap"><span class="tag">⚠ Pegadinha</span> Não troque: <b>SIM</b> = óbitos; <b>SINASC</b> = nascidos vivos; <b>SINAN</b> = agravos notificáveis. São a base dos indicadores de saúde (ex.: mortalidade infantil usa SIM + SINASC).</div>
+  </section>
+
+  <!-- 9 -->
+  <section id="emergencias">
+    <div class="sec-head"><span class="sec-num">09</span><h2>Emergências em Saúde Pública &amp; RSI</h2></div>
+    <ul class="clean">
+      <li><b>ESPIN</b> — Emergência em Saúde Pública de Importância Nacional; <b>ESPII</b> — de Importância Internacional (declarada pela OMS).</li>
+      <li><b>Regulamento Sanitário Internacional (RSI 2005):</b> obriga os países a detectar, avaliar, notificar e responder a eventos de saúde pública.</li>
+      <li>A PNVS prevê o desenvolvimento das <b>capacidades básicas</b> de vigilância e a resposta coordenada entre as esferas.</li>
+    </ul>
+  </section>
+
+  <!-- 10 -->
+  <section id="pegadinhas">
+    <div class="sec-head"><span class="sec-num">10</span><h2>Pegadinhas consolidadas</h2></div>
+    <div class="trap"><span class="tag">⚠ Top pegadinhas</span>
+      <ul class="clean" style="margin:0">
+        <li><b>PNVS = Resolução CNS nº 588/2018</b> (resolução do Conselho, não portaria do MS); fruto da <b>1ª CNVS</b>.</li>
+        <li>Caráter: <b>universal, transversal e orientador</b>; gestão <b>exclusiva do poder público</b>.</li>
+        <li>4 vigilâncias: <b>epidemiológica, sanitária, ambiental e do trabalhador</b> (+ laboratorial e análise de situação como transversais).</li>
+        <li><b>Notificação compulsória</b> = obrigatória, mesmo em suspeita; vai ao <b>SINAN</b>; imediata em 24h para eventos graves.</li>
+        <li><b>Endemia</b> (habitual) × <b>epidemia</b> (acima do esperado) × <b>surto</b> (localizado) × <b>pandemia</b> (global).</li>
+        <li>Vigilância <b>passiva</b> (espontânea) × <b>ativa</b> (busca) × <b>sentinela</b>.</li>
+        <li><b>VISA</b> = produtos/serviços/ambientes (ANVISA); <b>VISAT</b> = RENAST/CEREST.</li>
+        <li><b>SIM</b> (óbitos) × <b>SINASC</b> (nascidos vivos) × <b>SINAN</b> (agravos).</li>
+        <li>A VS deve se inserir em <b>toda a RAS</b>, sobretudo na <b>APS</b> (coordenadora).</li>
+        <li><b>ESPIN</b> (nacional) × <b>ESPII</b> (internacional, OMS); <b>RSI 2005</b>.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 11 -->
+  <section id="casos">
+    <div class="sec-head"><span class="sec-num">11</span><h2>Questões — autoteste ★</h2></div>
+    <p>Leia, responda e clique para conferir.</p>
+    <div class="fc-grid" id="caseGrid"></div>
+  </section>
+
+  <footer>
+    <b>Fontes-base:</b> Política Nacional de Vigilância em Saúde — Resolução CNS nº 588, de 12 de julho de 2018 (1ª Conferência Nacional de Vigilância em Saúde); Lei 8.080/1990; lista de notificação compulsória (Portaria de Consolidação nº 4/2017); sistemas de informação em saúde (SINAN, SIM, SINASC); Regulamento Sanitário Internacional (2005). Material de revisão — confronte com o edital e a bibliografia da sua banca (FGV, EBSERH, ENARE).
+  </footer>
+
+</div>
+
+<script>
+  const cases = [
+    {q:"Qual norma institui a Política Nacional de Vigilância em Saúde e como ela define a vigilância em saúde?", a:"A Resolução CNS nº 588, de 12 de julho de 2018 (fruto da 1ª Conferência Nacional de Vigilância em Saúde). Define vigilância em saúde como o processo contínuo e sistemático de coleta, consolidação, análise de dados e disseminação de informações sobre eventos de saúde, para planejar e implementar medidas de saúde pública, atuando sobre determinantes, riscos, agravos e doenças."},
+    {q:"Qual o caráter da PNVS segundo a Resolução 588/2018?", a:"É uma política pública de Estado e função essencial do SUS, de caráter universal, transversal e orientador do modelo de atenção nos territórios, sendo sua gestão de responsabilidade exclusiva do poder público."},
+    {q:"Quais são os quatro componentes (vigilâncias) articulados pela PNVS?", a:"Vigilância epidemiológica, vigilância sanitária, vigilância em saúde ambiental e vigilância em saúde do trabalhador. As ações laboratoriais (laboratórios de saúde pública) e a análise de situação de saúde são transversais a todas elas."},
+    {q:"O que faz a vigilância epidemiológica?", a:"Conhece, detecta ou prevê mudanças nos fatores determinantes e condicionantes da saúde individual e coletiva, com a finalidade de recomendar e adotar medidas de prevenção e controle de doenças e agravos, incluindo a notificação, a investigação de surtos e o monitoramento de doenças transmissíveis e não transmissíveis."},
+    {q:"O que é a notificação compulsória e onde os dados são registrados?", a:"É a comunicação obrigatória, às autoridades de saúde, da ocorrência (ou suspeita) de determinadas doenças, agravos e eventos de saúde pública, conforme lista oficial. Pode ser imediata (até 24 horas) ou semanal, e os dados são registrados no SINAN (Sistema de Informação de Agravos de Notificação)."},
+    {q:"Diferencie vigilância passiva, ativa e sentinela.", a:"Passiva: baseia-se na notificação espontânea feita pelos serviços. Ativa: a equipe busca ativamente os casos (busca em prontuários, comunidade). Sentinela: monitora eventos ou utiliza unidades/profissionais sentinela como amostra para detectar precocemente problemas."},
+    {q:"Diferencie endemia, epidemia, surto e pandemia.", a:"Endemia é a ocorrência habitual/esperada de uma doença em uma área. Epidemia é a elevação acima do esperado, com disseminação rápida, em uma região. Surto é uma epidemia restrita a um espaço delimitado (ex.: hospital, bairro). Pandemia é a epidemia disseminada por vários países ou continentes."},
+    {q:"O que é a vigilância sanitária e qual órgão a coordena nacionalmente?", a:"É o conjunto de ações capazes de eliminar, diminuir ou prevenir riscos à saúde decorrentes do ambiente, da produção e circulação de bens e da prestação de serviços de interesse da saúde (medicamentos, alimentos, serviços de saúde, etc.). É coordenada nacionalmente pela ANVISA, autarquia vinculada ao Ministério da Saúde."},
+    {q:"Cite programas da vigilância em saúde ambiental.", a:"VIGIAGUA (qualidade da água para consumo humano), VIGIAR (qualidade do ar), VIGISOLO/VIGIPEQ (solo e populações expostas a contaminantes), VIGIDESASTRES (desastres) e a vigilância de zoonoses."},
+    {q:"O que são a RENAST e o CEREST na vigilância em saúde do trabalhador?", a:"A RENAST é a Rede Nacional de Atenção Integral à Saúde do Trabalhador, que organiza as ações de saúde do trabalhador no SUS; os CEREST são os Centros de Referência em Saúde do Trabalhador, que dão suporte técnico, capacitam a rede e apoiam a vigilância dos ambientes e processos de trabalho."},
+    {q:"Quais são os princípios da PNVS?", a:"Estão alinhados aos do SUS: universalidade, equidade, integralidade, descentralização, regionalização e hierarquização, além de territorialização, intersetorialidade e participação/controle social."},
+    {q:"Qual diretriz da PNVS conecta a vigilância à rede assistencial?", a:"A de construir práticas de gestão e de trabalho que assegurem a integralidade, inserindo as ações de vigilância em saúde em toda a Rede de Atenção à Saúde e, especialmente, na Atenção Primária como coordenadora do cuidado — integrando vigilância e assistência."},
+    {q:"Diferencie SIM, SINASC e SINAN.", a:"SIM é o Sistema de Informações sobre Mortalidade (óbitos); SINASC é o Sistema de Informações sobre Nascidos Vivos; SINAN é o Sistema de Informação de Agravos de Notificação. Indicadores como a mortalidade infantil são calculados combinando SIM e SINASC."},
+    {q:"O que são ESPIN e ESPII?", a:"ESPIN é a Emergência em Saúde Pública de Importância Nacional, declarada no âmbito do país; ESPII é a Emergência em Saúde Pública de Importância Internacional, declarada pela Organização Mundial da Saúde, no contexto do Regulamento Sanitário Internacional."},
+    {q:"O que é o Regulamento Sanitário Internacional (RSI 2005)?", a:"É um instrumento jurídico internacional que obriga os países a desenvolverem capacidades para detectar, avaliar, notificar e responder a eventos de saúde pública de importância internacional, prevenindo a propagação de doenças entre as nações com o mínimo de interferência no tráfego e comércio."},
+    {q:"Por que se diz que a análise de situação de saúde e as ações laboratoriais são transversais à PNVS?", a:"Porque dão suporte a todas as quatro vigilâncias: a análise de situação de saúde produz o perfil epidemiológico do território para orientar prioridades, e os laboratórios de saúde pública (rede LACEN) fornecem o diagnóstico e a confirmação necessários a qualquer das vigilâncias."}
+  ];
+  const grid = document.getElementById('caseGrid');
+  cases.forEach(c=>{
+    const b=document.createElement('button');b.className='fc case';b.type='button';
+    b.innerHTML=`<span class="q">${c.q}</span><span class="hint">Ver resposta</span><span class="ans">${c.a}</span>`;
+    b.addEventListener('click',()=>b.classList.toggle('open'));
+    grid.appendChild(b);
+  });
+</script>
+</body>
+</html>

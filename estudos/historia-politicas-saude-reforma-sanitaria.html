@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>História das Políticas de Saúde no Brasil &amp; Reforma Sanitária — Guia de revisão</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@500;600;700;800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#E7E1D2;--surface:#FBF8F0;--surface-2:#F3EEE1;
+    --ink:#143C42;--ink-soft:#4E5F5C;--vermilion:#D6492A;--ochre:#B98220;--green:#3C6E47;--blue:#2C5A74;
+    --line:rgba(20,60,66,.22);--line-strong:rgba(20,60,66,.55);
+    --font-display:'Anton',Impact,sans-serif;--font-head:'Archivo',system-ui,sans-serif;--font-body:'IBM Plex Sans',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+  body{margin:0;background:radial-gradient(circle at 100% -2%, rgba(214,73,42,.06), transparent 38%),var(--paper);
+    color:var(--ink);font-family:var(--font-body);line-height:1.55;padding:clamp(16px,3.5vw,44px) clamp(12px,4vw,40px) 80px}
+  .wrap{max-width:1080px;margin:0 auto}
+  .top-rule{height:6px;background:var(--ink)}
+  .kicker{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-family:var(--font-head);font-weight:700;text-transform:uppercase;letter-spacing:.15em;font-size:11px;color:var(--ink-soft);padding:9px 2px;border-bottom:1px solid var(--line)}
+  .kicker .dot{color:var(--vermilion)}
+  h1{font-family:var(--font-display);font-weight:400;line-height:.92;font-size:clamp(24px,4.6vw,52px);margin:16px 0 8px;text-transform:uppercase;letter-spacing:.5px}
+  h1 .accent{color:var(--vermilion)}
+  .dek{font-size:clamp(15px,2vw,17.5px);color:var(--ink-soft);max-width:68ch;border-top:3px double var(--line-strong);padding-top:12px}
+  .dek b{color:var(--ink);font-weight:600}
+  nav.toc{position:sticky;top:0;z-index:20;background:rgba(231,225,210,.94);backdrop-filter:blur(6px);margin:18px 0 8px;padding:10px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  nav.toc ul{list-style:none;display:flex;gap:7px;flex-wrap:wrap;margin:0;padding:0}
+  nav.toc a{font-family:var(--font-head);font-weight:600;font-size:12px;text-decoration:none;color:var(--ink);border:1.5px solid var(--line-strong);border-radius:2px;padding:5px 10px;transition:background .12s,color .12s}
+  nav.toc a:hover{background:var(--ink);color:var(--surface)}
+  section{margin:38px 0 0;scroll-margin-top:64px}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:14px;border-bottom:2px solid var(--ink);padding-bottom:8px}
+  .sec-num{font-family:var(--font-display);font-size:clamp(26px,4vw,40px);color:var(--vermilion);line-height:.8}
+  .sec-head h2{font-family:var(--font-head);font-weight:800;font-size:clamp(18px,3vw,25px);margin:0;letter-spacing:-.01em}
+  p{margin:0 0 12px}.lead{font-size:16px}
+  strong,b{color:var(--ink);font-weight:600}.hl{color:var(--vermilion);font-weight:600}
+  ul.clean{margin:0 0 12px;padding-left:18px}ul.clean li{margin:5px 0}
+  .box{background:var(--surface);border:1.5px solid var(--ink);border-radius:3px;box-shadow:4px 4px 0 var(--ink);padding:16px 18px;margin:14px 0}
+  .grid2{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+  .bizu{border:1.5px dashed var(--green);background:rgba(60,110,71,.06);border-radius:3px;padding:13px 16px;margin:14px 0}
+  .bizu .tag{font-family:var(--font-head);font-weight:700;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--green);display:block;margin-bottom:5px}
+  .bizu b{color:var(--green)}
+  .trap{border:1.5px solid var(--vermilion);background:rgba(214,73,42,.05);border-radius:3px;padding:13px 16px;margin:14px 0}
+  .trap .tag{font-family:var(--font-head);font-weight:700;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--vermilion);display:block;margin-bottom:5px}
+  .note{border:1.5px solid var(--blue);background:rgba(44,90,116,.06);border-radius:3px;padding:13px 16px;margin:14px 0}
+  .note .tag{font-family:var(--font-head);font-weight:700;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--blue);display:block;margin-bottom:5px}
+  .tbl{width:100%;border-collapse:collapse;margin:14px 0;font-size:12.5px;background:var(--surface)}
+  .tbl th,.tbl td{border:1px solid var(--line-strong);padding:8px 10px;text-align:left;vertical-align:top}
+  .tbl thead th{background:var(--ink);color:var(--surface);font-family:var(--font-head);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.03em}
+  .tbl tbody th{background:var(--surface-2);font-family:var(--font-head);font-weight:700;white-space:nowrap}
+  .tbl-scroll{overflow-x:auto}
+  .time{margin:14px 0;border-left:3px solid var(--ink);padding-left:0}
+  .tevent{position:relative;padding:8px 0 8px 22px;margin-left:8px;border-left:1.5px solid var(--line-strong)}
+  .tevent::before{content:"";position:absolute;left:-7px;top:13px;width:12px;height:12px;background:var(--vermilion);border:2px solid var(--surface);border-radius:50%}
+  .tevent .yr{font-family:var(--font-display);color:var(--vermilion);font-size:16px;letter-spacing:.04em}
+  .tevent .ev{font-size:13.5px}
+  .tevent .ev b{color:var(--ink)}
+  .fc-grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));margin-top:14px}
+  .fc{background:var(--surface);border:1.5px solid var(--ink);border-radius:3px;box-shadow:4px 4px 0 var(--ink);padding:16px 17px;cursor:pointer;text-align:left;width:100%;font-family:var(--font-body);color:var(--ink);display:flex;flex-direction:column;gap:9px;transition:transform .12s,box-shadow .12s}
+  .fc:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--vermilion)}
+  .fc:focus-visible{outline:3px solid var(--vermilion);outline-offset:3px}
+  .fc .q{font-family:var(--font-head);font-weight:700;font-size:15px;line-height:1.28}
+  .fc .hint{font-family:var(--font-head);font-weight:600;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--vermilion)}
+  .fc .ans{font-size:13.5px;color:var(--ink-soft)}
+  .fc:not(.open) .ans{display:none}.fc.open .hint{display:none}
+  .case .q::before{content:"QUESTÃO ";font-family:var(--font-display);color:var(--vermilion);font-size:11px;letter-spacing:.08em}
+  footer{margin:46px 0 0;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--ink-soft)}
+  footer b{color:var(--ink)}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="top-rule"></div>
+    <div class="kicker">
+      <span>Saúde Coletiva <span class="dot">·</span> SUS &amp; Políticas</span>
+      <span>FGV · EBSERH · ENARE</span>
+    </div>
+    <h1>História das Políticas de Saúde &amp; <span class="accent">Reforma Sanitária</span></h1>
+    <p class="dek">A trajetória da saúde no Brasil: do <b>sanitarismo campanhista</b> e do seguro social (<b>CAPs e IAPs</b>) ao <b>INPS/INAMPS</b>, o <b>Movimento da Reforma Sanitária</b>, a <b>8ª CNS</b>, a <b>CF/88</b> e a criação do <b>SUS</b>. Guia objetivo com linha do tempo, bizus e questões.</p>
+  </header>
+
+  <nav class="toc" aria-label="Índice">
+    <ul>
+      <li><a href="#linha">Linha do tempo ★</a></li>
+      <li><a href="#campanhista">1 · Campanhista ★</a></li>
+      <li><a href="#vargas">2 · IAPs/Vargas ★</a></li>
+      <li><a href="#transicao">3 · MS 1953</a></li>
+      <li><a href="#ditadura">4 · INPS/INAMPS ★</a></li>
+      <li><a href="#antecessores">5 · Mov. sanitário ★</a></li>
+      <li><a href="#oitava">6 · 8ª CNS ★</a></li>
+      <li><a href="#cf88">7 · CF/88 &amp; SUS ★</a></li>
+      <li><a href="#los">8 · Leis 8.080 e 8.142 ★</a></li>
+      <li><a href="#principios">9 · Princípios do SUS ★</a></li>
+      <li><a href="#pos90">10 · Normatização</a></li>
+      <li><a href="#pegadinhas">11 · Pegadinhas</a></li>
+      <li><a href="#casos">12 · Questões ★</a></li>
+    </ul>
+  </nav>
+
+  <!-- TIMELINE -->
+  <section id="linha">
+    <div class="sec-head"><span class="sec-num">★</span><h2>Linha do tempo essencial</h2></div>
+    <div class="time">
+      <div class="tevent"><div class="yr">1904</div><div class="ev"><b>Revolta da Vacina</b> — modelo campanhista de Oswaldo Cruz (vacinação obrigatória contra a varíola).</div></div>
+      <div class="tevent"><div class="yr">1923</div><div class="ev"><b>Lei Eloy Chaves</b> — cria as <b>CAPs</b> (Caixas de Aposentadorias e Pensões). Marco da previdência, <b>por empresa</b>.</div></div>
+      <div class="tevent"><div class="yr">1930</div><div class="ev">Era Vargas — Ministério da Educação e Saúde; surgem os <b>IAPs</b> (Institutos), <b>por categoria profissional</b>.</div></div>
+      <div class="tevent"><div class="yr">1953</div><div class="ev">Criação do <b>Ministério da Saúde</b> (separado da Educação).</div></div>
+      <div class="tevent"><div class="yr">1966</div><div class="ev">Ditadura — unificação dos IAPs no <b>INPS</b> (centralização).</div></div>
+      <div class="tevent"><div class="yr">1976–79</div><div class="ev"><b>CEBES (1976)</b> e <b>ABRASCO (1979)</b> — base do Movimento da Reforma Sanitária.</div></div>
+      <div class="tevent"><div class="yr">1977</div><div class="ev"><b>INAMPS</b> — assistência médica previdenciária (lógica do seguro: só contribuinte).</div></div>
+      <div class="tevent"><div class="yr">1986</div><div class="ev"><b>8ª Conferência Nacional de Saúde</b> — marco da Reforma Sanitária (Sergio Arouca).</div></div>
+      <div class="tevent"><div class="yr">1988</div><div class="ev"><b>Constituição Cidadã</b> — saúde como direito de todos e dever do Estado; cria o <b>SUS</b>.</div></div>
+      <div class="tevent"><div class="yr">1990</div><div class="ev"><b>Leis 8.080 e 8.142</b> — Leis Orgânicas da Saúde, que organizam o SUS.</div></div>
+    </div>
+    <div class="bizu"><span class="tag">★ Bizu macro</span> A evolução do modelo: <b>campanhista</b> (saúde pública/coletiva) → <b>seguro social</b> (CAPs/IAPs/INPS/INAMPS, só para quem contribui) → <b>universal</b> (SUS, direito de todos). Esse é o fio condutor da prova.</div>
+  </section>
+
+  <!-- 1 -->
+  <section id="campanhista">
+    <div class="sec-head"><span class="sec-num">01</span><h2>República Velha — sanitarismo campanhista ★</h2></div>
+    <ul class="clean">
+      <li>Modelo <b>campanhista</b> e <b>policial</b> de <b>Oswaldo Cruz</b>: combate a epidemias (febre amarela, peste, varíola) com ações autoritárias e verticais.</li>
+      <li><b>Revolta da Vacina (1904)</b>: reação popular à vacinação obrigatória contra a varíola.</li>
+      <li>Economia agroexportadora (café): sanear os portos para não atrapalhar o comércio.</li>
+      <li><b>Lei Eloy Chaves (1923):</b> cria as <b>CAPs</b> — <span class="hl">por empresa</span>, financiadas por empregados e empregadores, <b>geridas pelo setor privado</b>. Começaram pelos <b>ferroviários</b>. Marco inicial da previdência social.</li>
+    </ul>
+    <div class="bizu"><span class="tag">★ Bizu</span> <b>CAPs = por empresa, privadas, Lei Eloy Chaves (1923).</b> É o primeiro elo da previdência atrelada ao trabalho — só o trabalhador formal tinha cobertura.</div>
+  </section>
+
+  <!-- 2 -->
+  <section id="vargas">
+    <div class="sec-head"><span class="sec-num">02</span><h2>Era Vargas — IAPs e seguro social ★</h2></div>
+    <ul class="clean">
+      <li>As CAPs são reorganizadas em <b>IAPs (Institutos de Aposentadorias e Pensões)</b> — agora <span class="hl">por categoria profissional</span> (IAPM marítimos, IAPB bancários, IAPI industriários…), <b>geridos pelo Estado</b>.</li>
+      <li>Lógica do <b>seguro social</b>: direito vinculado à contribuição/trabalho formal — a <b>“cidadania regulada”</b> (só era “cidadão” quem tinha carteira assinada).</li>
+      <li><b>Dicotomia</b> que marcará décadas: <b>saúde pública</b> (campanhas, Ministério) separada da <b>assistência médica previdenciária</b> (IAPs, curativa, individual).</li>
+    </ul>
+    <div class="trap"><span class="tag">⚠ Pegadinha clássica</span> <b>CAPs = por EMPRESA (privadas, 1923). IAPs = por CATEGORIA profissional (estatais, Vargas).</b> Trocar isso é o erro mais comum da prova.</div>
+  </section>
+
+  <!-- 3 -->
+  <section id="transicao">
+    <div class="sec-head"><span class="sec-num">03</span><h2>1953–1964 — Ministério da Saúde &amp; debate</h2></div>
+    <ul class="clean">
+      <li><b>1953:</b> criação do <b>Ministério da Saúde</b>, separando-se da Educação.</li>
+      <li>Expansão da assistência médica; início do debate sanitarista.</li>
+      <li><b>3ª Conferência Nacional de Saúde (1963):</b> já defendia <b>descentralização</b> e municipalização — interrompida pelo golpe de 1964.</li>
+    </ul>
+  </section>
+
+  <!-- 4 -->
+  <section id="ditadura">
+    <div class="sec-head"><span class="sec-num">04</span><h2>Ditadura militar — INPS &amp; INAMPS ★</h2></div>
+    <ul class="clean">
+      <li><b>1966 — INPS</b> (Instituto Nacional de Previdência Social): <b>unifica todos os IAPs</b>, centralizando a previdência. Mais arrecadação, mas exclusão de quem não contribuía.</li>
+      <li>Modelo <b>médico-assistencial privatista</b>: o Estado <b>compra serviços</b> do setor privado; assistência <b>hospitalocêntrica, curativa e individual</b>.</li>
+      <li><b>1977 — INAMPS</b> (Instituto Nacional de Assistência Médica da Previdência Social), dentro do <b>SINPAS</b>: presta assistência médica <span class="hl">apenas aos contribuintes</span> da previdência.</li>
+      <li>Crise do modelo (custos, fraudes, exclusão) abre espaço para a Reforma Sanitária.</li>
+    </ul>
+    <div class="bizu"><span class="tag">★ Bizu</span> Sequência da previdência: <b>CAPs → IAPs → INPS (1966) → INAMPS (1977)</b>. Até o SUS, valia a <b>lógica do seguro</b>: saúde como direito só de quem contribuía. O SUS rompe isso com a <b>universalidade</b>.</div>
+  </section>
+
+  <!-- 5 -->
+  <section id="antecessores">
+    <div class="sec-head"><span class="sec-num">05</span><h2>Movimento da Reforma Sanitária &amp; antecessores do SUS ★</h2></div>
+    <p>Nos anos 1970–80, em plena ditadura, nasce o <b>Movimento da Reforma Sanitária</b>: saúde como <b>direito de cidadania e dever do Estado</b>, com <b>conceito ampliado de saúde</b> (determinantes sociais — moradia, trabalho, alimentação, etc.).</p>
+    <ul class="clean">
+      <li><b>CEBES (1976)</b> — Centro Brasileiro de Estudos de Saúde: divulgação das ideias.</li>
+      <li><b>ABRASCO (1979)</b> — Associação Brasileira de Saúde Coletiva: base acadêmica.</li>
+      <li>Experiências descentralizadoras que prepararam o SUS: <b>PIASS (1976)</b> — interiorização; <b>AIS (1983)</b> — Ações Integradas de Saúde; <b>SUDS (1987)</b> — Sistemas Unificados e Descentralizados de Saúde.</li>
+    </ul>
+    <div class="note"><span class="tag">ℹ Conceito ampliado de saúde</span> Saúde não é só “ausência de doença”, mas resultado de condições de vida (alimentação, moradia, renda, educação, meio ambiente, trabalho, acesso a serviços). Esse conceito é a alma da Reforma Sanitária e aparece na 8ª CNS.</div>
+  </section>
+
+  <!-- 6 -->
+  <section id="oitava">
+    <div class="sec-head"><span class="sec-num">06</span><h2>8ª Conferência Nacional de Saúde (1986) ★</h2></div>
+    <ul class="clean">
+      <li><b>Marco da Reforma Sanitária</b>, presidida por <b>Sergio Arouca</b>; foi a primeira CNS <b>aberta à participação da sociedade</b>.</li>
+      <li>Três eixos: <b>saúde como direito de cidadania</b>; <b>reformulação do Sistema Nacional de Saúde</b> (criação de um sistema único); <b>financiamento</b> do setor.</li>
+      <li>Consolidou o <b>conceito ampliado de saúde</b> e serviu de <b>base para o capítulo da saúde na Constituinte</b>.</li>
+      <li>Originou a <b>Comissão Nacional da Reforma Sanitária</b>.</li>
+    </ul>
+    <div class="bizu"><span class="tag">★ Bizu</span> Se a questão citar <b>“1986 + Arouca + conceito ampliado + base do SUS”</b>, é a <b>8ª CNS</b>. É o evento mais cobrado do tema.</div>
+  </section>
+
+  <!-- 7 -->
+  <section id="cf88">
+    <div class="sec-head"><span class="sec-num">07</span><h2>Constituição de 1988 &amp; criação do SUS ★</h2></div>
+    <ul class="clean">
+      <li><b>“Constituição Cidadã”</b>: insere a saúde na <b>Seguridade Social</b> (saúde + previdência + assistência social).</li>
+      <li><b>Art. 196:</b> <span class="hl">“A saúde é direito de todos e dever do Estado”</span>, garantida mediante políticas que reduzam o risco de doença e o acesso <b>universal e igualitário</b>.</li>
+      <li>Cria o <b>SUS</b> (Arts. 196 a 200): rede regionalizada e hierarquizada, descentralizada, com atendimento integral e participação da comunidade.</li>
+      <li>A assistência à saúde é <b>livre à iniciativa privada</b>, que pode participar do SUS de forma <b>complementar</b> (preferência a entidades filantrópicas/sem fins lucrativos).</li>
+    </ul>
+    <div class="trap"><span class="tag">⚠ Pegadinha</span> A saúde é <b>“direito de todos e dever do Estado”</b> — universal, independentemente de contribuição. É a ruptura com a lógica do seguro (INAMPS). O <b>INAMPS só foi extinto em 1993</b> (Lei 8.689), já depois da criação do SUS.</div>
+  </section>
+
+  <!-- 8 -->
+  <section id="los">
+    <div class="sec-head"><span class="sec-num">08</span><h2>Leis Orgânicas da Saúde — 8.080 e 8.142 ★</h2></div>
+    <div class="tbl-scroll">
+    <table class="tbl">
+      <thead><tr><th>Lei</th><th>Do que trata</th></tr></thead>
+      <tbody>
+        <tr><th>Lei nº 8.080/1990</th><td><b>Organização e funcionamento</b> do SUS: princípios e diretrizes, competências das esferas, vigilância, assistência. É a “lei-mãe” do SUS.</td></tr>
+        <tr><th>Lei nº 8.142/1990</th><td><b>Participação da comunidade</b> (Conselhos e Conferências de Saúde) e <b>transferências intergovernamentais</b> de recursos (financiamento).</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="bizu"><span class="tag">★ Bizu</span> A <b>8.142</b> nasceu para <b>suprir os vetos</b> do presidente à 8.080 (justamente <b>participação social</b> e <b>repasse de recursos</b>). Decore: <b>8.080 = organização; 8.142 = participação + dinheiro</b>.</div>
+    <div class="note"><span class="tag">ℹ Controle social (8.142)</span> <b>Conselho de Saúde:</b> permanente, deliberativo, <b>paritário</b> — 50% usuários e 50% (trabalhadores + gestores + prestadores). <b>Conferência de Saúde:</b> a cada <b>4 anos</b>, avalia e propõe diretrizes. Existem nas três esferas (nacional, estadual, municipal).</div>
+  </section>
+
+  <!-- 9 -->
+  <section id="principios">
+    <div class="sec-head"><span class="sec-num">09</span><h2>Princípios e diretrizes do SUS ★</h2></div>
+    <div class="grid2">
+      <div class="box"><p><b>Doutrinários</b> (os “valores”)</p>
+        <ul class="clean" style="margin:0">
+          <li><b>Universalidade:</b> saúde é direito de todos, sem distinção.</li>
+          <li><b>Integralidade:</b> ações de promoção, prevenção e recuperação; ver o indivíduo como um todo.</li>
+          <li><b>Equidade:</b> tratar desigualmente os desiguais — mais a quem mais precisa.</li>
+        </ul></div>
+      <div class="box"><p><b>Organizativos</b> (o “como funciona”)</p>
+        <ul class="clean" style="margin:0">
+          <li><b>Descentralização</b> (com direção única em cada esfera) → municipalização.</li>
+          <li><b>Regionalização e hierarquização</b> (rede por níveis de complexidade).</li>
+          <li><b>Participação da comunidade</b> (controle social).</li>
+        </ul></div>
+    </div>
+    <div class="bizu"><span class="tag">★ Bizu</span> Doutrinários = <b>“U-I-E”</b> (Universalidade, Integralidade, Equidade). Organizativos = <b>descentralização, regionalização/hierarquização, participação</b>. <b>Equidade não está escrita literalmente na CF</b> (vem da “igualdade” + diretrizes), mas é princípio doutrinário consagrado.</div>
+  </section>
+
+  <!-- 10 -->
+  <section id="pos90">
+    <div class="sec-head"><span class="sec-num">10</span><h2>Normatização do SUS (pós-1990)</h2></div>
+    <div class="tbl-scroll">
+    <table class="tbl">
+      <thead><tr><th>Marco</th><th>Foco</th></tr></thead>
+      <tbody>
+        <tr><th>NOBs (1991, 1993, 1996)</th><td>Normas Operacionais Básicas — <b>descentralização e municipalização</b> da gestão.</td></tr>
+        <tr><th>NOAS (2001/2002)</th><td>Norma Operacional de Assistência à Saúde — <b>regionalização</b>.</td></tr>
+        <tr><th>Pacto pela Saúde (2006)</th><td>Pacto <b>pela Vida</b>, <b>em Defesa do SUS</b> e <b>de Gestão</b>.</td></tr>
+        <tr><th>Decreto nº 7.508/2011</th><td>Regulamenta a Lei 8.080: <b>regiões de saúde, RAS, RENASES, RENAME e COAP</b>.</td></tr>
+        <tr><th>LC nº 141/2012</th><td><b>Financiamento</b> — define percentuais mínimos de aplicação em saúde (União, estados, municípios).</td></tr>
+      </tbody>
+    </table>
+    </div>
+  </section>
+
+  <!-- 11 -->
+  <section id="pegadinhas">
+    <div class="sec-head"><span class="sec-num">11</span><h2>Pegadinhas consolidadas</h2></div>
+    <div class="trap"><span class="tag">⚠ Top pegadinhas</span>
+      <ul class="clean" style="margin:0">
+        <li><b>CAPs</b> = por empresa, privadas (Lei Eloy Chaves, <b>1923</b>); <b>IAPs</b> = por categoria, estatais (Vargas).</li>
+        <li>Sequência: <b>CAPs → IAPs → INPS (1966) → INAMPS (1977)</b>.</li>
+        <li><b>INAMPS</b> atendia só contribuintes; foi extinto em <b>1993</b> (depois do SUS).</li>
+        <li><b>8ª CNS (1986)</b> = Arouca + conceito ampliado + base do SUS.</li>
+        <li><b>Ministério da Saúde</b> criado em <b>1953</b> (não em 1930 — em 1930 era Educação e Saúde juntos).</li>
+        <li><b>CF/88, Art. 196:</b> “saúde é direito de todos e dever do Estado”.</li>
+        <li><b>8.080</b> = organização/funcionamento; <b>8.142</b> = participação social + financiamento (supriu vetos).</li>
+        <li>Doutrinários = <b>universalidade, integralidade, equidade</b>; organizativos = descentralização, regionalização/hierarquização, participação.</li>
+        <li><b>Conselho</b> é deliberativo e paritário (50% usuários); <b>Conferência</b> a cada 4 anos.</li>
+        <li>Privado participa do SUS de forma <b>complementar</b> (preferência aos filantrópicos).</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 12 -->
+  <section id="casos">
+    <div class="sec-head"><span class="sec-num">12</span><h2>Questões — autoteste ★</h2></div>
+    <p>Leia, responda e clique para conferir.</p>
+    <div class="fc-grid" id="caseGrid"></div>
+  </section>
+
+  <footer>
+    <b>Fontes-base:</b> história das políticas públicas de saúde no Brasil; Lei Eloy Chaves (1923); 8ª Conferência Nacional de Saúde (1986); Constituição Federal de 1988 (Arts. 196–200); Leis nº 8.080/1990 e 8.142/1990; Decreto 7.508/2011; literatura de saúde coletiva (Bertolli Filho; Paim). Material de revisão — confronte com o edital e a bibliografia da sua banca (FGV, EBSERH, ENARE).
+  </footer>
+
+</div>
+
+<script>
+  const cases = [
+    {q:"A Lei Eloy Chaves (1923) é considerada o marco inicial de quê, e qual estrutura ela criou?", a:"Marco inicial da previdência social no Brasil. Criou as CAPs (Caixas de Aposentadorias e Pensões), organizadas por empresa, financiadas por empregados e empregadores e geridas pelo setor privado — começando pelos ferroviários."},
+    {q:"Qual a diferença fundamental entre as CAPs e os IAPs?", a:"As CAPs eram organizadas por empresa e geridas de forma privada (1923); os IAPs (Era Vargas) eram organizados por categoria profissional e geridos pelo Estado. É a troca mais cobrada nas provas."},
+    {q:"Em que ano foi criado o Ministério da Saúde como pasta independente?", a:"Em 1953, quando se separou do Ministério da Educação e Saúde (criado em 1930). Atenção: 1930 ainda era Educação e Saúde juntos."},
+    {q:"O que foi o INPS (1966) e qual sua lógica?", a:"Instituto Nacional de Previdência Social, que unificou todos os IAPs durante a ditadura, centralizando a previdência. Mantinha a lógica do seguro: cobertura apenas para os trabalhadores contribuintes."},
+    {q:"Qual instituto, criado em 1977, prestava assistência médica apenas aos contribuintes da previdência, e quando foi extinto?", a:"O INAMPS (Instituto Nacional de Assistência Médica da Previdência Social), dentro do SINPAS. Foi extinto em 1993 (Lei 8.689), já após a criação do SUS, que universalizou o direito à saúde."},
+    {q:"Qual evento de 1986 é o grande marco do Movimento da Reforma Sanitária e por quê?", a:"A 8ª Conferência Nacional de Saúde, presidida por Sergio Arouca. Consolidou o conceito ampliado de saúde, defendeu a saúde como direito de cidadania e serviu de base para o capítulo da saúde na Constituição de 1988."},
+    {q:"O que significa 'conceito ampliado de saúde'?", a:"A ideia de que saúde não é apenas ausência de doença, mas resultado das condições de vida — alimentação, moradia, renda, educação, trabalho, meio ambiente e acesso a serviços (determinantes sociais). É a base da Reforma Sanitária."},
+    {q:"O que estabelece o Art. 196 da Constituição de 1988?", a:"Que 'a saúde é direito de todos e dever do Estado', garantida por políticas que reduzam o risco de doença e por acesso universal e igualitário às ações e serviços. Rompe com a lógica do seguro (contribuição)."},
+    {q:"Diferencie o objeto das Leis 8.080/1990 e 8.142/1990.", a:"A 8.080 trata da organização e funcionamento do SUS (princípios, diretrizes, competências). A 8.142 trata da participação da comunidade (conselhos e conferências) e das transferências de recursos. A 8.142 supriu os vetos feitos à 8.080."},
+    {q:"Quais são os princípios doutrinários do SUS?", a:"Universalidade (saúde como direito de todos), integralidade (ações de promoção, prevenção e recuperação, vendo o indivíduo como um todo) e equidade (tratar desigualmente os desiguais, priorizando quem mais precisa)."},
+    {q:"Quais são os princípios organizativos do SUS?", a:"Descentralização com direção única em cada esfera (municipalização), regionalização e hierarquização da rede (por níveis de complexidade) e participação da comunidade (controle social)."},
+    {q:"Como é a composição e a periodicidade dos Conselhos e Conferências de Saúde (Lei 8.142)?", a:"O Conselho de Saúde é permanente, deliberativo e paritário (50% de usuários; os outros 50% entre trabalhadores, gestores e prestadores). A Conferência de Saúde ocorre a cada 4 anos para avaliar e propor diretrizes. Ambos existem nas três esferas."},
+    {q:"Como o setor privado pode participar do SUS, segundo a CF/88?", a:"De forma complementar, quando a rede pública for insuficiente, mediante contrato ou convênio de direito público, com preferência às entidades filantrópicas e sem fins lucrativos."},
+    {q:"Cite duas experiências descentralizadoras dos anos 1980 que anteciparam o SUS.", a:"As AIS (Ações Integradas de Saúde, 1983) e o SUDS (Sistemas Unificados e Descentralizados de Saúde, 1987) — além do PIASS (1976) de interiorização. Foram estratégias de integração e descentralização que prepararam o terreno para o SUS."},
+    {q:"Que modelo de atenção predominou na ditadura militar e como era caracterizado?", a:"O modelo médico-assistencial privatista: o Estado comprava serviços do setor privado, com assistência hospitalocêntrica, curativa e individual, voltada aos contribuintes da previdência (INPS/INAMPS)."},
+    {q:"Resuma, em uma frase, a evolução do modelo de saúde brasileiro até o SUS.", a:"Do sanitarismo campanhista (saúde pública/coletiva) ao modelo de seguro social restrito aos contribuintes (CAPs, IAPs, INPS, INAMPS) e, com a Reforma Sanitária e a CF/88, ao sistema universal e igualitário (SUS)."}
+  ];
+  const grid = document.getElementById('caseGrid');
+  cases.forEach(c=>{
+    const b=document.createElement('button');b.className='fc case';b.type='button';
+    b.innerHTML=`<span class="q">${c.q}</span><span class="hint">Ver resposta</span><span class="ans">${c.a}</span>`;
+    b.addEventListener('click',()=>b.classList.toggle('open'));
+    grid.appendChild(b);
+  });
+</script>
+</body>
+</html>

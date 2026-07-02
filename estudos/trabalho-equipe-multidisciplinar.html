@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Trabalho em Equipe Multidisciplinar — Guia de revisão</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@500;600;700;800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#E7E1D2;--surface:#FBF8F0;--surface-2:#F3EEE1;
+    --ink:#143C42;--ink-soft:#4E5F5C;--vermilion:#D6492A;--ochre:#B98220;--green:#3C6E47;--blue:#2C5A74;
+    --line:rgba(20,60,66,.22);--line-strong:rgba(20,60,66,.55);
+    --font-display:'Anton',Impact,sans-serif;--font-head:'Archivo',system-ui,sans-serif;--font-body:'IBM Plex Sans',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+  body{margin:0;background:radial-gradient(circle at 100% -2%, rgba(214,73,42,.06), transparent 38%),var(--paper);
+    color:var(--ink);font-family:var(--font-body);line-height:1.55;padding:clamp(16px,3.5vw,44px) clamp(12px,4vw,40px) 80px}
+  .wrap{max-width:1080px;margin:0 auto}
+  .top-rule{height:6px;background:var(--ink)}
+  .kicker{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-family:var(--font-head);font-weight:700;text-transform:uppercase;letter-spacing:.15em;font-size:11px;color:var(--ink-soft);padding:9px 2px;border-bottom:1px solid var(--line)}
+  .kicker .dot{color:var(--vermilion)}
+  h1{font-family:var(--font-display);font-weight:400;line-height:.92;font-size:clamp(25px,4.6vw,52px);margin:16px 0 8px;text-transform:uppercase;letter-spacing:.5px}
+  h1 .accent{color:var(--vermilion)}
+  .dek{font-size:clamp(15px,2vw,17.5px);color:var(--ink-soft);max-width:68ch;border-top:3px double var(--line-strong);padding-top:12px}
+  .dek b{color:var(--ink);font-weight:600}
+  nav.toc{position:sticky;top:0;z-index:20;background:rgba(231,225,210,.94);backdrop-filter:blur(6px);margin:18px 0 8px;padding:10px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  nav.toc ul{list-style:none;display:flex;gap:7px;flex-wrap:wrap;margin:0;padding:0}
+  nav.toc a{font-family:var(--font-head);font-weight:600;font-size:12px;text-decoration:none;color:var(--ink);border:1.5px solid var(--line-strong);border-radius:2px;padding:5px 10px;transition:background .12s,color .12s}
+  nav.toc a:hover{background:var(--ink);color:var(--surface)}
+  section{margin:38px 0 0;scroll-margin-top:64px}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:14px;border-bottom:2px solid var(--ink);padding-bottom:8px}
+  .sec-num{font-family:var(--font-display);font-size:clamp(26px,4vw,40px);color:var(--vermilion);line-height:.8}
+  .sec-head h2{font-family:var(--font-head);font-weight:800;font-size:clamp(18px,3vw,25px);margin:0;letter-spacing:-.01em}
+  p{margin:0 0 12px}.lead{font-size:16px}
+  strong,b{color:var(--ink);font-weight:600}.hl{color:var(--vermilion);font-weight:600}
+  ul.clean{margin:0 0 12px;padding-left:18px}ul.clean li{margin:5px 0}
+  .box{background:var(--surface);border:1.5px solid var(--ink);border-radius:3px;box-shadow:4px 4px 0 var(--ink);padding:16px 18px;margin:14px 0}
+  .grid2{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+  .pillars{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));margin:14px 0}
+  .pillar{background:var(--surface);border:1.5px solid var(--ink);border-radius:3px;box-shadow:3px 3px 0 var(--ink);padding:13px 15px}
+  .pillar h4{font-family:var(--font-head);font-weight:700;margin:0 0 4px;font-size:14px;color:var(--vermilion)}
+  .pillar p{margin:0;font-size:12px;color:var(--ink-soft)}
+  .bizu{border:1.5px dashed var(--green);background:rgba(60,110,71,.06);border-radius:3px;padding:13px 16px;margin:14px 0}
+  .bizu .tag{font-family:var(--font-head);font-weight:700;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--green);display:block;margin-bottom:5px}
+  .bizu b{color:var(--green)}
+  .trap{border:1.5px solid var(--vermilion);background:rgba(214,73,42,.05);border-radius:3px;padding:13px 16px;margin:14px 0}
+  .trap .tag{font-family:var(--font-head);font-weight:700;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--vermilion);display:block;margin-bottom:5px}
+  .note{border:1.5px solid var(--blue);background:rgba(44,90,116,.06);border-radius:3px;padding:13px 16px;margin:14px 0}
+  .note .tag{font-family:var(--font-head);font-weight:700;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--blue);display:block;margin-bottom:5px}
+  .tbl{width:100%;border-collapse:collapse;margin:14px 0;font-size:12.5px;background:var(--surface)}
+  .tbl th,.tbl td{border:1px solid var(--line-strong);padding:8px 10px;text-align:left;vertical-align:top}
+  .tbl thead th{background:var(--ink);color:var(--surface);font-family:var(--font-head);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.03em}
+  .tbl tbody th{background:var(--surface-2);font-family:var(--font-head);font-weight:700;white-space:nowrap}
+  .tbl-scroll{overflow-x:auto}
+  .fc-grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));margin-top:14px}
+  .fc{background:var(--surface);border:1.5px solid var(--ink);border-radius:3px;box-shadow:4px 4px 0 var(--ink);padding:16px 17px;cursor:pointer;text-align:left;width:100%;font-family:var(--font-body);color:var(--ink);display:flex;flex-direction:column;gap:9px;transition:transform .12s,box-shadow .12s}
+  .fc:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--vermilion)}
+  .fc:focus-visible{outline:3px solid var(--vermilion);outline-offset:3px}
+  .fc .q{font-family:var(--font-head);font-weight:700;font-size:15px;line-height:1.28}
+  .fc .hint{font-family:var(--font-head);font-weight:600;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--vermilion)}
+  .fc .ans{font-size:13.5px;color:var(--ink-soft)}
+  .fc:not(.open) .ans{display:none}.fc.open .hint{display:none}
+  .case .q::before{content:"QUESTÃO ";font-family:var(--font-display);color:var(--vermilion);font-size:11px;letter-spacing:.08em}
+  footer{margin:46px 0 0;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--ink-soft)}
+  footer b{color:var(--ink)}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="top-rule"></div>
+    <div class="kicker">
+      <span>Saúde Coletiva <span class="dot">·</span> Trabalho em Saúde</span>
+      <span>FGV · EBSERH · ENARE</span>
+    </div>
+    <h1>Trabalho em Equipe <span class="accent">Multidisciplinar</span></h1>
+    <p class="dek">Como as profissões se articulam para um cuidado integral: <b>multi × inter × transdisciplinaridade</b>, a tipologia de <b>Peduzzi</b> (equipe agrupamento × integração), <b>núcleo × campo</b> (Campos), a <b>educação interprofissional</b> e o <b>apoio matricial</b>. Guia objetivo com bizus, tabelas e questões.</p>
+  </header>
+
+  <nav class="toc" aria-label="Índice">
+    <ul>
+      <li><a href="#porque">1 · Por que equipe ★</a></li>
+      <li><a href="#disciplinas">2 · Multi/inter/trans ★★</a></li>
+      <li><a href="#peduzzi">3 · Peduzzi ★★</a></li>
+      <li><a href="#campos">4 · Núcleo × campo ★</a></li>
+      <li><a href="#eip">5 · Interprofissional ★</a></li>
+      <li><a href="#matricial">6 · Apoio matricial ★</a></li>
+      <li><a href="#comunicacao">7 · Comunicação/conflito</a></li>
+      <li><a href="#pegadinhas">8 · Pegadinhas</a></li>
+      <li><a href="#casos">9 · Questões ★</a></li>
+    </ul>
+  </nav>
+
+  <!-- 1 -->
+  <section id="porque">
+    <div class="sec-head"><span class="sec-num">01</span><h2>Por que trabalhar em equipe ★</h2></div>
+    <ul class="clean">
+      <li>O cuidado em saúde é <b>complexo</b> e multidimensional: nenhuma profissão isolada dá conta da <b>integralidade</b>.</li>
+      <li>A equipe articula diferentes <b>saberes e práticas</b> em torno de um <b>projeto comum</b> centrado no usuário.</li>
+      <li>Melhora a <b>qualidade e a segurança</b> do cuidado, a resolutividade e a satisfação de usuários e trabalhadores.</li>
+    </ul>
+    <div class="bizu"><span class="tag">★ Bizu</span> O trabalho em equipe é a base de dispositivos como <b>ESF, eMulti, RAPS e o PTS</b>. A finalidade não é “somar profissões”, mas <b>integrar o cuidado</b> em torno das necessidades do usuário.</div>
+  </section>
+
+  <!-- 2 -->
+  <section id="disciplinas">
+    <div class="sec-head"><span class="sec-num">02</span><h2>Multi × inter × transdisciplinaridade ★★</h2></div>
+    <div class="tbl-scroll">
+    <table class="tbl">
+      <thead><tr><th>Tipo</th><th>Como as disciplinas se relacionam</th></tr></thead>
+      <tbody>
+        <tr><th>Multidisciplinaridade</th><td>Várias disciplinas atuam <b>em paralelo/justapostas</b>, cada uma no seu saber, <b>sem integração</b>. Soma de olhares.</td></tr>
+        <tr><th>Interdisciplinaridade</th><td><b>Interação e integração</b> entre as disciplinas: troca, articulação e construção conjunta de um projeto.</td></tr>
+        <tr><th>Transdisciplinaridade</th><td><b>Ultrapassa</b> as fronteiras das disciplinas (“através e além”): uma perspectiva integradora que dissolve os limites entre os saberes.</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="trap"><span class="tag">⚠ Pegadinha</span> <b>Multi</b> = justaposição (lado a lado, sem integrar); <b>inter</b> = integração/troca; <b>trans</b> = além das fronteiras. “Equipe <b>multi</b>profissional” se refere à <b>composição</b> (várias profissões); a <b>prática interprofissional</b> é o <b>modo colaborativo</b> de atuar.</div>
+  </section>
+
+  <!-- 3 -->
+  <section id="peduzzi">
+    <div class="sec-head"><span class="sec-num">03</span><h2>Peduzzi — agrupamento × integração ★★</h2></div>
+    <p>Tipologia clássica de <b>Marina Peduzzi</b> para as equipes de saúde:</p>
+    <div class="grid2">
+      <div class="box"><p><b>Equipe agrupamento</b></p>
+        <ul class="clean" style="margin:0">
+          <li><b>Justaposição</b> das ações; cada um faz a sua parte.</li>
+          <li><b>Fragmentação</b> e pouca articulação.</li>
+          <li>Comunicação restrita ao estritamente técnico.</li>
+        </ul></div>
+      <div class="box"><p><b>Equipe integração</b></p>
+        <ul class="clean" style="margin:0">
+          <li><b>Articulação</b> das ações e dos saberes.</li>
+          <li><b>Projeto assistencial comum</b> e flexibilidade da divisão do trabalho.</li>
+          <li><b>Comunicação</b> intrínseca ao trabalho; interdependência + autonomia técnica.</li>
+        </ul></div>
+    </div>
+    <div class="bizu"><span class="tag">★ Bizu</span> O ideal buscado é a <b>equipe integração</b> (comunicação + projeto comum + articulação), em oposição à <b>equipe agrupamento</b> (soma fragmentada). A <b>comunicação</b> é o elemento-chave que diferencia as duas.</div>
+  </section>
+
+  <!-- 4 -->
+  <section id="campos">
+    <div class="sec-head"><span class="sec-num">04</span><h2>Núcleo × campo de competência ★</h2></div>
+    <p>Conceitos de <b>Gastão Wagner de Sousa Campos</b>:</p>
+    <div class="grid2">
+      <div class="box"><p><b>Núcleo</b></p><p>Saberes e responsabilidades <b>específicos</b> de cada profissão — a identidade profissional (ex.: o ato exclusivo do farmacêutico).</p></div>
+      <div class="box"><p><b>Campo</b></p><p>Saberes e responsabilidades <b>comuns/compartilhados</b> por várias profissões (ex.: acolhimento, educação em saúde, escuta).</p></div>
+    </div>
+    <div class="bizu"><span class="tag">★ Bizu</span> <b>Núcleo</b> = o que é só seu; <b>campo</b> = o que é de todos. A boa equipe respeita os <b>núcleos</b> e amplia o <b>campo</b> compartilhado — base da interdependência sem perder a autonomia técnica.</div>
+  </section>
+
+  <!-- 5 -->
+  <section id="eip">
+    <div class="sec-head"><span class="sec-num">05</span><h2>Educação interprofissional &amp; prática colaborativa ★</h2></div>
+    <ul class="clean">
+      <li><b>Educação Interprofissional (EIP):</b> ocorre quando estudantes/profissionais de <b>duas ou mais profissões</b> aprendem <b>com, sobre e entre si</b>, para melhorar a colaboração e a qualidade do cuidado (referencial da <b>OMS</b>, 2010).</li>
+      <li><b>Prática colaborativa:</b> múltiplos profissionais de diferentes formações prestam cuidado integral <b>trabalhando juntos</b> com usuários, famílias e comunidades.</li>
+    </ul>
+    <p><b>4 domínios de competências colaborativas:</b></p>
+    <div class="pillars">
+      <div class="pillar"><h4>Valores e ética</h4><p>Respeito mútuo e cuidado centrado no usuário.</p></div>
+      <div class="pillar"><h4>Papéis e responsabilidades</h4><p>Conhecer o próprio papel e o do outro.</p></div>
+      <div class="pillar"><h4>Comunicação</h4><p>Comunicação clara e responsiva entre as profissões.</p></div>
+      <div class="pillar"><h4>Trabalho em equipe</h4><p>Cooperação, liderança compartilhada e resolução de conflitos.</p></div>
+    </div>
+    <div class="trap"><span class="tag">⚠ Pegadinha</span> EIP não é “cada profissão estuda em sala separada”: é <b>aprender em conjunto</b>, uns <b>com</b> os outros, <b>sobre</b> os outros e <b>entre</b> si. Conecta-se à <b>Educação Permanente em Saúde</b> e à residência multiprofissional.</div>
+  </section>
+
+  <!-- 6 -->
+  <section id="matricial">
+    <div class="sec-head"><span class="sec-num">06</span><h2>Apoio matricial / matriciamento ★</h2></div>
+    <ul class="clean">
+      <li>Arranjo de <b>Campos &amp; Domitti</b>: uma <b>equipe de referência</b> (responsável pelo caso) recebe <b>retaguarda</b> de <b>apoiadores matriciais</b> (especialistas).</li>
+      <li>Dois tipos de suporte: <b>assistencial</b> (ações conjuntas, atendimento compartilhado) e <b>técnico-pedagógico</b> (qualificar a equipe).</li>
+      <li>É a lógica das <b>eMulti</b> (ex-NASF) na Atenção Primária e dos CAPS na RAPS.</li>
+    </ul>
+    <div class="bizu"><span class="tag">★ Bizu</span> Apoio matricial <b>≠</b> simples encaminhamento: o especialista <b>compartilha</b> o cuidado e <b>capacita</b> a equipe de referência, ampliando a resolutividade sem fragmentar o vínculo.</div>
+  </section>
+
+  <!-- 7 -->
+  <section id="comunicacao">
+    <div class="sec-head"><span class="sec-num">07</span><h2>Comunicação, conflito &amp; PTS</h2></div>
+    <ul class="clean">
+      <li><b>Comunicação</b> é o coração da equipe: reuniões, passagem de plantão estruturada (ex.: <b>SBAR</b>) e registro compartilhado.</li>
+      <li><b>Projeto Terapêutico Singular (PTS):</b> instrumento construído <b>coletivamente</b> pela equipe para casos complexos — materializa o trabalho integrado.</li>
+      <li><b>Conflitos</b> são naturais (diferenças de poder, hierarquia, corporativismo); a gestão construtiva e a <b>liderança compartilhada</b>/horizontalidade os transformam em aprendizado.</li>
+    </ul>
+    <div class="note"><span class="tag">ℹ Para o farmacêutico</span> Na equipe, o farmacêutico contribui com seu <b>núcleo</b> (cuidado farmacêutico, conciliação, uso racional) e atua no <b>campo</b> compartilhado (educação, acolhimento, PTS), integrando-se à eMulti e ao NSP.</div>
+  </section>
+
+  <!-- 8 -->
+  <section id="pegadinhas">
+    <div class="sec-head"><span class="sec-num">08</span><h2>Pegadinhas consolidadas</h2></div>
+    <div class="trap"><span class="tag">⚠ Top pegadinhas</span>
+      <ul class="clean" style="margin:0">
+        <li><b>Multi</b> (justaposição) × <b>inter</b> (integração) × <b>trans</b> (além das fronteiras).</li>
+        <li>“Equipe <b>multiprofissional</b>” = composição; “prática <b>interprofissional</b>” = modo colaborativo.</li>
+        <li><b>Peduzzi:</b> equipe <b>agrupamento</b> (fragmentada) × <b>integração</b> (articulada, com comunicação e projeto comum).</li>
+        <li><b>Campos:</b> <b>núcleo</b> (específico) × <b>campo</b> (compartilhado).</li>
+        <li><b>EIP (OMS):</b> aprender <b>com, sobre e entre</b> as profissões.</li>
+        <li>4 competências colaborativas: <b>valores/ética, papéis, comunicação, trabalho em equipe</b>.</li>
+        <li><b>Apoio matricial</b> = retaguarda + capacitação; não é encaminhamento.</li>
+        <li>A <b>comunicação</b> é o que diferencia agrupamento de integração.</li>
+        <li><b>PTS</b> é instrumento de cuidado <b>coletivo</b> da equipe.</li>
+        <li>Interdependência <b>não anula</b> a autonomia técnica de cada núcleo.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 9 -->
+  <section id="casos">
+    <div class="sec-head"><span class="sec-num">09</span><h2>Questões — autoteste ★</h2></div>
+    <p>Leia, responda e clique para conferir.</p>
+    <div class="fc-grid" id="caseGrid"></div>
+  </section>
+
+  <footer>
+    <b>Fontes-base:</b> Peduzzi, M. — equipe agrupamento × integração (2001); Campos, G. W. S. — núcleo e campo, apoio matricial (Campos &amp; Domitti, 2007); Marco para Ação em Educação Interprofissional e Prática Colaborativa (OMS, 2010); competências para a prática colaborativa (IPEC/CAIPE); Política Nacional de Humanização e Política Nacional de Educação Permanente em Saúde. Material de revisão — confronte com o edital e a bibliografia da sua banca (FGV, EBSERH, ENARE).
+  </footer>
+
+</div>
+
+<script>
+  const cases = [
+    {q:"Qual a diferença entre multidisciplinaridade, interdisciplinaridade e transdisciplinaridade?", a:"Na multidisciplinaridade, várias disciplinas atuam em paralelo e justapostas, sem integração. Na interdisciplinaridade há interação, troca e construção conjunta entre as disciplinas. Na transdisciplinaridade ultrapassam-se as fronteiras entre os saberes, numa perspectiva integradora que vai 'através e além' das disciplinas."},
+    {q:"Qual a diferença entre 'equipe multiprofissional' e 'prática interprofissional'?", a:"Equipe multiprofissional refere-se à composição: a presença de profissionais de várias formações. Prática interprofissional refere-se ao modo de atuar: profissionais que colaboram, integram saberes e compartilham decisões. É possível ter uma equipe multiprofissional que atua de forma fragmentada (sem ser interprofissional)."},
+    {q:"Segundo Peduzzi, qual a diferença entre equipe agrupamento e equipe integração?", a:"Na equipe agrupamento há justaposição e fragmentação das ações, com comunicação restrita ao estritamente técnico. Na equipe integração há articulação das ações e dos saberes, projeto assistencial comum, flexibilidade na divisão do trabalho e comunicação intrínseca ao trabalho. O ideal buscado é a equipe integração."},
+    {q:"Qual elemento é central para diferenciar a equipe integração da equipe agrupamento?", a:"A comunicação. Na equipe integração, a comunicação é intrínseca ao processo de trabalho e sustenta a articulação das ações e a construção de um projeto comum; na equipe agrupamento, ela se restringe ao mínimo técnico."},
+    {q:"O que são núcleo e campo de competência, segundo Campos?", a:"Núcleo é o conjunto de saberes e responsabilidades específicos de cada profissão, que define sua identidade. Campo é o conjunto de saberes e responsabilidades comuns, compartilhados por várias profissões. A boa equipe respeita os núcleos e amplia o campo compartilhado."},
+    {q:"Como a OMS define a educação interprofissional (EIP)?", a:"A EIP ocorre quando estudantes ou profissionais de duas ou mais profissões aprendem com, sobre e entre si, com o objetivo de melhorar a colaboração e a qualidade do cuidado em saúde. É a base para o desenvolvimento da prática colaborativa."},
+    {q:"Quais são os quatro domínios de competências para a prática colaborativa?", a:"Valores e ética (respeito mútuo e cuidado centrado no usuário); papéis e responsabilidades (conhecer o próprio papel e o do outro); comunicação interprofissional; e trabalho em equipe (cooperação, liderança compartilhada e gestão de conflitos)."},
+    {q:"O que é o apoio matricial e como se diferencia do encaminhamento?", a:"É um arranjo em que uma equipe de referência, responsável pelo caso, recebe retaguarda de apoiadores matriciais (especialistas), que oferecem suporte assistencial (cuidado compartilhado) e técnico-pedagógico (qualificação da equipe). Diferente do encaminhamento, o especialista compartilha o cuidado e capacita a equipe, sem romper o vínculo."},
+    {q:"Que dispositivos do SUS são exemplos de apoio matricial?", a:"As Equipes Multiprofissionais na Atenção Primária (eMulti, antigo NASF), que apoiam as equipes de Saúde da Família, e os CAPS na Rede de Atenção Psicossocial, que matriciam a atenção em saúde mental no território."},
+    {q:"O que é o Projeto Terapêutico Singular no contexto do trabalho em equipe?", a:"É um conjunto de propostas e condutas terapêuticas para um sujeito ou família, construído coletivamente pela equipe interdisciplinar a partir da discussão do caso. Materializa o trabalho integrado e o cuidado compartilhado, especialmente em situações complexas."},
+    {q:"Por que conflitos são esperados em equipes e como devem ser tratados?", a:"Porque há diferenças de poder, hierarquia, formação e, por vezes, corporativismo entre as profissões. Devem ser tratados de forma construtiva, com diálogo, liderança compartilhada e horizontalidade, transformando as divergências em oportunidade de aprendizado e melhoria do cuidado."},
+    {q:"A interdependência entre os profissionais anula a autonomia técnica de cada um?", a:"Não. A boa equipe combina interdependência (articulação e cuidado compartilhado) com a preservação da autonomia técnica de cada núcleo profissional. Integrar não significa diluir as identidades, mas coordená-las em torno de um projeto comum."},
+    {q:"Como o trabalho em equipe se relaciona com a integralidade do cuidado?", a:"A integralidade exige responder ao conjunto das necessidades do usuário, o que nenhuma profissão isolada consegue. O trabalho em equipe articula diferentes saberes e práticas em torno de um projeto comum centrado no usuário, viabilizando o cuidado integral."},
+    {q:"Como a educação interprofissional se conecta à educação permanente em saúde?", a:"Ambas valorizam a aprendizagem no e pelo trabalho, de forma coletiva e a partir dos problemas reais. A EIP fortalece a colaboração entre as profissões e é estratégia da educação permanente, sendo central na formação em serviço, como nas residências multiprofissionais."},
+    {q:"Como o farmacêutico se insere na equipe multiprofissional?", a:"Contribui com seu núcleo específico (cuidado farmacêutico, conciliação e revisão da farmacoterapia, uso racional de medicamentos) e atua no campo compartilhado (acolhimento, educação em saúde, construção do PTS), integrando-se a dispositivos como a eMulti e o Núcleo de Segurança do Paciente."}
+  ];
+  const grid = document.getElementById('caseGrid');
+  cases.forEach(c=>{
+    const b=document.createElement('button');b.className='fc case';b.type='button';
+    b.innerHTML=`<span class="q">${c.q}</span><span class="hint">Ver resposta</span><span class="ans">${c.a}</span>`;
+    b.addEventListener('click',()=>b.classList.toggle('open'));
+    grid.appendChild(b);
+  });
+</script>
+</body>
+</html>

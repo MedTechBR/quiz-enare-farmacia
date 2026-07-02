@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Estratégia Saúde da Família &amp; PNAB — Guia de revisão</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@500;600;700;800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#E7E1D2;--surface:#FBF8F0;--surface-2:#F3EEE1;
+    --ink:#143C42;--ink-soft:#4E5F5C;--vermilion:#D6492A;--ochre:#B98220;--green:#3C6E47;--blue:#2C5A74;
+    --line:rgba(20,60,66,.22);--line-strong:rgba(20,60,66,.55);
+    --font-display:'Anton',Impact,sans-serif;--font-head:'Archivo',system-ui,sans-serif;--font-body:'IBM Plex Sans',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+  body{margin:0;background:radial-gradient(circle at 100% -2%, rgba(214,73,42,.06), transparent 38%),var(--paper);
+    color:var(--ink);font-family:var(--font-body);line-height:1.55;padding:clamp(16px,3.5vw,44px) clamp(12px,4vw,40px) 80px}
+  .wrap{max-width:1080px;margin:0 auto}
+  .top-rule{height:6px;background:var(--ink)}
+  .kicker{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-family:var(--font-head);font-weight:700;text-transform:uppercase;letter-spacing:.15em;font-size:11px;color:var(--ink-soft);padding:9px 2px;border-bottom:1px solid var(--line)}
+  .kicker .dot{color:var(--vermilion)}
+  h1{font-family:var(--font-display);font-weight:400;line-height:.92;font-size:clamp(26px,5vw,56px);margin:16px 0 8px;text-transform:uppercase;letter-spacing:.5px}
+  h1 .accent{color:var(--vermilion)}
+  .dek{font-size:clamp(15px,2vw,17.5px);color:var(--ink-soft);max-width:68ch;border-top:3px double var(--line-strong);padding-top:12px}
+  .dek b{color:var(--ink);font-weight:600}
+  nav.toc{position:sticky;top:0;z-index:20;background:rgba(231,225,210,.94);backdrop-filter:blur(6px);margin:18px 0 8px;padding:10px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  nav.toc ul{list-style:none;display:flex;gap:7px;flex-wrap:wrap;margin:0;padding:0}
+  nav.toc a{font-family:var(--font-head);font-weight:600;font-size:12px;text-decoration:none;color:var(--ink);border:1.5px solid var(--line-strong);border-radius:2px;padding:5px 10px;transition:background .12s,color .12s}
+  nav.toc a:hover{background:var(--ink);color:var(--surface)}
+  section{margin:38px 0 0;scroll-margin-top:64px}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:14px;border-bottom:2px solid var(--ink);padding-bottom:8px}
+  .sec-num{font-family:var(--font-display);font-size:clamp(26px,4vw,40px);color:var(--vermilion);line-height:.8}
+  .sec-head h2{font-family:var(--font-head);font-weight:800;font-size:clamp(18px,3vw,25px);margin:0;letter-spacing:-.01em}
+  p{margin:0 0 12px}.lead{font-size:16px}
+  strong,b{color:var(--ink);font-weight:600}.hl{color:var(--vermilion);font-weight:600}
+  ul.clean{margin:0 0 12px;padding-left:18px}ul.clean li{margin:5px 0}
+  .box{background:var(--surface);border:1.5px solid var(--ink);border-radius:3px;box-shadow:4px 4px 0 var(--ink);padding:16px 18px;margin:14px 0}
+  .grid2{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+  .bizu{border:1.5px dashed var(--green);background:rgba(60,110,71,.06);border-radius:3px;padding:13px 16px;margin:14px 0}
+  .bizu .tag{font-family:var(--font-head);font-weight:700;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--green);display:block;margin-bottom:5px}
+  .bizu b{color:var(--green)}
+  .trap{border:1.5px solid var(--vermilion);background:rgba(214,73,42,.05);border-radius:3px;padding:13px 16px;margin:14px 0}
+  .trap .tag{font-family:var(--font-head);font-weight:700;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--vermilion);display:block;margin-bottom:5px}
+  .note{border:1.5px solid var(--blue);background:rgba(44,90,116,.06);border-radius:3px;padding:13px 16px;margin:14px 0}
+  .note .tag{font-family:var(--font-head);font-weight:700;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--blue);display:block;margin-bottom:5px}
+  .tbl{width:100%;border-collapse:collapse;margin:14px 0;font-size:12.5px;background:var(--surface)}
+  .tbl th,.tbl td{border:1px solid var(--line-strong);padding:8px 10px;text-align:left;vertical-align:top}
+  .tbl thead th{background:var(--ink);color:var(--surface);font-family:var(--font-head);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.03em}
+  .tbl tbody th{background:var(--surface-2);font-family:var(--font-head);font-weight:700;white-space:nowrap}
+  .tbl-scroll{overflow-x:auto}
+  .attrs{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));margin:14px 0}
+  .attr{background:var(--surface);border:1.5px solid var(--ink);border-radius:3px;box-shadow:3px 3px 0 var(--ink);padding:12px 14px}
+  .attr h4{font-family:var(--font-head);font-weight:700;margin:0 0 4px;font-size:14px}
+  .attr p{margin:0;font-size:12px;color:var(--ink-soft)}
+  .team{display:flex;flex-wrap:wrap;gap:8px;margin:12px 0}
+  .tchip{font-family:var(--font-head);font-weight:700;font-size:12px;border:1.5px solid var(--ink);border-radius:2px;padding:6px 12px;background:var(--surface);box-shadow:2px 2px 0 var(--ink)}
+  .fc-grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));margin-top:14px}
+  .fc{background:var(--surface);border:1.5px solid var(--ink);border-radius:3px;box-shadow:4px 4px 0 var(--ink);padding:16px 17px;cursor:pointer;text-align:left;width:100%;font-family:var(--font-body);color:var(--ink);display:flex;flex-direction:column;gap:9px;transition:transform .12s,box-shadow .12s}
+  .fc:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--vermilion)}
+  .fc:focus-visible{outline:3px solid var(--vermilion);outline-offset:3px}
+  .fc .q{font-family:var(--font-head);font-weight:700;font-size:15px;line-height:1.28}
+  .fc .hint{font-family:var(--font-head);font-weight:600;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--vermilion)}
+  .fc .ans{font-size:13.5px;color:var(--ink-soft)}
+  .fc:not(.open) .ans{display:none}.fc.open .hint{display:none}
+  .case .q::before{content:"QUESTÃO ";font-family:var(--font-display);color:var(--vermilion);font-size:11px;letter-spacing:.08em}
+  footer{margin:46px 0 0;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--ink-soft)}
+  footer b{color:var(--ink)}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="top-rule"></div>
+    <div class="kicker">
+      <span>Saúde Coletiva <span class="dot">·</span> Atenção Básica</span>
+      <span>FGV · EBSERH · ENARE</span>
+    </div>
+    <h1>Estratégia Saúde da Família &amp; <span class="accent">PNAB</span></h1>
+    <p class="dek">A <b>Atenção Básica</b> como porta de entrada e coordenadora do cuidado: atributos da APS, a <b>PNAB (Portaria 2.436/2017)</b>, a <b>ESF</b> e sua equipe, o ACS, a transição <b>NASF → eMulti</b> e o <b>financiamento</b> (Previne Brasil → nova metodologia 2024). Guia objetivo com bizus, tabelas e questões.</p>
+  </header>
+
+  <nav class="toc" aria-label="Índice">
+    <ul>
+      <li><a href="#aps">1 · O que é a APS ★</a></li>
+      <li><a href="#atributos">2 · Atributos (Starfield) ★</a></li>
+      <li><a href="#pnab">3 · PNAB ★</a></li>
+      <li><a href="#esf">4 · ESF &amp; equipe ★★</a></li>
+      <li><a href="#acs">5 · ACS ★</a></li>
+      <li><a href="#emulti">6 · NASF → eMulti ★★</a></li>
+      <li><a href="#equipes">7 · Equipes &amp; programas</a></li>
+      <li><a href="#financiamento">8 · Financiamento ★</a></li>
+      <li><a href="#pegadinhas">9 · Pegadinhas</a></li>
+      <li><a href="#casos">10 · Questões ★</a></li>
+    </ul>
+  </nav>
+
+  <!-- 1 -->
+  <section id="aps">
+    <div class="sec-head"><span class="sec-num">01</span><h2>O que é a Atenção Básica/APS ★</h2></div>
+    <p class="lead">Conjunto de ações de saúde, <b>individuais e coletivas</b>, que abrange <b>promoção, prevenção, diagnóstico, tratamento, reabilitação, redução de danos</b> e manutenção da saúde. É o <b>primeiro nível</b> de atenção, a <span class="hl">porta de entrada preferencial</span>, <b>coordenadora do cuidado</b> e <b>ordenadora da rede</b>.</p>
+    <div class="bizu"><span class="tag">★ Bizu</span> Na <b>PNAB 2017</b>, <b>“Atenção Básica” e “Atenção Primária à Saúde” são termos equivalentes</b>. Deve ser <b>resolutiva</b> (resolver a maioria dos problemas de saúde da população).</div>
+  </section>
+
+  <!-- 2 -->
+  <section id="atributos">
+    <div class="sec-head"><span class="sec-num">02</span><h2>Atributos da APS (Starfield) ★</h2></div>
+    <div class="attrs">
+      <div class="attr"><h4>Primeiro contato / acesso</h4><p>Porta de entrada a cada novo problema; acessível.</p></div>
+      <div class="attr"><h4>Longitudinalidade</h4><p><b>Vínculo</b> e acompanhamento ao longo do tempo (continuidade).</p></div>
+      <div class="attr"><h4>Integralidade</h4><p>Responder ao conjunto das necessidades (promoção à reabilitação).</p></div>
+      <div class="attr"><h4>Coordenação do cuidado</h4><p>Integrar e organizar o cuidado prestado em outros pontos da rede.</p></div>
+    </div>
+    <p>Atributos <b>derivados</b>: <b>orientação familiar</b>, <b>orientação comunitária</b> e <b>competência cultural</b>.</p>
+    <div class="bizu"><span class="tag">★ Bizu</span> Os <b>4 essenciais</b>: <b>primeiro contato, longitudinalidade, integralidade e coordenação</b>. <b>Longitudinalidade ≠ continuidade pontual</b>: é o vínculo mantido ao longo da vida, com a mesma equipe.</div>
+  </section>
+
+  <!-- 3 -->
+  <section id="pnab">
+    <div class="sec-head"><span class="sec-num">03</span><h2>PNAB — Política Nacional de Atenção Básica ★</h2></div>
+    <ul class="clean">
+      <li><b>Vigente:</b> <span class="hl">Portaria nº 2.436/2017</span> (consolidada na Portaria de Consolidação GM/MS nº 2/2017). Revisou a PNAB de <b>2011</b> (Portaria 2.488), que revisou a de 2006.</li>
+      <li>Estabelece a revisão de <b>diretrizes para a organização da AB</b> no SUS.</li>
+      <li>Define a <b>ESF como estratégia prioritária</b> para expansão, consolidação e qualificação da AB.</li>
+      <li><b>Diretrizes:</b> regionalização e hierarquização, territorialização, população adscrita, cuidado centrado na pessoa, resolutividade, longitudinalidade, coordenação do cuidado, ordenação da rede e participação da comunidade.</li>
+    </ul>
+    <div class="trap"><span class="tag">⚠ Pegadinha</span> A PNAB 2017 reconheceu, além da eSF, a <b>equipe de Atenção Primária (eAP)</b> — antes “eAB” — com composição mais flexível. Mas a <b>ESF continua sendo a estratégia prioritária</b>; a eAP é alternativa, não a regra preferencial.</div>
+  </section>
+
+  <!-- 4 -->
+  <section id="esf">
+    <div class="sec-head"><span class="sec-num">04</span><h2>Estratégia Saúde da Família &amp; equipe ★★</h2></div>
+    <p>A <b>ESF</b> é a estratégia prioritária de <b>reorganização</b> da AB, com equipe multiprofissional responsável por um <b>território</b> e uma <b>população adscrita</b>.</p>
+    <p><b>Equipe mínima da eSF</b> (carga horária 40h):</p>
+    <div class="team">
+      <span class="tchip">Médico (pref. de família e comunidade)</span>
+      <span class="tchip">Enfermeiro</span>
+      <span class="tchip">Auxiliar/Técnico de enfermagem</span>
+      <span class="tchip">Agentes Comunitários de Saúde (ACS)</span>
+    </div>
+    <p>Pode incorporar a <b>equipe de Saúde Bucal (eSB)</b>: cirurgião-dentista + auxiliar/técnico em saúde bucal.</p>
+    <ul class="clean">
+      <li><b>População adscrita:</b> recomendado <b>até 4.000 pessoas</b> por eSF (média ~3.000), conforme vulnerabilidade do território.</li>
+      <li><b>Processo de trabalho:</b> territorialização, cadastramento e adscrição, acolhimento, visita domiciliar, vínculo e longitudinalidade.</li>
+    </ul>
+    <div class="bizu"><span class="tag">★ Bizu</span> Decore a equipe mínima da eSF: <b>médico + enfermeiro + auxiliar/técnico de enfermagem + ACS</b>. A <b>saúde bucal</b> é acoplada (eSB), não obrigatória na composição mínima.</div>
+  </section>
+
+  <!-- 5 -->
+  <section id="acs">
+    <div class="sec-head"><span class="sec-num">05</span><h2>Agente Comunitário de Saúde (ACS) ★</h2></div>
+    <ul class="clean">
+      <li>É o <b>elo</b> entre a comunidade e a equipe; deve <b>residir na área</b> de atuação.</li>
+      <li>Funções: <b>cadastramento</b>, <b>visita domiciliar</b>, acompanhamento das famílias, ações de <b>educação em saúde</b> e identificação de situações de risco.</li>
+      <li>Profissão regulamentada pela <b>Lei nº 11.350/2006</b> (ACS e ACE — Agente de Combate às Endemias).</li>
+    </ul>
+    <div class="bizu"><span class="tag">★ Bizu</span> Não confunda <b>ACS</b> (Agente Comunitário de Saúde, ligado à eSF, mora na área) com <b>ACE</b> (Agente de Combate às Endemias, vigilância — ex.: controle do Aedes). Ambos na Lei 11.350/2006.</div>
+  </section>
+
+  <!-- 6 -->
+  <section id="emulti">
+    <div class="sec-head"><span class="sec-num">06</span><h2>NASF → eMulti ★★</h2></div>
+    <div class="tbl-scroll">
+    <table class="tbl">
+      <thead><tr><th>Marco</th><th>O que mudou</th></tr></thead>
+      <tbody>
+        <tr><th>NASF (2008)</th><td>Núcleo de <b>Apoio</b> à Saúde da Família — apoio matricial à eSF (Portaria 154/2008).</td></tr>
+        <tr><th>NASF-AB (2017)</th><td>“Apoio” vira <b>Ampliado</b> (Núcleo Ampliado de Saúde da Família e AB).</td></tr>
+        <tr><th>Previne Brasil (2019)</th><td>Interrompe o <b>financiamento federal específico</b> do NASF-AB.</td></tr>
+        <tr><th>eMulti (2023)</th><td><b>Equipes Multiprofissionais na APS</b> (Portaria GM/MS nº 635/2023): retomam o cuidado multiprofissional e o cofinanciamento federal, com modalidades (Ampliada, Complementar e Estratégica).</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <ul class="clean">
+      <li>Composição multiprofissional: <b>farmacêutico</b>, assistente social, psicólogo, nutricionista, fisioterapeuta, fonoaudiólogo, terapeuta ocupacional, entre outros (e novas especialidades médicas).</li>
+      <li>Lógica do <b>apoio matricial / matriciamento</b>: a <b>equipe de referência</b> (eSF) é apoiada pela equipe especializada — suporte <b>técnico-pedagógico e assistencial</b>.</li>
+    </ul>
+    <div class="trap"><span class="tag">⚠ Pegadinha</span> A <b>eMulti não é porta de entrada</b> nem atende “sozinha”: ela <b>apoia</b> as equipes (apoio matricial), ampliando a resolutividade da eSF. E o <b>farmacêutico</b> integra esse cuidado multiprofissional na APS.</div>
+  </section>
+
+  <!-- 7 -->
+  <section id="equipes">
+    <div class="sec-head"><span class="sec-num">07</span><h2>Tipos de equipes, UBS &amp; programas</h2></div>
+    <ul class="clean">
+      <li><b>Equipes:</b> eSF (Saúde da Família), eAP (Atenção Primária), eSB (Saúde Bucal), <b>eCR (Consultório na Rua)</b>, equipes de Saúde da Família <b>ribeirinhas/fluviais</b> e <b>eMulti</b>.</li>
+      <li><b>UBS (Unidade Básica de Saúde):</b> estabelecimento físico onde atuam as equipes.</li>
+      <li><b>Programas/estratégias:</b> <b>Saúde na Hora</b> (horário estendido), <b>Academia da Saúde</b>, <b>Programa Saúde na Escola (PSE)</b>, <b>Mais Médicos</b>, e-SUS AB/SISAB (informação).</li>
+    </ul>
+  </section>
+
+  <!-- 8 -->
+  <section id="financiamento">
+    <div class="sec-head"><span class="sec-num">08</span><h2>Financiamento da APS ★</h2></div>
+    <p>Financiamento <b>tripartite</b>. Evolução do cofinanciamento <b>federal</b>:</p>
+    <div class="tbl-scroll">
+    <table class="tbl">
+      <thead><tr><th>Modelo</th><th>Como funcionava/funciona</th></tr></thead>
+      <tbody>
+        <tr><th>PAB fixo + variável (até 2019)</th><td><b>PAB fixo</b> (per capita) + <b>PAB variável</b> (incentivos por ESF, ACS, saúde bucal etc.).</td></tr>
+        <tr><th>Previne Brasil (Portaria 2.979/2019)</th><td>Três componentes: <b>capitação ponderada</b> (por pessoa cadastrada), <b>pagamento por desempenho</b> (indicadores) e <b>incentivo a ações estratégicas</b>. Acabou com o PAB fixo; muito atrelado ao cadastro.</td></tr>
+        <tr><th>Nova metodologia (Portaria 3.493/2024)</th><td>Reformula o cofinanciamento federal (“Mais Saúde da Família”): componentes de <b>per capita populacional</b>, <b>vínculo e acompanhamento territorial</b>, <b>qualidade</b> e <b>implantação/manutenção</b> de equipes/programas; nova classificação por <b>vulnerabilidade social + porte</b> (IED); <b>reduz o peso do cadastro</b> e <b>retoma o cofinanciamento das eMulti</b>.</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="bizu"><span class="tag">★ Bizu</span> Se a prova for recente, o modelo vigente é o da <b>Portaria 3.493/2024</b>. Mas <b>Previne Brasil (2.979/2019)</b> ainda cai muito — saiba seus 3 componentes: <b>capitação ponderada, desempenho e ação estratégica</b>.</div>
+  </section>
+
+  <!-- 9 -->
+  <section id="pegadinhas">
+    <div class="sec-head"><span class="sec-num">09</span><h2>Pegadinhas consolidadas</h2></div>
+    <div class="trap"><span class="tag">⚠ Top pegadinhas</span>
+      <ul class="clean" style="margin:0">
+        <li><b>PNAB vigente = Portaria 2.436/2017</b> (revisou a de 2011).</li>
+        <li><b>AB e APS são equivalentes</b> na PNAB 2017.</li>
+        <li><b>ESF</b> = estratégia <b>prioritária</b> de reorganização da AB.</li>
+        <li>Equipe mínima da eSF: <b>médico, enfermeiro, aux/téc de enfermagem e ACS</b>.</li>
+        <li>APS = porta de entrada preferencial, <b>coordenadora do cuidado, ordenadora da rede</b>.</li>
+        <li>Atributos de Starfield: <b>primeiro contato, longitudinalidade, integralidade, coordenação</b>.</li>
+        <li><b>NASF → NASF-AB → eMulti</b> (Portaria 635/2023); eMulti <b>apoia</b> (apoio matricial), não é porta de entrada.</li>
+        <li><b>ACS</b> mora na área; <b>ACE</b> = endemias (Lei 11.350/2006).</li>
+        <li>População adscrita: <b>até 4.000</b> por eSF (recomendado).</li>
+        <li>Financiamento: <b>Previne Brasil (2019)</b> → reformulado pela <b>Portaria 3.493/2024</b>.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 10 -->
+  <section id="casos">
+    <div class="sec-head"><span class="sec-num">10</span><h2>Questões — autoteste ★</h2></div>
+    <p>Leia, responda e clique para conferir.</p>
+    <div class="fc-grid" id="caseGrid"></div>
+  </section>
+
+  <footer>
+    <b>Fontes-base:</b> PNAB — Portaria GM/MS nº 2.436/2017 (PRC nº 2/2017); atributos da APS (Starfield); ESF e composição de equipes; Lei nº 11.350/2006 (ACS/ACE); eMulti — Portaria GM/MS nº 635/2023; financiamento — Previne Brasil (Portaria 2.979/2019) e nova metodologia de cofinanciamento federal da APS (Portaria 3.493/2024). Material de revisão — confronte com o edital e a bibliografia da sua banca (FGV, EBSERH, ENARE).
+  </footer>
+
+</div>
+
+<script>
+  const cases = [
+    {q:"Qual portaria estabelece a Política Nacional de Atenção Básica vigente e qual ela revisou?", a:"A PNAB vigente é a Portaria GM/MS nº 2.436/2017 (consolidada na Portaria de Consolidação nº 2/2017), que revisou a PNAB de 2011 (Portaria 2.488/2011). Ela define a Estratégia Saúde da Família como estratégia prioritária da AB."},
+    {q:"Quais são os quatro atributos essenciais da Atenção Primária segundo Starfield?", a:"Primeiro contato (acesso), longitudinalidade (vínculo ao longo do tempo), integralidade (responder ao conjunto das necessidades) e coordenação do cuidado. Os derivados são orientação familiar, orientação comunitária e competência cultural."},
+    {q:"Qual a composição da equipe mínima da Estratégia Saúde da Família (eSF)?", a:"Médico (preferencialmente de família e comunidade), enfermeiro, auxiliar ou técnico de enfermagem e agentes comunitários de saúde (ACS). A equipe de Saúde Bucal (cirurgião-dentista + auxiliar/técnico) pode ser acoplada, mas não compõe a equipe mínima."},
+    {q:"O que significa dizer que a APS é a 'porta de entrada preferencial' e 'ordenadora da rede'?", a:"Que deve ser o primeiro contato do usuário com o sistema, resolvendo a maior parte das necessidades, e que organiza e coordena os fluxos do usuário pelos demais pontos da rede (referência e contrarreferência), garantindo a continuidade do cuidado."},
+    {q:"Qual a diferença entre o ACS e o ACE, e qual lei os regulamenta?", a:"O Agente Comunitário de Saúde (ACS) é o elo entre a comunidade e a eSF, reside na área e atua na promoção e acompanhamento das famílias; o Agente de Combate às Endemias (ACE) atua na vigilância e controle de vetores/endemias (ex.: Aedes). Ambos são regulamentados pela Lei nº 11.350/2006."},
+    {q:"O que aconteceu com o NASF e o que são as eMulti?", a:"O NASF (Núcleo de Apoio à Saúde da Família, 2008) passou a NASF-AB (Ampliado, 2017) e teve o financiamento federal específico interrompido pelo Previne Brasil (2019). Em 2023, a Portaria GM/MS nº 635 instituiu as Equipes Multiprofissionais na APS (eMulti), retomando o cuidado multiprofissional e o cofinanciamento, em modalidades Ampliada, Complementar e Estratégica."},
+    {q:"O que é o apoio matricial e qual o papel da eMulti em relação à eSF?", a:"O apoio matricial (matriciamento) é a retaguarda técnico-pedagógica e assistencial que uma equipe especializada (eMulti) oferece à equipe de referência (eSF). A eMulti não é porta de entrada nem substitui a eSF: ela amplia a resolutividade e o escopo de práticas da equipe de Saúde da Família."},
+    {q:"Na PNAB 2017, 'Atenção Básica' e 'Atenção Primária à Saúde' são a mesma coisa?", a:"Sim. A PNAB 2017 considera os termos Atenção Básica e Atenção Primária à Saúde como equivalentes."},
+    {q:"Qual a população adscrita recomendada por equipe de Saúde da Família?", a:"Recomenda-se até 4.000 pessoas por eSF (média em torno de 3.000), ajustada conforme a vulnerabilidade do território. Cada equipe é responsável por um território e uma população definida (adscrita)."},
+    {q:"Quais são os três componentes do financiamento da APS no modelo Previne Brasil (2019)?", a:"Capitação ponderada (recurso por pessoa cadastrada, ajustado por vulnerabilidade, idade e geografia), pagamento por desempenho (indicadores) e incentivo para ações estratégicas. Esse modelo extinguiu o PAB fixo e foi muito atrelado ao cadastro."},
+    {q:"O que mudou no financiamento federal da APS a partir de 2024?", a:"A Portaria GM/MS nº 3.493/2024 reformulou o cofinanciamento federal ('Mais Saúde da Família'), com componentes de per capita populacional, vínculo e acompanhamento territorial, qualidade e implantação/manutenção de equipes, nova classificação por vulnerabilidade social e porte, redução do peso do cadastro e retomada do cofinanciamento das eMulti."},
+    {q:"Por que a Estratégia Saúde da Família é considerada 'prioritária' e não a única forma de organizar a AB?", a:"Porque a PNAB a define como modelo prioritário por reorganizar a atenção com base no território, no vínculo e na equipe multiprofissional. A eAP (equipe de Atenção Primária) é admitida como alternativa de transição/flexibilização, mas a expansão preferencial deve ser pela ESF."},
+    {q:"O que é a UBS e qual sua relação com as equipes?", a:"A Unidade Básica de Saúde (UBS) é o estabelecimento físico onde atuam as equipes da Atenção Básica (eSF, eAP, eSB, eMulti). É o ponto de atenção onde se concretiza o cuidado primário no território."},
+    {q:"Cite programas/estratégias federais ligados à Atenção Básica.", a:"Saúde na Hora (ampliação do horário das UBS), Academia da Saúde, Programa Saúde na Escola (PSE), Programa Mais Médicos e o sistema de informação e-SUS AB/SISAB."},
+    {q:"O que é territorialização e adscrição na ESF?", a:"Territorialização é o reconhecimento e a delimitação do território de atuação da equipe, com análise das condições de vida e saúde da população. Adscrição é a vinculação de uma população definida àquela equipe, base para o vínculo, a longitudinalidade e a responsabilização sanitária."},
+    {q:"Como o farmacêutico se insere na Atenção Primária à Saúde?", a:"Principalmente nas Equipes Multiprofissionais (eMulti), oferecendo apoio matricial às eSF, e na assistência farmacêutica da AB: cuidado farmacêutico, conciliação e revisão da farmacoterapia, promoção do uso racional de medicamentos e educação em saúde no território."}
+  ];
+  const grid = document.getElementById('caseGrid');
+  cases.forEach(c=>{
+    const b=document.createElement('button');b.className='fc case';b.type='button';
+    b.innerHTML=`<span class="q">${c.q}</span><span class="hint">Ver resposta</span><span class="ans">${c.a}</span>`;
+    b.addEventListener('click',()=>b.classList.toggle('open'));
+    grid.appendChild(b);
+  });
+</script>
+</body>
+</html>

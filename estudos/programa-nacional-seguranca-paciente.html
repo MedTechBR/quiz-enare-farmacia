@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Programa Nacional de Segurança do Paciente — Guia de revisão</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@500;600;700;800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#E7E1D2;--surface:#FBF8F0;--surface-2:#F3EEE1;
+    --ink:#143C42;--ink-soft:#4E5F5C;--vermilion:#D6492A;--ochre:#B98220;--green:#3C6E47;--blue:#2C5A74;
+    --line:rgba(20,60,66,.22);--line-strong:rgba(20,60,66,.55);
+    --font-display:'Anton',Impact,sans-serif;--font-head:'Archivo',system-ui,sans-serif;--font-body:'IBM Plex Sans',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+  body{margin:0;background:radial-gradient(circle at 100% -2%, rgba(214,73,42,.06), transparent 38%),var(--paper);
+    color:var(--ink);font-family:var(--font-body);line-height:1.55;padding:clamp(16px,3.5vw,44px) clamp(12px,4vw,40px) 80px}
+  .wrap{max-width:1080px;margin:0 auto}
+  .top-rule{height:6px;background:var(--ink)}
+  .kicker{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-family:var(--font-head);font-weight:700;text-transform:uppercase;letter-spacing:.15em;font-size:11px;color:var(--ink-soft);padding:9px 2px;border-bottom:1px solid var(--line)}
+  .kicker .dot{color:var(--vermilion)}
+  h1{font-family:var(--font-display);font-weight:400;line-height:.92;font-size:clamp(25px,4.6vw,52px);margin:16px 0 8px;text-transform:uppercase;letter-spacing:.5px}
+  h1 .accent{color:var(--vermilion)}
+  .dek{font-size:clamp(15px,2vw,17.5px);color:var(--ink-soft);max-width:68ch;border-top:3px double var(--line-strong);padding-top:12px}
+  .dek b{color:var(--ink);font-weight:600}
+  nav.toc{position:sticky;top:0;z-index:20;background:rgba(231,225,210,.94);backdrop-filter:blur(6px);margin:18px 0 8px;padding:10px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  nav.toc ul{list-style:none;display:flex;gap:7px;flex-wrap:wrap;margin:0;padding:0}
+  nav.toc a{font-family:var(--font-head);font-weight:600;font-size:12px;text-decoration:none;color:var(--ink);border:1.5px solid var(--line-strong);border-radius:2px;padding:5px 10px;transition:background .12s,color .12s}
+  nav.toc a:hover{background:var(--ink);color:var(--surface)}
+  section{margin:38px 0 0;scroll-margin-top:64px}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:14px;border-bottom:2px solid var(--ink);padding-bottom:8px}
+  .sec-num{font-family:var(--font-display);font-size:clamp(26px,4vw,40px);color:var(--vermilion);line-height:.8}
+  .sec-head h2{font-family:var(--font-head);font-weight:800;font-size:clamp(18px,3vw,25px);margin:0;letter-spacing:-.01em}
+  p{margin:0 0 12px}.lead{font-size:16px}
+  strong,b{color:var(--ink);font-weight:600}.hl{color:var(--vermilion);font-weight:600}
+  ul.clean{margin:0 0 12px;padding-left:18px}ul.clean li{margin:5px 0}
+  .box{background:var(--surface);border:1.5px solid var(--ink);border-radius:3px;box-shadow:4px 4px 0 var(--ink);padding:16px 18px;margin:14px 0}
+  .grid2{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+  .metas{counter-reset:meta;margin:14px 0}
+  .meta{position:relative;background:var(--surface);border:1.5px solid var(--ink);border-radius:3px;box-shadow:3px 3px 0 var(--ink);padding:12px 16px 12px 56px;margin:0 0 10px}
+  .meta::before{counter-increment:meta;content:counter(meta);position:absolute;left:12px;top:50%;transform:translateY(-50%);width:32px;height:32px;background:var(--vermilion);color:#fff;font-family:var(--font-display);font-size:17px;display:flex;align-items:center;justify-content:center;border-radius:50%}
+  .meta h4{font-family:var(--font-head);font-weight:700;margin:0 0 2px;font-size:14.5px}
+  .meta p{margin:0;font-size:12.5px;color:var(--ink-soft)}
+  .bizu{border:1.5px dashed var(--green);background:rgba(60,110,71,.06);border-radius:3px;padding:13px 16px;margin:14px 0}
+  .bizu .tag{font-family:var(--font-head);font-weight:700;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--green);display:block;margin-bottom:5px}
+  .bizu b{color:var(--green)}
+  .trap{border:1.5px solid var(--vermilion);background:rgba(214,73,42,.05);border-radius:3px;padding:13px 16px;margin:14px 0}
+  .trap .tag{font-family:var(--font-head);font-weight:700;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--vermilion);display:block;margin-bottom:5px}
+  .note{border:1.5px solid var(--blue);background:rgba(44,90,116,.06);border-radius:3px;padding:13px 16px;margin:14px 0}
+  .note .tag{font-family:var(--font-head);font-weight:700;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--blue);display:block;margin-bottom:5px}
+  .tbl{width:100%;border-collapse:collapse;margin:14px 0;font-size:12.5px;background:var(--surface)}
+  .tbl th,.tbl td{border:1px solid var(--line-strong);padding:8px 10px;text-align:left;vertical-align:top}
+  .tbl thead th{background:var(--ink);color:var(--surface);font-family:var(--font-head);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.03em}
+  .tbl tbody th{background:var(--surface-2);font-family:var(--font-head);font-weight:700;white-space:nowrap}
+  .tbl-scroll{overflow-x:auto}
+  .fc-grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));margin-top:14px}
+  .fc{background:var(--surface);border:1.5px solid var(--ink);border-radius:3px;box-shadow:4px 4px 0 var(--ink);padding:16px 17px;cursor:pointer;text-align:left;width:100%;font-family:var(--font-body);color:var(--ink);display:flex;flex-direction:column;gap:9px;transition:transform .12s,box-shadow .12s}
+  .fc:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--vermilion)}
+  .fc:focus-visible{outline:3px solid var(--vermilion);outline-offset:3px}
+  .fc .q{font-family:var(--font-head);font-weight:700;font-size:15px;line-height:1.28}
+  .fc .hint{font-family:var(--font-head);font-weight:600;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--vermilion)}
+  .fc .ans{font-size:13.5px;color:var(--ink-soft)}
+  .fc:not(.open) .ans{display:none}.fc.open .hint{display:none}
+  .case .q::before{content:"QUESTÃO ";font-family:var(--font-display);color:var(--vermilion);font-size:11px;letter-spacing:.08em}
+  footer{margin:46px 0 0;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--ink-soft)}
+  footer b{color:var(--ink)}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="top-rule"></div>
+    <div class="kicker">
+      <span>Qualidade <span class="dot">·</span> Segurança do Paciente</span>
+      <span>FGV · EBSERH · ENARE</span>
+    </div>
+    <h1>Programa Nacional de <span class="accent">Segurança do Paciente</span></h1>
+    <p class="dek">O <b>PNSP</b> (Portaria 529/2013) e a <b>RDC 36/2013</b>: conceitos (incidente, evento adverso, <i>near miss</i>), <b>cultura de segurança</b>, o <b>NSP</b> e o <b>Plano de Segurança do Paciente</b>, as <b>6 metas internacionais</b> e os <b>6 protocolos básicos</b>. Guia objetivo com bizus, tabelas e questões.</p>
+  </header>
+
+  <nav class="toc" aria-label="Índice">
+    <ul>
+      <li><a href="#pnsp">1 · O que é o PNSP ★★</a></li>
+      <li><a href="#conceitos">2 · Conceitos ★★</a></li>
+      <li><a href="#cultura">3 · Cultura de segurança ★</a></li>
+      <li><a href="#rdc36">4 · NSP &amp; PSP ★★</a></li>
+      <li><a href="#metas">5 · As 6 metas ★★</a></li>
+      <li><a href="#protocolos">6 · 6 protocolos ★</a></li>
+      <li><a href="#notificacao">7 · Notificação</a></li>
+      <li><a href="#pegadinhas">8 · Pegadinhas</a></li>
+      <li><a href="#casos">9 · Questões ★</a></li>
+    </ul>
+  </nav>
+
+  <!-- 1 -->
+  <section id="pnsp">
+    <div class="sec-head"><span class="sec-num">01</span><h2>O que é o PNSP ★★</h2></div>
+    <p class="lead">O <b>Programa Nacional de Segurança do Paciente</b> foi instituído pela <span class="hl">Portaria GM/MS nº 529, de 1º de abril de 2013</span>, com o objetivo de <b>qualificar o cuidado em saúde</b> em todos os estabelecimentos do território nacional — <b>públicos ou privados</b>.</p>
+    <ul class="clean">
+      <li>Antecedentes: relatório <b>“To Err is Human”</b> (IOM, 1999) e a <b>Aliança Mundial para a Segurança do Paciente</b> (OMS, 2004).</li>
+      <li>Regulamentado pela <b>RDC ANVISA nº 36/2013</b>, que cria o <b>Núcleo de Segurança do Paciente (NSP)</b> e exige o <b>Plano de Segurança do Paciente (PSP)</b>.</li>
+      <li>Operacionalizado por <b>6 protocolos básicos</b> (Portarias 1.377 e 2.095/2013), que traduzem as <b>6 metas internacionais</b> da OMS.</li>
+    </ul>
+    <div class="bizu"><span class="tag">★ Bizu</span> Trio normativo: <b>Portaria 529/2013</b> (institui o PNSP) + <b>RDC 36/2013</b> (NSP e PSP) + <b>Portarias 1.377 e 2.095/2013</b> (6 protocolos). O eixo é a <b>gestão de risco</b> para reduzir danos evitáveis.</div>
+  </section>
+
+  <!-- 2 -->
+  <section id="conceitos">
+    <div class="sec-head"><span class="sec-num">02</span><h2>Conceitos-chave ★★</h2></div>
+    <div class="tbl-scroll">
+    <table class="tbl">
+      <thead><tr><th>Termo</th><th>Definição</th></tr></thead>
+      <tbody>
+        <tr><th>Segurança do paciente</th><td>Redução, a um <b>mínimo aceitável</b>, do risco de <b>dano desnecessário</b> associado ao cuidado de saúde.</td></tr>
+        <tr><th>Dano</th><td>Comprometimento da estrutura ou função do corpo (físico, social ou psicológico).</td></tr>
+        <tr><th>Incidente</th><td>Evento/circunstância que <b>poderia ter resultado, ou resultou</b>, em dano desnecessário ao paciente.</td></tr>
+        <tr><th>Evento adverso</th><td>Incidente que <b>resulta em dano</b> ao paciente.</td></tr>
+        <tr><th><i>Near miss</i> (quase erro)</th><td>Incidente que <b>não chegou</b> a atingir o paciente.</td></tr>
+        <tr><th>Circunstância notificável</th><td>Situação com <b>potencial</b> de dano, sem incidente ainda ocorrido.</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="trap"><span class="tag">⚠ Pegadinha</span> <b>Todo evento adverso é incidente, mas nem todo incidente é evento adverso.</b> O que define o <b>evento adverso</b> é ter <b>causado dano</b>. <i>Near miss</i> = não atingiu o paciente; incidente sem dano = atingiu, mas sem dano.</div>
+  </section>
+
+  <!-- 3 -->
+  <section id="cultura">
+    <div class="sec-head"><span class="sec-num">03</span><h2>Cultura de segurança ★</h2></div>
+    <p>Conjunto de valores e comportamentos que <b>substitui a culpa e a punição</b> pela <b>oportunidade de aprender</b> com as falhas. Caracteriza-se por:</p>
+    <ul class="clean">
+      <li>Todos (profissionais e gestores) assumem <b>responsabilidade</b> pela própria segurança e a dos outros;</li>
+      <li>Prioriza a <b>segurança</b> acima de metas financeiras e operacionais;</li>
+      <li><b>Encoraja e recompensa</b> a identificação, a notificação e a resolução de problemas;</li>
+      <li>Promove o <b>aprendizado organizacional</b> a partir dos incidentes;</li>
+      <li>Disponibiliza <b>recursos</b> e estrutura para a segurança.</li>
+    </ul>
+    <div class="bizu"><span class="tag">★ Bizu</span> Cultura de segurança é <b>“justa” e não punitiva</b>: o foco é o <b>sistema/processo</b> (por que falhou?), não “quem errou”. Punir o profissional gera <b>subnotificação</b>; aprender com o erro previne a repetição.</div>
+  </section>
+
+  <!-- 4 -->
+  <section id="rdc36">
+    <div class="sec-head"><span class="sec-num">04</span><h2>RDC 36/2013 — NSP &amp; PSP ★★</h2></div>
+    <div class="grid2">
+      <div class="box"><p><b>NSP — Núcleo de Segurança do Paciente</b></p><p>Instância do serviço, criada pela direção, para <b>promover e apoiar</b> a implementação das ações de segurança. Implanta os protocolos, monitora indicadores e articula o trabalho multiprofissional.</p></div>
+      <div class="box"><p><b>PSP — Plano de Segurança do Paciente</b></p><p>Documento que <b>aponta os riscos</b> e descreve as <b>estratégias e ações</b> para a gestão de risco — da admissão à alta/transferência/óbito.</p></div>
+    </div>
+    <div class="note"><span class="tag">ℹ Obrigatoriedade</span> A <b>RDC 36/2013</b> torna <b>obrigatória</b> a constituição do <b>NSP</b> nos serviços de saúde e a elaboração do <b>PSP</b>, além do <b>monitoramento e notificação</b> de eventos adversos.</div>
+  </section>
+
+  <!-- 5 -->
+  <section id="metas">
+    <div class="sec-head"><span class="sec-num">05</span><h2>As 6 metas internacionais ★★</h2></div>
+    <div class="metas">
+      <div class="meta"><h4>Identificar corretamente o paciente</h4><p>Usar <b>ao menos 2 identificadores</b> (ex.: nome completo + data de nascimento). <b>Nunca</b> o número do leito/quarto.</p></div>
+      <div class="meta"><h4>Melhorar a comunicação efetiva</h4><p>Comunicação clara entre a equipe; ordens verbais com <b>“ler de volta”</b> (read-back); passagem de plantão estruturada.</p></div>
+      <div class="meta"><h4>Segurança de medicamentos de alta vigilância</h4><p>Cuidado redobrado com <b>medicamentos potencialmente perigosos</b> (MAV/MPP), eletrólitos concentrados, similaridade fonética/ortográfica.</p></div>
+      <div class="meta"><h4>Cirurgia segura</h4><p>Local, paciente e procedimento corretos; <b>checklist da OMS</b> e <b>time out</b> antes da incisão.</p></div>
+      <div class="meta"><h4>Higienizar as mãos</h4><p>Reduzir infecções pelos <b>5 momentos</b> da OMS para a higiene das mãos.</p></div>
+      <div class="meta"><h4>Reduzir quedas e lesões por pressão</h4><p>Avaliar risco (ex.: escala de Morse) e prevenir <b>quedas</b> e <b>lesão por pressão</b> (ex.: escala de Braden).</p></div>
+    </div>
+    <div class="bizu"><span class="tag">★ Bizu</span> Mnemônico: <b>Identifica · Comunica · Medica (com cuidado) · Opera (seguro) · Lava as mãos · Previne queda/lesão</b>. As metas são da <b>OMS</b> e viraram os <b>6 protocolos</b> no Brasil.</div>
+  </section>
+
+  <!-- 6 -->
+  <section id="protocolos">
+    <div class="sec-head"><span class="sec-num">06</span><h2>Os 6 protocolos básicos ★</h2></div>
+    <div class="tbl-scroll">
+    <table class="tbl">
+      <thead><tr><th>Protocolo</th><th>Foco</th></tr></thead>
+      <tbody>
+        <tr><th>Identificação do paciente</th><td>Pulseira e dupla checagem de identificadores.</td></tr>
+        <tr><th>Higiene das mãos</th><td>5 momentos; água e sabão ou preparação alcoólica.</td></tr>
+        <tr><th>Segurança na prescrição, uso e administração de medicamentos</th><td>Os <b>“certos”</b> da medicação; conciliação; dupla checagem de MAV.</td></tr>
+        <tr><th>Cirurgia segura</th><td>Checklist da OMS em 3 momentos (entrada / pausa / saída).</td></tr>
+        <tr><th>Prevenção de quedas</th><td>Avaliação de risco e medidas ambientais.</td></tr>
+        <tr><th>Prevenção de lesão por pressão</th><td>Avaliação (Braden), mudança de decúbito, cuidados com a pele.</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="bizu"><span class="tag">★ Bizu</span> Os protocolos foram publicados pelas <b>Portarias 1.377/2013 e 2.095/2013</b>. O protocolo de <b>medicamentos</b> é o seu território como farmacêutico — conciliação, dupla checagem e os “certos” da administração.</div>
+  </section>
+
+  <!-- 7 -->
+  <section id="notificacao">
+    <div class="sec-head"><span class="sec-num">07</span><h2>Notificação de eventos adversos</h2></div>
+    <ul class="clean">
+      <li>A notificação dos eventos adversos é feita ao <b>NOTIVISA</b> (Sistema Nacional de Notificações para a Vigilância Sanitária).</li>
+      <li><b>Eventos adversos graves</b> (que levam a óbito ou dano grave) têm prazo de notificação <b>mais curto</b> (até 72h da ocorrência); demais eventos, de forma mensal.</li>
+      <li>A notificação deve ser <b>livre de punição</b>, para estimular o relato e o aprendizado.</li>
+    </ul>
+    <div class="trap"><span class="tag">⚠ Pegadinha</span> A notificação tem caráter de <b>aprendizado e vigilância</b>, não de busca por culpados. Subnotificar por medo de punição é o principal inimigo da segurança do paciente.</div>
+  </section>
+
+  <!-- 8 -->
+  <section id="pegadinhas">
+    <div class="sec-head"><span class="sec-num">08</span><h2>Pegadinhas consolidadas</h2></div>
+    <div class="trap"><span class="tag">⚠ Top pegadinhas</span>
+      <ul class="clean" style="margin:0">
+        <li><b>Portaria 529/2013</b> institui o PNSP; <b>RDC 36/2013</b> cria NSP e exige o PSP.</li>
+        <li><b>Segurança do paciente</b> = reduzir a um <b>mínimo aceitável</b> o risco de dano desnecessário.</li>
+        <li><b>Evento adverso</b> = incidente <b>com dano</b>; <b><i>near miss</i></b> = não atingiu o paciente.</li>
+        <li><b>Cultura de segurança</b> = justa e <b>não punitiva</b> (foco no sistema, não no culpado).</li>
+        <li><b>6 metas (OMS)</b> = identificação, comunicação, medicamentos, cirurgia segura, higiene das mãos, quedas/lesão por pressão.</li>
+        <li><b>Identificação</b> usa ≥ 2 identificadores; <b>nunca</b> o número do leito.</li>
+        <li><b>6 protocolos</b> = Portarias 1.377 e 2.095/2013.</li>
+        <li><b>Notificação</b> ao <b>NOTIVISA</b>; EA grave em até 72h.</li>
+        <li><b>Lesão por pressão</b> (terminologia atual) substituiu “úlcera por pressão”.</li>
+        <li>PNSP vale para serviços <b>públicos e privados</b>.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 9 -->
+  <section id="casos">
+    <div class="sec-head"><span class="sec-num">09</span><h2>Questões — autoteste ★</h2></div>
+    <p>Leia, responda e clique para conferir.</p>
+    <div class="fc-grid" id="caseGrid"></div>
+  </section>
+
+  <footer>
+    <b>Fontes-base:</b> Portaria GM/MS nº 529, de 1º de abril de 2013 (institui o PNSP); RDC ANVISA nº 36, de 25 de julho de 2013 (NSP e PSP); Portarias nº 1.377/2013 e 2.095/2013 (protocolos básicos); 6 Metas Internacionais de Segurança do Paciente (OMS/Aliança Mundial); “To Err is Human” (IOM, 1999); Classificação Internacional de Segurança do Paciente (OMS, 2009). Material de revisão — confronte com o edital e a bibliografia da sua banca (FGV, EBSERH, ENARE).
+  </footer>
+
+</div>
+
+<script>
+  const cases = [
+    {q:"Qual portaria institui o Programa Nacional de Segurança do Paciente e qual seu objetivo?", a:"A Portaria GM/MS nº 529, de 1º de abril de 2013, que instituiu o PNSP com o objetivo de contribuir para a qualificação do cuidado em saúde em todos os estabelecimentos de saúde do território nacional, públicos ou privados."},
+    {q:"Como é definida a segurança do paciente?", a:"É a redução, a um mínimo aceitável, do risco de dano desnecessário associado ao cuidado/atenção à saúde. Reconhece que o risco zero não existe, mas deve ser reduzido ao menor nível possível por meio da gestão de risco."},
+    {q:"Diferencie incidente, evento adverso e near miss.", a:"Incidente é um evento ou circunstância que poderia ter resultado, ou resultou, em dano desnecessário ao paciente. Evento adverso é o incidente que efetivamente resultou em dano. Near miss (quase erro) é o incidente que não chegou a atingir o paciente."},
+    {q:"O que caracteriza a cultura de segurança?", a:"É um conjunto de valores e comportamentos que substitui a culpa e a punição pela oportunidade de aprender com as falhas. Caracteriza-se por responsabilização compartilhada, prioridade à segurança sobre metas financeiras, estímulo à notificação, aprendizado organizacional e disponibilização de recursos para a segurança."},
+    {q:"Por que a cultura de segurança deve ser 'não punitiva'?", a:"Porque o foco é o sistema e os processos que permitiram a falha, e não a busca por culpados. A punição ao profissional gera medo e subnotificação, escondendo os erros e impedindo o aprendizado que previne novas ocorrências."},
+    {q:"O que a RDC 36/2013 torna obrigatório nos serviços de saúde?", a:"A constituição do Núcleo de Segurança do Paciente (NSP) e a elaboração e implantação do Plano de Segurança do Paciente (PSP), além do monitoramento e da notificação dos eventos adversos."},
+    {q:"O que é o Núcleo de Segurança do Paciente (NSP)?", a:"É a instância do serviço de saúde, criada pela direção, responsável por promover e apoiar a implementação das ações de segurança do paciente, implantar os protocolos, monitorar os indicadores e articular o trabalho multiprofissional."},
+    {q:"O que é o Plano de Segurança do Paciente (PSP)?", a:"É o documento que aponta as situações de risco e descreve as estratégias e ações definidas pelo serviço para a gestão de risco, visando prevenir e mitigar incidentes, desde a admissão até a alta, transferência ou óbito do paciente."},
+    {q:"Quais são as seis metas internacionais de segurança do paciente?", a:"1) Identificar corretamente o paciente; 2) melhorar a comunicação efetiva; 3) melhorar a segurança dos medicamentos de alta vigilância; 4) assegurar cirurgia segura (local, paciente e procedimento corretos); 5) higienizar as mãos para reduzir infecções; 6) reduzir o risco de quedas e de lesões por pressão."},
+    {q:"Como deve ser feita a identificação correta do paciente (meta 1)?", a:"Usando pelo menos dois identificadores (por exemplo, nome completo e data de nascimento), confirmados antes de cuidados, medicação e procedimentos. O número do leito ou do quarto nunca deve ser usado como identificador."},
+    {q:"O que envolve a meta de segurança dos medicamentos de alta vigilância?", a:"Cuidados redobrados com os medicamentos potencialmente perigosos (alta vigilância), como eletrólitos concentrados, anticoagulantes e insulinas, incluindo dupla checagem, armazenamento diferenciado e atenção a nomes e embalagens parecidos (sound-alike/look-alike)."},
+    {q:"Em que consiste o protocolo de cirurgia segura?", a:"Em garantir o local, o paciente e o procedimento corretos, por meio do checklist de cirurgia segura da OMS aplicado em três momentos (antes da indução anestésica, antes da incisão — o 'time out' — e antes de o paciente sair da sala), com conferência por toda a equipe."},
+    {q:"Quais escalas são usadas na avaliação de risco de quedas e de lesão por pressão?", a:"Para risco de quedas, costuma-se usar a escala de Morse; para risco de lesão por pressão, a escala de Braden. A avaliação orienta as medidas preventivas individualizadas."},
+    {q:"Para onde se notificam os eventos adversos e qual o prazo dos eventos graves?", a:"Os eventos adversos são notificados ao NOTIVISA (Sistema Nacional de Notificações para a Vigilância Sanitária). Os eventos adversos graves (que resultam em óbito ou dano grave) têm prazo de notificação mais curto, de até 72 horas; os demais são notificados mensalmente."},
+    {q:"Por que se passou a usar 'lesão por pressão' em vez de 'úlcera por pressão'?", a:"Porque a terminologia foi atualizada (a partir da revisão da NPUAP, em 2016) para refletir melhor que o dano pode ocorrer na pele íntegra ou em tecidos subjacentes, não apenas como uma 'úlcera' aberta. As provas atuais tendem a usar 'lesão por pressão'."},
+    {q:"Como o farmacêutico contribui para o PNSP?", a:"Atuando no protocolo de segurança na prescrição, uso e administração de medicamentos: conciliação medicamentosa, análise e dupla checagem de prescrições, gestão dos medicamentos de alta vigilância, farmacovigilância e educação da equipe — além de integrar o NSP na gestão de risco."}
+  ];
+  const grid = document.getElementById('caseGrid');
+  cases.forEach(c=>{
+    const b=document.createElement('button');b.className='fc case';b.type='button';
+    b.innerHTML=`<span class="q">${c.q}</span><span class="hint">Ver resposta</span><span class="ans">${c.a}</span>`;
+    b.addEventListener('click',()=>b.classList.toggle('open'));
+    grid.appendChild(b);
+  });
+</script>
+</body>
+</html>

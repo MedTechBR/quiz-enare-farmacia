@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>NR 32 — Segurança e Saúde no Trabalho em Serviços de Saúde — Guia de revisão</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@500;600;700;800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#E7E1D2;--surface:#FBF8F0;--surface-2:#F3EEE1;
+    --ink:#143C42;--ink-soft:#4E5F5C;--vermilion:#D6492A;--ochre:#B98220;--green:#3C6E47;--blue:#2C5A74;
+    --line:rgba(20,60,66,.22);--line-strong:rgba(20,60,66,.55);
+    --font-display:'Anton',Impact,sans-serif;--font-head:'Archivo',system-ui,sans-serif;--font-body:'IBM Plex Sans',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+  body{margin:0;background:radial-gradient(circle at 100% -2%, rgba(214,73,42,.06), transparent 38%),var(--paper);
+    color:var(--ink);font-family:var(--font-body);line-height:1.55;padding:clamp(16px,3.5vw,44px) clamp(12px,4vw,40px) 80px}
+  .wrap{max-width:1080px;margin:0 auto}
+  .top-rule{height:6px;background:var(--ink)}
+  .kicker{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-family:var(--font-head);font-weight:700;text-transform:uppercase;letter-spacing:.15em;font-size:11px;color:var(--ink-soft);padding:9px 2px;border-bottom:1px solid var(--line)}
+  .kicker .dot{color:var(--vermilion)}
+  h1{font-family:var(--font-display);font-weight:400;line-height:.92;font-size:clamp(24px,4.4vw,50px);margin:16px 0 8px;text-transform:uppercase;letter-spacing:.5px}
+  h1 .accent{color:var(--vermilion)}
+  .dek{font-size:clamp(15px,2vw,17.5px);color:var(--ink-soft);max-width:68ch;border-top:3px double var(--line-strong);padding-top:12px}
+  .dek b{color:var(--ink);font-weight:600}
+  nav.toc{position:sticky;top:0;z-index:20;background:rgba(231,225,210,.94);backdrop-filter:blur(6px);margin:18px 0 8px;padding:10px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  nav.toc ul{list-style:none;display:flex;gap:7px;flex-wrap:wrap;margin:0;padding:0}
+  nav.toc a{font-family:var(--font-head);font-weight:600;font-size:12px;text-decoration:none;color:var(--ink);border:1.5px solid var(--line-strong);border-radius:2px;padding:5px 10px;transition:background .12s,color .12s}
+  nav.toc a:hover{background:var(--ink);color:var(--surface)}
+  section{margin:38px 0 0;scroll-margin-top:64px}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:14px;border-bottom:2px solid var(--ink);padding-bottom:8px}
+  .sec-num{font-family:var(--font-display);font-size:clamp(26px,4vw,40px);color:var(--vermilion);line-height:.8}
+  .sec-head h2{font-family:var(--font-head);font-weight:800;font-size:clamp(18px,3vw,25px);margin:0;letter-spacing:-.01em}
+  p{margin:0 0 12px}.lead{font-size:16px}
+  strong,b{color:var(--ink);font-weight:600}.hl{color:var(--vermilion);font-weight:600}
+  ul.clean{margin:0 0 12px;padding-left:18px}ul.clean li{margin:5px 0}
+  .box{background:var(--surface);border:1.5px solid var(--ink);border-radius:3px;box-shadow:4px 4px 0 var(--ink);padding:16px 18px;margin:14px 0}
+  .grid2{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+  .bizu{border:1.5px dashed var(--green);background:rgba(60,110,71,.06);border-radius:3px;padding:13px 16px;margin:14px 0}
+  .bizu .tag{font-family:var(--font-head);font-weight:700;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--green);display:block;margin-bottom:5px}
+  .bizu b{color:var(--green)}
+  .trap{border:1.5px solid var(--vermilion);background:rgba(214,73,42,.05);border-radius:3px;padding:13px 16px;margin:14px 0}
+  .trap .tag{font-family:var(--font-head);font-weight:700;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--vermilion);display:block;margin-bottom:5px}
+  .note{border:1.5px solid var(--blue);background:rgba(44,90,116,.06);border-radius:3px;padding:13px 16px;margin:14px 0}
+  .note .tag{font-family:var(--font-head);font-weight:700;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--blue);display:block;margin-bottom:5px}
+  .tbl{width:100%;border-collapse:collapse;margin:14px 0;font-size:12.5px;background:var(--surface)}
+  .tbl th,.tbl td{border:1px solid var(--line-strong);padding:8px 10px;text-align:left;vertical-align:top}
+  .tbl thead th{background:var(--ink);color:var(--surface);font-family:var(--font-head);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.03em}
+  .tbl tbody th{background:var(--surface-2);font-family:var(--font-head);font-weight:700;white-space:nowrap}
+  .tbl-scroll{overflow-x:auto}
+  .ynbox{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));margin:14px 0}
+  .yn{border-radius:3px;padding:13px 15px;border:1.5px solid var(--ink);box-shadow:3px 3px 0 var(--ink);background:var(--surface)}
+  .yn h4{font-family:var(--font-head);font-weight:700;margin:0 0 6px;font-size:13.5px}
+  .yn.no h4{color:var(--vermilion)}.yn.yes h4{color:var(--green)}
+  .yn ul{margin:0;padding-left:17px}.yn li{font-size:12.5px;margin:4px 0}
+  .fc-grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));margin-top:14px}
+  .fc{background:var(--surface);border:1.5px solid var(--ink);border-radius:3px;box-shadow:4px 4px 0 var(--ink);padding:16px 17px;cursor:pointer;text-align:left;width:100%;font-family:var(--font-body);color:var(--ink);display:flex;flex-direction:column;gap:9px;transition:transform .12s,box-shadow .12s}
+  .fc:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--vermilion)}
+  .fc:focus-visible{outline:3px solid var(--vermilion);outline-offset:3px}
+  .fc .q{font-family:var(--font-head);font-weight:700;font-size:15px;line-height:1.28}
+  .fc .hint{font-family:var(--font-head);font-weight:600;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--vermilion)}
+  .fc .ans{font-size:13.5px;color:var(--ink-soft)}
+  .fc:not(.open) .ans{display:none}.fc.open .hint{display:none}
+  .case .q::before{content:"QUESTÃO ";font-family:var(--font-display);color:var(--vermilion);font-size:11px;letter-spacing:.08em}
+  footer{margin:46px 0 0;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--ink-soft)}
+  footer b{color:var(--ink)}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="top-rule"></div>
+    <div class="kicker">
+      <span>Saúde do Trabalhador <span class="dot">·</span> SST</span>
+      <span>FGV · EBSERH · ENARE</span>
+    </div>
+    <h1>NR 32 — Segurança e Saúde no Trabalho em <span class="accent">Serviços de Saúde</span></h1>
+    <p class="dek">A norma setorial que protege quem trabalha na saúde (<b>Portaria nº 485/2005</b>): campo de aplicação, os <b>riscos</b> (biológicos, químicos, radiações, resíduos), os programas <b>PGR</b> e <b>PCMSO</b>, a <b>imunização</b> e as regras de <b>perfurocortantes</b>. Com a atualização PPRA → PGR. Guia objetivo com bizus, tabelas e questões.</p>
+  </header>
+
+  <nav class="toc" aria-label="Índice">
+    <ul>
+      <li><a href="#oque">1 · O que é a NR 32 ★★</a></li>
+      <li><a href="#atualizacao">2 · PPRA → PGR ★</a></li>
+      <li><a href="#riscos">3 · Os riscos ★★</a></li>
+      <li><a href="#biologicos">4 · Biológicos ★★</a></li>
+      <li><a href="#quimicos">5 · Químicos ★</a></li>
+      <li><a href="#programas">6 · PGR &amp; PCMSO ★</a></li>
+      <li><a href="#protecao">7 · Proteção &amp; proibições ★★</a></li>
+      <li><a href="#pegadinhas">8 · Pegadinhas</a></li>
+      <li><a href="#casos">9 · Questões ★</a></li>
+    </ul>
+  </nav>
+
+  <!-- 1 -->
+  <section id="oque">
+    <div class="sec-head"><span class="sec-num">01</span><h2>O que é a NR 32 ★★</h2></div>
+    <ul class="clean">
+      <li>Aprovada pela <span class="hl">Portaria MTE/GM nº 485, de 11 de novembro de 2005</span>. É uma <b>Norma Regulamentadora setorial</b> (regula um setor específico: os <b>serviços de saúde</b>).</li>
+      <li><b>Finalidade:</b> estabelecer diretrizes básicas para implementar medidas de proteção à <b>segurança e à saúde dos trabalhadores</b> dos serviços de saúde e dos que exercem atividades de promoção e assistência à saúde.</li>
+      <li><b>Serviços de saúde:</b> qualquer edificação destinada à assistência à saúde e todas as ações de promoção, recuperação, assistência, <b>pesquisa e ensino</b> em qualquer nível de complexidade. <b>Não</b> se aplica à saúde <b>animal</b>.</li>
+      <li>Construída de forma <b>tripartite</b> (governo, empregadores e trabalhadores — CTPP).</li>
+    </ul>
+    <div class="bizu"><span class="tag">★ Bizu</span> A NR 32 protege o <b>trabalhador</b> da saúde (não o paciente — esse é o PNSP/RDC 36). Inclui <b>todos</b> os que atuam no serviço: profissionais de saúde, limpeza, manutenção, estudantes, etc.</div>
+  </section>
+
+  <!-- 2 -->
+  <section id="atualizacao">
+    <div class="sec-head"><span class="sec-num">02</span><h2>Atualização: PPRA → PGR ★</h2></div>
+    <ul class="clean">
+      <li>A <b>Portaria MTP nº 806, de 13 de abril de 2022</b>, substituiu o antigo <b>PPRA</b> pelo <b>PGR</b> (Programa de Gerenciamento de Riscos), <b>harmonizando</b> a NR 32 com a <b>NR 1</b> revisada (que instituiu o <b>GRO</b> — Gerenciamento de Riscos Ocupacionais).</li>
+      <li>A <b>Portaria MTP nº 4.219, de 20 de dezembro de 2022</b>, foi a <b>última modificação</b> (ajustes, como a “CIPA” passar a Comissão Interna de Prevenção de Acidentes <b>e de Assédio</b>).</li>
+    </ul>
+    <div class="trap"><span class="tag">⚠ Pegadinha de atualidade</span> Onde a prova antiga falava em <b>PPRA</b>, a NR 32 hoje fala em <b>PGR</b> (inventário de riscos + plano de ação). O <b>PCMSO (NR 7)</b> continua. Se a questão citar PPRA na NR 32, está <b>desatualizada</b>.</div>
+  </section>
+
+  <!-- 3 -->
+  <section id="riscos">
+    <div class="sec-head"><span class="sec-num">03</span><h2>Os riscos abordados ★★</h2></div>
+    <div class="tbl-scroll">
+    <table class="tbl">
+      <thead><tr><th>Risco</th><th>Exemplos / foco</th></tr></thead>
+      <tbody>
+        <tr><th>Biológicos (32.2)</th><td>Microrganismos, culturas de células, parasitas, toxinas e <b>príons</b>; perfurocortantes.</td></tr>
+        <tr><th>Químicos (32.3)</th><td>Gases/vapores anestésicos, <b>quimioterápicos/drogas de risco</b>, saneantes, inventário de produtos.</td></tr>
+        <tr><th>Radiações ionizantes (32.4)</th><td>Radiodiagnóstico, radioterapia, medicina nuclear; <b>Plano de Proteção Radiológica (PPR)</b>.</td></tr>
+        <tr><th>Resíduos (32.5)</th><td>Gerenciamento dos <b>resíduos de serviços de saúde</b> (PGRSS).</td></tr>
+        <tr><th>Demais</th><td>Refeitórios, lavanderias, limpeza, manutenção de máquinas e equipamentos.</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="bizu"><span class="tag">★ Bizu</span> Memorize os <b>4 grandes blocos de risco</b>: <b>Biológico · Químico · Radiação · Resíduos</b>. Os dois primeiros (biológico e químico) são os mais cobrados.</div>
+  </section>
+
+  <!-- 4 -->
+  <section id="biologicos">
+    <div class="sec-head"><span class="sec-num">04</span><h2>Riscos biológicos em foco ★★</h2></div>
+    <p><b>Agentes biológicos:</b> microrganismos (geneticamente modificados ou não), <b>culturas de células</b>, parasitas, <b>toxinas</b> e <b>príons</b>. Classificados em <b>4 classes de risco</b> (Anexo I):</p>
+    <div class="tbl-scroll">
+    <table class="tbl">
+      <thead><tr><th>Classe</th><th>Risco individual / coletivo</th><th>Exemplo</th></tr></thead>
+      <tbody>
+        <tr><th>1</th><td>Baixo / baixo</td><td><i>Bacillus subtilis</i></td></tr>
+        <tr><th>2</th><td>Moderado / limitado</td><td>Vírus da febre amarela; <i>Schistosoma mansoni</i></td></tr>
+        <tr><th>3</th><td>Alto / limitado</td><td><i>Mycobacterium tuberculosis</i></td></tr>
+        <tr><th>4</th><td>Elevado / elevado</td><td>Vírus Ebola</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <ul class="clean">
+      <li>Todo local com possibilidade de exposição deve ter <b>lavatório exclusivo</b> para higiene das mãos (água corrente, sabonete líquido, papel-toalha e lixeira sem contato manual).</li>
+      <li>O <b>uso de luvas NÃO substitui</b> a lavagem das mãos.</li>
+      <li>Em exposição acidental, medidas devem ser adotadas <b>imediatamente</b>, mesmo que não previstas no PGR.</li>
+    </ul>
+    <div class="trap"><span class="tag">⚠ Pegadinha</span> A classe de risco considera o risco <b>individual</b> E <b>coletivo</b>. Classe 4 = elevado nos dois (ex.: Ebola). Não confunda com as “4 fases” de outra coisa: aqui são <b>classes de risco biológico</b>.</div>
+  </section>
+
+  <!-- 5 -->
+  <section id="quimicos">
+    <div class="sec-head"><span class="sec-num">05</span><h2>Riscos químicos ★</h2></div>
+    <ul class="clean">
+      <li>O <b>PGR</b> deve conter <b>inventário de todos os produtos químicos</b> (inclusive intermediários e resíduos), com rotulagem e identificação dos perigosos.</li>
+      <li><b>Quimioterápicos / drogas de risco</b> (antineoplásicos): o PGR deve descrever os perigos do recebimento, armazenamento, <b>preparo, distribuição e administração</b> — articulando-se com a <b>RDC ANVISA nº 220/2004</b>.</li>
+      <li><b>Gases e vapores anestésicos:</b> a <b>trabalhadora gestante</b> só pode atuar em área com possível exposição mediante <b>autorização por escrito</b> do médico do PCMSO.</li>
+      <li>Vedado o uso de medicamentos/substâncias sem rotulagem adequada.</li>
+    </ul>
+    <div class="bizu"><span class="tag">★ Bizu</span> Para o farmacêutico, este é o ponto-chave: a NR 32 + <b>RDC 220/2004</b> regem a <b>manipulação segura de antineoplásicos</b> (cabine de segurança biológica, EPI, fluxo). É a base da segurança na central de quimioterapia.</div>
+  </section>
+
+  <!-- 6 -->
+  <section id="programas">
+    <div class="sec-head"><span class="sec-num">06</span><h2>Programas: PGR &amp; PCMSO ★</h2></div>
+    <div class="grid2">
+      <div class="box"><p><b>PGR — Programa de Gerenciamento de Riscos</b></p><p>Além do previsto na <b>NR 1</b>, deve identificar os <b>agentes biológicos</b> prováveis, o <b>inventário de produtos químicos</b> e os perigos das atividades. Estrutura: <b>inventário de riscos + plano de ação</b>.</p></div>
+      <div class="box"><p><b>PCMSO — Programa de Controle Médico de Saúde Ocupacional</b></p><p>Além do previsto na <b>NR 7</b>: reconhecimento/avaliação dos riscos biológicos, <b>vigilância médica</b> dos expostos, identificação nominal dos trabalhadores e a <b>imunização</b>.</p></div>
+    </div>
+    <div class="note"><span class="tag">ℹ Articulação</span> A NR 32 é <b>setorial</b>: aplica-se em conjunto com as NRs gerais — NR 1 (PGR/GRO), NR 6 (EPI), NR 7 (PCMSO), NR 9 (riscos ambientais), NR 5 (CIPA), entre outras.</div>
+  </section>
+
+  <!-- 7 -->
+  <section id="protecao">
+    <div class="sec-head"><span class="sec-num">07</span><h2>Proteção &amp; proibições ★★</h2></div>
+    <div class="ynbox">
+      <div class="yn yes"><h4>✔ Direitos / obrigatório</h4>
+        <ul>
+          <li><b>Imunização gratuita</b> do trabalhador (vacinas contra doenças transmissíveis, ex.: hepatite B, tétano).</li>
+          <li>Fornecimento de <b>EPI e EPC</b> (NR 6).</li>
+          <li><b>Capacitação</b> sobre os riscos, no início e de forma continuada.</li>
+          <li><b>Lavatório exclusivo</b> e materiais de higiene.</li>
+          <li>Dispositivos de <b>segurança</b> em perfurocortantes.</li>
+        </ul></div>
+      <div class="yn no"><h4>✘ Proibido / vedado</h4>
+        <ul>
+          <li>Uso de <b>adornos</b> (anéis, brincos, pulseiras, relógios) por quem tem contato com pacientes.</li>
+          <li><b>Reencapar</b> agulhas ou desconectá-las manualmente.</li>
+          <li><b>Calçados abertos</b>.</li>
+          <li><b>Comer, beber, fumar</b> ou guardar alimentos nos locais com risco.</li>
+          <li>Uso das pias de trabalho para fins diversos.</li>
+        </ul></div>
+    </div>
+    <div class="bizu"><span class="tag">★ Bizu</span> Perfurocortantes: o empregador deve constituir uma <b>comissão gestora multidisciplinar</b> e adotar <b>dispositivos de segurança</b>. <b>É vedado reencapar agulhas.</b> O descarte vai em coletor rígido próprio. A <b>imunização é gratuita</b> e direito do trabalhador.</div>
+  </section>
+
+  <!-- 8 -->
+  <section id="pegadinhas">
+    <div class="sec-head"><span class="sec-num">08</span><h2>Pegadinhas consolidadas</h2></div>
+    <div class="trap"><span class="tag">⚠ Top pegadinhas</span>
+      <ul class="clean" style="margin:0">
+        <li><b>NR 32</b> = Portaria 485/2005; protege o <b>trabalhador</b> (≠ PNSP, que protege o paciente).</li>
+        <li>Norma <b>setorial</b>; <b>não</b> se aplica à saúde animal; abrange até <b>ensino e pesquisa</b>.</li>
+        <li><b>PPRA → PGR</b> (Portaria MTP 806/2022); última modificação Portaria 4.219/2022.</li>
+        <li>Agentes biológicos incluem <b>príons, toxinas e culturas de células</b>; 4 classes de risco.</li>
+        <li><b>Luvas não substituem</b> a lavagem das mãos; <b>lavatório exclusivo</b> obrigatório.</li>
+        <li><b>Quimioterápicos</b> (drogas de risco) + <b>RDC 220/2004</b>; gestante e gases anestésicos só com autorização escrita.</li>
+        <li><b>Imunização gratuita</b> = direito do trabalhador.</li>
+        <li><b>Vedado reencapar agulhas</b>; dispositivos de segurança + comissão de perfurocortantes.</li>
+        <li><b>Proibidos adornos</b> e calçados abertos a quem tem contato com pacientes.</li>
+        <li>Aplica-se em conjunto com NR 1, NR 6, NR 7, NR 5 etc.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 9 -->
+  <section id="casos">
+    <div class="sec-head"><span class="sec-num">09</span><h2>Questões — autoteste ★</h2></div>
+    <p>Leia, responda e clique para conferir.</p>
+    <div class="fc-grid" id="caseGrid"></div>
+  </section>
+
+  <footer>
+    <b>Fontes-base:</b> NR 32 — Segurança e Saúde no Trabalho em Serviços de Saúde (Portaria MTE/GM nº 485, de 11/11/2005), com alterações pela Portaria MTP nº 806/2022 (PPRA → PGR) e Portaria MTP nº 4.219/2022; NR 1 (PGR/GRO), NR 6 (EPI) e NR 7 (PCMSO); RDC ANVISA nº 220/2004 (antineoplásicos). Material de revisão — confronte com o edital e a bibliografia da sua banca (FGV, EBSERH, ENARE).
+  </footer>
+
+</div>
+
+<script>
+  const cases = [
+    {q:"Qual portaria aprovou a NR 32 e qual o seu objetivo?", a:"A Portaria MTE/GM nº 485, de 11 de novembro de 2005. Seu objetivo é estabelecer as diretrizes básicas para a implementação de medidas de proteção à segurança e à saúde dos trabalhadores dos serviços de saúde, bem como daqueles que exercem atividades de promoção e assistência à saúde em geral."},
+    {q:"A NR 32 protege o paciente ou o trabalhador?", a:"O trabalhador dos serviços de saúde (e quem atua na promoção/assistência). A segurança do paciente é tratada por outras normas, como o PNSP (Portaria 529/2013) e a RDC 36/2013. É um erro comum confundir os dois focos."},
+    {q:"O que se entende por 'serviços de saúde' na NR 32, e a quem ela não se aplica?", a:"Qualquer edificação destinada à prestação de assistência à saúde da população e todas as ações de promoção, recuperação, assistência, pesquisa e ensino em saúde, em qualquer nível de complexidade. Não se aplica aos serviços de saúde animal (veterinária)."},
+    {q:"Qual a principal atualização recente da NR 32 quanto aos programas de risco?", a:"A Portaria MTP nº 806/2022 substituiu o antigo PPRA pelo PGR (Programa de Gerenciamento de Riscos), harmonizando a NR 32 com a NR 1 revisada (que instituiu o Gerenciamento de Riscos Ocupacionais – GRO). A Portaria MTP nº 4.219/2022 trouxe a última modificação."},
+    {q:"O que são considerados agentes biológicos pela NR 32?", a:"Os microrganismos (geneticamente modificados ou não), as culturas de células, os parasitas, as toxinas e os príons. Eles são classificados em quatro classes de risco, conforme o risco individual e coletivo (Anexo I)."},
+    {q:"Como são definidas as classes de risco biológico?", a:"Pelo risco individual e para a comunidade. Classe 1: baixo individual e coletivo; classe 2: moderado individual e limitado coletivo; classe 3: alto individual e limitado coletivo; classe 4: elevado individual e coletivo (ex.: vírus Ebola)."},
+    {q:"O uso de luvas substitui a lavagem das mãos, segundo a NR 32?", a:"Não. A NR 32 é explícita: o uso de luvas não substitui o processo de lavagem das mãos. Todo local com possibilidade de exposição a agente biológico deve ter lavatório exclusivo para a higiene das mãos."},
+    {q:"Quais exigências a NR 32 traz para o trabalho com quimioterápicos (drogas de risco)?", a:"O PGR deve descrever os perigos das atividades de recebimento, armazenamento, preparo, distribuição e administração desses medicamentos; exige uso de EPI/EPC e cabine de segurança, articulando-se com a RDC ANVISA nº 220/2004, que rege a manipulação de antineoplásicos."},
+    {q:"Que cuidado a NR 32 prevê para a trabalhadora gestante quanto a gases anestésicos?", a:"A gestante só pode ser liberada para o trabalho em áreas com possibilidade de exposição a gases ou vapores anestésicos após autorização por escrito do médico responsável pelo PCMSO, considerando as informações do PGR."},
+    {q:"Quais programas a NR 32 exige e com quais NRs eles se articulam?", a:"Exige o PGR (Programa de Gerenciamento de Riscos, harmonizado com a NR 1) e o PCMSO (Programa de Controle Médico de Saúde Ocupacional, da NR 7). Como norma setorial, a NR 32 se aplica em conjunto com NR 6 (EPI), NR 5 (CIPA) e demais NRs gerais."},
+    {q:"A imunização dos trabalhadores é um direito segundo a NR 32?", a:"Sim. Todo trabalhador dos serviços de saúde tem direito, gratuitamente, a programa de imunização contra doenças transmissíveis (como hepatite B e tétano), conforme o risco a que está exposto, sendo essa oferta responsabilidade do empregador."},
+    {q:"Quais práticas a NR 32 veda quanto a materiais perfurocortantes?", a:"É vedado reencapar agulhas ou proceder à sua retirada/desconexão manual. O empregador deve adotar dispositivos de segurança, constituir uma comissão gestora multidisciplinar para a prevenção de acidentes com perfurocortantes e garantir o descarte em coletor rígido apropriado."},
+    {q:"Por que a NR 32 proíbe o uso de adornos por quem tem contato com pacientes?", a:"Porque adornos (anéis, brincos, pulseiras, relógios) podem acumular e veicular microrganismos, aumentando o risco de transmissão e dificultando a higiene das mãos. A norma também proíbe calçados abertos e comer, beber ou fumar nos locais com risco."},
+    {q:"O que a NR 32 exige em relação às radiações ionizantes?", a:"Exige a elaboração e manutenção do Plano de Proteção Radiológica (PPR), aprovado pela CNEN (e pela Vigilância Sanitária, no caso do radiodiagnóstico), além de monitoração individual e de áreas, dosimetria e medidas específicas para os trabalhadores expostos."},
+    {q:"Por que a NR 32 é classificada como norma 'setorial' e o que isso implica?", a:"Porque regulamenta a segurança e a saúde do trabalho em um setor específico (os serviços de saúde), diferentemente das normas gerais que valem para todos os setores. Isso implica que, além da NR 32, devem ser cumpridas as demais NRs gerais e especiais aplicáveis (NR 1, NR 6, NR 7, NR 13 para autoclaves, etc.)."},
+    {q:"Como a NR 32 se conecta ao trabalho do farmacêutico hospitalar?", a:"Principalmente na manipulação segura de antineoplásicos e drogas de risco (com a RDC 220/2004), no gerenciamento de produtos químicos e resíduos, no uso de EPI/EPC e cabines de segurança, e na participação na elaboração do PGR e nas comissões de saúde do trabalhador do serviço."}
+  ];
+  const grid = document.getElementById('caseGrid');
+  cases.forEach(c=>{
+    const b=document.createElement('button');b.className='fc case';b.type='button';
+    b.innerHTML=`<span class="q">${c.q}</span><span class="hint">Ver resposta</span><span class="ans">${c.a}</span>`;
+    b.addEventListener('click',()=>b.classList.toggle('open'));
+    grid.appendChild(b);
+  });
+</script>
+</body>
+</html>

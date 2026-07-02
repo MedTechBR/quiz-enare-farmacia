@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Política Nacional de Educação Permanente em Saúde — Guia de revisão</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@500;600;700;800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#E7E1D2;--surface:#FBF8F0;--surface-2:#F3EEE1;
+    --ink:#143C42;--ink-soft:#4E5F5C;--vermilion:#D6492A;--ochre:#B98220;--green:#3C6E47;--blue:#2C5A74;
+    --line:rgba(20,60,66,.22);--line-strong:rgba(20,60,66,.55);
+    --font-display:'Anton',Impact,sans-serif;--font-head:'Archivo',system-ui,sans-serif;--font-body:'IBM Plex Sans',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+  body{margin:0;background:radial-gradient(circle at 100% -2%, rgba(214,73,42,.06), transparent 38%),var(--paper);
+    color:var(--ink);font-family:var(--font-body);line-height:1.55;padding:clamp(16px,3.5vw,44px) clamp(12px,4vw,40px) 80px}
+  .wrap{max-width:1080px;margin:0 auto}
+  .top-rule{height:6px;background:var(--ink)}
+  .kicker{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-family:var(--font-head);font-weight:700;text-transform:uppercase;letter-spacing:.15em;font-size:11px;color:var(--ink-soft);padding:9px 2px;border-bottom:1px solid var(--line)}
+  .kicker .dot{color:var(--vermilion)}
+  h1{font-family:var(--font-display);font-weight:400;line-height:.92;font-size:clamp(25px,4.6vw,52px);margin:16px 0 8px;text-transform:uppercase;letter-spacing:.5px}
+  h1 .accent{color:var(--vermilion)}
+  .dek{font-size:clamp(15px,2vw,17.5px);color:var(--ink-soft);max-width:68ch;border-top:3px double var(--line-strong);padding-top:12px}
+  .dek b{color:var(--ink);font-weight:600}
+  nav.toc{position:sticky;top:0;z-index:20;background:rgba(231,225,210,.94);backdrop-filter:blur(6px);margin:18px 0 8px;padding:10px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  nav.toc ul{list-style:none;display:flex;gap:7px;flex-wrap:wrap;margin:0;padding:0}
+  nav.toc a{font-family:var(--font-head);font-weight:600;font-size:12px;text-decoration:none;color:var(--ink);border:1.5px solid var(--line-strong);border-radius:2px;padding:5px 10px;transition:background .12s,color .12s}
+  nav.toc a:hover{background:var(--ink);color:var(--surface)}
+  section{margin:38px 0 0;scroll-margin-top:64px}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:14px;border-bottom:2px solid var(--ink);padding-bottom:8px}
+  .sec-num{font-family:var(--font-display);font-size:clamp(26px,4vw,40px);color:var(--vermilion);line-height:.8}
+  .sec-head h2{font-family:var(--font-head);font-weight:800;font-size:clamp(18px,3vw,25px);margin:0;letter-spacing:-.01em}
+  p{margin:0 0 12px}.lead{font-size:16px}
+  strong,b{color:var(--ink);font-weight:600}.hl{color:var(--vermilion);font-weight:600}
+  ul.clean{margin:0 0 12px;padding-left:18px}ul.clean li{margin:5px 0}
+  .box{background:var(--surface);border:1.5px solid var(--ink);border-radius:3px;box-shadow:4px 4px 0 var(--ink);padding:16px 18px;margin:14px 0}
+  .grid2{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+  .quad{display:grid;gap:10px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));margin:14px 0}
+  .qcard{background:var(--surface);border:1.5px solid var(--ink);border-radius:3px;box-shadow:3px 3px 0 var(--ink);padding:13px 15px}
+  .qcard h4{font-family:var(--font-head);font-weight:700;margin:0 0 4px;font-size:14.5px;color:var(--vermilion)}
+  .qcard p{margin:0;font-size:12.5px;color:var(--ink-soft)}
+  .bizu{border:1.5px dashed var(--green);background:rgba(60,110,71,.06);border-radius:3px;padding:13px 16px;margin:14px 0}
+  .bizu .tag{font-family:var(--font-head);font-weight:700;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--green);display:block;margin-bottom:5px}
+  .bizu b{color:var(--green)}
+  .trap{border:1.5px solid var(--vermilion);background:rgba(214,73,42,.05);border-radius:3px;padding:13px 16px;margin:14px 0}
+  .trap .tag{font-family:var(--font-head);font-weight:700;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--vermilion);display:block;margin-bottom:5px}
+  .note{border:1.5px solid var(--blue);background:rgba(44,90,116,.06);border-radius:3px;padding:13px 16px;margin:14px 0}
+  .note .tag{font-family:var(--font-head);font-weight:700;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--blue);display:block;margin-bottom:5px}
+  .tbl{width:100%;border-collapse:collapse;margin:14px 0;font-size:12.5px;background:var(--surface)}
+  .tbl th,.tbl td{border:1px solid var(--line-strong);padding:8px 10px;text-align:left;vertical-align:top}
+  .tbl thead th{background:var(--ink);color:var(--surface);font-family:var(--font-head);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.03em}
+  .tbl tbody th{background:var(--surface-2);font-family:var(--font-head);font-weight:700;white-space:nowrap}
+  .tbl-scroll{overflow-x:auto}
+  .fc-grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));margin-top:14px}
+  .fc{background:var(--surface);border:1.5px solid var(--ink);border-radius:3px;box-shadow:4px 4px 0 var(--ink);padding:16px 17px;cursor:pointer;text-align:left;width:100%;font-family:var(--font-body);color:var(--ink);display:flex;flex-direction:column;gap:9px;transition:transform .12s,box-shadow .12s}
+  .fc:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--vermilion)}
+  .fc:focus-visible{outline:3px solid var(--vermilion);outline-offset:3px}
+  .fc .q{font-family:var(--font-head);font-weight:700;font-size:15px;line-height:1.28}
+  .fc .hint{font-family:var(--font-head);font-weight:600;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--vermilion)}
+  .fc .ans{font-size:13.5px;color:var(--ink-soft)}
+  .fc:not(.open) .ans{display:none}.fc.open .hint{display:none}
+  .case .q::before{content:"QUESTÃO ";font-family:var(--font-display);color:var(--vermilion);font-size:11px;letter-spacing:.08em}
+  footer{margin:46px 0 0;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--ink-soft)}
+  footer b{color:var(--ink)}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="top-rule"></div>
+    <div class="kicker">
+      <span>Saúde Coletiva <span class="dot">·</span> Educação na Saúde</span>
+      <span>FGV · EBSERH · ENARE</span>
+    </div>
+    <h1>Política Nacional de <span class="accent">Educação Permanente</span> em Saúde</h1>
+    <p class="dek">A <b>EPS</b> como aprendizagem <b>no e pelo trabalho</b>: conceito e diferença para a educação continuada, o <b>quadrilátero da formação</b>, a <b>Portaria 198/2004</b> e sua reformulação pela <b>1.996/2007</b> (CGR + <b>CIES</b>), o financiamento e as atualizações. Guia objetivo com bizus, tabelas e questões.</p>
+  </header>
+
+  <nav class="toc" aria-label="Índice">
+    <ul>
+      <li><a href="#conceito">1 · O que é EPS ★</a></li>
+      <li><a href="#vs">2 · EPS × Continuada ★★</a></li>
+      <li><a href="#quad">3 · Quadrilátero ★</a></li>
+      <li><a href="#base">4 · Base legal</a></li>
+      <li><a href="#p198">5 · Portaria 198/2004 ★</a></li>
+      <li><a href="#p1996">6 · Portaria 1.996/2007 ★★</a></li>
+      <li><a href="#cies">7 · CIES ★</a></li>
+      <li><a href="#atualizacoes">8 · Atualizações</a></li>
+      <li><a href="#pegadinhas">9 · Pegadinhas</a></li>
+      <li><a href="#casos">10 · Questões ★</a></li>
+    </ul>
+  </nav>
+
+  <!-- 1 -->
+  <section id="conceito">
+    <div class="sec-head"><span class="sec-num">01</span><h2>O que é Educação Permanente em Saúde ★</h2></div>
+    <p class="lead">EPS é a <b>aprendizagem no trabalho</b>, em que o <b>aprender e o ensinar se incorporam ao cotidiano</b> das organizações e do trabalho. Parte dos <span class="hl">problemas reais</span> enfrentados no dia a dia dos serviços, visando <b>transformar as práticas</b>.</p>
+    <ul class="clean">
+      <li>Fundamenta-se na <b>aprendizagem significativa</b> e na <b>problematização</b> (inspiração em Paulo Freire): aprende-se a partir do que faz sentido e dos problemas vividos.</li>
+      <li>É <b>ascendente</b>: parte das <b>necessidades do processo de trabalho</b> e da realidade local (de baixo para cima), não de uma grade pré-definida.</li>
+      <li>É <b>coletiva, multiprofissional, interdisciplinar e intersetorial</b>; o trabalhador é protagonista.</li>
+    </ul>
+    <div class="bizu"><span class="tag">★ Bizu</span> Palavra-chave: <b>aprender no trabalho para transformar o trabalho</b>. A EPS não é “mais um curso”: é uma <b>estratégia de mudança das práticas</b> e de <b>gestão</b>, ancorada nos problemas do cotidiano.</div>
+  </section>
+
+  <!-- 2 -->
+  <section id="vs">
+    <div class="sec-head"><span class="sec-num">02</span><h2>EPS × Educação Continuada ★★</h2></div>
+    <div class="tbl-scroll">
+    <table class="tbl">
+      <thead><tr><th>Critério</th><th>Educação Permanente (EPS)</th><th>Educação Continuada</th></tr></thead>
+      <tbody>
+        <tr><th>Ponto de partida</th><td><b>Problemas do cotidiano</b> do trabalho (ascendente).</td><td>Conteúdos/temas pré-definidos (descendente).</td></tr>
+        <tr><th>Método</th><td><b>Problematização</b>, aprendizagem significativa, metodologias ativas.</td><td>Transmissão de conteúdo, atualização técnica.</td></tr>
+        <tr><th>Sujeito</th><td><b>Coletivo</b>, equipe, multiprofissional.</td><td>Individual, por categoria.</td></tr>
+        <tr><th>Objetivo</th><td><b>Transformar as práticas</b> e o serviço.</td><td>Atualizar/aperfeiçoar conhecimentos.</td></tr>
+        <tr><th>Periodicidade</th><td><b>Contínua</b>, no processo de trabalho.</td><td><b>Pontual</b> (cursos, eventos).</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="trap"><span class="tag">⚠ Pegadinha</span> A banca troca os dois: <b>EPS = no trabalho, problematizadora, coletiva, transformadora, ascendente</b>. <b>Educação continuada = pontual, técnica, individual, descendente</b>. EPS <b>inclui</b> a continuada, mas vai além dela.</div>
+  </section>
+
+  <!-- 3 -->
+  <section id="quad">
+    <div class="sec-head"><span class="sec-num">03</span><h2>Quadrilátero da formação ★</h2></div>
+    <p>Proposto por <b>Ceccim e Feuerwerker</b>, articula <b>quatro</b> dimensões que a EPS busca integrar:</p>
+    <div class="quad">
+      <div class="qcard"><h4>Ensino</h4><p>Instituições formadoras; mudança na graduação e na formação técnica.</p></div>
+      <div class="qcard"><h4>Gestão</h4><p>Gestão setorial da saúde; organização do trabalho.</p></div>
+      <div class="qcard"><h4>Atenção</h4><p>Práticas de cuidado nos serviços de saúde.</p></div>
+      <div class="qcard"><h4>Controle social</h4><p>Participação popular; conselhos e movimentos sociais.</p></div>
+    </div>
+    <div class="bizu"><span class="tag">★ Bizu</span> Decore os 4 vértices: <b>Ensino · Gestão · Atenção · Controle social</b>. A EPS quer que esses quatro “conversem” para transformar a formação e o cuidado no SUS.</div>
+  </section>
+
+  <!-- 4 -->
+  <section id="base">
+    <div class="sec-head"><span class="sec-num">04</span><h2>Base legal &amp; antecedentes</h2></div>
+    <ul class="clean">
+      <li><b>CF/88, Art. 200, III:</b> compete ao SUS <b>ordenar a formação de recursos humanos</b> na área da saúde.</li>
+      <li><b>Lei 8.080/1990</b> (arts. 14, 15, 27) e <b>NOB/RH-SUS</b>: organização e desenvolvimento de RH.</li>
+      <li><b>SGTES (2003):</b> Secretaria de Gestão do Trabalho e da Educação na Saúde — responsável por formular as políticas de formação e desenvolvimento dos trabalhadores.</li>
+      <li><b>Resolução CNS nº 335/2003:</b> aprovou a “Política de Educação e Desenvolvimento para o SUS: Caminhos para a Educação Permanente em Saúde”.</li>
+    </ul>
+    <div class="bizu"><span class="tag">★ Bizu</span> A “ordenação da formação de RH” é <b>competência constitucional do SUS</b> (Art. 200, III). A EPS é o <b>instrumento</b> dessa missão, conduzida pela <b>SGTES</b>.</div>
+  </section>
+
+  <!-- 5 -->
+  <section id="p198">
+    <div class="sec-head"><span class="sec-num">05</span><h2>Portaria GM/MS nº 198/2004 ★</h2></div>
+    <ul class="clean">
+      <li><b>Instituiu a PNEPS</b> (13/02/2004) como estratégia do SUS para a <b>formação e o desenvolvimento dos trabalhadores</b>.</li>
+      <li>Finalidade: produzir mudanças nas práticas de <b>formação, atenção, gestão e participação social</b> (o quadrilátero).</li>
+      <li>Criou os <b>Polos de Educação Permanente em Saúde</b> — instâncias <b>interinstitucionais e locorregionais</b> (“rodas de gestão”) para articular ensino e serviço.</li>
+    </ul>
+    <div class="note"><span class="tag">ℹ Guarde a data</span> <b>Portaria 198, de 13 de fevereiro de 2004</b> = marco que <b>institui a PNEPS</b> e cria os <b>Polos de EPS</b>.</div>
+  </section>
+
+  <!-- 6 -->
+  <section id="p1996">
+    <div class="sec-head"><span class="sec-num">06</span><h2>Portaria GM/MS nº 1.996/2007 — reformulação ★★</h2></div>
+    <p>Definiu <b>novas diretrizes e estratégias</b> para a implementação da PNEPS, adequando-a ao <b>Pacto pela Saúde</b> e ao processo de <b>regionalização/descentralização</b>.</p>
+    <ul class="clean">
+      <li><b>Substituiu os Polos</b> pela condução regional via <b>Colegiados de Gestão Regional (CGR)</b>, com a participação das <b>Comissões Permanentes de Integração Ensino-Serviço (CIES)</b>.</li>
+      <li>Instrumento de planejamento: <b>Plano de Ação Regional de Educação Permanente em Saúde (PAREPS)</b>.</li>
+      <li><b>Financiamento:</b> repasse <b>fundo a fundo</b> (Fundo Nacional de Saúde → fundos estaduais/municipais), pactuado nas <b>CIB</b> e homologado na <b>CIT</b>.</li>
+    </ul>
+    <div class="trap"><span class="tag">⚠ Pegadinha</span> Mudança clássica de prova: <b>198/2004 criou os POLOS</b>; <b>1.996/2007 os substituiu por CGR + CIES</b> e regionalizou a gestão da EPS, alinhando-a ao Pacto pela Saúde.</div>
+  </section>
+
+  <!-- 7 -->
+  <section id="cies">
+    <div class="sec-head"><span class="sec-num">07</span><h2>CIES — Comissões de Integração Ensino-Serviço ★</h2></div>
+    <p>Instâncias <b>intersetoriais e interinstitucionais permanentes</b> que participam da <b>formulação, condução e desenvolvimento</b> da PNEPS no âmbito regional.</p>
+    <p><b>Composição</b> (gestores de saúde municipais/estaduais/DF e, conforme a região):</p>
+    <ul class="clean">
+      <li>Gestores de <b>educação</b> e/ou seus representantes;</li>
+      <li><b>Trabalhadores do SUS</b> e/ou suas entidades;</li>
+      <li><b>Instituições de ensino</b> com cursos na área da saúde;</li>
+      <li><b>Movimentos sociais</b> ligados ao <b>controle social</b> no SUS.</li>
+    </ul>
+    <div class="bizu"><span class="tag">★ Bizu</span> A CIES <b>espelha o quadrilátero</b>: reúne <b>gestão, ensino, trabalhadores (atenção) e controle social</b>. Ela <b>assessora</b> os CGR e ajuda a elaborar/conduzir o <b>PAREPS</b>; quem delibera/conduz a região é o CGR (hoje, a <b>CIR</b>, do Decreto 7.508/2011).</div>
+  </section>
+
+  <!-- 8 -->
+  <section id="atualizacoes">
+    <div class="sec-head"><span class="sec-num">08</span><h2>Atualizações &amp; fortalecimento</h2></div>
+    <ul class="clean">
+      <li><b>PRO EPS-SUS</b> — Programa para o Fortalecimento das Práticas de Educação Permanente em Saúde no SUS (Portaria nº 3.194/2017): incentivo financeiro para que estados elaborem e implementem <b>Planos Estaduais de EPS</b>.</li>
+      <li><b>COAPES</b> — Contrato Organizativo da Ação Pública Ensino-Saúde: integra instituições de ensino e serviços para os cenários de prática.</li>
+      <li><b>Educação Interprofissional em Saúde (EIP):</b> aprender <b>com, sobre e entre</b> as profissões, fortalecendo o trabalho em equipe.</li>
+      <li>Com o <b>Decreto 7.508/2011</b>, os antigos CGR correspondem hoje às <b>Comissões Intergestores Regionais (CIR)</b>.</li>
+    </ul>
+    <div class="note"><span class="tag">ℹ Para o farmacêutico</span> A EPS é a base das <b>residências (incluindo a multiprofissional)</b>, dos <b>preceptores</b> e do desenvolvimento no trabalho — campo direto da sua atuação como educador no SUS.</div>
+  </section>
+
+  <!-- 9 -->
+  <section id="pegadinhas">
+    <div class="sec-head"><span class="sec-num">09</span><h2>Pegadinhas consolidadas</h2></div>
+    <div class="trap"><span class="tag">⚠ Top pegadinhas</span>
+      <ul class="clean" style="margin:0">
+        <li><b>EPS</b> = aprender no/pelo trabalho, problematizadora, coletiva, <b>ascendente</b>, transformadora.</li>
+        <li><b>Educação continuada</b> = pontual, técnica, individual, descendente (a EPS a inclui).</li>
+        <li><b>Quadrilátero (Ceccim):</b> ensino, gestão, atenção, controle social.</li>
+        <li><b>CF/88 Art. 200, III:</b> ordenar a formação de RH é competência do SUS.</li>
+        <li><b>Portaria 198/2004</b> instituiu a PNEPS e criou os <b>Polos de EPS</b>.</li>
+        <li><b>Portaria 1.996/2007</b> substituiu os Polos por <b>CGR + CIES</b> (Pacto pela Saúde).</li>
+        <li><b>CIES</b> é intersetorial/interinstitucional e participa da condução; <b>não</b> substitui o CGR/CIR.</li>
+        <li>Financiamento <b>fundo a fundo</b>, pactuado na CIB e homologado na CIT.</li>
+        <li><b>PRO EPS-SUS (2017)</b> = fortalecimento e planos estaduais de EPS.</li>
+        <li>Base teórica: <b>aprendizagem significativa e problematização</b> (Paulo Freire).</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 10 -->
+  <section id="casos">
+    <div class="sec-head"><span class="sec-num">10</span><h2>Questões — autoteste ★</h2></div>
+    <p>Leia, responda e clique para conferir.</p>
+    <div class="fc-grid" id="caseGrid"></div>
+  </section>
+
+  <footer>
+    <b>Fontes-base:</b> Portaria GM/MS nº 198/2004 (institui a PNEPS) e Portaria GM/MS nº 1.996/2007 (diretrizes de implementação); Resolução CNS nº 335/2003; CF/88 (Art. 200, III) e Lei 8.080/1990; PRO EPS-SUS (Portaria nº 3.194/2017); quadrilátero da formação (Ceccim &amp; Feuerwerker); aprendizagem significativa/problematização (Paulo Freire). Material de revisão — confronte com o edital e a bibliografia da sua banca (FGV, EBSERH, ENARE).
+  </footer>
+
+</div>
+
+<script>
+  const cases = [
+    {q:"O que é Educação Permanente em Saúde (EPS) e em que ela se baseia?", a:"É a aprendizagem no trabalho, em que o ensinar e o aprender se incorporam ao cotidiano dos serviços, partindo dos problemas reais do dia a dia para transformar as práticas. Baseia-se na aprendizagem significativa e na problematização (inspiração em Paulo Freire), de forma coletiva e multiprofissional."},
+    {q:"Diferencie Educação Permanente de Educação Continuada.", a:"A EPS parte dos problemas do cotidiano do trabalho (ascendente), usa a problematização, é coletiva e visa transformar as práticas, de forma contínua. A educação continuada é pontual, parte de conteúdos pré-definidos (descendente), é centrada na atualização técnica e individual. A EPS incorpora a continuada, mas a supera."},
+    {q:"Quais são as quatro dimensões do 'quadrilátero da formação' de Ceccim e Feuerwerker?", a:"Ensino, gestão, atenção (práticas de cuidado) e controle social. A EPS busca articular esses quatro vértices para transformar a formação e o cuidado no SUS."},
+    {q:"Qual dispositivo constitucional fundamenta a EPS e o que ele estabelece?", a:"O Art. 200, inciso III, da Constituição Federal de 1988, que estabelece como competência do SUS ordenar a formação de recursos humanos na área da saúde."},
+    {q:"Qual portaria instituiu a Política Nacional de Educação Permanente em Saúde e o que ela criou?", a:"A Portaria GM/MS nº 198, de 13 de fevereiro de 2004, que instituiu a PNEPS e criou os Polos de Educação Permanente em Saúde como instâncias interinstitucionais e locorregionais de gestão (rodas de gestão)."},
+    {q:"O que mudou com a Portaria GM/MS nº 1.996/2007?", a:"Ela definiu novas diretrizes e estratégias para implementar a PNEPS, adequando-a ao Pacto pela Saúde. Substituiu os Polos pela condução regional por meio dos Colegiados de Gestão Regional (CGR), com a participação das Comissões de Integração Ensino-Serviço (CIES), e definiu o financiamento fundo a fundo."},
+    {q:"O que são as CIES e qual sua composição?", a:"As Comissões de Integração Ensino-Serviço são instâncias intersetoriais e interinstitucionais permanentes que participam da formulação e condução da PNEPS na região. São compostas por gestores de saúde (municipais, estaduais e do DF) e, conforme a região, por gestores de educação, trabalhadores do SUS, instituições de ensino da área da saúde e movimentos sociais do controle social."},
+    {q:"Como a EPS é financiada segundo a Portaria 1.996/2007?", a:"Por repasse fundo a fundo do Fundo Nacional de Saúde aos fundos estaduais e municipais, com a distribuição dos recursos pactuada nas Comissões Intergestores Bipartite (CIB) e homologada na Comissão Intergestores Tripartite (CIT)."},
+    {q:"O que é o Plano de Ação Regional de Educação Permanente em Saúde (PAREPS)?", a:"É o instrumento de planejamento regional da EPS, elaborado no âmbito do Colegiado de Gestão Regional com apoio da CIES, que organiza as ações de educação permanente conforme as necessidades de formação e desenvolvimento dos trabalhadores da região."},
+    {q:"Por que se diz que a EPS é 'ascendente'?", a:"Porque parte das necessidades concretas do processo de trabalho e da realidade local (de baixo para cima), e não de uma grade de conteúdos imposta de cima para baixo. O ponto de partida são os problemas vividos pelas equipes nos serviços."},
+    {q:"O que é o PRO EPS-SUS?", a:"O Programa para o Fortalecimento das Práticas de Educação Permanente em Saúde no SUS (Portaria nº 3.194/2017), que oferece incentivo financeiro para que os estados elaborem e implementem seus Planos Estaduais de Educação Permanente em Saúde."},
+    {q:"Qual a relação entre a SGTES e a PNEPS?", a:"A Secretaria de Gestão do Trabalho e da Educação na Saúde (SGTES), criada em 2003, é a responsável por formular e conduzir as políticas de formação e desenvolvimento dos trabalhadores do SUS, sendo a área do Ministério da Saúde que coordena a PNEPS."},
+    {q:"A CIES delibera e conduz a região no lugar do Colegiado de Gestão Regional?", a:"Não. A CIES é uma instância de assessoramento e integração ensino-serviço que participa da formulação e condução da política; quem conduz a região é o Colegiado de Gestão Regional (hoje correspondente à Comissão Intergestores Regional – CIR). A CIES apoia e ajuda a elaborar o PAREPS."},
+    {q:"Qual referencial teórico embasa a EPS e o conceito de aprendizagem significativa?", a:"A pedagogia problematizadora, com forte inspiração em Paulo Freire: aprende-se a partir de problemas significativos da realidade, com o trabalhador como sujeito ativo, transformando a prática — em oposição à educação 'bancária' (transmissão passiva de conteúdo)."},
+    {q:"Como a EPS se conecta com a residência multiprofissional e a preceptoria?", a:"A residência é um cenário privilegiado de EPS: a aprendizagem ocorre em serviço, a partir dos problemas reais do trabalho, com mediação do preceptor. A formação de preceptores e o desenvolvimento das equipes são ações típicas da Política Nacional de Educação Permanente em Saúde."}
+  ];
+  const grid = document.getElementById('caseGrid');
+  cases.forEach(c=>{
+    const b=document.createElement('button');b.className='fc case';b.type='button';
+    b.innerHTML=`<span class="q">${c.q}</span><span class="hint">Ver resposta</span><span class="ans">${c.a}</span>`;
+    b.addEventListener('click',()=>b.classList.toggle('open'));
+    grid.appendChild(b);
+  });
+</script>
+</body>
+</html>

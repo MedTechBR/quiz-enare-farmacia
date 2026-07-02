@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Inclusão de Grupos Vulnerabilizados na Saúde — Guia de revisão</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@500;600;700;800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#E7E1D2;--surface:#FBF8F0;--surface-2:#F3EEE1;
+    --ink:#143C42;--ink-soft:#4E5F5C;--vermilion:#D6492A;--ochre:#B98220;--green:#3C6E47;--blue:#2C5A74;
+    --line:rgba(20,60,66,.22);--line-strong:rgba(20,60,66,.55);
+    --font-display:'Anton',Impact,sans-serif;--font-head:'Archivo',system-ui,sans-serif;--font-body:'IBM Plex Sans',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+  body{margin:0;background:radial-gradient(circle at 100% -2%, rgba(214,73,42,.06), transparent 38%),var(--paper);
+    color:var(--ink);font-family:var(--font-body);line-height:1.55;padding:clamp(16px,3.5vw,44px) clamp(12px,4vw,40px) 80px}
+  .wrap{max-width:1080px;margin:0 auto}
+  .top-rule{height:6px;background:var(--ink)}
+  .kicker{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-family:var(--font-head);font-weight:700;text-transform:uppercase;letter-spacing:.15em;font-size:11px;color:var(--ink-soft);padding:9px 2px;border-bottom:1px solid var(--line)}
+  .kicker .dot{color:var(--vermilion)}
+  h1{font-family:var(--font-display);font-weight:400;line-height:.92;font-size:clamp(24px,4.6vw,52px);margin:16px 0 8px;text-transform:uppercase;letter-spacing:.5px}
+  h1 .accent{color:var(--vermilion)}
+  .dek{font-size:clamp(15px,2vw,17.5px);color:var(--ink-soft);max-width:68ch;border-top:3px double var(--line-strong);padding-top:12px}
+  .dek b{color:var(--ink);font-weight:600}
+  nav.toc{position:sticky;top:0;z-index:20;background:rgba(231,225,210,.94);backdrop-filter:blur(6px);margin:18px 0 8px;padding:10px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  nav.toc ul{list-style:none;display:flex;gap:7px;flex-wrap:wrap;margin:0;padding:0}
+  nav.toc a{font-family:var(--font-head);font-weight:600;font-size:12px;text-decoration:none;color:var(--ink);border:1.5px solid var(--line-strong);border-radius:2px;padding:5px 10px;transition:background .12s,color .12s}
+  nav.toc a:hover{background:var(--ink);color:var(--surface)}
+  section{margin:38px 0 0;scroll-margin-top:64px}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:14px;border-bottom:2px solid var(--ink);padding-bottom:8px}
+  .sec-num{font-family:var(--font-display);font-size:clamp(22px,3.6vw,36px);color:var(--vermilion);line-height:.8}
+  .sec-head h2{font-family:var(--font-head);font-weight:800;font-size:clamp(17px,2.8vw,24px);margin:0;letter-spacing:-.01em}
+  p{margin:0 0 12px}.lead{font-size:16px}
+  strong,b{color:var(--ink);font-weight:600}.hl{color:var(--vermilion);font-weight:600}
+  ul.clean{margin:0 0 12px;padding-left:18px}ul.clean li{margin:5px 0}
+  .box{background:var(--surface);border:1.5px solid var(--ink);border-radius:3px;box-shadow:4px 4px 0 var(--ink);padding:16px 18px;margin:14px 0}
+  .grid2{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+  .bizu{border:1.5px dashed var(--green);background:rgba(60,110,71,.06);border-radius:3px;padding:13px 16px;margin:14px 0}
+  .bizu .tag{font-family:var(--font-head);font-weight:700;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--green);display:block;margin-bottom:5px}
+  .bizu b{color:var(--green)}
+  .trap{border:1.5px solid var(--vermilion);background:rgba(214,73,42,.05);border-radius:3px;padding:13px 16px;margin:14px 0}
+  .trap .tag{font-family:var(--font-head);font-weight:700;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--vermilion);display:block;margin-bottom:5px}
+  .note{border:1.5px solid var(--blue);background:rgba(44,90,116,.06);border-radius:3px;padding:13px 16px;margin:14px 0}
+  .note .tag{font-family:var(--font-head);font-weight:700;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--blue);display:block;margin-bottom:5px}
+  .tbl{width:100%;border-collapse:collapse;margin:14px 0;font-size:12.5px;background:var(--surface)}
+  .tbl th,.tbl td{border:1px solid var(--line-strong);padding:8px 10px;text-align:left;vertical-align:top}
+  .tbl thead th{background:var(--ink);color:var(--surface);font-family:var(--font-head);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.03em}
+  .tbl tbody th{background:var(--surface-2);font-family:var(--font-head);font-weight:700;white-space:nowrap}
+  .tbl-scroll{overflow-x:auto}
+  .fc-grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));margin-top:14px}
+  .fc{background:var(--surface);border:1.5px solid var(--ink);border-radius:3px;box-shadow:4px 4px 0 var(--ink);padding:16px 17px;cursor:pointer;text-align:left;width:100%;font-family:var(--font-body);color:var(--ink);display:flex;flex-direction:column;gap:9px;transition:transform .12s,box-shadow .12s}
+  .fc:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--vermilion)}
+  .fc:focus-visible{outline:3px solid var(--vermilion);outline-offset:3px}
+  .fc .q{font-family:var(--font-head);font-weight:700;font-size:15px;line-height:1.28}
+  .fc .hint{font-family:var(--font-head);font-weight:600;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--vermilion)}
+  .fc .ans{font-size:13.5px;color:var(--ink-soft)}
+  .fc:not(.open) .ans{display:none}.fc.open .hint{display:none}
+  .case .q::before{content:"QUESTÃO ";font-family:var(--font-display);color:var(--vermilion);font-size:11px;letter-spacing:.08em}
+  footer{margin:46px 0 0;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--ink-soft)}
+  footer b{color:var(--ink)}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="top-rule"></div>
+    <div class="kicker">
+      <span>Saúde Coletiva <span class="dot">·</span> Equidade</span>
+      <span>FGV · EBSERH · ENARE</span>
+    </div>
+    <h1>Inclusão de Grupos <span class="accent">Vulnerabilizados</span> na Saúde</h1>
+    <p class="dek">As <b>políticas nacionais de equidade</b> do SUS para crianças e adolescentes, idosos, <b>LGBTQIA+</b>, pessoas com deficiência, população em situação de rua, <b>povos indígenas</b>, população negra, quilombolas e demais minorias. Guia objetivo com norma, pontos-chave, bizus e questões.</p>
+  </header>
+
+  <nav class="toc" aria-label="Índice">
+    <ul>
+      <li><a href="#marco">1 · Marco conceitual ★</a></li>
+      <li><a href="#mapa">2 · Mapa das políticas ★★</a></li>
+      <li><a href="#crianca">3 · Criança/adolesc.</a></li>
+      <li><a href="#idoso">4 · Idoso</a></li>
+      <li><a href="#lgbt">5 · LGBTQIA+ ★</a></li>
+      <li><a href="#pcd">6 · Deficiência ★</a></li>
+      <li><a href="#rua">7 · Situação de rua ★</a></li>
+      <li><a href="#indigena">8 · Povos indígenas ★★</a></li>
+      <li><a href="#negra">9 · População negra ★</a></li>
+      <li><a href="#quilombola">10 · Quilombolas/campo</a></li>
+      <li><a href="#pegadinhas">11 · Pegadinhas</a></li>
+      <li><a href="#casos">12 · Questões ★</a></li>
+    </ul>
+  </nav>
+
+  <!-- 1 -->
+  <section id="marco">
+    <div class="sec-head"><span class="sec-num">01</span><h2>Marco conceitual ★</h2></div>
+    <ul class="clean">
+      <li><b>Equidade:</b> tratar <b>desigualmente os desiguais</b> — investir mais onde a necessidade é maior. É o princípio do SUS que sustenta essas políticas.</li>
+      <li><b>Vulnerabilização:</b> processo <b>social</b> (não característica “natural” do grupo) que produz maior exposição a riscos e menor acesso a direitos. Por isso “vulnerabiliz<b>ados</b>” — alguém os tornou vulneráveis.</li>
+      <li><b>Determinantes sociais da saúde:</b> renda, escolaridade, raça/cor, gênero, território, racismo, estigma — explicam as <b>iniquidades</b> em saúde.</li>
+      <li><b>Intersetorialidade</b> e <b>participação social</b>: as respostas exigem articulação entre setores e com os movimentos sociais.</li>
+    </ul>
+    <div class="bizu"><span class="tag">★ Bizu</span> Diferencie: <b>desigualdade</b> (diferença) × <b>iniquidade</b> (diferença <b>injusta e evitável</b>). As políticas de equidade combatem as <b>iniquidades</b>, promovendo acesso diferenciado a quem mais precisa.</div>
+  </section>
+
+  <!-- 2 -->
+  <section id="mapa">
+    <div class="sec-head"><span class="sec-num">02</span><h2>Mapa das políticas nacionais de equidade ★★</h2></div>
+    <div class="tbl-scroll">
+    <table class="tbl">
+      <thead><tr><th>População</th><th>Política / norma-chave</th></tr></thead>
+      <tbody>
+        <tr><th>Criança</th><td><b>PNAISC</b> — Política Nac. de Atenção Integral à Saúde da Criança (Portaria 1.130/2015); <b>ECA</b> (Lei 8.069/1990).</td></tr>
+        <tr><th>Adolescente/jovem</th><td>Política Nac. de Atenção Integral à Saúde de Adolescentes e Jovens; <b>ECA</b>.</td></tr>
+        <tr><th>Idoso</th><td><b>PNSPI</b> (Portaria 2.528/2006); <b>Estatuto do Idoso</b> (Lei 10.741/2003).</td></tr>
+        <tr><th>LGBTQIA+</th><td><b>Política Nac. de Saúde Integral LGBT</b> (Portaria 2.836/2011); processo transexualizador (Portaria 2.803/2013).</td></tr>
+        <tr><th>Pessoa com deficiência</th><td>Política Nac. de Saúde da Pessoa com Deficiência (Portaria 1.060/2002); <b>LBI</b> (Lei 13.146/2015); Rede “Viver sem Limite”.</td></tr>
+        <tr><th>Situação de rua</th><td>Política Nac. para a População em Situação de Rua (Decreto 7.053/2009); <b>Consultório na Rua</b>.</td></tr>
+        <tr><th>Povos indígenas</th><td><b>PNASPI</b>; Subsistema (<b>Lei Arouca 9.836/1999</b>); SasiSUS; SESAI; <b>DSEI</b>.</td></tr>
+        <tr><th>População negra</th><td><b>PNSIPN</b> (Portaria 992/2009); Estatuto da Igualdade Racial (Lei 12.288/2010).</td></tr>
+        <tr><th>Campo, floresta e águas (inclui quilombolas)</th><td><b>PNSIPCFA</b> (Portaria 2.866/2011).</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="bizu"><span class="tag">★ Bizu</span> Há ainda políticas/ações para <b>população cigana, privados de liberdade (PNAISP), migrantes e refugiados</b>. Padrão de prova: ligar <b>população ↔ política ↔ ano/norma</b>.</div>
+  </section>
+
+  <!-- 3 -->
+  <section id="crianca">
+    <div class="sec-head"><span class="sec-num">03</span><h2>Crianças e adolescentes</h2></div>
+    <ul class="clean">
+      <li><b>PNAISC (2015):</b> atenção integral do nascimento aos 9 anos, com prioridade à <b>primeira infância</b>; eixos como aleitamento, crescimento/desenvolvimento, atenção a agravos e à criança em situação de violência.</li>
+      <li><b>ECA (Lei 8.069/1990):</b> <b>proteção integral</b>; criança = até 12 anos incompletos; adolescente = 12 a 18 anos. Prioridade absoluta e notificação compulsória de violência/maus-tratos.</li>
+      <li>Instrumentos: <b>Caderneta de Saúde da Criança</b>, calendário vacinal, puericultura.</li>
+    </ul>
+    <div class="trap"><span class="tag">⚠ Pegadinha</span> No <b>ECA</b>: criança é até <b>12 anos incompletos</b>; adolescente, de <b>12 a 18</b>. A notificação de suspeita de maus-tratos é <b>compulsória</b> ao Conselho Tutelar.</div>
+  </section>
+
+  <!-- 4 -->
+  <section id="idoso">
+    <div class="sec-head"><span class="sec-num">04</span><h2>Pessoa idosa</h2></div>
+    <ul class="clean">
+      <li><b>PNSPI (Portaria 2.528/2006):</b> foco na <b>capacidade funcional</b> e no envelhecimento ativo, não só na doença.</li>
+      <li><b>Estatuto do Idoso (Lei 10.741/2003):</b> idoso = <b>≥ 60 anos</b>; garante prioridade no atendimento, gratuidade de medicamentos de uso contínuo e notificação compulsória de violência contra o idoso.</li>
+      <li>Instrumento: <b>Caderneta de Saúde da Pessoa Idosa</b>; avaliação multidimensional/funcional.</li>
+    </ul>
+  </section>
+
+  <!-- 5 -->
+  <section id="lgbt">
+    <div class="sec-head"><span class="sec-num">05</span><h2>População LGBTQIA+ ★</h2></div>
+    <ul class="clean">
+      <li><b>Política Nac. de Saúde Integral LGBT (Portaria 2.836/2011):</b> combate ao <b>estigma e à discriminação</b> (LGBTfobia como determinante de saúde) e garantia de acesso integral.</li>
+      <li><b>Nome social:</b> direito ao uso do nome social em todo o SUS (<b>Portaria 1.820/2009</b> — direitos dos usuários; <b>Decreto 8.727/2016</b>).</li>
+      <li><b>Processo transexualizador no SUS (Portaria 2.803/2013):</b> acompanhamento e procedimentos para pessoas trans.</li>
+    </ul>
+    <div class="bizu"><span class="tag">★ Bizu</span> Conceitos que a banca separa: <b>sexo biológico ≠ identidade de gênero ≠ orientação sexual ≠ expressão de gênero</b>. O <b>nome social</b> é um direito garantido em todo o SUS, independentemente de retificação de documento.</div>
+  </section>
+
+  <!-- 6 -->
+  <section id="pcd">
+    <div class="sec-head"><span class="sec-num">06</span><h2>Pessoas com deficiência ★</h2></div>
+    <ul class="clean">
+      <li><b>Política Nac. de Saúde da Pessoa com Deficiência (Portaria 1.060/2002).</b></li>
+      <li><b>Rede de Cuidados à Pessoa com Deficiência</b> (“Viver sem Limite”, Decreto 7.612/2011) — uma das redes temáticas do SUS; <b>CER</b> (Centros Especializados em Reabilitação).</li>
+      <li><b>LBI — Lei Brasileira de Inclusão / Estatuto da Pessoa com Deficiência (Lei 13.146/2015):</b> baseada na <b>Convenção da ONU</b>; adota o <b>modelo social</b> da deficiência (a deficiência resulta da interação com as <b>barreiras</b>, não só do corpo); garante <b>acessibilidade</b> e atendimento prioritário.</li>
+    </ul>
+    <div class="trap"><span class="tag">⚠ Pegadinha</span> <b>Modelo social</b> (LBI): a deficiência não está “na pessoa”, mas na <b>interação com as barreiras</b> (atitudinais, arquitetônicas, comunicacionais). Acessibilidade é direito, não favor.</div>
+  </section>
+
+  <!-- 7 -->
+  <section id="rua">
+    <div class="sec-head"><span class="sec-num">07</span><h2>População em situação de rua ★</h2></div>
+    <ul class="clean">
+      <li><b>Política Nac. para a População em Situação de Rua (Decreto 7.053/2009):</b> reconhece o grupo e veda qualquer condicionante (endereço, documento) para o acesso.</li>
+      <li><b>Consultório na Rua (eCR):</b> equipes da Atenção Básica que levam o cuidado <b>até a rua</b>, de forma itinerante, articuladas a UBS, CAPS e RUE.</li>
+      <li>Princípios: <b>acesso sem barreiras</b>, vínculo, redução de danos e respeito à autonomia.</li>
+    </ul>
+    <div class="bizu"><span class="tag">★ Bizu</span> O <b>Consultório na Rua</b> é uma <b>equipe da Atenção Básica</b> (não um local fixo). A ausência de comprovante de residência <b>não pode</b> impedir o atendimento no SUS.</div>
+  </section>
+
+  <!-- 8 -->
+  <section id="indigena">
+    <div class="sec-head"><span class="sec-num">08</span><h2>Povos originários (indígenas) ★★</h2></div>
+    <ul class="clean">
+      <li><b>Lei Arouca (Lei 9.836/1999):</b> criou o <b>Subsistema de Atenção à Saúde Indígena</b> dentro do SUS.</li>
+      <li><b>PNASPI</b> — Política Nacional de Atenção à Saúde dos Povos Indígenas: atenção <b>diferenciada</b>, respeitando saberes e práticas tradicionais.</li>
+      <li><b>SasiSUS</b> (subsistema) é gerido pela <b>SESAI</b> (Secretaria de Saúde Indígena, criada em 2010, no <b>Ministério da Saúde</b>), organizado em <b>34 DSEIs</b> (Distritos Sanitários Especiais Indígenas), com <b>AIS</b> (Agentes Indígenas de Saúde) e <b>EMSI</b> (equipes multidisciplinares).</li>
+      <li>A atenção básica ocorre nas aldeias; média/alta complexidade é referenciada à rede do SUS.</li>
+    </ul>
+    <div class="bizu"><span class="tag">★ Bizu</span> Decore: <b>Lei Arouca (9.836/1999) → Subsistema → PNASPI → SasiSUS → SESAI (2010) → 34 DSEIs</b>. A organização é por <b>Distrito Sanitário</b> (lógica territorial/etnográfica), não por município.</div>
+  </section>
+
+  <!-- 9 -->
+  <section id="negra">
+    <div class="sec-head"><span class="sec-num">09</span><h2>População negra ★</h2></div>
+    <ul class="clean">
+      <li><b>PNSIPN — Política Nac. de Saúde Integral da População Negra (Portaria 992/2009):</b> enfrenta o <b>racismo</b> como determinante social e as iniquidades raciais em saúde.</li>
+      <li><b>Quesito raça/cor</b> obrigatório nos sistemas de informação (visibilidade dos dados para planejar ações).</li>
+      <li>Agravos com maior carga: <b>anemia falciforme</b> (doença genética mais prevalente; triagem no teste do pezinho), <b>hipertensão</b>, diabetes, e a <b>mortalidade materna</b> mais alta entre mulheres negras (foco da Rede Alyne).</li>
+    </ul>
+    <div class="bizu"><span class="tag">★ Bizu</span> Liga clássica de prova: <b>população negra ↔ anemia falciforme ↔ quesito raça/cor ↔ PNSIPN (2009)</b>. O <b>racismo</b> é tratado como <b>determinante social</b> da saúde.</div>
+  </section>
+
+  <!-- 10 -->
+  <section id="quilombola">
+    <div class="sec-head"><span class="sec-num">10</span><h2>Quilombolas, campo, floresta e águas</h2></div>
+    <ul class="clean">
+      <li><b>PNSIPCFA — Política Nac. de Saúde Integral das Populações do Campo, da Floresta e das Águas (Portaria 2.866/2011):</b> abrange <b>quilombolas</b>, assentados, ribeirinhos, extrativistas, pescadores artesanais, atingidos por barragens, entre outros.</li>
+      <li>As <b>comunidades quilombolas</b> são contempladas também pela <b>PNSIPN</b> (população negra).</li>
+      <li>Desafios: acesso geográfico, saneamento, exposição a agrotóxicos e respeito aos modos de vida.</li>
+    </ul>
+    <div class="note"><span class="tag">ℹ Demais minorias</span> Compõem o campo da equidade ainda: <b>população cigana</b>, <b>pessoas privadas de liberdade</b> (PNAISP), <b>migrantes, refugiados e apátridas</b>, e adolescentes em medida socioeducativa — todas com acesso garantido ao SUS sem discriminação.</div>
+  </section>
+
+  <!-- 11 -->
+  <section id="pegadinhas">
+    <div class="sec-head"><span class="sec-num">11</span><h2>Pegadinhas consolidadas</h2></div>
+    <div class="trap"><span class="tag">⚠ Top pegadinhas</span>
+      <ul class="clean" style="margin:0">
+        <li><b>Equidade</b> = tratar desigualmente os desiguais; combate à <b>iniquidade</b> (diferença injusta e evitável).</li>
+        <li><b>Vulnerabilizados</b> (processo social), não “vulneráveis por natureza”.</li>
+        <li><b>ECA:</b> criança &lt; 12 anos; adolescente 12–18. <b>Idoso ≥ 60</b> (Estatuto do Idoso).</li>
+        <li><b>Nome social</b> = direito em todo o SUS (independe de retificar documento).</li>
+        <li><b>LBI (13.146/2015):</b> modelo <b>social</b> da deficiência (barreiras).</li>
+        <li><b>Consultório na Rua</b> = equipe da Atenção Básica; sem exigir comprovante de residência.</li>
+        <li><b>Lei Arouca (9.836/1999)</b> criou o Subsistema indígena; gerido pela <b>SESAI</b> em <b>34 DSEIs</b> (no Ministério da Saúde).</li>
+        <li><b>PNSIPN (2009)</b> ↔ população negra ↔ <b>anemia falciforme</b> ↔ quesito raça/cor.</li>
+        <li><b>Quilombolas</b> = PNSIPN <b>e</b> PNSIPCFA (campo/floresta/águas).</li>
+        <li><b>Rede Cegonha → Rede Alyne</b> tem foco na mortalidade materna de mulheres negras.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 12 -->
+  <section id="casos">
+    <div class="sec-head"><span class="sec-num">12</span><h2>Questões — autoteste ★</h2></div>
+    <p>Leia, responda e clique para conferir.</p>
+    <div class="fc-grid" id="caseGrid"></div>
+  </section>
+
+  <footer>
+    <b>Fontes-base:</b> princípio da equidade (Lei 8.080/1990); PNAISC (Portaria 1.130/2015) e ECA (Lei 8.069/1990); PNSPI (Portaria 2.528/2006) e Estatuto do Idoso (Lei 10.741/2003); Política Nacional de Saúde Integral LGBT (Portaria 2.836/2011) e processo transexualizador (Portaria 2.803/2013); Política da Pessoa com Deficiência (Portaria 1.060/2002) e LBI (Lei 13.146/2015); População em Situação de Rua (Decreto 7.053/2009); Lei Arouca (Lei 9.836/1999), PNASPI e SasiSUS/SESAI; PNSIPN (Portaria 992/2009); PNSIPCFA (Portaria 2.866/2011). Material de revisão — confronte com o edital e a bibliografia da sua banca (FGV, EBSERH, ENARE).
+  </footer>
+
+</div>
+
+<script>
+  const cases = [
+    {q:"Qual a diferença entre desigualdade e iniquidade em saúde, e qual princípio do SUS sustenta as políticas para grupos vulnerabilizados?", a:"Desigualdade é uma diferença entre grupos; iniquidade é uma diferença injusta e evitável. As políticas de equidade combatem as iniquidades, com base no princípio da equidade (tratar desigualmente os desiguais, priorizando quem mais precisa)."},
+    {q:"Por que se usa o termo 'populações vulnerabilizadas' em vez de 'vulneráveis'?", a:"Porque a vulnerabilidade não é uma característica natural do grupo, mas resultado de um processo social (racismo, pobreza, estigma, exclusão) que os tornou vulneráveis. O termo evidencia a responsabilidade social e estrutural, não culpabiliza o grupo."},
+    {q:"Segundo o ECA, quais as faixas de idade de criança e adolescente?", a:"Criança é a pessoa com até 12 anos incompletos; adolescente é a pessoa de 12 a 18 anos de idade. O ECA (Lei 8.069/1990) adota a doutrina da proteção integral e a prioridade absoluta."},
+    {q:"A partir de que idade uma pessoa é considerada idosa no Brasil e qual lei define isso?", a:"A partir de 60 anos, conforme o Estatuto do Idoso (Lei 10.741/2003). A PNSPI (Portaria 2.528/2006) organiza a atenção com foco na capacidade funcional e no envelhecimento ativo."},
+    {q:"Um usuário trans solicita ser chamado pelo nome social na recepção de uma UBS, mas ainda não retificou seus documentos. Como proceder?", a:"O uso do nome social é um direito garantido em todo o SUS, independentemente da retificação de documentos (Portaria 1.820/2009 e Decreto 8.727/2016). Deve-se respeitar e registrar o nome social no atendimento."},
+    {q:"O que estabelece a Política Nacional de Saúde Integral LGBT (2011) como foco principal?", a:"O enfrentamento do estigma e da discriminação (a LGBTfobia como determinante social da saúde) e a garantia de acesso integral e equânime, incluindo o respeito à identidade de gênero e à orientação sexual e o acesso ao processo transexualizador no SUS."},
+    {q:"O que é o modelo social da deficiência, adotado pela LBI?", a:"É a compreensão de que a deficiência resulta da interação entre a pessoa e as barreiras (atitudinais, arquitetônicas, comunicacionais) do ambiente, e não apenas de uma limitação corporal. A Lei 13.146/2015 garante acessibilidade e inclusão como direitos."},
+    {q:"O que é o Consultório na Rua e qual cuidado o profissional deve ter quanto ao acesso?", a:"É uma equipe itinerante da Atenção Básica que leva o cuidado às pessoas em situação de rua, articulada com UBS, CAPS e a rede de urgência. O acesso não pode ser condicionado a comprovante de residência ou documento — o atendimento é garantido sem barreiras."},
+    {q:"Qual lei criou o Subsistema de Atenção à Saúde Indígena e como ele está organizado?", a:"A Lei Arouca (Lei 9.836/1999) criou o Subsistema de Atenção à Saúde Indígena no SUS. Ele é regido pela PNASPI, gerido pela SESAI (no Ministério da Saúde) por meio do SasiSUS, e organizado em 34 Distritos Sanitários Especiais Indígenas (DSEI), com Agentes Indígenas de Saúde e equipes multidisciplinares."},
+    {q:"Por que a atenção à saúde indígena é organizada em Distritos Sanitários e considerada 'diferenciada'?", a:"Porque respeita as especificidades epidemiológicas, geográficas, culturais e etnográficas dos povos, articulando a medicina tradicional aos serviços do SUS. Os DSEI seguem uma lógica territorial/etnográfica, e não a divisão político-administrativa por município."},
+    {q:"Qual política trata da saúde da população negra e qual agravo genético é classicamente associado a ela?", a:"A Política Nacional de Saúde Integral da População Negra (PNSIPN, Portaria 992/2009). O agravo classicamente associado é a anemia falciforme (rastreada no teste do pezinho); a política também enfrenta o racismo como determinante e exige o preenchimento do quesito raça/cor."},
+    {q:"Para que serve o preenchimento do quesito raça/cor nos sistemas de informação em saúde?", a:"Para dar visibilidade às iniquidades raciais, permitindo monitorar indicadores por raça/cor e planejar ações específicas. É uma exigência da PNSIPN para o enfrentamento do racismo em saúde."},
+    {q:"As comunidades quilombolas são contempladas por quais políticas de equidade?", a:"Pela Política Nacional de Saúde Integral da População Negra (PNSIPN) e pela Política Nacional de Saúde Integral das Populações do Campo, da Floresta e das Águas (PNSIPCFA, Portaria 2.866/2011), que abrange também ribeirinhos, assentados, pescadores artesanais e outros."},
+    {q:"Cite outras populações contempladas pelas políticas de promoção da equidade no SUS, além das já citadas.", a:"População cigana, pessoas privadas de liberdade (com a PNAISP), migrantes, refugiados e apátridas, e adolescentes em cumprimento de medida socioeducativa — todas com direito de acesso ao SUS sem discriminação."},
+    {q:"Como as políticas de equidade se relacionam com os determinantes sociais da saúde?", a:"Elas reconhecem que renda, escolaridade, raça/cor, gênero, território e fenômenos como racismo e estigma produzem as iniquidades em saúde. Por isso atuam de forma intersetorial e com participação social, oferecendo acesso diferenciado para reduzir essas desigualdades injustas."},
+    {q:"Qual rede temática tem foco específico na redução da mortalidade materna entre mulheres negras?", a:"A Rede Alyne (atualização da Rede Cegonha, Portaria 5.350/2024), que tem como meta reduzir a mortalidade materna, em especial a de mulheres negras, articulando saúde materno-infantil e equidade racial."}
+  ];
+  const grid = document.getElementById('caseGrid');
+  cases.forEach(c=>{
+    const b=document.createElement('button');b.className='fc case';b.type='button';
+    b.innerHTML=`<span class="q">${c.q}</span><span class="hint">Ver resposta</span><span class="ans">${c.a}</span>`;
+    b.addEventListener('click',()=>b.classList.toggle('open'));
+    grid.appendChild(b);
+  });
+</script>
+</body>
+</html>

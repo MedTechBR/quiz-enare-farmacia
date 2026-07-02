@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Redes de Atenção à Saúde (RAS) — Guia de revisão</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@500;600;700;800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#E7E1D2;--surface:#FBF8F0;--surface-2:#F3EEE1;
+    --ink:#143C42;--ink-soft:#4E5F5C;--vermilion:#D6492A;--ochre:#B98220;--green:#3C6E47;--blue:#2C5A74;
+    --line:rgba(20,60,66,.22);--line-strong:rgba(20,60,66,.55);
+    --font-display:'Anton',Impact,sans-serif;--font-head:'Archivo',system-ui,sans-serif;--font-body:'IBM Plex Sans',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+  body{margin:0;background:radial-gradient(circle at 100% -2%, rgba(214,73,42,.06), transparent 38%),var(--paper);
+    color:var(--ink);font-family:var(--font-body);line-height:1.55;padding:clamp(16px,3.5vw,44px) clamp(12px,4vw,40px) 80px}
+  .wrap{max-width:1080px;margin:0 auto}
+  .top-rule{height:6px;background:var(--ink)}
+  .kicker{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-family:var(--font-head);font-weight:700;text-transform:uppercase;letter-spacing:.15em;font-size:11px;color:var(--ink-soft);padding:9px 2px;border-bottom:1px solid var(--line)}
+  .kicker .dot{color:var(--vermilion)}
+  h1{font-family:var(--font-display);font-weight:400;line-height:.92;font-size:clamp(27px,5.2vw,58px);margin:16px 0 8px;text-transform:uppercase;letter-spacing:.5px}
+  h1 .accent{color:var(--vermilion)}
+  .dek{font-size:clamp(15px,2vw,17.5px);color:var(--ink-soft);max-width:68ch;border-top:3px double var(--line-strong);padding-top:12px}
+  .dek b{color:var(--ink);font-weight:600}
+  nav.toc{position:sticky;top:0;z-index:20;background:rgba(231,225,210,.94);backdrop-filter:blur(6px);margin:18px 0 8px;padding:10px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  nav.toc ul{list-style:none;display:flex;gap:7px;flex-wrap:wrap;margin:0;padding:0}
+  nav.toc a{font-family:var(--font-head);font-weight:600;font-size:12px;text-decoration:none;color:var(--ink);border:1.5px solid var(--line-strong);border-radius:2px;padding:5px 10px;transition:background .12s,color .12s}
+  nav.toc a:hover{background:var(--ink);color:var(--surface)}
+  section{margin:38px 0 0;scroll-margin-top:64px}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:14px;border-bottom:2px solid var(--ink);padding-bottom:8px}
+  .sec-num{font-family:var(--font-display);font-size:clamp(26px,4vw,40px);color:var(--vermilion);line-height:.8}
+  .sec-head h2{font-family:var(--font-head);font-weight:800;font-size:clamp(18px,3vw,25px);margin:0;letter-spacing:-.01em}
+  p{margin:0 0 12px}.lead{font-size:16px}
+  strong,b{color:var(--ink);font-weight:600}.hl{color:var(--vermilion);font-weight:600}
+  ul.clean{margin:0 0 12px;padding-left:18px}ul.clean li{margin:5px 0}
+  .box{background:var(--surface);border:1.5px solid var(--ink);border-radius:3px;box-shadow:4px 4px 0 var(--ink);padding:16px 18px;margin:14px 0}
+  .grid2{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+  .grid3{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(200px,1fr))}
+  .bizu{border:1.5px dashed var(--green);background:rgba(60,110,71,.06);border-radius:3px;padding:13px 16px;margin:14px 0}
+  .bizu .tag{font-family:var(--font-head);font-weight:700;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--green);display:block;margin-bottom:5px}
+  .bizu b{color:var(--green)}
+  .trap{border:1.5px solid var(--vermilion);background:rgba(214,73,42,.05);border-radius:3px;padding:13px 16px;margin:14px 0}
+  .trap .tag{font-family:var(--font-head);font-weight:700;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--vermilion);display:block;margin-bottom:5px}
+  .note{border:1.5px solid var(--blue);background:rgba(44,90,116,.06);border-radius:3px;padding:13px 16px;margin:14px 0}
+  .note .tag{font-family:var(--font-head);font-weight:700;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--blue);display:block;margin-bottom:5px}
+  .tbl{width:100%;border-collapse:collapse;margin:14px 0;font-size:12.5px;background:var(--surface)}
+  .tbl th,.tbl td{border:1px solid var(--line-strong);padding:8px 10px;text-align:left;vertical-align:top}
+  .tbl thead th{background:var(--ink);color:var(--surface);font-family:var(--font-head);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.03em}
+  .tbl tbody th{background:var(--surface-2);font-family:var(--font-head);font-weight:700;white-space:nowrap}
+  .tbl-scroll{overflow-x:auto}
+  .hub{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));margin:14px 0;counter-reset:el}
+  .elcard{position:relative;background:var(--surface);border:1.5px solid var(--ink);border-radius:3px;box-shadow:3px 3px 0 var(--ink);padding:13px 15px 13px 46px}
+  .elcard::before{counter-increment:el;content:counter(el);position:absolute;left:11px;top:12px;width:26px;height:26px;background:var(--vermilion);color:#fff;font-family:var(--font-display);font-size:15px;display:flex;align-items:center;justify-content:center;border-radius:50%}
+  .elcard h4{font-family:var(--font-head);font-weight:700;margin:0 0 4px;font-size:14.5px}
+  .elcard p{margin:0;font-size:12.5px;color:var(--ink-soft)}
+  .fc-grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));margin-top:14px}
+  .fc{background:var(--surface);border:1.5px solid var(--ink);border-radius:3px;box-shadow:4px 4px 0 var(--ink);padding:16px 17px;cursor:pointer;text-align:left;width:100%;font-family:var(--font-body);color:var(--ink);display:flex;flex-direction:column;gap:9px;transition:transform .12s,box-shadow .12s}
+  .fc:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--vermilion)}
+  .fc:focus-visible{outline:3px solid var(--vermilion);outline-offset:3px}
+  .fc .q{font-family:var(--font-head);font-weight:700;font-size:15px;line-height:1.28}
+  .fc .hint{font-family:var(--font-head);font-weight:600;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--vermilion)}
+  .fc .ans{font-size:13.5px;color:var(--ink-soft)}
+  .fc:not(.open) .ans{display:none}.fc.open .hint{display:none}
+  .case .q::before{content:"QUESTÃO ";font-family:var(--font-display);color:var(--vermilion);font-size:11px;letter-spacing:.08em}
+  footer{margin:46px 0 0;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--ink-soft)}
+  footer b{color:var(--ink)}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="top-rule"></div>
+    <div class="kicker">
+      <span>Saúde Coletiva <span class="dot">·</span> Organização do SUS</span>
+      <span>FGV · EBSERH · ENARE</span>
+    </div>
+    <h1>Redes de Atenção à <span class="accent">Saúde</span></h1>
+    <p class="dek">Como o SUS supera a <b>fragmentação</b> e organiza o cuidado em <b>rede</b>: conceito, pirâmide × rede poliárquica, os <b>3 elementos constitutivos</b>, a <b>APS como coordenadora</b> e as <b>redes temáticas prioritárias</b> (com a atualização Rede Cegonha → Alyne). Guia objetivo com bizus, tabelas e questões.</p>
+  </header>
+
+  <nav class="toc" aria-label="Índice">
+    <ul>
+      <li><a href="#conceito">1 · Conceito ★</a></li>
+      <li><a href="#piramide">2 · Pirâmide × rede ★</a></li>
+      <li><a href="#elementos">3 · 3 elementos ★★</a></li>
+      <li><a href="#estrutura">4 · Estrutura operacional ★</a></li>
+      <li><a href="#aps">5 · APS coordenadora ★</a></li>
+      <li><a href="#atributos">6 · Atributos &amp; fundamentos</a></li>
+      <li><a href="#temáticas">7 · Redes temáticas ★★</a></li>
+      <li><a href="#modelos">8 · Modelos de atenção</a></li>
+      <li><a href="#legal">9 · Base legal ★</a></li>
+      <li><a href="#pegadinhas">10 · Pegadinhas</a></li>
+      <li><a href="#casos">11 · Questões ★</a></li>
+    </ul>
+  </nav>
+
+  <!-- 1 -->
+  <section id="conceito">
+    <div class="sec-head"><span class="sec-num">01</span><h2>Conceito ★</h2></div>
+    <p class="lead">As <b>RAS</b> são <b>arranjos organizativos</b> de ações e serviços de saúde de <b>diferentes densidades tecnológicas</b> que, integrados por sistemas de <b>apoio técnico, logístico e de gestão</b>, buscam garantir a <span class="hl">integralidade do cuidado</span>.</p>
+    <p>Surgem para <b>superar a fragmentação</b> da atenção e da gestão — o modelo antigo, voltado às <b>condições agudas</b>, é desarticulado e episódico, inadequado para a realidade atual de predomínio das <b>condições crônicas</b>.</p>
+    <div class="bizu"><span class="tag">★ Bizu</span> Palavra-chave da RAS: <b>integração para a integralidade</b>. O inimigo a vencer é a <b>fragmentação</b> (serviços isolados, sem comunicação, focados na doença aguda).</div>
+  </section>
+
+  <!-- 2 -->
+  <section id="piramide">
+    <div class="sec-head"><span class="sec-num">02</span><h2>Pirâmide × rede poliárquica ★</h2></div>
+    <div class="tbl-scroll">
+    <table class="tbl">
+      <thead><tr><th></th><th>Sistema piramidal (antigo)</th><th>Rede poliárquica (RAS)</th></tr></thead>
+      <tbody>
+        <tr><th>Forma</th><td><b>Hierárquica</b>, em pirâmide (níveis de “menor” a “maior” complexidade).</td><td><b>Poliárquica</b>: todos os pontos têm a <b>mesma importância relativa</b>.</td></tr>
+        <tr><th>Lógica</th><td>Complexidade crescente; APS na “base”.</td><td>APS é o <b>centro de comunicação</b> que coordena o cuidado.</td></tr>
+        <tr><th>Foco</th><td>Condições <b>agudas</b>, atenção episódica.</td><td>Condições <b>crônicas</b> + agudas; cuidado <b>contínuo</b>.</td></tr>
+        <tr><th>Relações</th><td>Verticais, fragmentadas.</td><td>Horizontais, <b>integradas</b> (referência e contrarreferência).</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="trap"><span class="tag">⚠ Pegadinha</span> A RAS <b>não</b> é uma pirâmide com a APS “embaixo”. É uma <b>rede horizontal/poliárquica</b> em que a APS é o <b>centro coordenador</b> — não um nível “inferior”. “Menor densidade tecnológica” não significa “menos importante”.</div>
+  </section>
+
+  <!-- 3 -->
+  <section id="elementos">
+    <div class="sec-head"><span class="sec-num">03</span><h2>Os 3 elementos constitutivos ★★</h2></div>
+    <div class="hub">
+      <div class="elcard"><h4>População / território</h4><p>Uma <b>população definida</b> sob responsabilidade, vivendo em <b>territórios sanitários</b> — base do planejamento.</p></div>
+      <div class="elcard"><h4>Estrutura operacional</h4><p>Os <b>“nós”</b> e suas ligações: APS (centro), pontos de atenção secundária/terciária, sistemas de apoio, logísticos e de governança.</p></div>
+      <div class="elcard"><h4>Modelo de atenção à saúde</h4><p>O <b>sistema lógico</b> que organiza o funcionamento da rede, conforme a situação demográfica/epidemiológica (agudas × crônicas).</p></div>
+    </div>
+    <div class="bizu"><span class="tag">★ Bizu</span> Decore o trio: <b>População · Estrutura operacional · Modelo de atenção</b>. É a pergunta mais direta sobre RAS na prova.</div>
+  </section>
+
+  <!-- 4 -->
+  <section id="estrutura">
+    <div class="sec-head"><span class="sec-num">04</span><h2>Estrutura operacional — os componentes ★</h2></div>
+    <div class="tbl-scroll">
+    <table class="tbl">
+      <thead><tr><th>Componente</th><th>O que é</th></tr></thead>
+      <tbody>
+        <tr><th>1. Centro de comunicação</th><td>A <b>Atenção Primária à Saúde (APS)</b> — coordena o cuidado e ordena a rede.</td></tr>
+        <tr><th>2. Pontos de atenção secundária e terciária</th><td>Serviços <b>especializados</b> ambulatoriais e hospitalares (maior densidade tecnológica).</td></tr>
+        <tr><th>3. Sistemas de apoio</th><td><b>SADT</b> (diagnóstico e terapêutico), <b>assistência farmacêutica</b> e sistemas de <b>informação</b> em saúde.</td></tr>
+        <tr><th>4. Sistemas logísticos</th><td><b>Cartão SUS</b>, <b>prontuário eletrônico</b>, sistemas de <b>regulação</b> e <b>transporte sanitário</b>.</td></tr>
+        <tr><th>5. Sistema de governança</th><td>Gestão compartilhada da rede (pactuação, regras, responsabilidades).</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="trap"><span class="tag">⚠ Pegadinha</span> Não confunda: <b>sistemas de apoio</b> = diagnóstico/terapêutico, farmácia, informação (dão suporte clínico). <b>Sistemas logísticos</b> = cartão SUS, prontuário, regulação, transporte (organizam o <b>fluxo</b> de pessoas e informação).</div>
+  </section>
+
+  <!-- 5 -->
+  <section id="aps">
+    <div class="sec-head"><span class="sec-num">05</span><h2>APS como coordenadora ★</h2></div>
+    <ul class="clean">
+      <li>A <b>APS</b> é a <b>porta de entrada preferencial</b>, o <b>centro de comunicação</b> e a <b>coordenadora do cuidado</b> em toda a rede.</li>
+      <li>Deve ser <b>resolutiva</b> (resolver a maioria dos problemas) e <b>ordenar</b> os fluxos para os demais pontos (referência) e recebê-los de volta (contrarreferência).</li>
+      <li>Atributos da APS (Starfield): <b>primeiro contato/acesso, longitudinalidade, integralidade e coordenação</b> (+ orientação familiar e comunitária).</li>
+    </ul>
+    <div class="bizu"><span class="tag">★ Bizu</span> Na RAS, a APS não é “a base da pirâmide”, é o <b>maestro</b> da orquestra: coordena, ordena e dá continuidade ao cuidado. Sem APS forte, não há rede.</div>
+  </section>
+
+  <!-- 6 -->
+  <section id="atributos">
+    <div class="sec-head"><span class="sec-num">06</span><h2>Atributos &amp; fundamentos</h2></div>
+    <div class="grid2">
+      <div class="box"><p><b>Atributos da RAS</b></p>
+        <ul class="clean" style="margin:0">
+          <li>População/território definidos.</li>
+          <li>APS estruturada como coordenadora.</li>
+          <li>Atenção <b>contínua e integral</b>, multiprofissional.</li>
+          <li><b>Governança única</b> e participação social.</li>
+          <li>Gestão baseada em <b>resultados</b>.</li>
+        </ul></div>
+      <div class="box"><p><b>Fundamentos</b></p>
+        <ul class="clean" style="margin:0">
+          <li><b>Economia de escala</b> e qualidade.</li>
+          <li>Suficiência, acesso e disponibilidade de recursos.</li>
+          <li><b>Integração horizontal e vertical</b>.</li>
+          <li>Processos de substituição; território sanitário; níveis de atenção.</li>
+        </ul></div>
+    </div>
+  </section>
+
+  <!-- 7 -->
+  <section id="temáticas">
+    <div class="sec-head"><span class="sec-num">07</span><h2>Redes temáticas prioritárias ★★</h2></div>
+    <p>O Ministério da Saúde priorizou <b>cinco redes temáticas</b>:</p>
+    <div class="tbl-scroll">
+    <table class="tbl">
+      <thead><tr><th>Rede</th><th>Foco</th></tr></thead>
+      <tbody>
+        <tr><th>Rede Cegonha → <span class="hl">Rede Alyne</span></th><td>Saúde <b>materno-infantil</b> (pré-natal, parto, puerpério, criança). <b>Atualizada/renomeada para Rede Alyne</b> em 2024.</td></tr>
+        <tr><th>RUE</th><td><b>Urgências e Emergências</b>: SAMU 192, UPA 24h, portas hospitalares, salas de estabilização.</td></tr>
+        <tr><th>RAPS</th><td><b>Atenção Psicossocial</b>: saúde mental, álcool e outras drogas; <b>CAPS</b>, base comunitária.</td></tr>
+        <tr><th>Rede de Cuidado à Pessoa com Deficiência</th><td>“Viver sem Limite”: reabilitação e cuidado integral.</td></tr>
+        <tr><th>Rede de Doenças Crônicas</th><td>Condições crônicas, incluindo <b>atenção oncológica</b>.</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="note"><span class="tag">ℹ Atualização — Rede Cegonha → Rede Alyne</span>
+      A antiga <b>Rede Cegonha</b> (Portaria 1.459/2011) foi <b>reestruturada e renomeada para Rede Alyne</b> pela <b>Portaria GM/MS nº 5.350/2024</b> (homenagem a Alyne Pimentel), com foco em reduzir a mortalidade materna, sobretudo de mulheres negras. Houve uma tentativa intermediária — a <b>RAMI</b> (Portaria 715/2022) — que foi <b>revogada</b>. <b>Atenção:</b> provas recentes podem cobrar “Rede Alyne”; provas mais antigas, “Rede Cegonha”.</div>
+    <div class="bizu"><span class="tag">★ Bizu</span> Mnemônico das 5 redes: <b>“Mãe-bebê, Urgência, Mente, Deficiência, Crônicas”</b> → Alyne (ex-Cegonha), RUE, RAPS, Pessoa com Deficiência, Doenças Crônicas.</div>
+  </section>
+
+  <!-- 8 -->
+  <section id="modelos">
+    <div class="sec-head"><span class="sec-num">08</span><h2>Modelos de atenção</h2></div>
+    <ul class="clean">
+      <li><b>Modelos para condições agudas:</b> organizam a resposta a eventos agudos por <b>gravidade/risco</b> (ex.: classificação de risco/acolhimento, Protocolo de Manchester nas urgências).</li>
+      <li><b>Modelos para condições crônicas:</b> destaque para o <b>MACC — Modelo de Atenção às Condições Crônicas</b> (Eugênio Vilaça Mendes), baseado em estratificação de risco da população e autocuidado apoiado.</li>
+    </ul>
+    <div class="bizu"><span class="tag">★ Bizu</span> A grande virada das RAS é deixar de tratar tudo como <b>agudo/episódico</b> e passar a gerir <b>condições crônicas</b> de forma proativa, contínua e estratificada por risco.</div>
+  </section>
+
+  <!-- 9 -->
+  <section id="legal">
+    <div class="sec-head"><span class="sec-num">09</span><h2>Base legal ★</h2></div>
+    <div class="tbl-scroll">
+    <table class="tbl">
+      <thead><tr><th>Norma</th><th>O que faz</th></tr></thead>
+      <tbody>
+        <tr><th>Portaria GM/MS nº 4.279/2010</th><td><b>Estabelece as diretrizes para a organização das RAS</b> no SUS. É o marco normativo do tema.</td></tr>
+        <tr><th>Decreto nº 7.508/2011</th><td>Regulamenta a Lei 8.080: <b>Região de Saúde, RAS, portas de entrada, Mapa da Saúde, RENASES, RENAME e COAP</b>.</td></tr>
+        <tr><th>Portaria de Consolidação nº 3/2017</th><td>Consolida as normas sobre as <b>redes do SUS</b> (onde hoje constam as redes temáticas).</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="bizu"><span class="tag">★ Bizu</span> Se a questão pedir “a norma que <b>institui as diretrizes das RAS</b>”, é a <b>Portaria 4.279/2010</b>. O <b>Decreto 7.508/2011</b> dá a moldura jurídica (Região de Saúde) onde a rede se organiza.</div>
+  </section>
+
+  <!-- 10 -->
+  <section id="pegadinhas">
+    <div class="sec-head"><span class="sec-num">10</span><h2>Pegadinhas consolidadas</h2></div>
+    <div class="trap"><span class="tag">⚠ Top pegadinhas</span>
+      <ul class="clean" style="margin:0">
+        <li>RAS combatem a <b>fragmentação</b>; objetivo é a <b>integralidade</b>.</li>
+        <li>RAS é <b>poliárquica</b> (horizontal), <b>não</b> piramidal/hierárquica.</li>
+        <li>3 elementos: <b>população, estrutura operacional, modelo de atenção</b>.</li>
+        <li>A <b>APS</b> é o <b>centro de comunicação e coordenadora</b> (não a “base inferior”).</li>
+        <li><b>Sistemas de apoio</b> (SADT, farmácia, informação) ≠ <b>logísticos</b> (cartão SUS, prontuário, regulação, transporte).</li>
+        <li>5 redes temáticas: <b>Alyne (ex-Cegonha), RUE, RAPS, Deficiência, Crônicas</b>.</li>
+        <li><b>Rede Cegonha → Rede Alyne</b> (Portaria 5.350/2024); RAMI (2022) foi revogada.</li>
+        <li><b>Portaria 4.279/2010</b> = diretrizes das RAS; <b>Decreto 7.508/2011</b> = Região de Saúde.</li>
+        <li>Foco no cuidado das <b>condições crônicas</b> (MACC), além das agudas.</li>
+        <li>Integração <b>horizontal e vertical</b>; economia de <b>escala</b>.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 11 -->
+  <section id="casos">
+    <div class="sec-head"><span class="sec-num">11</span><h2>Questões — autoteste ★</h2></div>
+    <p>Leia, responda e clique para conferir.</p>
+    <div class="fc-grid" id="caseGrid"></div>
+  </section>
+
+  <footer>
+    <b>Fontes-base:</b> Portaria GM/MS nº 4.279/2010 (diretrizes das RAS); Decreto nº 7.508/2011; Portaria de Consolidação GM/MS nº 3/2017; redes temáticas (Rede Alyne — Portaria 5.350/2024 —, RUE, RAPS, Pessoa com Deficiência, Doenças Crônicas); Mendes, E. V. <i>As redes de atenção à saúde</i> (OPAS/Fiocruz). Material de revisão — confronte com o edital e a bibliografia da sua banca (FGV, EBSERH, ENARE).
+  </footer>
+
+</div>
+
+<script>
+  const cases = [
+    {q:"O que são as Redes de Atenção à Saúde (RAS) e qual problema vêm enfrentar?", a:"São arranjos organizativos de ações e serviços de saúde de diferentes densidades tecnológicas, integrados por sistemas de apoio, logísticos e de gestão, para garantir a integralidade do cuidado. Vêm superar a fragmentação da atenção e da gestão, inadequada ao predomínio das condições crônicas."},
+    {q:"Qual a diferença entre o sistema piramidal/hierárquico e a rede poliárquica?", a:"No sistema piramidal os serviços se organizam por níveis hierárquicos de complexidade crescente, de forma fragmentada e voltada ao agudo. Na rede poliárquica (RAS), todos os pontos têm a mesma importância relativa, com relações horizontais e a APS como centro de comunicação que coordena o cuidado."},
+    {q:"Quais são os três elementos constitutivos das RAS?", a:"População (e território definidos), estrutura operacional (os pontos de atenção e suas conexões) e modelo de atenção à saúde (o sistema lógico que organiza o funcionamento da rede)."},
+    {q:"Quais são os componentes da estrutura operacional das RAS?", a:"O centro de comunicação (APS), os pontos de atenção secundária e terciária, os sistemas de apoio (SADT, assistência farmacêutica, informação), os sistemas logísticos (cartão SUS, prontuário eletrônico, regulação, transporte sanitário) e o sistema de governança."},
+    {q:"Qual o papel da Atenção Primária à Saúde nas RAS?", a:"A APS é a porta de entrada preferencial, o centro de comunicação da rede e a coordenadora do cuidado: deve ser resolutiva e ordenar os fluxos para os demais pontos (referência) e recebê-los de volta (contrarreferência). Não é um nível 'inferior' da rede."},
+    {q:"Diferencie os sistemas de apoio dos sistemas logísticos nas RAS.", a:"Os sistemas de apoio dão suporte clínico-diagnóstico: SADT (diagnóstico e terapêutico), assistência farmacêutica e sistemas de informação. Os sistemas logísticos organizam o fluxo de pessoas e informações: cartão SUS, prontuário eletrônico, centrais de regulação e transporte sanitário."},
+    {q:"Quais são as cinco redes temáticas prioritárias do SUS?", a:"Rede Cegonha (atualizada para Rede Alyne), Rede de Atenção às Urgências e Emergências (RUE), Rede de Atenção Psicossocial (RAPS), Rede de Cuidado à Pessoa com Deficiência e Rede de Atenção às Pessoas com Doenças Crônicas."},
+    {q:"O que mudou na rede de saúde materno-infantil em 2024?", a:"A Rede Cegonha (Portaria 1.459/2011) foi reestruturada e renomeada para Rede Alyne, pela Portaria GM/MS nº 5.350/2024, com foco em reduzir a mortalidade materna, especialmente de mulheres negras. Antes houve a RAMI (2022), que foi revogada. Provas recentes podem cobrar 'Rede Alyne'."},
+    {q:"Quais serviços compõem a Rede de Atenção às Urgências e Emergências (RUE)?", a:"Componentes como o SAMU 192, as Unidades de Pronto Atendimento (UPA 24h), as salas de estabilização, as portas hospitalares de urgência e as ações de promoção/prevenção, articulados com a APS."},
+    {q:"A que se destina a Rede de Atenção Psicossocial (RAPS)?", a:"À atenção a pessoas com sofrimento ou transtorno mental e com necessidades decorrentes do uso de álcool e outras drogas, com base comunitária e território, tendo os CAPS como serviços estratégicos."},
+    {q:"Que norma estabelece as diretrizes para a organização das RAS no SUS?", a:"A Portaria GM/MS nº 4.279, de 2010, que define as diretrizes para a estruturação das Redes de Atenção à Saúde. O Decreto 7.508/2011 dá a moldura jurídica (Região de Saúde) onde a rede se organiza."},
+    {q:"O que é o MACC e a qual situação ele responde?", a:"O Modelo de Atenção às Condições Crônicas (MACC), de Eugênio Vilaça Mendes, organiza a atenção às condições crônicas com base na estratificação de risco da população e no autocuidado apoiado — resposta ao predomínio epidemiológico das doenças crônicas."},
+    {q:"O que significa 'economia de escala' como fundamento das RAS?", a:"É concentrar serviços de maior densidade tecnológica em pontos que atendam a uma população suficiente para garantir qualidade e eficiência, evitando duplicação de recursos — equilibrando escala, acesso e qualidade no território."},
+    {q:"O que são referência e contrarreferência?", a:"Referência é o encaminhamento do usuário da APS para serviços de maior densidade tecnológica (especializados/hospitalares); contrarreferência é o retorno do usuário, com as informações do atendimento, à APS para continuidade do cuidado. Garantem a integração e a continuidade na rede."},
+    {q:"Por que se diz que a APS deve ser o 'centro' e não a 'base' da rede?", a:"Porque na lógica poliárquica das RAS não há hierarquia de importância entre os pontos: a APS ocupa o centro como coordenadora e ordenadora do cuidado, dando continuidade e integralidade, e não um nível inferior de uma pirâmide. Menor densidade tecnológica não significa menor importância."}
+  ];
+  const grid = document.getElementById('caseGrid');
+  cases.forEach(c=>{
+    const b=document.createElement('button');b.className='fc case';b.type='button';
+    b.innerHTML=`<span class="q">${c.q}</span><span class="hint">Ver resposta</span><span class="ans">${c.a}</span>`;
+    b.addEventListener('click',()=>b.classList.toggle('open'));
+    grid.appendChild(b);
+  });
+</script>
+</body>
+</html>

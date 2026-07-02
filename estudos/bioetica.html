@@ -1,0 +1,270 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bioética — Guia de revisão</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@500;600;700;800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#E7E1D2;--surface:#FBF8F0;--surface-2:#F3EEE1;
+    --ink:#143C42;--ink-soft:#4E5F5C;--vermilion:#D6492A;--ochre:#B98220;--green:#3C6E47;--blue:#2C5A74;
+    --line:rgba(20,60,66,.22);--line-strong:rgba(20,60,66,.55);
+    --font-display:'Anton',Impact,sans-serif;--font-head:'Archivo',system-ui,sans-serif;--font-body:'IBM Plex Sans',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+  body{margin:0;background:radial-gradient(circle at 100% -2%, rgba(214,73,42,.06), transparent 38%),var(--paper);
+    color:var(--ink);font-family:var(--font-body);line-height:1.55;padding:clamp(16px,3.5vw,44px) clamp(12px,4vw,40px) 80px}
+  .wrap{max-width:1080px;margin:0 auto}
+  .top-rule{height:6px;background:var(--ink)}
+  .kicker{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-family:var(--font-head);font-weight:700;text-transform:uppercase;letter-spacing:.15em;font-size:11px;color:var(--ink-soft);padding:9px 2px;border-bottom:1px solid var(--line)}
+  .kicker .dot{color:var(--vermilion)}
+  h1{font-family:var(--font-display);font-weight:400;line-height:.92;font-size:clamp(28px,5.4vw,60px);margin:16px 0 8px;text-transform:uppercase;letter-spacing:.5px}
+  h1 .accent{color:var(--vermilion)}
+  .dek{font-size:clamp(15px,2vw,17.5px);color:var(--ink-soft);max-width:68ch;border-top:3px double var(--line-strong);padding-top:12px}
+  .dek b{color:var(--ink);font-weight:600}
+  nav.toc{position:sticky;top:0;z-index:20;background:rgba(231,225,210,.94);backdrop-filter:blur(6px);margin:18px 0 8px;padding:10px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  nav.toc ul{list-style:none;display:flex;gap:7px;flex-wrap:wrap;margin:0;padding:0}
+  nav.toc a{font-family:var(--font-head);font-weight:600;font-size:12px;text-decoration:none;color:var(--ink);border:1.5px solid var(--line-strong);border-radius:2px;padding:5px 10px;transition:background .12s,color .12s}
+  nav.toc a:hover{background:var(--ink);color:var(--surface)}
+  section{margin:38px 0 0;scroll-margin-top:64px}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:14px;border-bottom:2px solid var(--ink);padding-bottom:8px}
+  .sec-num{font-family:var(--font-display);font-size:clamp(26px,4vw,40px);color:var(--vermilion);line-height:.8}
+  .sec-head h2{font-family:var(--font-head);font-weight:800;font-size:clamp(18px,3vw,25px);margin:0;letter-spacing:-.01em}
+  p{margin:0 0 12px}.lead{font-size:16px}
+  strong,b{color:var(--ink);font-weight:600}.hl{color:var(--vermilion);font-weight:600}
+  ul.clean{margin:0 0 12px;padding-left:18px}ul.clean li{margin:5px 0}
+  .box{background:var(--surface);border:1.5px solid var(--ink);border-radius:3px;box-shadow:4px 4px 0 var(--ink);padding:16px 18px;margin:14px 0}
+  .grid2{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+  .pillars{display:grid;gap:12px;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));margin:14px 0}
+  .pillar{background:var(--surface);border:1.5px solid var(--ink);border-radius:3px;box-shadow:3px 3px 0 var(--ink);padding:13px 15px}
+  .pillar h4{font-family:var(--font-head);font-weight:700;margin:0 0 4px;font-size:14.5px;color:var(--vermilion)}
+  .pillar p{margin:0;font-size:12.5px;color:var(--ink-soft)}
+  .time{margin:14px 0}
+  .tevent{position:relative;padding:8px 0 8px 22px;margin-left:8px;border-left:1.5px solid var(--line-strong)}
+  .tevent::before{content:"";position:absolute;left:-7px;top:13px;width:12px;height:12px;background:var(--vermilion);border:2px solid var(--surface);border-radius:50%}
+  .tevent .yr{font-family:var(--font-display);color:var(--vermilion);font-size:16px;letter-spacing:.04em}
+  .tevent .ev{font-size:13.5px}.tevent .ev b{color:var(--ink)}
+  .bizu{border:1.5px dashed var(--green);background:rgba(60,110,71,.06);border-radius:3px;padding:13px 16px;margin:14px 0}
+  .bizu .tag{font-family:var(--font-head);font-weight:700;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--green);display:block;margin-bottom:5px}
+  .bizu b{color:var(--green)}
+  .trap{border:1.5px solid var(--vermilion);background:rgba(214,73,42,.05);border-radius:3px;padding:13px 16px;margin:14px 0}
+  .trap .tag{font-family:var(--font-head);font-weight:700;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--vermilion);display:block;margin-bottom:5px}
+  .note{border:1.5px solid var(--blue);background:rgba(44,90,116,.06);border-radius:3px;padding:13px 16px;margin:14px 0}
+  .note .tag{font-family:var(--font-head);font-weight:700;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--blue);display:block;margin-bottom:5px}
+  .tbl{width:100%;border-collapse:collapse;margin:14px 0;font-size:12.5px;background:var(--surface)}
+  .tbl th,.tbl td{border:1px solid var(--line-strong);padding:8px 10px;text-align:left;vertical-align:top}
+  .tbl thead th{background:var(--ink);color:var(--surface);font-family:var(--font-head);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.03em}
+  .tbl tbody th{background:var(--surface-2);font-family:var(--font-head);font-weight:700;white-space:nowrap}
+  .tbl-scroll{overflow-x:auto}
+  .fc-grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));margin-top:14px}
+  .fc{background:var(--surface);border:1.5px solid var(--ink);border-radius:3px;box-shadow:4px 4px 0 var(--ink);padding:16px 17px;cursor:pointer;text-align:left;width:100%;font-family:var(--font-body);color:var(--ink);display:flex;flex-direction:column;gap:9px;transition:transform .12s,box-shadow .12s}
+  .fc:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--vermilion)}
+  .fc:focus-visible{outline:3px solid var(--vermilion);outline-offset:3px}
+  .fc .q{font-family:var(--font-head);font-weight:700;font-size:15px;line-height:1.28}
+  .fc .hint{font-family:var(--font-head);font-weight:600;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--vermilion)}
+  .fc .ans{font-size:13.5px;color:var(--ink-soft)}
+  .fc:not(.open) .ans{display:none}.fc.open .hint{display:none}
+  .case .q::before{content:"QUESTÃO ";font-family:var(--font-display);color:var(--vermilion);font-size:11px;letter-spacing:.08em}
+  footer{margin:46px 0 0;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--ink-soft)}
+  footer b{color:var(--ink)}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="top-rule"></div>
+    <div class="kicker">
+      <span>Ética <span class="dot">·</span> Pesquisa &amp; Cuidado</span>
+      <span>FGV · EBSERH · ENARE</span>
+    </div>
+    <h1><span class="accent">Bioética</span></h1>
+    <p class="dek">Do conceito de Potter ao <b>principialismo</b> (autonomia, beneficência, não maleficência, justiça); os <b>marcos históricos</b> (Nuremberg, Helsinki, Belmont); a <b>ética em pesquisa no Brasil</b> (CEP/CONEP, Resolução 466/2012 e a Lei 14.874/2024); e os <b>dilemas de fim de vida</b>. Guia objetivo com bizus, tabelas e questões.</p>
+  </header>
+
+  <nav class="toc" aria-label="Índice">
+    <ul>
+      <li><a href="#conceitos">1 · Conceitos ★</a></li>
+      <li><a href="#principios">2 · Principialismo ★★</a></li>
+      <li><a href="#marcos">3 · Marcos históricos ★</a></li>
+      <li><a href="#brasil">4 · Pesquisa no Brasil ★★</a></li>
+      <li><a href="#correntes">5 · Correntes</a></li>
+      <li><a href="#fimdevida">6 · Fim de vida ★</a></li>
+      <li><a href="#pegadinhas">7 · Pegadinhas</a></li>
+      <li><a href="#casos">8 · Questões ★</a></li>
+    </ul>
+  </nav>
+
+  <!-- 1 -->
+  <section id="conceitos">
+    <div class="sec-head"><span class="sec-num">01</span><h2>Conceitos fundamentais ★</h2></div>
+    <div class="tbl-scroll">
+    <table class="tbl">
+      <thead><tr><th>Termo</th><th>Sentido</th></tr></thead>
+      <tbody>
+        <tr><th>Moral</th><td>Conjunto de <b>regras e costumes</b> de um grupo, transmitidos culturalmente (o que “se faz”).</td></tr>
+        <tr><th>Ética</th><td><b>Reflexão crítica</b> sobre a moral; a justificativa racional das condutas.</td></tr>
+        <tr><th>Deontologia</th><td>Ética <b>profissional</b> normatizada — os <b>códigos de ética</b> (deveres da profissão).</td></tr>
+        <tr><th>Bioética</th><td>Ética aplicada às <b>questões da vida e da saúde</b>, interdisciplinar.</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <ul class="clean">
+      <li>O termo <b>bioética</b> foi cunhado por <b>Van Rensselaer Potter</b> (1971, obra <i>Bioethics: Bridge to the Future</i>): uma <b>“ponte”</b> entre as ciências da vida e os valores humanos.</li>
+    </ul>
+    <div class="bizu"><span class="tag">★ Bizu</span> <b>Moral</b> = costume/prática; <b>ética</b> = reflexão sobre a moral; <b>deontologia</b> = código profissional. <b>Potter (1971)</b> = pai do termo “bioética” (ponte ciência ↔ valores).</div>
+  </section>
+
+  <!-- 2 -->
+  <section id="principios">
+    <div class="sec-head"><span class="sec-num">02</span><h2>Principialismo — os 4 princípios ★★</h2></div>
+    <p>Modelo de <b>Beauchamp &amp; Childress</b> (<i>Principles of Biomedical Ethics</i>, 1979), hegemônico na bioética:</p>
+    <div class="pillars">
+      <div class="pillar"><h4>Autonomia</h4><p>Respeito à <b>autodeterminação</b> do paciente; base do consentimento informado (TCLE).</p></div>
+      <div class="pillar"><h4>Beneficência</h4><p><b>Fazer o bem</b>; agir no melhor interesse do paciente.</p></div>
+      <div class="pillar"><h4>Não maleficência</h4><p><b>Não causar dano</b> (<i>primum non nocere</i>).</p></div>
+      <div class="pillar"><h4>Justiça</h4><p>Distribuição <b>equitativa</b> de recursos, riscos e benefícios.</p></div>
+    </div>
+    <div class="trap"><span class="tag">⚠ Pegadinha</span> <b>Beneficência</b> (fazer o bem) ≠ <b>não maleficência</b> (não causar dano) — são princípios distintos. E <b>nenhum princípio é absoluto</b>: em conflito, são ponderados no caso concreto (não há hierarquia fixa entre eles).</div>
+    <div class="bizu"><span class="tag">★ Bizu</span> A <b>autonomia</b> sustenta o <b>consentimento livre e esclarecido</b> e o respeito às escolhas do paciente (ex.: recusa de tratamento). Conflito clássico: <b>autonomia × beneficência (paternalismo)</b>.</div>
+  </section>
+
+  <!-- 3 -->
+  <section id="marcos">
+    <div class="sec-head"><span class="sec-num">03</span><h2>Marcos históricos da ética em pesquisa ★</h2></div>
+    <div class="time">
+      <div class="tevent"><div class="yr">1947</div><div class="ev"><b>Código de Nuremberg</b> — após os experimentos nazistas; consagra o <b>consentimento voluntário</b> como essencial.</div></div>
+      <div class="tevent"><div class="yr">1964</div><div class="ev"><b>Declaração de Helsinki</b> (Assoc. Médica Mundial) — princípios éticos para a <b>pesquisa médica</b> em humanos (revisada várias vezes).</div></div>
+      <div class="tevent"><div class="yr">1972</div><div class="ev"><b>Caso Tuskegee</b> exposto — estudo da sífilis que negou tratamento a homens negros (1932–1972); símbolo da violação ética.</div></div>
+      <div class="tevent"><div class="yr">1979</div><div class="ev"><b>Relatório Belmont</b> (EUA) — 3 princípios: <b>respeito às pessoas</b> (autonomia), <b>beneficência</b> e <b>justiça</b>.</div></div>
+      <div class="tevent"><div class="yr">2005</div><div class="ev"><b>Declaração Universal sobre Bioética e Direitos Humanos</b> (UNESCO) — amplia a bioética aos direitos humanos e à dimensão social.</div></div>
+    </div>
+    <div class="bizu"><span class="tag">★ Bizu</span> <b>Nuremberg (1947) = consentimento voluntário</b>; <b>Belmont (1979) = 3 princípios</b> (respeito/beneficência/justiça), que inspiraram o principialismo. <b>Tuskegee</b> é o caso que motivou o Belmont.</div>
+  </section>
+
+  <!-- 4 -->
+  <section id="brasil">
+    <div class="sec-head"><span class="sec-num">04</span><h2>Ética em pesquisa no Brasil ★★</h2></div>
+    <div class="tbl-scroll">
+    <table class="tbl">
+      <thead><tr><th>Norma</th><th>O que estabelece</th></tr></thead>
+      <tbody>
+        <tr><th>Res. CNS 196/1996</th><td>Estruturou o <b>Sistema CEP/CONEP</b> (revogada pela 466).</td></tr>
+        <tr><th>Res. CNS 466/2012</th><td>Diretrizes para pesquisa com <b>seres humanos</b>: <b>TCLE</b>, vulnerabilidade, riscos/benefícios, garantias pós-estudo. Incorpora autonomia, beneficência, não maleficência e justiça.</td></tr>
+        <tr><th>Res. CNS 510/2016</th><td>Pesquisa em <b>ciências humanas e sociais</b>.</td></tr>
+        <tr><th>Lei nº 14.874/2024</th><td><b>Novo marco legal</b>: institui o <b>Sistema Nacional de Ética em Pesquisa com Seres Humanos</b>; regulamentada pelo <b>Decreto 12.651/2025</b>.</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <ul class="clean">
+      <li><b>CEP</b> — Comitê de Ética em Pesquisa: análise <b>local/institucional</b> dos projetos.</li>
+      <li><b>CONEP</b> — Comissão Nacional de Ética em Pesquisa: instância <b>nacional</b>, ligada ao CNS.</li>
+      <li><b>Plataforma Brasil:</b> sistema nacional de <b>submissão</b> e acompanhamento dos projetos.</li>
+      <li><b>TCLE</b> — Termo de Consentimento Livre e Esclarecido: expressão da <b>autonomia</b>; deve ser obtido <b>antes</b> da participação, sem coação, com linguagem acessível.</li>
+    </ul>
+    <div class="note"><span class="tag">ℹ Atenção — transição normativa</span> A <b>Lei 14.874/2024</b> criou um novo sistema (com uma instância nacional de ética em pesquisa), mas o <b>Sistema CEP/CONEP</b> e a <b>Resolução 466/2012</b> seguem como referência durante a transição. Provas recentes podem cobrar a <b>nova lei</b>; saiba os dois.</div>
+    <div class="bizu"><span class="tag">★ Bizu</span> Para o farmacêutico: a ética em <b>ensaios clínicos de medicamentos</b> passa por CEP/CONEP + Plataforma Brasil, e os eventos adversos graves devem ser comunicados à <b>ANVISA</b>. A nova lei prevê comunicação de evento adverso grave em <b>até 72h</b>.</div>
+  </section>
+
+  <!-- 5 -->
+  <section id="correntes">
+    <div class="sec-head"><span class="sec-num">05</span><h2>Correntes da bioética</h2></div>
+    <div class="tbl-scroll">
+    <table class="tbl">
+      <thead><tr><th>Corrente</th><th>Ideia</th></tr></thead>
+      <tbody>
+        <tr><th>Principialismo</th><td>Os 4 princípios (Beauchamp &amp; Childress); modelo dominante.</td></tr>
+        <tr><th>Bioética da proteção</th><td>Schramm e Kottow: <b>proteger os vulneráveis</b> que não podem se defender sozinhos.</td></tr>
+        <tr><th>Bioética de intervenção</th><td>Volnei Garrafa (linha latino-americana): foco na <b>justiça social</b>, equidade e determinantes sociais.</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <div class="bizu"><span class="tag">★ Bizu</span> A <b>bioética de intervenção</b> (Garrafa) é uma resposta <b>latino-americana</b> ao principialismo “anglo-saxão”, enfatizando equidade e o coletivo — muito citada em provas brasileiras.</div>
+  </section>
+
+  <!-- 6 -->
+  <section id="fimdevida">
+    <div class="sec-head"><span class="sec-num">06</span><h2>Dilemas de fim de vida ★</h2></div>
+    <div class="tbl-scroll">
+    <table class="tbl">
+      <thead><tr><th>Termo</th><th>Definição</th></tr></thead>
+      <tbody>
+        <tr><th>Eutanásia</th><td>Antecipar a morte para abreviar sofrimento (ativa/passiva). <b>Vedada</b> no Brasil.</td></tr>
+        <tr><th>Ortotanásia</th><td>Morte no <b>tempo certo</b>: não prolongar artificialmente nem antecipar; cuidados paliativos. <b>Aceita</b> (CFM 1.805/2006).</td></tr>
+        <tr><th>Distanásia</th><td><b>Obstinação terapêutica</b>: prolongar a vida com sofrimento e tratamentos fúteis.</td></tr>
+        <tr><th>Mistanásia</th><td>Morte <b>miserável/social</b>, evitável, por falta de acesso e cuidado.</td></tr>
+      </tbody>
+    </table>
+    </div>
+    <ul class="clean">
+      <li><b>Diretivas Antecipadas de Vontade (DAV)</b> / “testamento vital”: o paciente registra antecipadamente os cuidados que deseja (ou não) no fim da vida — <b>Resolução CFM nº 1.995/2012</b>.</li>
+    </ul>
+    <div class="trap"><span class="tag">⚠ Pegadinha</span> Não confunda: <b>ortotanásia</b> (deixar a morte ocorrer no tempo natural, sem obstinação — eticamente aceita) × <b>eutanásia</b> (antecipar ativamente a morte — vedada) × <b>distanásia</b> (prolongar o sofrimento). Ortotanásia ≠ eutanásia passiva no discurso do CFM.</div>
+  </section>
+
+  <!-- 7 -->
+  <section id="pegadinhas">
+    <div class="sec-head"><span class="sec-num">07</span><h2>Pegadinhas consolidadas</h2></div>
+    <div class="trap"><span class="tag">⚠ Top pegadinhas</span>
+      <ul class="clean" style="margin:0">
+        <li><b>Potter (1971)</b> cunhou “bioética”; <b>moral</b> ≠ <b>ética</b> ≠ <b>deontologia</b>.</li>
+        <li><b>4 princípios:</b> autonomia, beneficência, não maleficência, justiça (sem hierarquia fixa).</li>
+        <li><b>Beneficência</b> (fazer o bem) ≠ <b>não maleficência</b> (não causar dano).</li>
+        <li><b>Nuremberg (1947)</b> = consentimento voluntário; <b>Belmont (1979)</b> = 3 princípios; <b>Tuskegee</b> motivou o Belmont.</li>
+        <li><b>CEP</b> (local) × <b>CONEP</b> (nacional); submissão pela <b>Plataforma Brasil</b>.</li>
+        <li><b>Res. 466/2012</b> = pesquisa com seres humanos; <b>510/2016</b> = ciências humanas/sociais.</li>
+        <li><b>Lei 14.874/2024</b> = novo marco legal (Sistema Nacional de Ética em Pesquisa); Decreto 12.651/2025.</li>
+        <li><b>TCLE</b> = autonomia; obtido antes, sem coação, em linguagem acessível.</li>
+        <li><b>Ortotanásia</b> (aceita) × <b>eutanásia</b> (vedada) × <b>distanásia</b> (obstinação) × <b>mistanásia</b> (morte social).</li>
+        <li><b>DAV/testamento vital</b> = Resolução CFM 1.995/2012.</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- 8 -->
+  <section id="casos">
+    <div class="sec-head"><span class="sec-num">08</span><h2>Questões — autoteste ★</h2></div>
+    <p>Leia, responda e clique para conferir.</p>
+    <div class="fc-grid" id="caseGrid"></div>
+  </section>
+
+  <footer>
+    <b>Fontes-base:</b> Potter, V. R. (1971); Beauchamp &amp; Childress, <i>Principles of Biomedical Ethics</i> (1979); Código de Nuremberg (1947); Declaração de Helsinki (1964); Relatório Belmont (1979); Declaração Universal sobre Bioética e Direitos Humanos (UNESCO, 2005); Resoluções CNS nº 466/2012 e 510/2016 e Sistema CEP/CONEP; Lei nº 14.874/2024 e Decreto nº 12.651/2025; Resoluções CFM nº 1.805/2006 e 1.995/2012. Material de revisão — confronte com o edital e a bibliografia da sua banca (FGV, EBSERH, ENARE).
+  </footer>
+
+</div>
+
+<script>
+  const cases = [
+    {q:"Quem cunhou o termo 'bioética' e em que sentido?", a:"Van Rensselaer Potter, em 1971, na obra 'Bioethics: Bridge to the Future'. Ele propôs a bioética como uma 'ponte' entre as ciências da vida e os valores humanos, voltada à sobrevivência e à qualidade de vida."},
+    {q:"Qual a diferença entre moral, ética e deontologia?", a:"Moral é o conjunto de regras e costumes transmitidos por uma cultura (o que se faz na prática); ética é a reflexão crítica e a justificação racional sobre a moral; deontologia é a ética profissional normatizada, expressa nos códigos de ética das profissões."},
+    {q:"Quais são os quatro princípios da bioética principialista e seus autores?", a:"Autonomia, beneficência, não maleficência e justiça, propostos por Beauchamp e Childress (Principles of Biomedical Ethics, 1979). Nenhum é absoluto: em conflito, são ponderados no caso concreto, sem hierarquia fixa."},
+    {q:"Qual a diferença entre beneficência e não maleficência?", a:"Beneficência é o dever de fazer o bem e agir no melhor interesse do paciente; não maleficência é o dever de não causar dano (primum non nocere). São princípios distintos, embora relacionados."},
+    {q:"Em que princípio se baseia o consentimento livre e esclarecido?", a:"No princípio da autonomia, que respeita a autodeterminação do indivíduo. O Termo de Consentimento Livre e Esclarecido (TCLE) é a sua expressão prática, garantindo que a participação seja voluntária, informada e sem coação."},
+    {q:"Qual a importância do Código de Nuremberg (1947)?", a:"Surgiu após os experimentos nazistas julgados em Nuremberg e estabeleceu, como primeiro princípio, que o consentimento voluntário do sujeito é absolutamente essencial em pesquisas com seres humanos. É um marco fundador da ética em pesquisa."},
+    {q:"Quais são os três princípios do Relatório Belmont (1979) e o que o motivou?", a:"Respeito às pessoas (autonomia), beneficência e justiça. Foi elaborado nos EUA após escândalos como o estudo de Tuskegee, e inspirou diretamente o principialismo de Beauchamp e Childress."},
+    {q:"O que foi o estudo de Tuskegee?", a:"Um estudo observacional sobre a sífilis (1932–1972) que acompanhou homens negros pobres sem lhes oferecer tratamento (mesmo após a penicilina estar disponível), sem consentimento adequado. Tornou-se símbolo de violação ética e motivou o Relatório Belmont."},
+    {q:"Qual a diferença entre CEP e CONEP no Brasil?", a:"O CEP (Comitê de Ética em Pesquisa) faz a análise ética local/institucional dos projetos; a CONEP (Comissão Nacional de Ética em Pesquisa) é a instância nacional, ligada ao Conselho Nacional de Saúde, que normatiza e avalia projetos de áreas especiais. Ambos compõem o Sistema CEP/CONEP, com submissão pela Plataforma Brasil."},
+    {q:"Qual resolução estabelece as diretrizes da pesquisa com seres humanos e o que ela exige?", a:"A Resolução CNS nº 466/2012, que exige, entre outros, o TCLE, a avaliação de riscos e benefícios, a proteção de participantes vulneráveis e garantias de assistência e pós-estudo, incorporando os princípios de autonomia, beneficência, não maleficência e justiça."},
+    {q:"O que mudou com a Lei nº 14.874/2024?", a:"É o novo marco legal da pesquisa com seres humanos no Brasil, que instituiu o Sistema Nacional de Ética em Pesquisa com Seres Humanos (com uma instância nacional de ética e os CEPs), buscando agilizar prazos. Foi regulamentada pelo Decreto nº 12.651/2025. O Sistema CEP/CONEP e a Resolução 466/2012 seguem como referência durante a transição."},
+    {q:"O que é a bioética de intervenção e quem a propõe?", a:"É uma corrente latino-americana, associada a Volnei Garrafa, que critica a ênfase individualista do principialismo e prioriza a justiça social, a equidade e os determinantes sociais da saúde, voltando-se ao bem-estar coletivo."},
+    {q:"Diferencie eutanásia, ortotanásia e distanásia.", a:"Eutanásia é antecipar a morte para abreviar o sofrimento (vedada no Brasil). Ortotanásia é deixar a morte ocorrer no seu tempo natural, sem prolongamento artificial, com cuidados paliativos (eticamente aceita, Resolução CFM 1.805/2006). Distanásia é a obstinação terapêutica, prolongando a vida com sofrimento e tratamentos fúteis."},
+    {q:"O que é mistanásia?", a:"É a morte miserável e socialmente evitável, decorrente da falta de acesso a cuidados de saúde, da pobreza e da exclusão — uma 'morte social' precoce que não deveria ocorrer se houvesse assistência adequada."},
+    {q:"O que são as Diretivas Antecipadas de Vontade (testamento vital)?", a:"São manifestações prévias e expressas da vontade do paciente sobre os cuidados e tratamentos que deseja ou não receber quando estiver incapaz de decidir, especialmente no fim da vida. No Brasil, são tratadas pela Resolução CFM nº 1.995/2012."},
+    {q:"Como a bioética se aplica ao trabalho do farmacêutico?", a:"Na pesquisa clínica de medicamentos (consentimento, análise por CEP/CONEP, notificação de eventos adversos à ANVISA), no uso racional e no acesso equitativo a medicamentos (justiça), no respeito à autonomia do paciente na farmácia clínica e no sigilo das informações — articulando os quatro princípios à prática profissional."}
+  ];
+  const grid = document.getElementById('caseGrid');
+  cases.forEach(c=>{
+    const b=document.createElement('button');b.className='fc case';b.type='button';
+    b.innerHTML=`<span class="q">${c.q}</span><span class="hint">Ver resposta</span><span class="ans">${c.a}</span>`;
+    b.addEventListener('click',()=>b.classList.toggle('open'));
+    grid.appendChild(b);
+  });
+</script>
+</body>
+</html>
