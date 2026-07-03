@@ -161,6 +161,26 @@
   .libframe{width:100%;height:calc(100vh - 200px);min-height:480px;border:1px solid var(--line);
     border-radius:14px;background:#fff;box-shadow:var(--shadow);display:block}
 
+  /* Caneta / escrita à mão (Apple Pencil) */
+  .ink-canvas{position:fixed;inset:0;width:100vw;height:100vh;z-index:9990;pointer-events:none;
+    touch-action:none;-webkit-user-select:none;user-select:none}
+  .ink-canvas.active{pointer-events:auto;cursor:crosshair}
+  .penbar{position:fixed;z-index:9999;
+    bottom:calc(16px + env(safe-area-inset-bottom));right:calc(16px + env(safe-area-inset-right));
+    display:flex;flex-direction:column;align-items:flex-end;gap:10px}
+  .pen-fab{width:52px;height:52px;border-radius:50%;border:none;background:var(--teal);color:#fff;
+    font-size:22px;line-height:1;box-shadow:var(--shadow);cursor:pointer;display:flex;
+    align-items:center;justify-content:center;-webkit-tap-highlight-color:transparent}
+  .pen-fab.on{background:var(--wrong)}
+  .pen-tools{display:flex;align-items:center;gap:8px;background:var(--paper);border:1px solid var(--line);
+    border-radius:14px;padding:8px 10px;box-shadow:var(--shadow);flex-wrap:wrap;max-width:88vw;justify-content:flex-end}
+  .pen-color{width:28px;height:28px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 1px var(--line);
+    cursor:pointer;padding:0}
+  .pen-color.sel{box-shadow:0 0 0 2px var(--teal)}
+  .pen-btn{font:inherit;font-size:.8rem;font-weight:700;border:1px solid var(--line);background:var(--paper);
+    color:var(--ink-soft);border-radius:9px;padding:6px 11px;cursor:pointer}
+  .pen-btn.sel{border-color:var(--wrong);color:var(--wrong);background:var(--wrong-bg)}
+
   @media(max-width:480px){
     .metrics{gap:16px}
     .metric .v{font-size:1.1rem}
@@ -1188,6 +1208,104 @@ document.getElementById("tabBtnS").onclick = ()=> setTab("saude");
 document.getElementById("tabBtnF").onclick = ()=> setTab("farmacia");
 try{ const saved = localStorage.getItem("enareTab"); if(saved && saved!=="questoes") setTab(saved); }catch(e){}
 </script>
+
+<!-- ===== Caneta / escrita à mão (Apple Pencil) ===== -->
+<canvas id="inkCanvas" class="ink-canvas" aria-hidden="true"></canvas>
+<div class="penbar">
+  <div class="pen-tools" id="penTools" hidden>
+    <button class="pen-color" data-color="#15302E" style="background:#15302E" title="Tinta" aria-label="Cor tinta"></button>
+    <button class="pen-color" data-color="#C0432F" style="background:#C0432F" title="Vermelho" aria-label="Cor vermelho"></button>
+    <button class="pen-color" data-color="#2C5A74" style="background:#2C5A74" title="Azul" aria-label="Cor azul"></button>
+    <button class="pen-color" data-color="#1F8A5B" style="background:#1F8A5B" title="Verde" aria-label="Cor verde"></button>
+    <button class="pen-btn" id="penEraser" type="button">Borracha</button>
+    <button class="pen-btn" id="penClear" type="button">Limpar</button>
+  </div>
+  <button class="pen-fab" id="penFab" type="button" aria-label="Escrever com a caneta">✏️</button>
+</div>
+
+<script>
+/* ============================================================
+   CANETA — escrever à mão sobre o app (Apple Pencil / dedo / mouse)
+   ============================================================ */
+(function(){
+  const canvas = document.getElementById("inkCanvas");
+  const ctx    = canvas.getContext("2d");
+  const fab    = document.getElementById("penFab");
+  const tools  = document.getElementById("penTools");
+  let penMode=false, drawing=false, erasing=false, color="#15302E";
+  let activeId=null, lastPen=0, lastX=0, lastY=0;
+
+  function sizeCanvas(){
+    const dpr = Math.min(window.devicePixelRatio||1, 3);
+    // preserva o desenho existente ao redimensionar/girar
+    let prev=null;
+    if(canvas.width){ prev=document.createElement("canvas"); prev.width=canvas.width; prev.height=canvas.height; prev.getContext("2d").drawImage(canvas,0,0); }
+    const w=window.innerWidth, h=window.innerHeight;
+    canvas.style.width=w+"px"; canvas.style.height=h+"px";
+    canvas.width=Math.round(w*dpr); canvas.height=Math.round(h*dpr);
+    ctx.setTransform(dpr,0,0,dpr,0,0);
+    ctx.lineCap="round"; ctx.lineJoin="round";
+    if(prev){ ctx.save(); ctx.setTransform(1,0,0,1,0,0); ctx.drawImage(prev,0,0,prev.width,prev.height,0,0,canvas.width,canvas.height); ctx.restore(); }
+  }
+  sizeCanvas();
+  window.addEventListener("resize", sizeCanvas);
+  window.addEventListener("orientationchange", ()=>setTimeout(sizeCanvas,250));
+
+  function setMode(on){
+    penMode = on;
+    canvas.classList.toggle("active", on);
+    tools.hidden = !on;
+    fab.classList.toggle("on", on);
+    fab.textContent = on ? "✕" : "✏️";
+    fab.setAttribute("aria-label", on ? "Sair do modo caneta" : "Escrever com a caneta");
+  }
+  fab.onclick = ()=> setMode(!penMode);
+
+  tools.querySelectorAll(".pen-color").forEach(b=>{
+    b.onclick = ()=>{ color=b.dataset.color; erasing=false; refreshSel(); };
+  });
+  document.getElementById("penEraser").onclick = ()=>{ erasing=!erasing; refreshSel(); };
+  document.getElementById("penClear").onclick = ()=>{
+    ctx.save(); ctx.setTransform(1,0,0,1,0,0); ctx.clearRect(0,0,canvas.width,canvas.height); ctx.restore();
+  };
+  function refreshSel(){
+    tools.querySelectorAll(".pen-color").forEach(b=>b.classList.toggle("sel", !erasing && b.dataset.color===color));
+    document.getElementById("penEraser").classList.toggle("sel", erasing);
+  }
+  refreshSel();
+
+  function seg(x,y,pressure){
+    ctx.globalCompositeOperation = erasing ? "destination-out" : "source-over";
+    ctx.strokeStyle = color;
+    ctx.lineWidth = erasing ? 26 : 2.4*(0.35 + 1.3*(pressure||0.5));
+    ctx.beginPath(); ctx.moveTo(lastX,lastY); ctx.lineTo(x,y); ctx.stroke();
+    lastX=x; lastY=y;
+  }
+  canvas.addEventListener("pointerdown", e=>{
+    if(!penMode) return;
+    // rejeição de palma: se a caneta foi usada há pouco, ignora o toque da mão
+    if(e.pointerType==="touch" && (performance.now()-lastPen)<1000){ e.preventDefault(); return; }
+    if(e.pointerType==="pen") lastPen=performance.now();
+    drawing=true; activeId=e.pointerId;
+    try{ canvas.setPointerCapture(e.pointerId); }catch(_){}
+    lastX=e.clientX; lastY=e.clientY;
+    seg(e.clientX+0.01, e.clientY+0.01, e.pressure); // pontinho ao tocar
+    e.preventDefault();
+  });
+  canvas.addEventListener("pointermove", e=>{
+    if(!drawing || e.pointerId!==activeId) return;
+    if(e.pointerType==="pen") lastPen=performance.now();
+    let evs = e.getCoalescedEvents ? e.getCoalescedEvents() : null;
+    if(!evs || !evs.length) evs = [e];
+    for(const ev of evs) seg(ev.clientX, ev.clientY, ev.pressure);
+    e.preventDefault();
+  });
+  function end(e){ if(e.pointerId===activeId){ drawing=false; activeId=null; } }
+  canvas.addEventListener("pointerup", end);
+  canvas.addEventListener("pointercancel", end);
+})();
+</script>
+
 <script>
 /* ---- PWA: registro do service worker ---- */
 if ("serviceWorker" in navigator) {
