@@ -204,6 +204,7 @@
   .pen-fab.on{background:var(--wrong)}
   .pen-tools{display:flex;align-items:center;gap:8px;background:var(--paper);border:1px solid var(--line);
     border-radius:14px;padding:8px 10px;box-shadow:var(--shadow);flex-wrap:wrap;max-width:88vw;justify-content:flex-end}
+  .pen-tools[hidden]{display:none}   /* só aparece no modo caneta (o atributo hidden precede o display:flex) */
   .pen-color{width:28px;height:28px;border-radius:50%;border:2px solid #fff;box-shadow:0 0 0 1px var(--line);
     cursor:pointer;padding:0}
   .pen-color.sel{box-shadow:0 0 0 2px var(--teal)}
