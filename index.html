@@ -120,8 +120,8 @@
   .foot a{color:var(--teal);cursor:pointer;text-decoration:underline}
 
   /* Tabs */
-  .tabs{display:flex;gap:8px;margin:0 0 16px}
-  .tab{flex:1;font:inherit;font-weight:700;font-size:.92rem;padding:11px 14px;border-radius:12px;
+  .tabs{display:flex;gap:8px;margin:0 0 16px;flex-wrap:wrap}
+  .tab{flex:1 1 auto;min-width:104px;font:inherit;font-weight:700;font-size:.92rem;padding:11px 14px;border-radius:12px;
     border:1px solid var(--line);background:var(--paper);color:var(--ink-soft);cursor:pointer;
     display:flex;align-items:center;justify-content:center;gap:7px;transition:background .12s,color .12s,border-color .12s}
   .tab:hover:not(.active){border-color:var(--teal);color:var(--teal)}
@@ -160,6 +160,26 @@
   .viewer-bar .vt{font-weight:700;color:var(--teal-deep);font-size:.95rem;flex:1;min-width:130px}
   .libframe{width:100%;height:calc(100vh - 200px);min-height:480px;border:1px solid var(--line);
     border-radius:14px;background:#fff;box-shadow:var(--shadow);display:block}
+
+  /* Simulado */
+  .sim-topbar{display:flex;align-items:center;gap:8px;margin-bottom:12px;flex-wrap:wrap}
+  .sim-topbar .vt{font-weight:700;color:var(--teal-deep);font-size:.9rem;flex:1;min-width:120px}
+  .sim-palette{display:grid;grid-template-columns:repeat(auto-fill,minmax(40px,1fr));gap:6px;margin-bottom:12px;
+    background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:10px;max-height:230px;overflow:auto}
+  .sim-cell{font:inherit;font-size:.8rem;font-weight:700;border:1px solid var(--line);border-radius:8px;padding:7px 0;
+    background:var(--paper);color:var(--ink-soft);cursor:pointer;text-align:center}
+  .sim-cell.ans{background:var(--teal-tint);border-color:var(--teal);color:var(--teal-deep)}
+  .sim-cell.cur{outline:2px solid var(--amber);outline-offset:1px}
+  .opt.sel{border-color:var(--teal);background:var(--teal-tint)}
+  .opt.sel .key{border-color:var(--teal);background:var(--teal);color:#fff}
+  .sim-scewrap{display:flex;align-items:center;gap:22px;flex-wrap:wrap;margin:6px 0 14px}
+  .sim-score{font-size:2.6rem;font-weight:800;color:var(--teal-deep);line-height:1}
+  .sim-rev{display:flex;flex-direction:column;gap:7px;margin-top:12px}
+  .sim-rev .it{border:1px solid var(--line);border-radius:10px;padding:9px 12px;font-size:.85rem;color:var(--ink)}
+  .sim-rev .it.ok{border-color:var(--right);background:var(--right-bg)}
+  .sim-rev .it.no{border-color:var(--wrong);background:var(--wrong-bg)}
+  .sim-rev .it.an{border-color:var(--amber);background:#fdf4e6}
+  .sim-rev b{color:var(--ink)}
 
   /* Caneta / escrita à mão (Apple Pencil) */
   .ink-canvas{position:fixed;inset:0;width:100vw;height:100vh;z-index:9990;pointer-events:none;
@@ -206,6 +226,7 @@
     <button class="tab active" id="tabBtnQ" data-tab="questoes" role="tab">Questões</button>
     <button class="tab" id="tabBtnS" data-tab="saude" role="tab">Saúde Pública</button>
     <button class="tab" id="tabBtnF" data-tab="farmacia" role="tab">Farmácia</button>
+    <button class="tab" id="tabBtnSim" data-tab="simulado" role="tab">Simulado</button>
   </div>
 
   <div id="panel-questoes" class="panel">
@@ -266,8 +287,29 @@
       <iframe class="libframe" data-frame="farmacia" title="Material de Farmácia" loading="lazy"></iframe>
     </div>
   </div>
+
+  <div id="panel-simulado" class="panel" hidden>
+    <div class="sim-list" data-view="list">
+      <p class="topics-intro">Simulados no formato da <b>prova real (FGV/ENARE)</b>: você responde tudo <b>sem ver o gabarito</b> e, ao finalizar, recebe a <b>nota final</b>. O progresso fica salvo — dá para pausar e continuar depois.</p>
+      <div class="topics" data-simgrid><!-- via JS --></div>
+    </div>
+    <div class="sim-run" data-view="run" hidden>
+      <div class="sim-topbar">
+        <button class="ghost" data-simback>← Sair</button>
+        <span class="vt" data-simtitle></span>
+        <button class="ghost" data-simpalette>Nº das questões</button>
+        <button class="btn" data-simfinish>Finalizar</button>
+      </div>
+      <div class="sim-palette" data-palette hidden></div>
+      <div class="card" data-simcard></div>
+    </div>
+    <div class="sim-result" data-view="result" hidden>
+      <div class="card" data-simresult></div>
+    </div>
+  </div>
 </div>
 
+<script src="simulados.js"></script>
 <script>
 /* ============================================================
    BANCO DE QUESTÕES — Leva 1
@@ -922,6 +964,7 @@ const BANK = [
    MOTOR DO QUIZ
    ============================================================ */
 const STORE_KEY = "enareFarmaProgress_v1";
+const POS_KEY = "enareFarmaPos_v1";   // continua de onde parou
 let answers = loadAnswers();          // { idx: {sel, ok} }
 let order = BANK.map((_,i)=>i);       // ordem de exibição (índices do BANK)
 let pos = 0;
@@ -965,7 +1008,7 @@ function refreshStats(){
 }
 
 /* ---- render da questão ---- */
-const LETTERS = ["A","B","C","D"];
+const LETTERS = ["A","B","C","D","E"];
 function render(){
   refreshStats();
   const card = document.getElementById("card");
@@ -973,6 +1016,7 @@ function render(){
   const qi = order[pos];
   const q = BANK[qi];
   const prev = answers[qi]; // já respondida?
+  try{ localStorage.setItem(POS_KEY, JSON.stringify({filter:activeFilter, qi})); }catch(e){}
 
   card.innerHTML = `
     <div class="qhead">
@@ -1043,9 +1087,19 @@ document.getElementById("reset").onclick = ()=>{
   }
 };
 
-/* ---- init ---- */
+/* ---- init (continua de onde parou) ---- */
 buildFilter();
-applyFilter();
+(function initResume(){
+  let saved=null; try{ saved=JSON.parse(localStorage.getItem(POS_KEY)||"null"); }catch(e){}
+  if(saved && saved.filter){
+    const sel=document.getElementById("filter");
+    if([...sel.options].some(o=>o.value===saved.filter)){ activeFilter=saved.filter; sel.value=saved.filter; }
+  }
+  order = BANK.map((_,i)=>i).filter(i=> activeFilter==="Todos os temas" || BANK[i].tema===activeFilter);
+  pos = 0;
+  if(saved && typeof saved.qi==="number"){ const p=order.indexOf(saved.qi); if(p>=0) pos=p; }
+  render();
+})();
 
 /* ============================================================
    ABAS DE CONTEÚDO — bibliotecas (Saúde Pública e Farmácia)
@@ -1193,7 +1247,8 @@ initLibrary("farmacia");
 const TABS = {
   questoes: {panel:"panel-questoes", btn:"tabBtnQ"},
   saude:    {panel:"panel-saude",    btn:"tabBtnS"},
-  farmacia: {panel:"panel-farmacia", btn:"tabBtnF"}
+  farmacia: {panel:"panel-farmacia", btn:"tabBtnF"},
+  simulado: {panel:"panel-simulado", btn:"tabBtnSim"}
 };
 function setTab(name){
   if(!TABS[name]) name = "questoes";
@@ -1201,12 +1256,133 @@ function setTab(name){
     document.getElementById(TABS[k].panel).hidden = (k !== name);
     document.getElementById(TABS[k].btn).classList.toggle("active", k === name);
   }
+  if(name==="simulado" && window.__simRefresh) window.__simRefresh();
   try{ localStorage.setItem("enareTab", name); }catch(e){}
 }
 document.getElementById("tabBtnQ").onclick = ()=> setTab("questoes");
 document.getElementById("tabBtnS").onclick = ()=> setTab("saude");
 document.getElementById("tabBtnF").onclick = ()=> setTab("farmacia");
-try{ const saved = localStorage.getItem("enareTab"); if(saved && saved!=="questoes") setTab(saved); }catch(e){}
+document.getElementById("tabBtnSim").onclick = ()=> setTab("simulado");
+
+/* ============================================================
+   SIMULADO — provas reais (window.SIMULADOS), com nota final
+   ============================================================ */
+(function(){
+  if(!window.SIMULADOS || !document.getElementById("panel-simulado")) return;
+  const panel  = document.getElementById("panel-simulado");
+  const grid   = panel.querySelector("[data-simgrid]");
+  const vList  = panel.querySelector('[data-view="list"]');
+  const vRun   = panel.querySelector('[data-view="run"]');
+  const vRes   = panel.querySelector('[data-view="result"]');
+  const card   = panel.querySelector("[data-simcard]");
+  const resCard= panel.querySelector("[data-simresult]");
+  const titleEl= panel.querySelector("[data-simtitle]");
+  const paletteEl = panel.querySelector("[data-palette]");
+  const LET = ["A","B","C","D","E"];
+  let cur = null;
+  const key = (id)=> "enareSim_"+id;
+  const loadState = (id)=>{ try{ return JSON.parse(localStorage.getItem(key(id))||"null"); }catch(e){ return null; } };
+  const saveState = ()=>{ if(cur){ try{ localStorage.setItem(key(cur.sim.id), JSON.stringify(cur.state)); }catch(e){} } };
+  const show = (v)=>{ vList.hidden=v!=="list"; vRun.hidden=v!=="run"; vRes.hidden=v!=="result"; };
+
+  function renderList(){
+    grid.innerHTML="";
+    window.SIMULADOS.forEach(sim=>{
+      const st=loadState(sim.id), total=sim.questions.length;
+      const answered = st ? Object.keys(st.answers||{}).length : 0;
+      const status = (st&&st.finished) ? "✓ Concluído — toque para ver a nota"
+                    : answered ? `Em andamento · ${answered}/${total} respondidas`
+                    : `${total} questões · toque para começar`;
+      const b=document.createElement("button"); b.className="topic"; b.type="button";
+      b.innerHTML=`<span class="kind">Simulado</span><h3>${sim.title}</h3><p>${sim.sub}</p><span class="n">${status}</span>`;
+      b.onclick=()=>openSim(sim);
+      grid.appendChild(b);
+    });
+  }
+  function openSim(sim){
+    const st=loadState(sim.id);
+    if(st && st.finished){ cur={sim,state:st}; renderResult(); return; }
+    cur={sim, state:(st && Object.keys(st.answers||{}).length)? st : {answers:{},pos:0,finished:false}};
+    startRun();
+  }
+  function startRun(){ show("run"); titleEl.textContent=cur.sim.title; paletteEl.hidden=true; renderQuestion(); }
+
+  function renderQuestion(){
+    const {sim,state}=cur, n=sim.questions.length, q=sim.questions[state.pos], sel=state.answers[state.pos];
+    card.innerHTML=`
+      <div class="qhead"><span class="num">Questão ${state.pos+1} de ${n}</span>
+        <span class="badge">${Object.keys(state.answers).length}/${n} respondidas</span></div>
+      <div class="enun">${q.q}</div>
+      <div class="opts">${q.ops.map((o,j)=>`<button class="opt${sel===j?' sel':''}" data-j="${j}"><span class="key">${LET[j]}</span><span class="txt">${o}</span></button>`).join("")}</div>
+      <div class="nav">
+        <button class="btn sec" data-prev ${state.pos===0?"disabled":""}>← Anterior</button>
+        ${state.pos>=n-1?'<button class="btn" data-finish2>Finalizar prova</button>':'<button class="btn" data-next>Próxima →</button>'}
+      </div>`;
+    card.querySelectorAll(".opt").forEach(btn=> btn.onclick=()=>{
+      state.answers[state.pos]=parseInt(btn.dataset.j); saveState();
+      card.querySelectorAll(".opt").forEach(o=>o.classList.remove("sel")); btn.classList.add("sel");
+      card.querySelector(".badge").textContent=`${Object.keys(state.answers).length}/${n} respondidas`;
+    });
+    const p=card.querySelector("[data-prev]"); if(p) p.onclick=()=>{ if(state.pos>0){state.pos--;saveState();renderQuestion();} };
+    const nx=card.querySelector("[data-next]"); if(nx) nx.onclick=()=>{ if(state.pos<n-1){state.pos++;saveState();renderQuestion();} };
+    const f2=card.querySelector("[data-finish2]"); if(f2) f2.onclick=confirmFinish;
+    window.scrollTo({top:0,behavior:"instant"});
+  }
+  function renderPalette(){
+    const {sim,state}=cur, n=sim.questions.length; paletteEl.innerHTML="";
+    for(let i=0;i<n;i++){
+      const c=document.createElement("button");
+      c.className="sim-cell"+(state.answers[i]!=null?" ans":"")+(i===state.pos?" cur":"");
+      c.textContent=i+1; c.onclick=()=>{ state.pos=i; saveState(); paletteEl.hidden=true; renderQuestion(); };
+      paletteEl.appendChild(c);
+    }
+  }
+  function confirmFinish(){
+    const {sim,state}=cur, n=sim.questions.length, answered=Object.keys(state.answers).length;
+    const msg = answered<n ? `Você respondeu ${answered} de ${n} questões. Finalizar e ver a nota mesmo assim?` : "Finalizar a prova e ver a nota final?";
+    if(confirm(msg)){ state.finished=true; saveState(); renderResult(); }
+  }
+  function grade(){
+    const {sim,state}=cur; let correct=0,annul=0,wrong=0,blank=0;
+    sim.questions.forEach((q,i)=>{
+      const sel=state.answers[i];
+      if(q.correct===-1){ annul++; correct++; }
+      else if(sel==null){ blank++; }
+      else if(sel===q.correct){ correct++; }
+      else { wrong++; }
+    });
+    return {correct,annul,wrong,blank,total:sim.questions.length};
+  }
+  function renderResult(){
+    show("result");
+    const {sim,state}=cur, g=grade(), pct=Math.round(100*g.correct/g.total);
+    const rev = sim.questions.map((q,i)=>{
+      if(q.correct===-1) return `<div class="it an"><b>Q${i+1}</b> · Anulada (ponto para todos)</div>`;
+      const sel=state.answers[i], ok=sel===q.correct, yours = sel==null? "em branco" : LET[sel];
+      return `<div class="it ${ok?'ok':'no'}"><b>Q${i+1}</b> · sua resposta: <b>${yours}</b> — gabarito: <b>${LET[q.correct]}</b></div>`;
+    }).join("");
+    resCard.innerHTML=`
+      <div class="qhead"><span class="num">Resultado</span><span class="badge">${sim.title}</span></div>
+      <div class="sim-scewrap">
+        <div><div class="sim-score">${g.correct}<span style="font-size:1.1rem;color:var(--ink-soft)">/${g.total}</span></div>
+        <div style="font-size:.8rem;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-soft)">Nota final · ${pct}%</div></div>
+        <div style="font-size:.86rem;color:var(--ink-soft);line-height:1.7">
+          ✓ ${g.correct-g.annul} certas &nbsp;·&nbsp; ✗ ${g.wrong} erradas<br>— ${g.blank} em branco &nbsp;·&nbsp; ⦿ ${g.annul} anuladas</div>
+      </div>
+      <div class="nav"><button class="btn sec" data-redo>Refazer do zero</button><button class="btn" data-toplist>Voltar aos simulados</button></div>
+      <div class="sim-rev">${rev}</div>`;
+    resCard.querySelector("[data-redo]").onclick=()=>{ if(confirm("Refazer este simulado do zero? Suas respostas serão apagadas.")){ cur.state={answers:{},pos:0,finished:false}; saveState(); startRun(); } };
+    resCard.querySelector("[data-toplist]").onclick=()=>{ renderList(); show("list"); };
+    window.scrollTo({top:0,behavior:"instant"});
+  }
+
+  panel.querySelector("[data-simback]").onclick   = ()=>{ renderList(); show("list"); };
+  panel.querySelector("[data-simfinish]").onclick = confirmFinish;
+  panel.querySelector("[data-simpalette]").onclick= ()=>{ if(paletteEl.hidden){ renderPalette(); paletteEl.hidden=false; } else { paletteEl.hidden=true; } };
+
+  window.__simRefresh = ()=>{ if(!vList.hidden) renderList(); };
+  renderList(); show("list");
+})();
 </script>
 
 <!-- ===== Caneta / escrita à mão (Apple Pencil) ===== -->
