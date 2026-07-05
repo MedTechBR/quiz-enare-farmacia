@@ -1100,6 +1100,10 @@ buildFilter();
   if(saved && typeof saved.qi==="number"){ const p=order.indexOf(saved.qi); if(p>=0) pos=p; }
   render();
 })();
+/* salva a posição também ao sair/minimizar o app (reforço p/ iOS) */
+function savePosNow(){ try{ if(order[pos]!=null) localStorage.setItem(POS_KEY, JSON.stringify({filter:activeFilter, qi:order[pos]})); }catch(e){} }
+window.addEventListener("pagehide", savePosNow);
+document.addEventListener("visibilitychange", ()=>{ if(document.visibilityState==="hidden") savePosNow(); });
 
 /* ============================================================
    ABAS DE CONTEÚDO — bibliotecas (Saúde Pública e Farmácia)
@@ -1483,10 +1487,16 @@ document.getElementById("tabBtnSim").onclick = ()=> setTab("simulado");
 </script>
 
 <script>
-/* ---- PWA: registro do service worker ---- */
+/* ---- PWA: registro do service worker + auto-atualização ---- */
 if ("serviceWorker" in navigator) {
+  const hadController = !!navigator.serviceWorker.controller;
+  let refreshing = false;
+  navigator.serviceWorker.addEventListener("controllerchange", () => {
+    if (refreshing) return; refreshing = true;
+    if (hadController) window.location.reload();   // pega a versão nova automaticamente
+  });
   window.addEventListener("load", () => {
-    navigator.serviceWorker.register("sw.js").catch(() => {});
+    navigator.serviceWorker.register("sw.js").then(reg => { try{ reg.update(); }catch(e){} }).catch(() => {});
   });
 }
 </script>
