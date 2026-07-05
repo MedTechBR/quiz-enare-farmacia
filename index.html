@@ -1406,6 +1406,7 @@ document.getElementById("tabBtnSim").onclick = ()=> setTab("simulado");
     const p=card.querySelector("[data-prev]"); if(p) p.onclick=()=>{ if(state.pos>0){state.pos--;saveState();renderQuestion();} };
     const nx=card.querySelector("[data-next]"); if(nx) nx.onclick=()=>{ if(state.pos<n-1){state.pos++;saveState();renderQuestion();} };
     const f2=card.querySelector("[data-finish2]"); if(f2) f2.onclick=confirmFinish;
+    if(window.QuizInk && typeof window.QuizInk.switchTo==="function") window.QuizInk.switchTo(skey);  // tinta da caneta fica só nesta questão do simulado
     window.scrollTo({top:0,behavior:"instant"});
   }
   function renderPalette(){
