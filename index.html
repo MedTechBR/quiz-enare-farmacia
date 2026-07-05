@@ -96,6 +96,9 @@
   .opt.struck .key{text-decoration:line-through;color:var(--ink-soft)}
   .opt.struck.right,.opt.struck.wrong{opacity:1}
   .opts-hint{font-size:.76rem;color:var(--ink-soft);margin:2px 2px 10px;display:flex;align-items:center;gap:6px}
+  /* figura anexada à questão */
+  .qfig{margin:0 0 16px;display:flex;justify-content:center}
+  .qfig img{max-width:100%;height:auto;border:1px solid var(--line);border-radius:12px;background:#fff;padding:10px}
   .opt .key{flex:0 0 auto;width:26px;height:26px;border-radius:7px;border:1.5px solid var(--line);
     display:flex;align-items:center;justify-content:center;font-weight:700;font-size:.85rem;color:var(--ink-soft)}
   .opt .txt{flex:1;padding-top:2px}
@@ -276,7 +279,7 @@
         <span class="vt" data-title="saude"></span>
         <a class="ghost" data-open="saude" target="_blank" rel="noopener">Abrir ↗</a>
       </div>
-      <iframe class="libframe" data-frame="saude" title="Guia de Saúde Pública" loading="lazy"></iframe>
+      <iframe class="libframe" data-frame="saude" title="Guia de Saúde Pública"></iframe>
     </div>
   </div>
 
@@ -291,7 +294,7 @@
         <span class="vt" data-title="farmacia"></span>
         <a class="ghost" data-open="farmacia" target="_blank" rel="noopener">Abrir ↗</a>
       </div>
-      <iframe class="libframe" data-frame="farmacia" title="Material de Farmácia" loading="lazy"></iframe>
+      <iframe class="libframe" data-frame="farmacia" title="Material de Farmácia"></iframe>
     </div>
   </div>
 
@@ -1036,6 +1039,7 @@ function render(){
       <span class="badge">${q.tema}</span>
     </div>
     <div class="enun">${q.q}</div>
+    ${q.img?`<figure class="qfig"><img src="${q.img}" alt="Figura da questão"></figure>`:""}
     <div class="opts-hint">↔ Arraste uma alternativa para o lado para riscá-la</div>
     <div class="opts" id="opts">
       ${q.ops.map((o,j)=>`
@@ -1378,6 +1382,7 @@ document.getElementById("tabBtnSim").onclick = ()=> setTab("simulado");
       <div class="qhead"><span class="num">Questão ${state.pos+1} de ${n}</span>
         <span class="badge">${Object.keys(state.answers).length}/${n} respondidas</span></div>
       <div class="enun">${q.q}</div>
+      ${q.img?`<figure class="qfig"><img src="${q.img}" alt="Figura da questão"></figure>`:""}
       <div class="opts-hint">↔ Arraste uma alternativa para o lado para riscá-la</div>
       <div class="opts">${q.ops.map((o,j)=>`<button class="opt${sel===j?' sel':''}" data-j="${j}"><span class="key">${LET[j]}</span><span class="txt">${o}</span></button>`).join("")}</div>
       <div class="nav">
