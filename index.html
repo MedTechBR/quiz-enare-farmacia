@@ -310,6 +310,7 @@
 </div>
 
 <script src="simulados.js"></script>
+<script src="banco_extra.js"></script>
 <script>
 /* ============================================================
    BANCO DE QUESTÕES — Leva 1
@@ -959,6 +960,10 @@ const BANK = [
 {"tema":"Idoso","q":"O critério de Beers 2023 lista medicamentos potencialmente inapropriados em idosos (PIM). Qual classe está associada ao maior risco de quedas e fraturas nessa população?","ops":["Metformina em dose padrão","Inibidores da bomba de prótons (IBP)","Estatinas em baixa dose","Benzodiazepínicos e hipnóticos Z (zolpidem, eszopiclona)"],"correct":3,"c":"Os <b>benzodiazepínicos e hipnóticos Z</b> (zolpidem, eszopiclona) figuram no Critério de Beers como PIM em idosos por causarem sedação excessiva, prejuízo cognitivo, ataxia e <b>alto risco de quedas e fraturas de quadril</b>. A meia-vida prolongada em idosos (metabolismo hepático reduzido) aumenta o acúmulo. Alternativas para insônia: higiene do sono, terapia cognitivo-comportamental, melatonina. Se necessário, prefira os de meia-vida mais curta com monitoramento rigoroso."},
 {"tema":"Idoso","q":"A polifarmácia em idosos é definida como uso concomitante de quantos medicamentos?","ops":["3 ou mais","5 ou mais","10 ou mais","2 ou mais"],"correct":1,"c":"A definição mais amplamente aceita de <b>polifarmácia</b> é o uso concomitante de <b>5 ou mais medicamentos</b>. A polifarmácia excessiva (≥ 10 medicamentos) é associada a maior risco de interações, efeitos adversos, hospitalizações e declínio funcional. Em idosos, a polifarmácia é quase inevitável dada a multimorbidade, mas o farmacêutico tem papel central na desprescrição (deprescribing) — redução intencional de medicamentos inapropriados ou desnecessários."}
 ];
+/* questões autorais adicionais (nível ENARE, estilo equilibrado) */
+if (window.BANK_EXTRA && Array.isArray(window.BANK_EXTRA)) {
+  Array.prototype.push.apply(BANK, window.BANK_EXTRA);
+}
 
 /* ============================================================
    MOTOR DO QUIZ
