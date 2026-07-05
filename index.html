@@ -1064,7 +1064,7 @@ function render(){
   document.getElementById("prev").onclick = ()=>{ if(pos>0){pos--;render();} };
   document.getElementById("next").onclick = ()=>{ if(pos<order.length-1){pos++;render();} };
 
-  if(window.Ink) window.Ink.switchTo("q"+qi);   // tinta da caneta fica só nesta questão
+  if(window.QuizInk && typeof window.QuizInk.switchTo==="function") window.QuizInk.switchTo("q"+qi);   // tinta da caneta fica só nesta questão
   if(prev) revealState(qi, prev.sel);
 }
 
@@ -1378,15 +1378,24 @@ document.getElementById("tabBtnSim").onclick = ()=> setTab("simulado");
       <div class="qhead"><span class="num">Questão ${state.pos+1} de ${n}</span>
         <span class="badge">${Object.keys(state.answers).length}/${n} respondidas</span></div>
       <div class="enun">${q.q}</div>
+      <div class="opts-hint">↔ Arraste uma alternativa para o lado para riscá-la</div>
       <div class="opts">${q.ops.map((o,j)=>`<button class="opt${sel===j?' sel':''}" data-j="${j}"><span class="key">${LET[j]}</span><span class="txt">${o}</span></button>`).join("")}</div>
       <div class="nav">
         <button class="btn sec" data-prev ${state.pos===0?"disabled":""}>← Anterior</button>
         ${state.pos>=n-1?'<button class="btn" data-finish2>Finalizar prova</button>':'<button class="btn" data-next>Próxima →</button>'}
       </div>`;
-    card.querySelectorAll(".opt").forEach(btn=> btn.onclick=()=>{
-      state.answers[state.pos]=parseInt(btn.dataset.j); saveState();
-      card.querySelectorAll(".opt").forEach(o=>o.classList.remove("sel")); btn.classList.add("sel");
-      card.querySelector(".badge").textContent=`${Object.keys(state.answers).length}/${n} respondidas`;
+    const skey = "S:"+sim.id+":"+state.pos;          // risco isolado por simulado+questão
+    const sStruck = window.getStruck ? window.getStruck(skey) : new Set();
+    card.querySelectorAll(".opt").forEach(btn=>{
+      const j=parseInt(btn.dataset.j);
+      if(sStruck.has(j)) btn.classList.add("struck");
+      if(window.attachStrikeSwipe) window.attachStrikeSwipe(btn, skey, j);
+      btn.onclick=()=>{
+        if(btn._swiped){ btn._swiped=false; return; }   // foi arraste p/ riscar, não seleção
+        state.answers[state.pos]=parseInt(btn.dataset.j); saveState();
+        card.querySelectorAll(".opt").forEach(o=>o.classList.remove("sel")); btn.classList.add("sel");
+        card.querySelector(".badge").textContent=`${Object.keys(state.answers).length}/${n} respondidas`;
+      };
     });
     const p=card.querySelector("[data-prev]"); if(p) p.onclick=()=>{ if(state.pos>0){state.pos--;saveState();renderQuestion();} };
     const nx=card.querySelector("[data-next]"); if(nx) nx.onclick=()=>{ if(state.pos<n-1){state.pos++;saveState();renderQuestion();} };
@@ -1527,7 +1536,7 @@ document.getElementById("tabBtnSim").onclick = ()=> setTab("simulado");
   };
 
   // API usada pelo quiz para manter a tinta só na questão em que foi feita
-  window.Ink = {
+  window.QuizInk = {
     switchTo(key){
       if(key===curKey) return;
       stash();                 // salva a tinta da questão anterior
