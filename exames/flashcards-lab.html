@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<title>Flashcards — Exames Laboratoriais (ENARE/FGV)</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Spectral:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#111827;
+    --bg-2:#171f30;
+    --paper:#F7F2E6;
+    --paper-2:#EFE8D6;
+    --ink:#22293B;
+    --ink-soft:#565F76;
+    --line:#D8CFB4;
+    --line-strong:#C7BC9C;
+  }
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:
+      radial-gradient(1200px 700px at 15% -10%, #1c2740 0%, transparent 60%),
+      var(--bg);
+    color:var(--paper);
+    font-family:'Inter',sans-serif;
+    padding:28px 16px 56px;
+  }
+  .wrap{max-width:760px;margin:0 auto;}
+  .masthead{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    border-bottom:2px solid #2b3550;
+    padding-bottom:14px;
+    margin-bottom:20px;
+    gap:12px;
+    flex-wrap:wrap;
+  }
+  .masthead h1{
+    font-family:'Spectral',serif;
+    font-weight:600;
+    font-size:22px;
+    margin:0 0 4px;
+    letter-spacing:0.2px;
+  }
+  .masthead p{
+    margin:0;
+    font-size:12.5px;
+    color:#9AA6C4;
+    font-family:'IBM Plex Mono',monospace;
+  }
+  .counter{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:13px;
+    color:#C9D2EA;
+    text-align:right;
+  }
+  .counter b{color:#fff;font-weight:600;}
+
+  .chips{
+    display:flex;
+    flex-wrap:wrap;
+    gap:6px;
+    margin-bottom:22px;
+  }
+  .chip{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    letter-spacing:0.3px;
+    padding:5px 10px;
+    border-radius:3px;
+    border:1px solid #2e3a58;
+    background:#1a2338;
+    color:#AEB8D4;
+    cursor:pointer;
+    user-select:none;
+    transition:transform .12s ease;
+  }
+  .chip:hover{border-color:#4a5a86;}
+  .chip.active{
+    background:var(--chip-bg,#3a4568);
+    color:var(--chip-fg,#fff);
+    border-color:transparent;
+  }
+
+  .stage{
+    perspective:1600px;
+    margin-bottom:18px;
+  }
+  .card{
+    position:relative;
+    width:100%;
+    min-height:340px;
+    transform-style:preserve-3d;
+    transition:transform .5s cubic-bezier(.4,.2,.2,1);
+    cursor:pointer;
+  }
+  .card.flipped{transform:rotateY(180deg);}
+  .face{
+    position:absolute;
+    inset:0;
+    backface-visibility:hidden;
+    border-radius:6px;
+    background:var(--paper);
+    color:var(--ink);
+    box-shadow:0 18px 40px -14px rgba(0,0,0,.55), 0 2px 0 rgba(0,0,0,.15);
+    display:flex;
+    flex-direction:column;
+    overflow:hidden;
+  }
+  .face::before{
+    content:"";
+    position:absolute;
+    top:0;left:0;right:0;
+    height:10px;
+    background:repeating-linear-gradient(90deg, transparent 0 6px, rgba(0,0,0,.06) 6px 7px);
+  }
+  .tab{
+    position:absolute;
+    top:0;
+    right:28px;
+    width:78px;
+    height:26px;
+    border-radius:0 0 5px 5px;
+    background:var(--tab-color,#888);
+    color:#fff;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:9.5px;
+    letter-spacing:.4px;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:0 4px;
+    line-height:1.15;
+    box-shadow:0 3px 6px rgba(0,0,0,.25);
+  }
+  .face-body{
+    padding:38px 34px 28px;
+    flex:1;
+    display:flex;
+    flex-direction:column;
+  }
+  .eyebrow{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    color:var(--ink-soft);
+    letter-spacing:.5px;
+    text-transform:uppercase;
+    margin-bottom:14px;
+  }
+  .front .param-name{
+    font-family:'Spectral',serif;
+    font-weight:600;
+    font-size:30px;
+    line-height:1.15;
+    margin:0 0 10px;
+  }
+  .front .hint{
+    margin-top:auto;
+    font-size:12px;
+    color:var(--ink-soft);
+    border-top:1px dashed var(--line-strong);
+    padding-top:12px;
+  }
+  .back .param-name-small{
+    font-family:'Spectral',serif;
+    font-weight:600;
+    font-size:17px;
+    margin:0 0 16px;
+    color:var(--ink-soft);
+  }
+  .back h3{
+    font-size:11px;
+    text-transform:uppercase;
+    letter-spacing:.5px;
+    color:var(--ink-soft);
+    margin:0 0 6px;
+    font-family:'IBM Plex Mono',monospace;
+  }
+  .back .purpose{
+    font-size:15px;
+    line-height:1.55;
+    margin:0 0 20px;
+  }
+  .refbox{
+    background:var(--paper-2);
+    border:1px solid var(--line);
+    border-radius:4px;
+    padding:12px 14px;
+    font-family:'IBM Plex Mono',monospace;
+    font-size:14px;
+    line-height:1.6;
+    white-space:pre-wrap;
+    margin-bottom:14px;
+  }
+  .note{
+    font-size:12px;
+    color:var(--ink-soft);
+    font-style:italic;
+    margin-top:auto;
+  }
+  .back{transform:rotateY(180deg);}
+
+  .controls{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    gap:10px;
+  }
+  .navgroup{display:flex;gap:8px;}
+  button.ctl{
+    font-family:'Inter',sans-serif;
+    font-size:13px;
+    font-weight:500;
+    background:#1a2338;
+    color:#DCE2F2;
+    border:1px solid #2e3a58;
+    border-radius:5px;
+    padding:9px 14px;
+    cursor:pointer;
+  }
+  button.ctl:hover{background:#232e4a;}
+  button.ctl:active{transform:scale(.97);}
+  .keyhint{
+    font-family:'IBM Plex Mono',monospace;
+    font-size:11px;
+    color:#6C7796;
+    text-align:center;
+    margin-top:14px;
+  }
+  .footnote{
+    margin-top:26px;
+    font-size:11.5px;
+    color:#7883A3;
+    line-height:1.6;
+    border-top:1px solid #232d47;
+    padding-top:14px;
+  }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="masthead">
+    <div>
+      <h1>Painel de exames laboratoriais</h1>
+      <p>estudo dirigido · residência multiprofissional (farmácia) · ENARE / FGV</p>
+    </div>
+    <div class="counter" id="counter"></div>
+  </div>
+
+  <div class="chips" id="chips"></div>
+
+  <div class="stage">
+    <div class="card" id="card">
+      <div class="face front">
+        <div class="tab" id="tabFront"></div>
+        <div class="face-body">
+          <div class="eyebrow" id="eyebrowFront"></div>
+          <p class="param-name" id="paramName"></p>
+          <p class="hint">Toque no cartão para ver finalidade e valores de referência</p>
+        </div>
+      </div>
+      <div class="face back">
+        <div class="tab" id="tabBack"></div>
+        <div class="face-body">
+          <p class="param-name-small" id="paramNameSmall"></p>
+          <h3 id="purposeLabel">Finalidade</h3>
+          <p class="purpose" id="purpose"></p>
+          <h3 id="refLabel">Valores de referência</h3>
+          <div class="refbox" id="refbox"></div>
+          <p class="note" id="noteText"></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="controls">
+    <div class="navgroup">
+      <button class="ctl" id="prevBtn">&larr; anterior</button>
+      <button class="ctl" id="nextBtn">próximo &rarr;</button>
+    </div>
+    <div class="navgroup">
+      <button class="ctl" id="shuffleBtn">embaralhar</button>
+      <button class="ctl" id="flipBtn">virar</button>
+    </div>
+  </div>
+
+  <p class="keyhint">setas ← → navegam · espaço vira o cartão · clique nos rótulos acima para filtrar por sistema</p>
+
+  <p class="footnote">Valores de referência variam conforme método, kit e laboratório — usados aqui como faixas de estudo mais cobradas em provas, não substituem o laudo do laboratório de origem.</p>
+
+</div>
+
+<script>
+const DATA = [
+ {cat:"Hematologia", color:"#8E2436", name:"Hemácias (eritrócitos)", purpose:"Avalia a produção de glóbulos vermelhos; rastreia anemia, policitemia e estado de hidratação.", ref:"Homens: 4,5–5,9 milhões/mm³\nMulheres: 4,0–5,2 milhões/mm³"},
+ {cat:"Hematologia", color:"#8E2436", name:"Hemoglobina (Hb)", purpose:"Mede a capacidade de transporte de oxigênio do sangue; principal parâmetro no diagnóstico de anemia.", ref:"Homens: 13–17 g/dL\nMulheres: 12–15 g/dL"},
+ {cat:"Hematologia", color:"#8E2436", name:"Hematócrito (Ht)", purpose:"Percentual do volume sanguíneo ocupado por hemácias; usado junto com Hb na avaliação de anemia e hidratação.", ref:"Homens: 40–50%\nMulheres: 36–44%"},
+ {cat:"Hematologia", color:"#8E2436", name:"VCM (volume corpuscular médio)", purpose:"Classifica a anemia quanto ao tamanho da hemácia: micro, normo ou macrocítica.", ref:"80–100 fL"},
+ {cat:"Hematologia", color:"#8E2436", name:"HCM (hemoglobina corpuscular média)", purpose:"Quantidade média de hemoglobina por hemácia; ajuda a classificar a anemia.", ref:"27–32 pg"},
+ {cat:"Hematologia", color:"#8E2436", name:"CHCM", purpose:"Concentração de hemoglobina por volume de hemácia; classifica anemia hipo ou normocrômica.", ref:"32–36 g/dL"},
+ {cat:"Hematologia", color:"#8E2436", name:"RDW", purpose:"Mede a variação do tamanho das hemácias (anisocitose); auxilia no diagnóstico diferencial de anemias.", ref:"11,5–14,5%"},
+ {cat:"Hematologia", color:"#8E2436", name:"Leucócitos totais", purpose:"Avalia processos infecciosos, inflamatórios, alérgicos ou de imunossupressão.", ref:"4.000–11.000/mm³"},
+ {cat:"Hematologia", color:"#8E2436", name:"Neutrófilos", purpose:"Principal linha de defesa contra infecções bacterianas agudas.", ref:"45–75% do total de leucócitos"},
+ {cat:"Hematologia", color:"#8E2436", name:"Linfócitos", purpose:"Relacionados à imunidade celular e humoral; alteram-se em infecções virais e neoplasias hematológicas.", ref:"20–40% do total de leucócitos"},
+ {cat:"Hematologia", color:"#8E2436", name:"Plaquetas", purpose:"Avaliam a hemostasia primária; risco de sangramento (baixas) ou trombose (elevadas).", ref:"150.000–450.000/mm³"},
+ {cat:"Hematologia", color:"#8E2436", name:"Reticulócitos", purpose:"Refletem a atividade da medula óssea e a resposta a tratamento de anemias.", ref:"0,5–2,0% das hemácias"},
+
+ {cat:"Função renal", color:"#1F5C86", name:"Ureia", purpose:"Produto final do catabolismo proteico; indica função renal e estado de hidratação/catabolismo.", ref:"15–45 mg/dL"},
+ {cat:"Função renal", color:"#1F5C86", name:"Creatinina", purpose:"Marcador da taxa de filtração glomerular; usada para ajuste posológico de fármacos.", ref:"Homens: 0,7–1,3 mg/dL\nMulheres: 0,6–1,1 mg/dL"},
+ {cat:"Função renal", color:"#1F5C86", name:"TFG estimada (CKD-EPI)", purpose:"Estadiamento da doença renal crônica e ajuste de dose de medicamentos.", ref:"≥90 mL/min/1,73m² = normal\n<60 sustentado = DRC"},
+ {cat:"Função renal", color:"#1F5C86", name:"Clearance de creatinina", purpose:"Estima a função renal para ajuste de dose (fórmula de Cockcroft-Gault, muito cobrada em farmácia clínica).", ref:"Homens: 90–140 mL/min\nMulheres: valores um pouco menores"},
+ {cat:"Função renal", color:"#1F5C86", name:"Cistatina C", purpose:"Marcador alternativo de função renal, menos influenciado pela massa muscular que a creatinina.", ref:"0,53–0,95 mg/L"},
+
+ {cat:"Função hepática", color:"#8A6A12", name:"TGO / AST", purpose:"Enzima de lesão hepatocelular, também presente no músculo cardíaco e esquelético.", ref:"10–40 U/L"},
+ {cat:"Função hepática", color:"#8A6A12", name:"TGP / ALT", purpose:"Enzima mais específica de lesão hepatocelular que a TGO.", ref:"7–56 U/L"},
+ {cat:"Função hepática", color:"#8A6A12", name:"Gama-GT (GGT)", purpose:"Marcador de colestase e de uso crônico de álcool ou indutores enzimáticos.", ref:"Homens: 8–61 U/L\nMulheres: 5–36 U/L"},
+ {cat:"Função hepática", color:"#8A6A12", name:"Fosfatase alcalina", purpose:"Eleva-se em colestase e em doenças ósseas; interpretar junto com GGT.", ref:"44–147 U/L"},
+ {cat:"Função hepática", color:"#8A6A12", name:"Bilirrubina total", purpose:"Produto do metabolismo do heme; avalia icterícia e função hepática/hemolítica.", ref:"0,3–1,2 mg/dL"},
+ {cat:"Função hepática", color:"#8A6A12", name:"Bilirrubina direta", purpose:"Fração conjugada; elevada em obstrução biliar e colestase.", ref:"até 0,3 mg/dL"},
+ {cat:"Função hepática", color:"#8A6A12", name:"Albumina", purpose:"Reflete a capacidade de síntese hepática e o estado nutricional.", ref:"3,5–5,0 g/dL"},
+
+ {cat:"Coagulação", color:"#6E2430", name:"TP / INR", purpose:"Avalia a via extrínseca da coagulação; monitorização de varfarina.", ref:"TP: 11–13,5 s\nINR: 0,8–1,2 (alvo terapêutico 2–3)"},
+ {cat:"Coagulação", color:"#6E2430", name:"TTPA", purpose:"Avalia a via intrínseca da coagulação; monitorização de heparina não fracionada.", ref:"25–35 segundos"},
+ {cat:"Coagulação", color:"#6E2430", name:"Fibrinogênio", purpose:"Fator de coagulação e proteína de fase aguda; reduzido em coagulopatia de consumo (CIVD).", ref:"200–400 mg/dL"},
+ {cat:"Coagulação", color:"#6E2430", name:"D-dímero", purpose:"Produto de degradação da fibrina; usado para excluir tromboembolismo venoso.", ref:"< 0,5 µg/mL (varia por método)"},
+
+ {cat:"Perfil lipídico", color:"#2F6B45", name:"Colesterol total", purpose:"Estimativa geral do risco cardiovascular.", ref:"< 190 mg/dL (desejável)"},
+ {cat:"Perfil lipídico", color:"#2F6B45", name:"LDL-c", purpose:"Fração aterogênica do colesterol; principal alvo terapêutico na prevenção cardiovascular.", ref:"Meta individualizada;\n< 100 mg/dL (risco padrão)"},
+ {cat:"Perfil lipídico", color:"#2F6B45", name:"HDL-c", purpose:"Fração protetora do colesterol; valores baixos aumentam risco cardiovascular.", ref:"Homens: > 40 mg/dL\nMulheres: > 50 mg/dL"},
+ {cat:"Perfil lipídico", color:"#2F6B45", name:"Triglicerídeos", purpose:"Relacionados a risco cardiovascular e, quando muito elevados, a risco de pancreatite aguda.", ref:"< 150 mg/dL"},
+
+ {cat:"Metabolismo glicídico", color:"#3F6B24", name:"Glicemia de jejum", purpose:"Rastreio e diagnóstico de pré-diabetes e diabetes mellitus.", ref:"Normal: 70–99 mg/dL\nPré-diabetes: 100–125\nDiabetes: ≥126"},
+ {cat:"Metabolismo glicídico", color:"#3F6B24", name:"Hemoglobina glicada (HbA1c)", purpose:"Reflete o controle glicêmico médio dos últimos 2–3 meses.", ref:"Normal: < 5,7%\nPré-diabetes: 5,7–6,4%\nDiabetes: ≥ 6,5%"},
+ {cat:"Metabolismo glicídico", color:"#3F6B24", name:"TOTG (2 horas)", purpose:"Teste oral de tolerância à glicose; diagnóstico de diabetes e intolerância à glicose.", ref:"Normal: < 140 mg/dL\nIntolerância: 140–199\nDiabetes: ≥ 200"},
+ {cat:"Metabolismo glicídico", color:"#3F6B24", name:"Insulina de jejum", purpose:"Usada no cálculo do HOMA-IR para avaliar resistência à insulina.", ref:"2–25 µU/mL (referência varia por método)"},
+
+ {cat:"Eletrólitos", color:"#5B4A8A", name:"Sódio (Na⁺)", purpose:"Principal íon extracelular; regula osmolaridade e volemia.", ref:"135–145 mEq/L"},
+ {cat:"Eletrólitos", color:"#5B4A8A", name:"Potássio (K⁺)", purpose:"Principal íon intracelular; crítico para excitabilidade cardíaca e neuromuscular.", ref:"3,5–5,0 mEq/L"},
+ {cat:"Eletrólitos", color:"#5B4A8A", name:"Cálcio total", purpose:"Envolvido em contração muscular, coagulação e sinalização celular.", ref:"8,5–10,5 mg/dL"},
+ {cat:"Eletrólitos", color:"#5B4A8A", name:"Cálcio ionizado", purpose:"Fração fisiologicamente ativa do cálcio, não depende da albumina sérica.", ref:"1,1–1,3 mmol/L"},
+ {cat:"Eletrólitos", color:"#5B4A8A", name:"Magnésio", purpose:"Cofator enzimático; sua deficiência pode causar arritmias e hipocalemia refratária.", ref:"1,5–2,5 mg/dL"},
+ {cat:"Eletrólitos", color:"#5B4A8A", name:"Fósforo", purpose:"Envolvido no metabolismo ósseo e na produção de energia celular (ATP).", ref:"2,5–4,5 mg/dL"},
+ {cat:"Eletrólitos", color:"#5B4A8A", name:"Cloro (Cl⁻)", purpose:"Participa do equilíbrio ácido-base e da eletroneutralidade plasmática.", ref:"96–106 mEq/L"},
+
+ {cat:"Tireoide", color:"#1A6B66", name:"TSH", purpose:"Exame de primeira linha para rastreio de disfunção tireoidiana.", ref:"0,4–4,0 mUI/L"},
+ {cat:"Tireoide", color:"#1A6B66", name:"T4 livre", purpose:"Fração ativa do hormônio tireoidiano circulante, confirma diagnóstico junto ao TSH.", ref:"0,8–1,8 ng/dL"},
+ {cat:"Tireoide", color:"#1A6B66", name:"T3", purpose:"Útil sobretudo na investigação de hipertireoidismo.", ref:"80–200 ng/dL"},
+
+ {cat:"Marcadores cardíacos", color:"#A3441C", name:"Troponina", purpose:"Marcador mais sensível e específico de necrose miocárdica (infarto agudo do miocárdio).", ref:"< 0,04 ng/mL (varia conforme o método/geração do ensaio)"},
+ {cat:"Marcadores cardíacos", color:"#A3441C", name:"CK-MB", purpose:"Marcador de lesão miocárdica, menos específico que a troponina.", ref:"< 25 U/L ou < 5% do CK total"},
+ {cat:"Marcadores cardíacos", color:"#A3441C", name:"BNP / NT-proBNP", purpose:"Auxiliam no diagnóstico e acompanhamento da insuficiência cardíaca.", ref:"BNP < 100 pg/mL\nNT-proBNP < 300 pg/mL"},
+
+ {cat:"Marcadores inflamatórios", color:"#6D5323", name:"Proteína C reativa (PCR)", purpose:"Marcador de fase aguda; usado para rastrear infecção/inflamação e, na versão ultrassensível, risco cardiovascular.", ref:"< 10 mg/L (padrão)\nPCR-us < 1 mg/L = baixo risco CV"},
+ {cat:"Marcadores inflamatórios", color:"#6D5323", name:"VHS", purpose:"Marcador inespecífico de inflamação, útil no acompanhamento de doenças reumatológicas.", ref:"Homens: < 15 mm/h\nMulheres: < 20 mm/h"},
+ {cat:"Marcadores inflamatórios", color:"#6D5323", name:"Procalcitonina", purpose:"Ajuda a diferenciar infecção bacteriana de viral e a guiar antibioticoterapia em sepse.", ref:"< 0,05 ng/mL"},
+
+ {cat:"Metabolismo do ferro", color:"#8A4A1F", name:"Ferritina", purpose:"Reflete as reservas corporais de ferro; também se comporta como proteína de fase aguda.", ref:"Homens: 20–250 ng/mL\nMulheres: 10–120 ng/mL"},
+ {cat:"Metabolismo do ferro", color:"#8A4A1F", name:"Ferro sérico", purpose:"Ferro circulante ligado à transferrina; varia bastante ao longo do dia.", ref:"60–170 µg/dL"},
+ {cat:"Metabolismo do ferro", color:"#8A4A1F", name:"Transferrina", purpose:"Proteína transportadora de ferro; aumenta na deficiência de ferro.", ref:"200–360 mg/dL"},
+ {cat:"Metabolismo do ferro", color:"#8A4A1F", name:"Saturação de transferrina", purpose:"Percentual de transferrina ocupado por ferro; auxilia no diagnóstico diferencial de anemias.", ref:"20–50%"},
+
+ {cat:"Urina", color:"#8A6D0F", name:"EAS (urina tipo I)", purpose:"Triagem de doenças renais e do trato urinário: densidade, pH, proteínas, glicose, sangue e sedimento.", ref:"Densidade: 1,005–1,030\npH: 5,0–8,0"},
+ {cat:"Urina", color:"#8A6D0F", name:"Proteinúria de 24h", purpose:"Quantifica a perda de proteína pela urina; indica dano glomerular.", ref:"< 150 mg/24h"},
+ {cat:"Urina", color:"#8A6D0F", name:"Microalbuminúria", purpose:"Detecta dano renal precoce, especialmente na nefropatia diabética.", ref:"< 30 mg/g de creatinina"},
+
+ {cat:"Gasometria arterial", color:"#385A73", name:"pH arterial", purpose:"Indica o equilíbrio ácido-base geral do organismo.", ref:"7,35–7,45"},
+ {cat:"Gasometria arterial", color:"#385A73", name:"PaCO₂", purpose:"Componente respiratório do equilíbrio ácido-base.", ref:"35–45 mmHg"},
+ {cat:"Gasometria arterial", color:"#385A73", name:"PaO₂", purpose:"Avalia a oxigenação sanguínea.", ref:"80–100 mmHg"},
+ {cat:"Gasometria arterial", color:"#385A73", name:"Bicarbonato (HCO₃⁻)", purpose:"Componente metabólico do equilíbrio ácido-base.", ref:"22–26 mEq/L"},
+ {cat:"Gasometria arterial", color:"#385A73", name:"SatO₂", purpose:"Percentual de hemoglobina saturada com oxigênio.", ref:"95–100%"},
+
+ {cat:"Metabolismo das purinas", color:"#7A5A1E", name:"Ácido úrico", purpose:"Produto final do metabolismo das purinas; relevante em gota e síndrome de lise tumoral.", ref:"Homens: 3,4–7,0 mg/dL\nMulheres: 2,4–6,0 mg/dL"},
+
+ {cat:"Marcadores tumorais", color:"#444467", name:"PSA", purpose:"Rastreio de câncer de próstata; não é diagnóstico isolado, sofre interferência de outras condições prostáticas.", ref:"< 4,0 ng/mL"},
+ {cat:"Marcadores tumorais", color:"#444467", name:"CA-125", purpose:"Acompanhamento de resposta terapêutica no câncer de ovário.", ref:"< 35 U/mL"},
+ {cat:"Marcadores tumorais", color:"#444467", name:"CA 19-9", purpose:"Acompanhamento de câncer pancreático e de vias biliares.", ref:"< 37 U/mL"},
+ {cat:"Marcadores tumorais", color:"#444467", name:"CEA", purpose:"Acompanhamento do câncer colorretal; pode se elevar em tabagistas.", ref:"< 5 ng/mL (não fumantes)"},
+ {cat:"Marcadores tumorais", color:"#444467", name:"Alfafetoproteína (AFP)", purpose:"Acompanhamento de hepatocarcinoma e de tumores de células germinativas.", ref:"< 10 ng/mL"},
+
+ {cat:"Monitorização terapêutica (IT estreito)", color:"#7A2F55", name:"Digoxina", purpose:"Monitorização de intoxicação digitálica em insuficiência cardíaca e arritmias; risco alto em hipocalemia e disfunção renal.", ref:"Faixa terapêutica: 0,5–2,0 ng/mL\n(IC: preferir 0,5–0,9)"},
+ {cat:"Monitorização terapêutica (IT estreito)", color:"#7A2F55", name:"Lítio", purpose:"Monitorização de toxicidade no tratamento do transtorno bipolar; janela terapêutica estreita e nefro/neurotoxicidade.", ref:"Manutenção: 0,6–1,2 mEq/L\nToxicidade: > 1,5 mEq/L"},
+ {cat:"Monitorização terapêutica (IT estreito)", color:"#7A2F55", name:"Vancomicina", purpose:"Monitorização de eficácia e nefrotoxicidade; a abordagem atual prioriza a razão AUC/CIM.", ref:"AUC24/CIM alvo: 400–600\nVale (método clássico): 10–20 µg/mL"},
+ {cat:"Monitorização terapêutica (IT estreito)", color:"#7A2F55", name:"Aminoglicosídeos (gentamicina/amicacina)", purpose:"Monitorização de nefro e ototoxicidade em esquemas convencionais (múltiplas doses/dia).", ref:"Gentamicina: pico 5–10 / vale <2 µg/mL\nAmicacina: pico 20–30 / vale <10 µg/mL"},
+ {cat:"Monitorização terapêutica (IT estreito)", color:"#7A2F55", name:"Fenitoína", purpose:"Monitorização de eficácia anticonvulsivante e de sinais de toxicidade neurológica (nistagmo, ataxia).", ref:"10–20 µg/mL (fração livre: 1–2 µg/mL)"},
+ {cat:"Monitorização terapêutica (IT estreito)", color:"#7A2F55", name:"Carbamazepina", purpose:"Monitorização de eficácia anticonvulsivante e de toxicidade (autoindução enzimática dificulta o ajuste).", ref:"4–12 µg/mL"},
+ {cat:"Monitorização terapêutica (IT estreito)", color:"#7A2F55", name:"Ácido valproico", purpose:"Monitorização anticonvulsivante e como estabilizador de humor; hepatotoxicidade é um risco relevante.", ref:"50–100 µg/mL"},
+ {cat:"Monitorização terapêutica (IT estreito)", color:"#7A2F55", name:"Fenobarbital", purpose:"Monitorização anticonvulsivante; meia-vida longa exige cautela na interpretação de níveis.", ref:"15–40 µg/mL"},
+ {cat:"Monitorização terapêutica (IT estreito)", color:"#7A2F55", name:"Teofilina", purpose:"Monitorização no tratamento de asma/DPOC; faixa terapêutica estreita com risco de arritmias e convulsões.", ref:"10–20 µg/mL"},
+ {cat:"Monitorização terapêutica (IT estreito)", color:"#7A2F55", name:"Ciclosporina", purpose:"Monitorização imunossupressora pós-transplante; nefrotoxicidade e rejeição são os riscos a balancear.", ref:"C0 variável por órgão/fase pós-transplante\n(ex.: 100–400 ng/mL)"},
+ {cat:"Monitorização terapêutica (IT estreito)", color:"#7A2F55", name:"Tacrolimo", purpose:"Monitorização imunossupressora pós-transplante; janela terapêutica estreita entre rejeição e nefrotoxicidade.", ref:"C0: 5–15 ng/mL\n(varia por órgão e tempo pós-transplante)"},
+ {cat:"Monitorização terapêutica (IT estreito)", color:"#7A2F55", name:"Metotrexato (altas doses)", purpose:"Monitorização para definir a necessidade e a duração do resgate com ácido folínico após infusão em altas doses.", ref:"Interpretado por nomograma tempo-dependente\n(ex.: < 0,1 µmol/L em 72h = seguro)"},
+
+ {cat:"Pediatria", color:"#1B4F72", name:"Hemoglobina / hematócrito no recém-nascido", purpose:"Valores altos ao nascer (policitemia relativa) caem fisiologicamente até formar a chamada anemia fisiológica do lactente.", ref:"RN ao nascer: Hb 14–20 g/dL\nNadir (2–3 meses): Hb 9,5–13 g/dL"},
+ {cat:"Pediatria", color:"#1B4F72", name:"Leucograma pediátrico", purpose:"Entre 1 e 4 anos há predomínio fisiológico de linfócitos, invertendo a fórmula leucocitária típica do adulto.", ref:"Neonato: 9.000–30.000/mm³\nLactente/pré-escolar: linfócitos ≈ 60% do total"},
+ {cat:"Pediatria", color:"#1B4F72", name:"Fosfatase alcalina na infância", purpose:"Fica fisiologicamente elevada por causa do crescimento ósseo ativo, especialmente em surtos de crescimento e puberdade.", ref:"Pode chegar a 3–5x o valor de referência do adulto"},
+ {cat:"Pediatria", color:"#1B4F72", name:"Creatinina e TFG pediátrica", purpose:"A creatinina é fisiologicamente mais baixa por causa da menor massa muscular; a função renal é estimada pela fórmula de Schwartz.", ref:"RN a termo: 0,3–1,0 mg/dL (varia com a idade)\nTFG (Schwartz): k × estatura(cm) / creatinina"},
+ {cat:"Pediatria", color:"#1B4F72", name:"Bilirrubina neonatal", purpose:"A icterícia fisiológica é comum nos primeiros dias de vida; níveis muito altos exigem fototerapia para evitar kernicterus.", ref:"Pico fisiológico: até ~12–15 mg/dL\npor volta do 3º–5º dia de vida"},
+
+ {cat:"Gestação", color:"#B03A5B", name:"Hemoglobina / hematócrito na gestação", purpose:"A expansão do volume plasmático é maior que o aumento da massa eritrocitária, causando anemia dilucional fisiológica.", ref:"Anemia gestacional: Hb < 11 g/dL\n(1º/3º trimestre) ou < 10,5 g/dL (2º trimestre)"},
+ {cat:"Gestação", color:"#B03A5B", name:"TOTG 75g para diabetes gestacional", purpose:"Rastreio realizado entre 24–28 semanas; basta um valor alterado para fechar o diagnóstico de diabetes gestacional.", ref:"Jejum ≥ 92 mg/dL\n1h ≥ 180 mg/dL · 2h ≥ 153 mg/dL"},
+ {cat:"Gestação", color:"#B03A5B", name:"TSH na gestação", purpose:"O hCG estimula discretamente a tireoide, reduzindo o TSH principalmente no 1º trimestre; faixas de referência variam por trimestre.", ref:"1º trimestre: cerca de 0,1–2,5 mUI/L\n(faixa varia por método/população)"},
+ {cat:"Gestação", color:"#B03A5B", name:"D-dímero na gestação", purpose:"Eleva-se fisiologicamente pelo estado de hipercoagulabilidade da gravidez, reduzindo sua utilidade para excluir TEV.", ref:"Sem ponto de corte único validado;\ninterpretar sempre com o quadro clínico"},
+ {cat:"Gestação", color:"#B03A5B", name:"Proteinúria e ácido úrico na gestação", purpose:"Usados junto com a pressão arterial no rastreio e diagnóstico de pré-eclâmpsia.", ref:"Proteinúria significativa: ≥ 300 mg/24h\nÁcido úrico elevado sugere maior gravidade"},
+
+ {cat:"Idoso", color:"#6B4226", name:"Creatinina no idoso", purpose:"Pode permanecer dentro da faixa 'normal' mesmo com função renal já reduzida, pela menor massa muscular; sempre estimar a TFG.", ref:"Creatinina isolada pode subestimar\na perda real de função renal"},
+ {cat:"Idoso", color:"#6B4226", name:"TSH no idoso", purpose:"O limite superior de normalidade tende a ser discretamente maior que no adulto jovem, exigindo cautela antes de tratar.", ref:"Alguns consensos toleram até ~5–6 mUI/L\nsem intervenção imediata"},
+ {cat:"Idoso", color:"#6B4226", name:"VHS no idoso", purpose:"Eleva-se fisiologicamente com a idade, o que exige cautela ao interpretá-la isoladamente como marcador de inflamação.", ref:"Estimativa prática (Homens): idade ÷ 2\n(limite superior aproximado)"},
+ {cat:"Idoso", color:"#6B4226", name:"Albumina no idoso", purpose:"Tende a declinar levemente com a idade e é sensível ao estado nutricional/inflamatório, podendo confundir a avaliação hepática.", ref:"Discretamente abaixo da faixa do adulto jovem,\nmesmo sem doença hepática"},
+
+ {cat:"Evitar na gestação", color:"#9C2B2B", name:"Isotretinoína", purposeLabel:"Por que evitar", purpose:"Teratógeno grave e comprovado: malformações do SNC, face e coração. Contraindicação absoluta.", refLabel:"Observação clínica", ref:"Exige contracepção eficaz antes,\ndurante e após o tratamento"},
+ {cat:"Evitar na gestação", color:"#9C2B2B", name:"Talidomida", purposeLabel:"Por que evitar", purpose:"Teratógeno clássico: causa focomelia e outras malformações graves de membros.", refLabel:"Observação clínica", ref:"Contraindicação absoluta em qualquer\nsuspeita ou confirmação de gravidez"},
+ {cat:"Evitar na gestação", color:"#9C2B2B", name:"Varfarina", purposeLabel:"Por que evitar", purpose:"Embriopatia varfarínica no 1º trimestre; risco de hemorragia fetal/placentária em uso tardio.", refLabel:"Observação clínica", ref:"Substituir por heparina\n(não atravessa a placenta)"},
+ {cat:"Evitar na gestação", color:"#9C2B2B", name:"IECA e BRA (ex.: captopril, losartana)", purposeLabel:"Por que evitar", purpose:"Nefrotoxicidade fetal, oligodrâmnio e disgenesia renal, sobretudo no 2º e 3º trimestres.", refLabel:"Observação clínica", ref:"Preferir anti-hipertensivos\nseguros na gestação (ex.: metildopa)"},
+ {cat:"Evitar na gestação", color:"#9C2B2B", name:"Ácido valproico", purposeLabel:"Por que evitar", purpose:"Associado a defeitos do tubo neural e a teratogenicidade importante.", refLabel:"Observação clínica", ref:"Evitar especialmente no 1º trimestre;\nrisco também de disfunção cognitiva fetal"},
+ {cat:"Evitar na gestação", color:"#9C2B2B", name:"Metotrexato", purposeLabel:"Por que evitar", purpose:"Abortivo e teratogênico; antagonista do ácido fólico, essencial para o desenvolvimento fetal.", refLabel:"Observação clínica", ref:"Contraindicação absoluta na gestação"},
+ {cat:"Evitar na gestação", color:"#9C2B2B", name:"Tetraciclinas", purposeLabel:"Por que evitar", purpose:"Depositam-se em ossos e dentes fetais, causando descoloração dentária permanente.", refLabel:"Observação clínica", ref:"Evitar sobretudo a partir do 2º trimestre"},
+ {cat:"Evitar na gestação", color:"#9C2B2B", name:"AINEs no 3º trimestre", purposeLabel:"Por que evitar", purpose:"Risco de fechamento precoce do canal arterial fetal e de oligodrâmnio.", refLabel:"Observação clínica", ref:"Uso pontual em outros trimestres\nexige avaliação individualizada"},
+ {cat:"Evitar na gestação", color:"#9C2B2B", name:"Misoprostol", purposeLabel:"Por que evitar", purpose:"Efeito uterotônico/abortivo; contraindicado fora de indicações obstétricas específicas.", refLabel:"Observação clínica", ref:"Uso restrito a protocolos obstétricos\nespecíficos e supervisionados"},
+
+ {cat:"Evitar na pediatria", color:"#B25B00", name:"Ácido acetilsalicílico (AAS)", purposeLabel:"Por que evitar", purpose:"Associado à síndrome de Reye quando usado durante quadros virais (varicela, influenza) em crianças.", refLabel:"Observação clínica", ref:"Evitar como antitérmico/analgésico\nde rotina em crianças e adolescentes"},
+ {cat:"Evitar na pediatria", color:"#B25B00", name:"Tetraciclinas", purposeLabel:"Por que evitar", purpose:"Causam descoloração dentária permanente e podem alterar o crescimento ósseo.", refLabel:"Observação clínica", ref:"Evitar em crianças menores de 8 anos"},
+ {cat:"Evitar na pediatria", color:"#B25B00", name:"Fluoroquinolonas", purposeLabel:"Por que evitar", purpose:"Risco teórico e descrito de artropatia e lesão da cartilagem de crescimento.", refLabel:"Observação clínica", ref:"Uso restrito a situações sem\nalternativa terapêutica adequada"},
+ {cat:"Evitar na pediatria", color:"#B25B00", name:"Codeína", purposeLabel:"Por que evitar", purpose:"Metabolizadores ultrarrápidos de CYP2D6 podem apresentar depressão respiratória grave.", refLabel:"Observação clínica", ref:"Contraindicada em menores de 12 anos\ne após certas cirurgias (ex.: adenoamigdalectomia)"},
+ {cat:"Evitar na pediatria", color:"#B25B00", name:"Prometazina", purposeLabel:"Por que evitar", purpose:"Risco de depressão respiratória grave, sobretudo em menores de 2 anos.", refLabel:"Observação clínica", ref:"Contraindicada em menores de 2 anos"},
+ {cat:"Evitar na pediatria", color:"#B25B00", name:"Cloranfenicol", purposeLabel:"Por que evitar", purpose:"Imaturidade da glicuronidação hepática em neonatos pode causar a síndrome do bebê cinzento.", refLabel:"Observação clínica", ref:"Cautela extrema em neonatos,\nsobretudo prematuros"},
+ {cat:"Evitar na pediatria", color:"#B25B00", name:"Sulfonamidas em neonatos", purposeLabel:"Por que evitar", purpose:"Deslocam a bilirrubina da albumina, aumentando o risco de kernicterus.", refLabel:"Observação clínica", ref:"Evitar principalmente em neonatos\ncom icterícia"},
+
+ {cat:"Evitar no idoso (critérios de Beers)", color:"#4A4A4A", name:"Benzodiazepínicos", purposeLabel:"Por que evitar", purpose:"Sedação excessiva, quedas, fraturas e piora cognitiva; risco aumentado com a idade.", refLabel:"Observação clínica", ref:"Evitar uso crônico; preferir\nabordagens não farmacológicas para insônia/ansiedade"},
+ {cat:"Evitar no idoso (critérios de Beers)", color:"#4A4A4A", name:"Anticolinérgicos (anti-histamínicos 1ª geração, tricíclicos)", purposeLabel:"Por que evitar", purpose:"Confusão mental, retenção urinária, constipação e possível associação com demência.", refLabel:"Observação clínica", ref:"Efeito cumulativo com outros\nfármacos de carga anticolinérgica"},
+ {cat:"Evitar no idoso (critérios de Beers)", color:"#4A4A4A", name:"AINEs de uso crônico", purposeLabel:"Por que evitar", purpose:"Maior risco de sangramento gastrointestinal, nefrotoxicidade e descompensação de hipertensão/IC.", refLabel:"Observação clínica", ref:"Evitar uso prolongado, especialmente\nsem proteção gástrica associada"},
+ {cat:"Evitar no idoso (critérios de Beers)", color:"#4A4A4A", name:"Antipsicóticos em demência", purposeLabel:"Por que evitar", purpose:"Associados a maior mortalidade cardiovascular e cerebrovascular em pacientes com demência.", refLabel:"Observação clínica", ref:"Reservar para sintomas graves\nsem resposta a medidas não farmacológicas"},
+ {cat:"Evitar no idoso (critérios de Beers)", color:"#4A4A4A", name:"Sulfonilureias de longa ação (ex.: glibenclamida)", purposeLabel:"Por que evitar", purpose:"Maior risco de hipoglicemia grave e prolongada em comparação a agentes de ação mais curta.", refLabel:"Observação clínica", ref:"Preferir sulfonilureias de meia-vida\nmais curta, se necessário"},
+ {cat:"Evitar no idoso (critérios de Beers)", color:"#4A4A4A", name:"Meperidina", purposeLabel:"Por que evitar", purpose:"Metabólito neurotóxico (normeperidina) associado a delirium e convulsões.", refLabel:"Observação clínica", ref:"Evitar como opioide de escolha\nem pacientes idosos"},
+ {cat:"Evitar no idoso (critérios de Beers)", color:"#4A4A4A", name:"Digoxina em doses altas", purposeLabel:"Por que evitar", purpose:"Maior risco de toxicidade pela redução fisiológica da função renal no idoso.", refLabel:"Observação clínica", ref:"Evitar doses > 0,125 mg/dia\ncomo dose de manutenção habitual"},
+];
+
+let order = DATA.map((_,i)=>i);
+let filterCat = null;
+let pos = 0;
+let flipped = false;
+
+const cats = [...new Set(DATA.map(d=>d.cat))];
+const colorOf = c => DATA.find(d=>d.cat===c).color;
+
+const chipsEl = document.getElementById('chips');
+cats.forEach(cat=>{
+  const chip = document.createElement('div');
+  chip.className = 'chip';
+  chip.textContent = cat;
+  chip.style.setProperty('--chip-bg', colorOf(cat));
+  chip.style.setProperty('--chip-fg', '#fff');
+  chip.onclick = ()=>{
+    filterCat = filterCat===cat ? null : cat;
+    rebuildOrder();
+    render();
+  };
+  chip.dataset.cat = cat;
+  chipsEl.appendChild(chip);
+});
+
+function rebuildOrder(){
+  order = DATA.map((_,i)=>i).filter(i=> !filterCat || DATA[i].cat===filterCat);
+  pos = 0;
+  flipped = false;
+  document.querySelectorAll('.chip').forEach(c=>{
+    c.classList.toggle('active', c.dataset.cat===filterCat);
+  });
+}
+
+function render(){
+  const card = document.getElementById('card');
+  card.classList.toggle('flipped', flipped);
+  const idx = order[pos];
+  const d = DATA[idx];
+
+  document.getElementById('eyebrowFront').textContent = d.cat;
+  document.getElementById('paramName').textContent = d.name;
+  document.getElementById('tabFront').textContent = d.cat;
+  document.getElementById('tabFront').style.setProperty('--tab-color', d.color);
+
+  document.getElementById('paramNameSmall').textContent = d.name;
+  document.getElementById('purposeLabel').textContent = d.purposeLabel || 'Finalidade';
+  document.getElementById('purpose').textContent = d.purpose;
+  document.getElementById('refLabel').textContent = d.refLabel || 'Valores de referência';
+  document.getElementById('refbox').textContent = d.ref;
+  document.getElementById('tabBack').textContent = d.cat;
+  document.getElementById('tabBack').style.setProperty('--tab-color', d.color);
+  document.getElementById('noteText').textContent = '';
+
+  document.getElementById('counter').innerHTML =
+    '<b>'+(pos+1)+'</b> / '+order.length+(filterCat? '  ·  '+filterCat : '  ·  todos os sistemas');
+}
+
+function next(){ flipped=false; pos = (pos+1)%order.length; render(); }
+function prev(){ flipped=false; pos = (pos-1+order.length)%order.length; render(); }
+function flip(){ flipped = !flipped; render(); }
+function shuffle(){
+  for(let i=order.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [order[i],order[j]]=[order[j],order[i]];
+  }
+  pos = 0; flipped=false; render();
+}
+
+document.getElementById('card').addEventListener('click', flip);
+document.getElementById('nextBtn').addEventListener('click', e=>{e.stopPropagation(); next();});
+document.getElementById('prevBtn').addEventListener('click', e=>{e.stopPropagation(); prev();});
+document.getElementById('flipBtn').addEventListener('click', e=>{e.stopPropagation(); flip();});
+document.getElementById('shuffleBtn').addEventListener('click', e=>{e.stopPropagation(); shuffle();});
+
+document.addEventListener('keydown', e=>{
+  if(e.key==='ArrowRight') next();
+  else if(e.key==='ArrowLeft') prev();
+  else if(e.key===' '){ e.preventDefault(); flip(); }
+});
+
+rebuildOrder();
+render();
+</script>
+</body>
+</html>
