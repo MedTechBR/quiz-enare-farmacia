@@ -185,7 +185,12 @@
   .sim-scewrap{display:flex;align-items:center;gap:22px;flex-wrap:wrap;margin:6px 0 14px}
   .sim-score{font-size:2.6rem;font-weight:800;color:var(--teal-deep);line-height:1}
   .sim-rev{display:flex;flex-direction:column;gap:7px;margin-top:12px}
-  .sim-rev .it{border:1px solid var(--line);border-radius:10px;padding:9px 12px;font-size:.85rem;color:var(--ink)}
+  .sim-rev .it{border:1px solid var(--line);border-radius:10px;padding:9px 12px;font-size:.85rem;color:var(--ink);
+    display:flex;align-items:center;justify-content:space-between;gap:8px;cursor:pointer;
+    transition:transform .1s,box-shadow .1s}
+  .sim-rev .it:hover{box-shadow:var(--shadow);transform:translateY(-1px)}
+  .sim-rev .it:active{transform:none}
+  .sim-rev .it .chev{font-size:1.2rem;color:var(--ink-soft);font-weight:700;flex:0 0 auto}
   .sim-rev .it.ok{border-color:var(--right);background:var(--right-bg)}
   .sim-rev .it.no{border-color:var(--wrong);background:var(--wrong-bg)}
   .sim-rev .it.an{border-color:var(--amber);background:#fdf4e6}
@@ -1438,9 +1443,9 @@ document.getElementById("tabBtnSim").onclick = ()=> setTab("simulado");
     show("result");
     const {sim,state}=cur, g=grade(), pct=Math.round(100*g.correct/g.total);
     const rev = sim.questions.map((q,i)=>{
-      if(q.correct===-1) return `<div class="it an"><b>Q${i+1}</b> · Anulada (ponto para todos)</div>`;
+      if(q.correct===-1) return `<div class="it an" data-qidx="${i}"><span><b>Q${i+1}</b> · Anulada (ponto para todos)</span><span class="chev">›</span></div>`;
       const sel=state.answers[i], ok=sel===q.correct, yours = sel==null? "em branco" : LET[sel];
-      return `<div class="it ${ok?'ok':'no'}"><b>Q${i+1}</b> · sua resposta: <b>${yours}</b> — gabarito: <b>${LET[q.correct]}</b></div>`;
+      return `<div class="it ${ok?'ok':'no'}" data-qidx="${i}"><span><b>Q${i+1}</b> · sua resposta: <b>${yours}</b> — gabarito: <b>${LET[q.correct]}</b></span><span class="chev">›</span></div>`;
     }).join("");
     resCard.innerHTML=`
       <div class="qhead"><span class="num">Resultado</span><span class="badge">${sim.title}</span></div>
@@ -1454,6 +1459,43 @@ document.getElementById("tabBtnSim").onclick = ()=> setTab("simulado");
       <div class="sim-rev">${rev}</div>`;
     resCard.querySelector("[data-redo]").onclick=()=>{ if(confirm("Refazer este simulado do zero? Suas respostas serão apagadas.")){ cur.state={answers:{},pos:0,finished:false}; saveState(); startRun(); } };
     resCard.querySelector("[data-toplist]").onclick=()=>{ renderList(); show("list"); };
+    resCard.querySelectorAll(".sim-rev .it").forEach(el=>{
+      el.onclick=()=>{ const idx=parseInt(el.dataset.qidx); if(!isNaN(idx)) renderReview(idx); };
+    });
+    window.scrollTo({top:0,behavior:"instant"});
+  }
+  function renderReview(i){
+    show("run");
+    const {sim,state}=cur, n=sim.questions.length, q=sim.questions[i], sel=state.answers[i];
+    const annul=q.correct===-1, ok=sel===q.correct;
+    const verdict = annul ? "⦿ Questão anulada — ponto para todos"
+      : ok ? "✓ Você acertou" : `✗ Você marcou ${sel==null?"em branco":LET[sel]} — gabarito: ${LET[q.correct]}`;
+    titleEl.textContent=sim.title; paletteEl.hidden=true;
+    card.innerHTML=`
+      <div class="qhead"><span class="num">Revisão · Questão ${i+1} de ${n}</span>
+        <span class="badge">${annul?"Anulada":(ok?"Acertou":"Errou")}</span></div>
+      <div class="enun">${q.q}</div>
+      ${q.img?`<figure class="qfig"><img src="${q.img}" alt="Figura da questão"></figure>`:""}
+      <div class="opts">${q.ops.map((o,j)=>{
+        let cls="opt";
+        if(!annul && j===q.correct) cls+=" right";
+        else if(j===sel && !ok) cls+=" wrong";
+        else cls+=" dim";
+        return `<button class="${cls}" disabled><span class="key">${LET[j]}</span><span class="txt">${o}</span></button>`;
+      }).join("")}</div>
+      <div class="feedback show ${annul?"ok":(ok?"ok":"no")}">
+        <div class="verdict">${verdict}</div>
+        ${q.c?`<div class="body">${q.c}</div>`:`<div class="body" style="color:var(--ink-soft)">Comentário em preparação para esta questão.</div>`}
+      </div>
+      <div class="nav">
+        <button class="btn sec" data-rprev ${i===0?"disabled":""}>← Anterior</button>
+        <button class="btn sec" data-rback>Voltar ao resultado</button>
+        <button class="btn" data-rnext ${i>=n-1?"disabled":""}>Próxima →</button>
+      </div>`;
+    const rp=card.querySelector("[data-rprev]"); if(rp) rp.onclick=()=>{ if(i>0) renderReview(i-1); };
+    const rn=card.querySelector("[data-rnext]"); if(rn) rn.onclick=()=>{ if(i<n-1) renderReview(i+1); };
+    card.querySelector("[data-rback]").onclick=()=>renderResult();
+    if(window.QuizInk && typeof window.QuizInk.switchTo==="function") window.QuizInk.switchTo("R:"+sim.id+":"+i);
     window.scrollTo({top:0,behavior:"instant"});
   }
 
