@@ -336,6 +336,7 @@
 
 <script src="simulados.js"></script>
 <script src="banco_extra.js"></script>
+<script src="banco_extra2.js"></script>
 <script>
 /* ============================================================
    BANCO DE QUESTÕES — Leva 1
@@ -988,6 +989,10 @@ const BANK = [
 /* questões autorais adicionais (nível ENARE, estilo equilibrado) */
 if (window.BANK_EXTRA && Array.isArray(window.BANK_EXTRA)) {
   Array.prototype.push.apply(BANK, window.BANK_EXTRA);
+}
+/* lote 2 — 200 questões mais longas/difíceis com pegadinhas */
+if (window.BANK_EXTRA2 && Array.isArray(window.BANK_EXTRA2)) {
+  Array.prototype.push.apply(BANK, window.BANK_EXTRA2);
 }
 
 /* ============================================================
