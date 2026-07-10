@@ -337,6 +337,7 @@
 <script src="simulados.js"></script>
 <script src="banco_extra.js"></script>
 <script src="banco_extra2.js"></script>
+<script src="banco_extra3.js"></script>
 <script>
 /* ============================================================
    BANCO DE QUESTÕES — Leva 1
@@ -993,6 +994,10 @@ if (window.BANK_EXTRA && Array.isArray(window.BANK_EXTRA)) {
 /* lote 2 — 200 questões mais longas/difíceis com pegadinhas */
 if (window.BANK_EXTRA2 && Array.isArray(window.BANK_EXTRA2)) {
   Array.prototype.push.apply(BANK, window.BANK_EXTRA2);
+}
+/* lote 3 — +200 autorais (longas/pegadinhas) + 10 questões reais (módulo cardiologia/adesão) */
+if (window.BANK_EXTRA3 && Array.isArray(window.BANK_EXTRA3)) {
+  Array.prototype.push.apply(BANK, window.BANK_EXTRA3);
 }
 
 /* ============================================================
