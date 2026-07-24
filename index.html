@@ -99,6 +99,9 @@
   /* aba Exames — deck de flashcards embutido */
   .exames-frame{width:100%;height:min(86vh,940px);min-height:600px;border:0;border-radius:14px;
     box-shadow:var(--shadow);background:#111827;display:block}
+  /* aba Treino — jogo embutido */
+  .treino-frame{width:100%;height:min(88vh,1000px);min-height:640px;border:0;border-radius:14px;
+    box-shadow:var(--shadow);background:#F3F7FB;display:block}
   /* figura anexada à questão */
   .qfig{margin:0 0 16px;display:flex;justify-content:center}
   .qfig img{max-width:100%;height:auto;border:1px solid var(--line);border-radius:12px;background:#fff;padding:10px}
@@ -247,6 +250,7 @@
     <button class="tab" id="tabBtnF" data-tab="farmacia" role="tab">Farmácia</button>
     <button class="tab" id="tabBtnSim" data-tab="simulado" role="tab">Simulado</button>
     <button class="tab" id="tabBtnE" data-tab="exames" role="tab">Exames</button>
+    <button class="tab" id="tabBtnT" data-tab="treino" role="tab">Treino 🎮</button>
   </div>
 
   <div id="panel-questoes" class="panel">
@@ -326,6 +330,11 @@
     <div class="sim-result" data-view="result" hidden>
       <div class="card" data-simresult></div>
     </div>
+  </div>
+
+  <div id="panel-treino" class="panel" hidden>
+    <p class="topics-intro">Aprenda jogando: <b>trilha de fases</b> com complete a frase, jogo da memória, quiz e verdadeiro ou falso — tudo ancorado em <b>mnemônicos</b> para fixar de vez. Ganhe XP, mantenha as vidas e a ofensiva 🔥.</p>
+    <iframe id="treinoFrame" class="treino-frame" title="Treino — gamificação"></iframe>
   </div>
 
   <div id="panel-exames" class="panel" hidden>
@@ -1343,7 +1352,8 @@ const TABS = {
   saude:    {panel:"panel-saude",    btn:"tabBtnS"},
   farmacia: {panel:"panel-farmacia", btn:"tabBtnF"},
   simulado: {panel:"panel-simulado", btn:"tabBtnSim"},
-  exames:   {panel:"panel-exames",   btn:"tabBtnE"}
+  exames:   {panel:"panel-exames",   btn:"tabBtnE"},
+  treino:   {panel:"panel-treino",   btn:"tabBtnT"}
 };
 function setTab(name){
   if(!TABS[name]) name = "questoes";
@@ -1353,6 +1363,7 @@ function setTab(name){
   }
   if(name==="simulado" && window.__simRefresh) window.__simRefresh();
   if(name==="exames"){ const f=document.getElementById("examesFrame"); if(f && !f.src) f.src="exames/flashcards-lab.html"; }
+  if(name==="treino"){ const f=document.getElementById("treinoFrame"); if(f && !f.src) f.src="treino/treino.html"; }
   try{ localStorage.setItem("enareTab", name); }catch(e){}
 }
 document.getElementById("tabBtnQ").onclick = ()=> setTab("questoes");
@@ -1360,6 +1371,7 @@ document.getElementById("tabBtnS").onclick = ()=> setTab("saude");
 document.getElementById("tabBtnF").onclick = ()=> setTab("farmacia");
 document.getElementById("tabBtnSim").onclick = ()=> setTab("simulado");
 document.getElementById("tabBtnE").onclick = ()=> setTab("exames");
+document.getElementById("tabBtnT").onclick = ()=> setTab("treino");
 
 /* ============================================================
    SIMULADO — provas reais (window.SIMULADOS), com nota final

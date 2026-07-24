@@ -1,0 +1,422 @@
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Treino — Banca ENARE</title>
+<style>
+  :root{
+    --bg:#F3F7FB; --paper:#fff; --ink:#152238; --soft:#5B6B84; --line:#E3EAF3;
+    --verde:#2FBF71; --verde-d:#1E9E58; --verde-bg:#E8F8EF;
+    --vermelho:#E8556D; --vermelho-d:#C93A52; --vermelho-bg:#FDECEF;
+    --roxo:#7C5CFF; --azul:#2E86DE; --amarelo:#FFC93C; --laranja:#FF8A3D; --rosa:#FF5FA2; --ciano:#00BCD4;
+    --shadow:0 4px 0 rgba(21,34,56,.14);
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg);color:var(--ink);line-height:1.45;padding:0 0 40px}
+  .wrap{max-width:720px;margin:0 auto;padding:0 14px}
+
+  /* ===== barra de status ===== */
+  .hud{position:sticky;top:0;z-index:50;background:var(--bg);padding:12px 0 10px;
+    display:flex;align-items:center;gap:10px;flex-wrap:wrap}
+  .pill{display:inline-flex;align-items:center;gap:6px;background:var(--paper);border:2px solid var(--line);
+    border-radius:999px;padding:6px 12px;font-weight:800;font-size:.86rem}
+  .pill.xp{color:var(--amarelo)} .pill.xp b{color:var(--ink)}
+  .pill.vidas{color:var(--vermelho)} .pill.vidas b{color:var(--ink)}
+  .pill.streak{color:var(--laranja)} .pill.streak b{color:var(--ink)}
+  .hud .sp{flex:1}
+  .btn{font:inherit;font-weight:800;border:none;border-radius:14px;padding:13px 18px;cursor:pointer;
+    background:var(--verde);color:#fff;box-shadow:0 4px 0 var(--verde-d);transition:transform .06s,box-shadow .06s}
+  .btn:active{transform:translateY(3px);box-shadow:0 1px 0 var(--verde-d)}
+  .btn:disabled{background:#C9D3E0;box-shadow:0 4px 0 #AEB9C9;cursor:default}
+  .btn.ghost{background:var(--paper);color:var(--soft);box-shadow:0 4px 0 var(--line);border:2px solid var(--line)}
+  .btn.wide{width:100%}
+
+  /* ===== trilha ===== */
+  h1.tt{font-size:1.4rem;margin:6px 0 2px}
+  p.sub{color:var(--soft);font-size:.9rem;margin:0 0 16px}
+  .unit{margin:22px 0 8px;border-radius:20px;padding:14px 16px;color:#fff;display:flex;align-items:center;gap:12px;
+    box-shadow:var(--shadow)}
+  .unit .ico{font-size:1.7rem;line-height:1}
+  .unit h2{margin:0;font-size:1.02rem}
+  .unit .mn{font-size:.78rem;opacity:.92;margin-top:2px}
+  .trail{display:flex;flex-direction:column;align-items:center;gap:14px;padding:6px 0 10px}
+  .node{position:relative;display:flex;flex-direction:column;align-items:center;gap:6px}
+  .node .circ{width:70px;height:70px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+    font-size:1.7rem;font-weight:900;color:#fff;cursor:pointer;border:none;
+    box-shadow:0 6px 0 rgba(0,0,0,.18);transition:transform .08s,box-shadow .08s}
+  .node .circ:active{transform:translateY(4px);box-shadow:0 2px 0 rgba(0,0,0,.18)}
+  .node .circ.lock{background:#C9D3E0;box-shadow:0 6px 0 #AEB9C9;cursor:not-allowed}
+  .node .circ.done{background:var(--amarelo);box-shadow:0 6px 0 #D9A417}
+  .node .lbl{font-size:.78rem;font-weight:700;color:var(--soft);text-align:center;max-width:190px}
+  .node.cur .circ{animation:pulse 1.6s infinite}
+  @keyframes pulse{0%,100%{transform:scale(1)}50%{transform:scale(1.06)}}
+  .node .stars{font-size:.72rem;letter-spacing:1px;color:var(--amarelo)}
+
+  /* ===== tela de lição ===== */
+  .screen{display:none}
+  .screen.on{display:block}
+  .lbar{display:flex;align-items:center;gap:10px;padding:12px 0}
+  .lbar .x{font-size:1.5rem;color:var(--soft);background:none;border:none;cursor:pointer;font-weight:700;line-height:1}
+  .prog{flex:1;height:14px;background:var(--line);border-radius:999px;overflow:hidden}
+  .prog i{display:block;height:100%;background:var(--verde);border-radius:999px;transition:width .3s}
+  .hearts{font-size:1rem;letter-spacing:1px}
+
+  .mnemo{background:linear-gradient(135deg,#FFF6DE,#FFEFC7);border:2px dashed var(--amarelo);border-radius:16px;
+    padding:12px 14px;margin:6px 0 16px;font-size:.88rem}
+  .mnemo b{display:block;font-size:.74rem;text-transform:uppercase;letter-spacing:.08em;color:#A97C00;margin-bottom:3px}
+
+  .card{background:var(--paper);border:2px solid var(--line);border-radius:20px;padding:18px 16px;box-shadow:var(--shadow)}
+  .kind{display:inline-block;font-size:.68rem;font-weight:900;text-transform:uppercase;letter-spacing:.09em;
+    padding:4px 10px;border-radius:999px;margin-bottom:10px}
+  .k-fill{background:#EDE7FF;color:var(--roxo)} .k-quiz{background:#E3F0FF;color:var(--azul)}
+  .k-vf{background:#FFE9F2;color:var(--rosa)} .k-mem{background:#E0F7FA;color:#00838F}
+  .qtxt{font-size:1.06rem;font-weight:700;margin:0 0 14px}
+  .qtxt .gap{display:inline-block;min-width:88px;border-bottom:3px solid var(--roxo);margin:0 4px;
+    text-align:center;color:var(--roxo);font-weight:900}
+  .opts{display:flex;flex-direction:column;gap:9px}
+  .opt{display:flex;align-items:center;gap:10px;text-align:left;width:100%;background:var(--paper);
+    border:2px solid var(--line);border-radius:14px;padding:12px 13px;font:inherit;font-size:.95rem;
+    cursor:pointer;box-shadow:0 3px 0 var(--line);transition:transform .06s}
+  .opt:active{transform:translateY(2px)}
+  .opt.sel{border-color:var(--azul);background:#EAF3FF;box-shadow:0 3px 0 #BBD7F7}
+  .opt.ok{border-color:var(--verde);background:var(--verde-bg);box-shadow:0 3px 0 #B7E7CC}
+  .opt.no{border-color:var(--vermelho);background:var(--vermelho-bg);box-shadow:0 3px 0 #F5C2CC}
+  .opt .kx{flex:0 0 auto;width:26px;height:26px;border-radius:8px;border:2px solid var(--line);
+    display:flex;align-items:center;justify-content:center;font-weight:900;font-size:.8rem;color:var(--soft)}
+  .vfrow{display:flex;gap:12px}
+  .vfbtn{flex:1;border-radius:16px;border:2px solid var(--line);background:var(--paper);padding:20px 8px;
+    font:inherit;font-weight:900;font-size:1rem;cursor:pointer;box-shadow:0 4px 0 var(--line)}
+  .vfbtn .em{display:block;font-size:1.7rem;margin-bottom:4px}
+  .vfbtn.sel{border-color:var(--azul);background:#EAF3FF}
+  .vfbtn.ok{border-color:var(--verde);background:var(--verde-bg)}
+  .vfbtn.no{border-color:var(--vermelho);background:var(--vermelho-bg)}
+
+  /* memória */
+  .memgrid{display:grid;grid-template-columns:repeat(2,1fr);gap:9px}
+  @media(min-width:520px){.memgrid{grid-template-columns:repeat(3,1fr)}}
+  .memc{min-height:78px;border-radius:14px;border:2px solid var(--line);background:var(--paper);
+    font:inherit;font-size:.8rem;font-weight:700;padding:8px;cursor:pointer;display:flex;align-items:center;
+    justify-content:center;text-align:center;box-shadow:0 3px 0 var(--line);transition:transform .08s}
+  .memc:active{transform:translateY(2px)}
+  .memc.up{border-color:var(--azul);background:#EAF3FF}
+  .memc.match{border-color:var(--verde);background:var(--verde-bg);color:var(--verde-d);cursor:default;opacity:.85}
+  .memc.miss{border-color:var(--vermelho);background:var(--vermelho-bg)}
+  .memhint{font-size:.82rem;color:var(--soft);margin:0 0 10px}
+
+  /* rodapé de feedback */
+  .fb{position:fixed;left:0;right:0;bottom:0;z-index:60;padding:16px 14px calc(16px + env(safe-area-inset-bottom));
+    transform:translateY(110%);transition:transform .22s ease}
+  .fb.on{transform:none}
+  .fb.ok{background:var(--verde-bg);border-top:3px solid var(--verde)}
+  .fb.no{background:var(--vermelho-bg);border-top:3px solid var(--vermelho)}
+  .fb .inner{max-width:720px;margin:0 auto;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .fb .tit{font-weight:900;font-size:1.02rem}
+  .fb.ok .tit{color:var(--verde-d)} .fb.no .tit{color:var(--vermelho-d)}
+  .fb .exp{font-size:.86rem;color:var(--ink);flex:1 1 100%;margin-top:-2px}
+  .fb .go{margin-left:auto}
+  .fb.no .go{background:var(--vermelho);box-shadow:0 4px 0 var(--vermelho-d)}
+
+  /* fim de lição */
+  .end{text-align:center;padding:24px 6px}
+  .end .big{font-size:3.4rem;line-height:1;margin-bottom:6px}
+  .end h2{margin:6px 0 4px;font-size:1.35rem}
+  .end .stat{display:flex;gap:10px;justify-content:center;flex-wrap:wrap;margin:16px 0 20px}
+  .end .stat div{background:var(--paper);border:2px solid var(--line);border-radius:16px;padding:10px 16px;
+    font-weight:900;min-width:92px;box-shadow:var(--shadow)}
+  .end .stat span{display:block;font-size:.7rem;font-weight:700;color:var(--soft);text-transform:uppercase;letter-spacing:.06em}
+  .toast{position:fixed;left:50%;top:14px;transform:translate(-50%,-140%);background:var(--ink);color:#fff;
+    padding:10px 16px;border-radius:999px;font-weight:800;font-size:.86rem;z-index:80;transition:transform .25s}
+  .toast.on{transform:translate(-50%,0)}
+</style>
+
+<div class="wrap">
+  <!-- ===== TRILHA ===== -->
+  <section id="scHome" class="screen on">
+    <div class="hud">
+      <span class="pill xp">⚡ <b id="hXp">0</b> XP</span>
+      <span class="pill vidas">❤️ <b id="hVidas">5</b></span>
+      <span class="pill streak">🔥 <b id="hStreak">0</b></span>
+      <span class="sp"></span>
+      <button class="btn ghost" id="btnReset" style="padding:8px 12px;font-size:.8rem">Zerar</button>
+    </div>
+    <h1 class="tt">Treino 🎮</h1>
+    <p class="sub">Fixe o conteúdo com mnemônicos, completando fases. Complete a frase, jogo da memória, quiz e verdadeiro ou falso.</p>
+    <div id="trilha"></div>
+    <p class="sub" style="text-align:center;margin-top:24px">As vidas voltam ao completar uma lição sem erros — ou toque em <b>Zerar</b> para recomeçar.</p>
+  </section>
+
+  <!-- ===== LIÇÃO ===== -->
+  <section id="scLic" class="screen">
+    <div class="lbar">
+      <button class="x" id="btnSair" aria-label="Sair da lição">✕</button>
+      <div class="prog"><i id="progBar" style="width:0%"></i></div>
+      <span class="hearts" id="hearts">❤️❤️❤️❤️❤️</span>
+    </div>
+    <div class="mnemo" id="mnemoBox"><b>Mnemônico da fase</b><span id="mnemoTxt"></span></div>
+    <div class="card" id="exCard"></div>
+  </section>
+
+  <!-- ===== FIM ===== -->
+  <section id="scEnd" class="screen">
+    <div class="end">
+      <div class="big" id="endEmoji">🎉</div>
+      <h2 id="endTit">Fase concluída!</h2>
+      <p class="sub" id="endSub"></p>
+      <div class="stat">
+        <div id="endXp">0<span>XP ganho</span></div>
+        <div id="endAcc">0%<span>Acerto</span></div>
+        <div id="endStars">★<span>Estrelas</span></div>
+      </div>
+      <div class="mnemo" style="text-align:left"><b>Leve isto na memória</b><span id="endMnemo"></span></div>
+      <button class="btn wide" id="btnContinuar" style="margin-top:16px">Continuar</button>
+    </div>
+  </section>
+</div>
+
+<div class="fb" id="fb"><div class="inner">
+  <div class="tit" id="fbTit"></div>
+  <button class="btn go" id="fbGo">Continuar</button>
+  <div class="exp" id="fbExp"></div>
+</div></div>
+<div class="toast" id="toast"></div>
+
+<script src="treino-conteudo.js"></script>
+<script>
+(function(){
+  "use strict";
+  var UN = (window.TREINO_UNIDADES||[]);
+  var CORES = ["#7C5CFF","#2E86DE","#00BCD4","#2FBF71","#FF8A3D","#FF5FA2","#E8556D","#8E6BD0"];
+  var KEY="enareTreino_v1";
+  var st = load();
+
+  function load(){
+    var d={xp:0,vidas:5,streak:0,ultimo:null,fases:{}};
+    try{ var s=JSON.parse(localStorage.getItem(KEY)||"null"); if(s&&typeof s==="object") d=Object.assign(d,s); }catch(e){}
+    if(typeof d.vidas!=="number"||d.vidas<0) d.vidas=5;
+    return d;
+  }
+  function save(){ try{ localStorage.setItem(KEY, JSON.stringify(st)); }catch(e){} }
+  function hoje(){ var x=new Date(); return x.getFullYear()+"-"+(x.getMonth()+1)+"-"+x.getDate(); }
+  function marcarDia(){
+    var h=hoje();
+    if(st.ultimo===h) return;
+    var on=new Date(); on.setDate(on.getDate()-1);
+    var ont=on.getFullYear()+"-"+(on.getMonth()+1)+"-"+on.getDate();
+    st.streak = (st.ultimo===ont) ? (st.streak||0)+1 : 1;
+    st.ultimo=h; save();
+  }
+  function fid(u,l){ return u+"-"+l; }
+
+  /* ---------- HUD ---------- */
+  function hud(){
+    document.getElementById("hXp").textContent=st.xp||0;
+    document.getElementById("hVidas").textContent=st.vidas;
+    document.getElementById("hStreak").textContent=st.streak||0;
+  }
+  function toast(msg){
+    var t=document.getElementById("toast"); t.textContent=msg; t.classList.add("on");
+    setTimeout(function(){ t.classList.remove("on"); },1800);
+  }
+
+  /* ---------- TRILHA ---------- */
+  function liberada(u,l){
+    if(u===0&&l===0) return true;
+    if(l>0) return !!st.fases[fid(u,l-1)];
+    var ant=UN[u-1]; return !!st.fases[fid(u-1,ant.licoes.length-1)];
+  }
+  function renderTrilha(){
+    var wrap=document.getElementById("trilha"); wrap.innerHTML="";
+    UN.forEach(function(un,ui){
+      var cor=CORES[ui%CORES.length];
+      var h=document.createElement("div");
+      h.className="unit"; h.style.background=cor;
+      h.innerHTML='<span class="ico">'+(un.icone||"📘")+'</span><div><h2>'+un.unidade+'</h2>'+
+        '<div class="mn">'+un.licoes.length+' fases · '+un.licoes.reduce(function(a,l){return a+l.itens.length;},0)+' exercícios</div></div>';
+      wrap.appendChild(h);
+      var tr=document.createElement("div"); tr.className="trail";
+      un.licoes.forEach(function(lic,li){
+        var f=st.fases[fid(ui,li)], lib=liberada(ui,li);
+        var node=document.createElement("div"); node.className="node"+(lib&&!f?" cur":"");
+        var b=document.createElement("button");
+        b.className="circ"+(f?" done":(lib?"":" lock"));
+        if(!f&&lib) b.style.background=cor, b.style.boxShadow="0 6px 0 rgba(0,0,0,.2)";
+        b.textContent = f? "★" : (lib? (li+1) : "🔒");
+        b.disabled=!lib;
+        b.onclick=function(){ if(lib) abrir(ui,li); };
+        node.appendChild(b);
+        var lbl=document.createElement("div"); lbl.className="lbl"; lbl.textContent=lic.titulo; node.appendChild(lbl);
+        if(f){ var s=document.createElement("div"); s.className="stars"; s.textContent="★".repeat(f.estrelas||1); node.appendChild(s); }
+        tr.appendChild(node);
+      });
+      wrap.appendChild(tr);
+    });
+    hud();
+  }
+
+  /* ---------- MOTOR DA LIÇÃO ---------- */
+  var cur=null;
+  function tela(id){
+    ["scHome","scLic","scEnd"].forEach(function(s){ document.getElementById(s).classList.toggle("on", s===id); });
+    window.scrollTo(0,0);
+  }
+  function abrir(ui,li){
+    if(st.vidas<=0){ toast("Sem vidas! Toque em Zerar para recomeçar."); return; }
+    var lic=UN[ui].licoes[li];
+    cur={ui:ui,li:li,lic:lic,i:0,acertos:0,erros:0,itens:lic.itens.slice()};
+    document.getElementById("mnemoTxt").textContent=lic.mnemo||"";
+    document.getElementById("mnemoBox").style.display = lic.mnemo? "block":"none";
+    tela("scLic"); passo();
+  }
+  function coracoes(){
+    document.getElementById("hearts").textContent = "❤️".repeat(Math.max(0,st.vidas))+"🖤".repeat(Math.max(0,5-st.vidas));
+  }
+  function passo(){
+    if(!cur) return;
+    coracoes();
+    document.getElementById("progBar").style.width = Math.round(100*cur.i/cur.itens.length)+"%";
+    if(cur.i>=cur.itens.length) return fim();
+    var it=cur.itens[cur.i], c=document.getElementById("exCard");
+    c.innerHTML="";
+    if(it.t==="fill") exFill(c,it);
+    else if(it.t==="quiz") exQuiz(c,it);
+    else if(it.t==="vf") exVF(c,it);
+    else if(it.t==="mem") exMem(c,it);
+    else { cur.i++; passo(); }
+  }
+  function LET(i){ return "ABCDE"[i]||"?"; }
+
+  function exFill(c,it){
+    var partes=String(it.frase).split("___");
+    c.innerHTML='<span class="kind k-fill">Complete a frase</span>'+
+      '<p class="qtxt">'+esc(partes[0])+'<span class="gap" id="gap">?</span>'+esc(partes[1]||"")+'</p>'+
+      (it.dica?'<p class="memhint">💡 '+esc(it.dica)+'</p>':'')+
+      '<div class="opts" id="opts"></div>';
+    var box=c.querySelector("#opts");
+    it.opcoes.forEach(function(o,j){
+      var b=document.createElement("button"); b.className="opt";
+      b.innerHTML='<span class="kx">'+LET(j)+'</span><span>'+esc(o)+'</span>';
+      b.onclick=function(){
+        if(b.disabled) return;
+        [].forEach.call(box.children,function(x){x.disabled=true;});
+        c.querySelector("#gap").textContent=o;
+        var ok=(j===it.resp);
+        b.classList.add(ok?"ok":"no");
+        if(!ok) box.children[it.resp].classList.add("ok");
+        responder(ok,it.exp||"");
+      };
+      box.appendChild(b);
+    });
+  }
+  function exQuiz(c,it){
+    c.innerHTML='<span class="kind k-quiz">Quiz</span><p class="qtxt">'+esc(it.p)+'</p><div class="opts" id="opts"></div>';
+    var box=c.querySelector("#opts");
+    it.opcoes.forEach(function(o,j){
+      var b=document.createElement("button"); b.className="opt";
+      b.innerHTML='<span class="kx">'+LET(j)+'</span><span>'+esc(o)+'</span>';
+      b.onclick=function(){
+        [].forEach.call(box.children,function(x){x.disabled=true;});
+        var ok=(j===it.resp);
+        b.classList.add(ok?"ok":"no");
+        if(!ok) box.children[it.resp].classList.add("ok");
+        responder(ok,it.exp||"");
+      };
+      box.appendChild(b);
+    });
+  }
+  function exVF(c,it){
+    c.innerHTML='<span class="kind k-vf">Verdadeiro ou falso</span><p class="qtxt">'+esc(it.afirm)+'</p>'+
+      '<div class="vfrow"><button class="vfbtn" data-v="1"><span class="em">✅</span>Verdadeiro</button>'+
+      '<button class="vfbtn" data-v="0"><span class="em">❌</span>Falso</button></div>';
+    [].forEach.call(c.querySelectorAll(".vfbtn"),function(b){
+      b.onclick=function(){
+        [].forEach.call(c.querySelectorAll(".vfbtn"),function(x){x.disabled=true;});
+        var v=(b.dataset.v==="1"), ok=(v===!!it.resp);
+        b.classList.add(ok?"ok":"no");
+        if(!ok){ [].forEach.call(c.querySelectorAll(".vfbtn"),function(x){ if((x.dataset.v==="1")===!!it.resp) x.classList.add("ok"); }); }
+        responder(ok,it.exp||"");
+      };
+    });
+  }
+  function exMem(c,it){
+    var cartas=[];
+    it.pares.forEach(function(p,idx){ cartas.push({txt:p[0],p:idx}); cartas.push({txt:p[1],p:idx}); });
+    for(var i=cartas.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=cartas[i]; cartas[i]=cartas[j]; cartas[j]=t; }
+    c.innerHTML='<span class="kind k-mem">Jogo da memória</span>'+
+      '<p class="qtxt">'+esc(it.titulo||"Encontre os pares")+'</p>'+
+      '<p class="memhint">Toque em duas cartas para formar o par.</p><div class="memgrid" id="grid"></div>';
+    var g=c.querySelector("#grid"), aberta=null, travado=false, feitos=0, errou=false;
+    cartas.forEach(function(ca){
+      var b=document.createElement("button"); b.className="memc"; b.textContent=ca.txt;
+      b.onclick=function(){
+        if(travado||b.classList.contains("match")||b===aberta) return;
+        b.classList.add("up");
+        if(!aberta){ aberta=b; aberta._p=ca.p; return; }
+        travado=true;
+        if(aberta._p===ca.p){
+          aberta.classList.add("match"); b.classList.add("match");
+          aberta.classList.remove("up"); b.classList.remove("up");
+          aberta=null; travado=false; feitos++;
+          if(feitos===it.pares.length) responder(!errou, "Todos os pares encontrados! "+(it.titulo||""));
+        } else {
+          errou=true;
+          var a=aberta; a.classList.add("miss"); b.classList.add("miss");
+          setTimeout(function(){ a.classList.remove("up","miss"); b.classList.remove("up","miss"); aberta=null; travado=false; },700);
+        }
+      };
+      g.appendChild(b);
+    });
+  }
+  function esc(s){ return String(s==null?"":s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+
+  /* ---------- feedback ---------- */
+  function responder(ok,exp){
+    if(ok){ cur.acertos++; st.xp=(st.xp||0)+10; }
+    else { cur.erros++; st.vidas=Math.max(0,st.vidas-1); }
+    save(); hud(); coracoes();
+    var fb=document.getElementById("fb");
+    fb.className="fb on "+(ok?"ok":"no");
+    document.getElementById("fbTit").textContent = ok? (["Boa! 🎉","Isso! ⚡","Mandou bem! 💪","Perfeito! ✨"][Math.floor(Math.random()*4)]) : "Quase! Fixe assim:";
+    document.getElementById("fbExp").textContent = exp||"";
+    document.getElementById("fbGo").textContent = (cur.i>=cur.itens.length-1)?"Terminar":"Continuar";
+  }
+  document.getElementById("fbGo").onclick=function(){
+    document.getElementById("fb").className="fb";
+    if(st.vidas<=0){ toast("Você ficou sem vidas 💔"); tela("scHome"); renderTrilha(); return; }
+    cur.i++; passo();
+  };
+
+  /* ---------- fim ---------- */
+  function fim(){
+    var tot=cur.itens.length, pct=Math.round(100*cur.acertos/tot);
+    var estrelas = cur.erros===0?3:(pct>=70?2:1);
+    var bonus = cur.erros===0?20:0;
+    st.xp=(st.xp||0)+bonus;
+    if(cur.erros===0) st.vidas=5;
+    var k=fid(cur.ui,cur.li), ant=st.fases[k];
+    if(!ant || (ant.estrelas||0)<estrelas) st.fases[k]={estrelas:estrelas,pct:pct};
+    marcarDia(); save(); hud();
+    document.getElementById("endEmoji").textContent = estrelas===3?"🏆":(estrelas===2?"🎉":"💪");
+    document.getElementById("endTit").textContent = estrelas===3?"Fase perfeita!":"Fase concluída!";
+    document.getElementById("endSub").textContent = cur.lic.titulo + (bonus?" · +20 XP de bônus (sem erros) e vidas restauradas!":"");
+    document.getElementById("endXp").innerHTML = (cur.acertos*10+bonus)+"<span>XP ganho</span>";
+    document.getElementById("endAcc").innerHTML = pct+"%<span>Acerto</span>";
+    document.getElementById("endStars").innerHTML = "★".repeat(estrelas)+"<span>Estrelas</span>";
+    document.getElementById("endMnemo").textContent = cur.lic.mnemo||"";
+    tela("scEnd");
+  }
+  document.getElementById("btnContinuar").onclick=function(){ tela("scHome"); renderTrilha(); };
+  document.getElementById("btnSair").onclick=function(){
+    document.getElementById("fb").className="fb";
+    tela("scHome"); renderTrilha();
+  };
+  document.getElementById("btnReset").onclick=function(){
+    if(confirm("Zerar seu progresso do Treino (XP, fases e vidas)?")){
+      st={xp:0,vidas:5,streak:0,ultimo:null,fases:{}}; save(); renderTrilha(); toast("Progresso zerado");
+    }
+  };
+
+  if(!UN.length){
+    document.getElementById("trilha").innerHTML='<p class="sub">Conteúdo do treino não carregado.</p>';
+  } else renderTrilha();
+})();
+</script>
