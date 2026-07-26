@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Flashcards — Memorização ativa</title>
+<style>
+  :root{
+    --bg:#FAF8F3; --paper:#fff; --ink:#15302E; --ink-soft:#42605D;
+    --line:#E4DFD4; --teal:#0A6E64; --teal-deep:#0A3F3B; --teal-tint:#E6F2F0;
+    --right:#1F8A5B; --right-bg:#E8F6EE; --wrong:#C0432F; --wrong-bg:#FBECE8;
+    --amber:#C88A2E; --amber-bg:#FDF4E6; --violet:#5B4A8A; --violet-bg:#EFEBF8;
+    --shadow:0 6px 18px rgba(20,48,45,.09);
+  }
+  *{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+  html,body{margin:0;padding:0}
+  body{
+    font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    background:var(--bg); color:var(--ink); line-height:1.5; padding:14px 12px 28px;
+  }
+  .wrap{max-width:640px;margin:0 auto}
+
+  /* ---------- topo ---------- */
+  .top{display:flex;align-items:center;gap:10px;margin-bottom:14px;flex-wrap:wrap}
+  .top .stat{display:flex;align-items:center;gap:5px;font-weight:800;font-size:.9rem;
+    background:var(--paper);border:1px solid var(--line);border-radius:999px;padding:6px 12px;box-shadow:var(--shadow)}
+  .top .stat small{font-weight:600;color:var(--ink-soft);font-size:.72rem;text-transform:uppercase;letter-spacing:.04em}
+  .spacer{flex:1}
+
+  /* ---------- decks ---------- */
+  .intro{font-size:.88rem;color:var(--ink-soft);margin:0 0 14px}
+  .due-cta{display:flex;align-items:center;gap:12px;background:linear-gradient(135deg,var(--teal),var(--teal-deep));
+    color:#fff;border-radius:16px;padding:14px 16px;margin-bottom:16px;box-shadow:var(--shadow);cursor:pointer;border:0;width:100%;text-align:left;font:inherit}
+  .due-cta:disabled{opacity:.55;cursor:default}
+  .due-cta .big{font-size:1.6rem;font-weight:800;line-height:1}
+  .due-cta .lbl{font-size:.86rem;font-weight:700}
+  .due-cta .sub{font-size:.76rem;opacity:.85}
+  .due-cta .go{margin-left:auto;font-size:1.4rem}
+
+  .decks{display:flex;flex-direction:column;gap:10px}
+  .deck{display:flex;align-items:center;gap:12px;background:var(--paper);border:1.5px solid var(--line);
+    border-radius:14px;padding:12px 13px;box-shadow:var(--shadow);cursor:pointer;font:inherit;color:inherit;text-align:left;width:100%;
+    transition:transform .1s,border-color .12s}
+  .deck:active{transform:scale(.99)}
+  .deck .ico{flex:0 0 auto;width:44px;height:44px;border-radius:12px;display:flex;align-items:center;justify-content:center;font-size:22px}
+  .deck .mid{flex:1;min-width:0}
+  .deck h3{margin:0 0 3px;font-size:.98rem;line-height:1.2}
+  .deck .meta{font-size:.76rem;color:var(--ink-soft)}
+  .deck .badge{flex:0 0 auto;font-size:.72rem;font-weight:800;padding:4px 9px;border-radius:999px;
+    background:var(--wrong-bg);color:var(--wrong)}
+  .deck .badge.zero{background:var(--right-bg);color:var(--right)}
+  .bar{height:6px;border-radius:999px;background:var(--line);overflow:hidden;margin-top:6px}
+  .bar > i{display:block;height:100%;background:var(--right);border-radius:999px;transition:width .3s}
+
+  /* ---------- estudo ---------- */
+  .study{display:none}
+  .study.on{display:block}
+  .decks-wrap.off{display:none}
+  .sbar{display:flex;align-items:center;gap:10px;margin-bottom:12px}
+  .sbar .x{background:none;border:0;font-size:1.5rem;line-height:1;color:var(--ink-soft);cursor:pointer;padding:2px 6px}
+  .prog{flex:1;height:12px;background:var(--line);border-radius:999px;overflow:hidden}
+  .prog > i{display:block;height:100%;background:var(--teal);border-radius:999px;transition:width .3s}
+  .cnt{font-size:.8rem;font-weight:800;color:var(--ink-soft);min-width:52px;text-align:right}
+
+  .card{background:var(--paper);border:1.5px solid var(--line);border-radius:18px;box-shadow:var(--shadow);
+    padding:20px 18px;min-height:230px;display:flex;flex-direction:column}
+  .tagchip{align-self:flex-start;font-size:.7rem;font-weight:800;text-transform:uppercase;letter-spacing:.05em;
+    padding:4px 10px;border-radius:999px;background:var(--teal-tint);color:var(--teal-deep);margin-bottom:12px}
+  .front{font-size:1.12rem;font-weight:700;line-height:1.45}
+  .hintq{margin-top:auto;padding-top:14px;font-size:.78rem;color:var(--ink-soft);font-style:italic}
+  .divider{border:0;border-top:1px dashed var(--line);margin:16px 0 14px}
+  .back{font-size:1rem;line-height:1.6}
+  .back b{color:var(--teal-deep)}
+  .back .mn{display:block;margin-top:12px;background:var(--amber-bg);border:1px dashed var(--amber);
+    border-radius:12px;padding:10px 12px;font-size:.9rem;color:#6b4d15}
+
+  .actions{margin-top:16px}
+  .btn{width:100%;font:inherit;font-weight:800;font-size:1rem;border:0;border-radius:14px;padding:15px;
+    cursor:pointer;color:#fff;background:var(--teal);box-shadow:0 4px 0 var(--teal-deep);transition:transform .06s,box-shadow .06s}
+  .btn:active{transform:translateY(3px);box-shadow:0 1px 0 var(--teal-deep)}
+  .rate{display:grid;grid-template-columns:repeat(3,1fr);gap:8px}
+  .rb{font:inherit;font-weight:800;font-size:.92rem;border:0;border-radius:14px;padding:13px 6px;cursor:pointer;color:#fff;
+    transition:transform .06s,box-shadow .06s;display:flex;flex-direction:column;align-items:center;gap:2px}
+  .rb small{font-weight:700;font-size:.68rem;opacity:.9}
+  .rb:active{transform:translateY(3px);box-shadow:none!important}
+  .rb.no{background:var(--wrong);box-shadow:0 4px 0 #8f3223}
+  .rb.mid{background:var(--amber);box-shadow:0 4px 0 #9a6a22}
+  .rb.yes{background:var(--right);box-shadow:0 4px 0 #16663f}
+
+  /* ---------- fim ---------- */
+  .done{display:none;text-align:center;background:var(--paper);border:1.5px solid var(--line);border-radius:18px;
+    padding:26px 18px;box-shadow:var(--shadow)}
+  .done.on{display:block}
+  .done .emo{font-size:3rem}
+  .done h2{margin:6px 0 4px;font-size:1.3rem}
+  .done p{margin:0 0 16px;color:var(--ink-soft);font-size:.9rem}
+  .kpis{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:16px}
+  .kpi{background:var(--bg);border:1px solid var(--line);border-radius:12px;padding:9px 14px;min-width:84px}
+  .kpi b{display:block;font-size:1.3rem;line-height:1.1}
+  .kpi small{font-size:.68rem;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-soft);font-weight:700}
+  .ghost{font:inherit;font-weight:700;font-size:.88rem;background:none;border:1.5px solid var(--line);
+    border-radius:12px;padding:11px 16px;color:var(--ink-soft);cursor:pointer;width:100%;margin-top:8px}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <div class="top">
+    <div class="stat">🃏 <span id="sTotal">0</span><small>cards</small></div>
+    <div class="stat">✅ <span id="sDom">0</span><small>dominados</small></div>
+    <div class="stat">🔥 <span id="sStreak">0</span><small>dias</small></div>
+    <div class="spacer"></div>
+    <button class="ghost" id="btnReset" style="width:auto;padding:7px 12px;font-size:.76rem">Zerar</button>
+  </div>
+
+  <div class="decks-wrap" id="deckWrap">
+    <p class="intro">Estude por <b>memorização ativa</b>: leia a pergunta, responda <b>de cabeça</b> e só então revele a resposta — depois diga se acertou. Os cards que você erra voltam mais vezes (<b>repetição espaçada</b>).</p>
+
+    <button class="due-cta" id="dueCta">
+      <div>
+        <div class="big" id="dueN">0</div>
+        <div class="sub">cards para revisar</div>
+      </div>
+      <div class="lbl" id="dueLbl">Revisar agora</div>
+      <div class="go">▶</div>
+    </button>
+
+    <div class="decks" id="decks"></div>
+  </div>
+
+  <div class="study" id="study">
+    <div class="sbar">
+      <button class="x" id="btnX" aria-label="Sair">✕</button>
+      <div class="prog"><i id="progFill" style="width:0%"></i></div>
+      <div class="cnt" id="cnt">0/0</div>
+    </div>
+
+    <div class="card" id="card">
+      <span class="tagchip" id="tag"></span>
+      <div class="front" id="front"></div>
+      <div id="backWrap" hidden>
+        <hr class="divider">
+        <div class="back" id="back"></div>
+      </div>
+      <div class="hintq" id="hintq">Responda de cabeça antes de revelar 🧠</div>
+    </div>
+
+    <div class="actions">
+      <button class="btn" id="btnShow">Mostrar resposta</button>
+      <div class="rate" id="rate" hidden>
+        <button class="rb no"  data-q="0">❌<span>Errei</span><small>volta já</small></button>
+        <button class="rb mid" data-q="1">😐<span>Quase</span><small>volta logo</small></button>
+        <button class="rb yes" data-q="2">✅<span>Sabia</span><small>volta depois</small></button>
+      </div>
+    </div>
+
+    <div class="done" id="done">
+      <div class="emo">🎉</div>
+      <h2>Sessão concluída!</h2>
+      <p id="doneSub"></p>
+      <div class="kpis">
+        <div class="kpi"><b id="kRev">0</b><small>revisados</small></div>
+        <div class="kpi"><b id="kAcc">0%</b><small>acerto</small></div>
+        <div class="kpi"><b id="kNext">0</b><small>p/ hoje</small></div>
+      </div>
+      <button class="btn" id="btnBack">Voltar aos temas</button>
+      <button class="ghost" id="btnMais">Estudar mais deste tema</button>
+    </div>
+  </div>
+
+</div>
+
+<script src="flashcards-conteudo.js"></script>
+<script>
+(function(){
+  "use strict";
+  var DECKS = window.FLASHCARDS || [];
+  var KEY = "enareFcards_v1";
+  var DAY = 86400000;
+
+  /* ---------- estado (repetição espaçada leve, estilo SM-2) ---------- */
+  var st = {cards:{}, streak:0, last:"", rev:0};
+  try{ var raw=localStorage.getItem(KEY); if(raw) st=Object.assign(st, JSON.parse(raw)||{}); }catch(e){}
+  function save(){ try{ localStorage.setItem(KEY, JSON.stringify(st)); }catch(e){} }
+  function hoje(){ var d=new Date(); return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate(); }
+  function tocaStreak(){
+    var h=hoje();
+    if(st.last===h) return;
+    var ont=new Date(Date.now()-DAY); ont=ont.getFullYear()+"-"+(ont.getMonth()+1)+"-"+ont.getDate();
+    st.streak = (st.last===ont) ? (st.streak||0)+1 : 1;
+    st.last=h; save();
+  }
+  function id(di,ci){ return di+":"+ci; }
+  function estado(di,ci){ return st.cards[id(di,ci)] || null; }
+  function venceu(di,ci){
+    var s=estado(di,ci);
+    if(!s) return true;                 // nunca visto = disponível
+    return (s.due||0) <= Date.now();
+  }
+  function dominado(di,ci){
+    var s=estado(di,ci);
+    return !!(s && (s.n||0)>=3 && (s.iv||0)>=7);
+  }
+  function agenda(di,ci,q){
+    var k=id(di,ci);
+    var s=st.cards[k] || {n:0, iv:0, ef:2.5};
+    if(q===0){ s.n=0; s.iv=0; s.ef=Math.max(1.3,(s.ef||2.5)-0.2); s.due=Date.now()+60000; }      // erro: volta na mesma sessão
+    else if(q===1){ s.n=(s.n||0); s.iv=(s.iv? Math.max(1,Math.round(s.iv*1.2)) : 1); s.ef=Math.max(1.3,(s.ef||2.5)-0.05); s.due=Date.now()+ (s.iv? s.iv*DAY : 600000); }
+    else { s.n=(s.n||0)+1; s.ef=Math.min(2.8,(s.ef||2.5)+0.1);
+           s.iv = s.n===1 ? 1 : (s.n===2 ? 3 : Math.round((s.iv||1)*s.ef));
+           s.due=Date.now()+s.iv*DAY; }
+    st.cards[k]=s; save();
+  }
+
+  /* ---------- telas ---------- */
+  var elDecks=document.getElementById("decks"), elDeckWrap=document.getElementById("deckWrap"),
+      elStudy=document.getElementById("study"), elDone=document.getElementById("done"),
+      elCard=document.getElementById("card"), elFront=document.getElementById("front"),
+      elBack=document.getElementById("back"), elBackWrap=document.getElementById("backWrap"),
+      elTag=document.getElementById("tag"), elHint=document.getElementById("hintq"),
+      btnShow=document.getElementById("btnShow"), elRate=document.getElementById("rate"),
+      elProg=document.getElementById("progFill"), elCnt=document.getElementById("cnt");
+
+  function contagens(di){
+    var d=DECKS[di], due=0, dom=0;
+    for(var i=0;i<d.cards.length;i++){ if(venceu(di,i)) due++; if(dominado(di,i)) dom++; }
+    return {due:due, dom:dom, total:d.cards.length};
+  }
+  function totalDue(){ var t=0; for(var i=0;i<DECKS.length;i++) t+=contagens(i).due; return t; }
+
+  function pintaTopo(){
+    var tot=0, dom=0;
+    for(var i=0;i<DECKS.length;i++){ var c=contagens(i); tot+=c.total; dom+=c.dom; }
+    document.getElementById("sTotal").textContent=tot;
+    document.getElementById("sDom").textContent=dom;
+    document.getElementById("sStreak").textContent=st.streak||0;
+  }
+
+  function pintaDecks(){
+    elDecks.innerHTML="";
+    DECKS.forEach(function(d,di){
+      var c=contagens(di);
+      var b=document.createElement("button");
+      b.className="deck"; b.type="button";
+      var pct = c.total? Math.round(100*c.dom/c.total) : 0;
+      b.innerHTML =
+        '<span class="ico" style="background:'+d.cor+'22;color:'+d.cor+'">'+d.icone+'</span>'+
+        '<span class="mid"><h3>'+d.nome+'</h3>'+
+          '<div class="meta">'+c.total+' cards · '+c.dom+' dominados ('+pct+'%)</div>'+
+          '<div class="bar"><i style="width:'+pct+'%;background:'+d.cor+'"></i></div></span>'+
+        '<span class="badge'+(c.due?'':' zero')+'">'+(c.due? c.due+' hoje' : 'em dia')+'</span>';
+      b.onclick=function(){ iniciar(di); };
+      elDecks.appendChild(b);
+    });
+    var n=totalDue();
+    document.getElementById("dueN").textContent=n;
+    document.getElementById("dueLbl").textContent = n? "Revisar agora" : "Tudo em dia ✨";
+    document.getElementById("dueCta").disabled = !n;
+    pintaTopo();
+  }
+
+  /* ---------- sessão ---------- */
+  var fila=[], pos=0, sessDeck=null, acertos=0, vistos=0, revelado=false;
+
+  function montaFila(di){
+    var lista=[];
+    var alvo = (di==null) ? DECKS.map(function(_,i){return i;}) : [di];
+    alvo.forEach(function(d){
+      DECKS[d].cards.forEach(function(c,ci){ if(venceu(d,ci)) lista.push({d:d,c:ci}); });
+    });
+    // embaralha
+    for(var i=lista.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=lista[i]; lista[i]=lista[j]; lista[j]=t; }
+    return lista.slice(0,30);   // sessão de até 30 cards
+  }
+  function iniciar(di){
+    sessDeck=di; fila=montaFila(di); pos=0; acertos=0; vistos=0;
+    if(!fila.length){
+      // nada vencido: estuda os mais antigos do baralho mesmo assim
+      var alvo=(di==null)? DECKS.map(function(_,i){return i;}) : [di];
+      alvo.forEach(function(d){ DECKS[d].cards.forEach(function(c,ci){ fila.push({d:d,c:ci}); }); });
+      for(var i=fila.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=fila[i]; fila[i]=fila[j]; fila[j]=t; }
+      fila=fila.slice(0,20);
+    }
+    elDeckWrap.classList.add("off"); elStudy.classList.add("on");
+    elDone.classList.remove("on"); elCard.style.display=""; document.querySelector(".actions").style.display="";
+    document.querySelector(".sbar").style.display="";
+    mostra();
+  }
+  function mostra(){
+    if(pos>=fila.length) return fim();
+    var it=fila[pos], card=DECKS[it.d].cards[it.c];
+    revelado=false;
+    elTag.textContent = (card.tag||DECKS[it.d].nome);
+    elTag.style.background = DECKS[it.d].cor+"1a";
+    elTag.style.color = DECKS[it.d].cor;
+    elFront.innerHTML = card.f;
+    elBack.innerHTML = card.v;
+    elBackWrap.hidden=true; elHint.hidden=false;
+    btnShow.hidden=false; elRate.hidden=true;
+    elCnt.textContent=(pos+1)+"/"+fila.length;
+    elProg.style.width = Math.round(100*pos/fila.length)+"%";
+    elCard.scrollIntoView({block:"nearest"});
+  }
+  btnShow.onclick=function(){
+    revelado=true; elBackWrap.hidden=false; elHint.hidden=true;
+    btnShow.hidden=true; elRate.hidden=false;
+  };
+  Array.prototype.forEach.call(elRate.querySelectorAll(".rb"), function(b){
+    b.onclick=function(){
+      if(!revelado) return;
+      var q=parseInt(b.dataset.q,10);
+      var it=fila[pos];
+      agenda(it.d, it.c, q);
+      vistos++; if(q===2) acertos++;
+      st.rev=(st.rev||0)+1; tocaStreak(); save();
+      if(q===0) fila.push({d:it.d,c:it.c});   // errou: repete no fim da sessão
+      pos++; mostra();
+    };
+  });
+  function fim(){
+    elCard.style.display="none"; document.querySelector(".actions").style.display="none";
+    document.querySelector(".sbar").style.display="none";
+    elDone.classList.add("on");
+    document.getElementById("kRev").textContent=vistos;
+    document.getElementById("kAcc").textContent=(vistos? Math.round(100*acertos/vistos):0)+"%";
+    document.getElementById("kNext").textContent=totalDue();
+    document.getElementById("doneSub").textContent = sessDeck==null ? "Revisão geral" : DECKS[sessDeck].nome;
+    pintaDecks();
+  }
+  function sair(){
+    elStudy.classList.remove("on"); elDeckWrap.classList.remove("off");
+    elDone.classList.remove("on"); pintaDecks(); window.scrollTo(0,0);
+  }
+  document.getElementById("btnX").onclick=sair;
+  document.getElementById("btnBack").onclick=sair;
+  document.getElementById("btnMais").onclick=function(){ iniciar(sessDeck); };
+  document.getElementById("dueCta").onclick=function(){ iniciar(null); };
+  document.getElementById("btnReset").onclick=function(){
+    if(confirm("Zerar o progresso dos flashcards (agendamentos e ofensiva)?")){
+      st={cards:{}, streak:0, last:"", rev:0}; save(); pintaDecks();
+    }
+  };
+
+  /* teclado (desktop) */
+  document.addEventListener("keydown", function(e){
+    if(!elStudy.classList.contains("on")) return;
+    if(e.key===" "){ e.preventDefault(); if(!revelado) btnShow.click(); }
+    else if(revelado && (e.key==="1"||e.key==="2"||e.key==="3")){
+      elRate.querySelectorAll(".rb")[parseInt(e.key,10)-1].click();
+    }
+  });
+
+  pintaDecks();
+})();
+</script>
+</body>
+</html>
