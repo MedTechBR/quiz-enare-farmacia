@@ -5,10 +5,12 @@
    - Estáticos (ícones/manifest): cache-first.
    Obs.: o progresso do usuário fica no localStorage, que NÃO é tocado por este cache. */
 
-const CACHE = "enare-farma-v23";
+const CACHE = "enare-farma-v24";
 const ASSETS = [
   "./",
   "./index.html",
+  "./planilha/planilha.html",
+  "./planilha/planilha-dados.js",
   "./treino/treino.html",
   "./treino/treino-conteudo.js",
   "./flashcards/flashcards.html",
@@ -63,9 +65,18 @@ const ASSETS = [
   "./farmacia/farmacovigilancia-ram.html"
 ];
 
+/* Pesados (best-effort): se falharem, NÃO impedem a instalação do SW. */
+const ASSETS_OPCIONAIS = ["./dados/cronograma_enare_farmacia.pdf"];
+
 self.addEventListener("install", (e) => {
   e.waitUntil(
-    caches.open(CACHE).then((c) => c.addAll(ASSETS)).then(() => self.skipWaiting())
+    caches.open(CACHE)
+      .then((c) =>
+        c.addAll(ASSETS).then(() =>
+          Promise.all(ASSETS_OPCIONAIS.map((u) => c.add(u).catch(() => null)))
+        )
+      )
+      .then(() => self.skipWaiting())
   );
 });
 

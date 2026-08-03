@@ -100,6 +100,8 @@
   .exames-frame{width:100%;height:min(86vh,940px);min-height:600px;border:0;border-radius:14px;
     box-shadow:var(--shadow);background:#111827;display:block}
   /* aba Treino — jogo embutido */
+  .planilha-frame{width:100%;height:min(88vh,1000px);min-height:620px;border:1px solid var(--line);
+    border-radius:14px;box-shadow:var(--shadow);background:#fff;display:block}
   .treino-frame{width:100%;height:min(88vh,1000px);min-height:640px;border:0;border-radius:14px;
     box-shadow:var(--shadow);background:#F3F7FB;display:block}
   /* figura anexada à questão */
@@ -252,6 +254,8 @@
     <button class="tab" id="tabBtnE" data-tab="exames" role="tab">Exames</button>
     <button class="tab" id="tabBtnT" data-tab="treino" role="tab">Treino 🎮</button>
     <button class="tab" id="tabBtnFC" data-tab="flashcards" role="tab">Flashcards 🃏</button>
+    <button class="tab" id="tabBtnRF" data-tab="revisao" role="tab">Revisão Final 📅</button>
+    <button class="tab" id="tabBtnLE" data-tab="logerros" role="tab">Log de Erros 📊</button>
   </div>
 
   <div id="panel-questoes" class="panel">
@@ -346,6 +350,17 @@
   <div id="panel-flashcards" class="panel" hidden>
     <p class="topics-intro"><b>Memorização ativa</b>: leia a pergunta, responda de cabeça e só então revele a resposta. O que você erra volta mais vezes (<b>repetição espaçada</b>) — 8 temas do ENARE, com mnemônicos.</p>
     <iframe id="fcardsFrame" class="treino-frame" title="Flashcards — memorização ativa"></iframe>
+  </div>
+
+  <div id="panel-revisao" class="panel" hidden>
+    <p class="topics-intro"><b>Cronograma de revisão final</b> — plano de 40 dias até a prova (13/09/2026, banca FGV), por semana e por bloco do edital, com teoria, questões, revisão espaçada e simulados.
+      <a id="pdfAbrir" href="dados/cronograma_enare_farmacia.pdf" target="_blank" rel="noopener" style="color:var(--teal-deep);font-weight:700">Abrir em tela cheia ↗</a></p>
+    <iframe id="revisaoFrame" class="treino-frame" title="Cronograma — revisão final"></iframe>
+  </div>
+
+  <div id="panel-logerros" class="panel" hidden>
+    <p class="topics-intro"><b>Log de erros</b> — a mesma planilha do Excel, editável aqui: digite nas células, use as <b>listas suspensas</b> e o <b>Resumo por Tema</b> se recalcula sozinho. Suas anotações ficam salvas no aparelho; dá para <b>exportar em .xlsx</b> e abrir no Excel.</p>
+    <iframe id="planilhaFrame" class="planilha-frame" title="Log de erros — planilha"></iframe>
   </div>
 </div>
 
@@ -1360,7 +1375,9 @@ const TABS = {
   simulado: {panel:"panel-simulado", btn:"tabBtnSim"},
   exames:   {panel:"panel-exames",   btn:"tabBtnE"},
   treino:   {panel:"panel-treino",   btn:"tabBtnT"},
-  flashcards:{panel:"panel-flashcards", btn:"tabBtnFC"}
+  flashcards:{panel:"panel-flashcards", btn:"tabBtnFC"},
+  revisao:  {panel:"panel-revisao",  btn:"tabBtnRF"},
+  logerros: {panel:"panel-logerros", btn:"tabBtnLE"}
 };
 function setTab(name){
   if(!TABS[name]) name = "questoes";
@@ -1372,6 +1389,8 @@ function setTab(name){
   if(name==="exames"){ const f=document.getElementById("examesFrame"); if(f && !f.src) f.src="exames/flashcards-lab.html"; }
   if(name==="treino"){ const f=document.getElementById("treinoFrame"); if(f && !f.src) f.src="treino/treino.html"; }
   if(name==="flashcards"){ const f=document.getElementById("fcardsFrame"); if(f && !f.src) f.src="flashcards/flashcards.html"; }
+  if(name==="revisao"){ const f=document.getElementById("revisaoFrame"); if(f && !f.src) f.src="dados/cronograma_enare_farmacia.pdf#view=FitH"; }
+  if(name==="logerros"){ const f=document.getElementById("planilhaFrame"); if(f && !f.src) f.src="planilha/planilha.html"; }
   try{ localStorage.setItem("enareTab", name); }catch(e){}
 }
 document.getElementById("tabBtnQ").onclick = ()=> setTab("questoes");
@@ -1381,6 +1400,8 @@ document.getElementById("tabBtnSim").onclick = ()=> setTab("simulado");
 document.getElementById("tabBtnE").onclick = ()=> setTab("exames");
 document.getElementById("tabBtnT").onclick = ()=> setTab("treino");
 document.getElementById("tabBtnFC").onclick = ()=> setTab("flashcards");
+document.getElementById("tabBtnRF").onclick = ()=> setTab("revisao");
+document.getElementById("tabBtnLE").onclick = ()=> setTab("logerros");
 
 /* ============================================================
    SIMULADO — provas reais (window.SIMULADOS), com nota final
