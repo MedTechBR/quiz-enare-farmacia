@@ -100,6 +100,15 @@
   .exames-frame{width:100%;height:min(86vh,940px);min-height:600px;border:0;border-radius:14px;
     box-shadow:var(--shadow);background:#111827;display:block}
   /* aba Treino — jogo embutido */
+  /* faixa de backup/proteção dos dados */
+  .bkp{display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:var(--paper);
+    border:1.5px solid var(--line);border-radius:14px;padding:11px 14px;margin-bottom:12px;box-shadow:var(--shadow)}
+  .bkp.ok{border-color:var(--right);background:var(--right-bg)}
+  .bkp.alerta{border-color:var(--amber);background:#fdf4e6}
+  .bkp-l{flex:1;min-width:220px;display:flex;flex-direction:column;gap:2px}
+  .bkp-l b{font-size:.88rem}
+  .bkp-l span{font-size:.76rem;color:var(--ink-soft)}
+  .bkp-b{display:flex;gap:8px;flex-wrap:wrap}
   .planilha-frame{width:100%;height:min(88vh,1000px);min-height:620px;border:1px solid var(--line);
     border-radius:14px;box-shadow:var(--shadow);background:#fff;display:block}
   .treino-frame{width:100%;height:min(88vh,1000px);min-height:640px;border:0;border-radius:14px;
@@ -360,6 +369,17 @@
 
   <div id="panel-logerros" class="panel" hidden>
     <p class="topics-intro"><b>Log de erros</b> — a mesma planilha do Excel, editável aqui: digite nas células, use as <b>listas suspensas</b> e o <b>Resumo por Tema</b> se recalcula sozinho. Suas anotações ficam salvas no aparelho; dá para <b>exportar em .xlsx</b> e abrir no Excel.</p>
+    <div class="bkp" id="bkpBox">
+      <div class="bkp-l">
+        <b id="bkpStatus">Verificando a proteção dos dados…</b>
+        <span id="bkpSub">O backup guarda tudo do app: planilha, respostas das questões, flashcards e treino.</span>
+      </div>
+      <div class="bkp-b">
+        <button class="ghost" id="bkpSalvar">⤓ Baixar backup</button>
+        <button class="ghost" id="bkpRestaurar">⤒ Restaurar backup</button>
+        <input type="file" id="bkpArquivo" accept="application/json,.json" hidden>
+      </div>
+    </div>
     <iframe id="planilhaFrame" class="planilha-frame" title="Log de erros — planilha"></iframe>
   </div>
 </div>
@@ -1055,6 +1075,118 @@ document.getElementById("tabBtnLE").onclick = ()=> setTab("logerros");
 </script>
 
 <script>
+/* ============================================================
+   PROTEÇÃO DOS DADOS — armazenamento persistente + backup
+   Motivo: por padrão o navegador (sobretudo o Safari/iOS) trata os dados do
+   site como descartáveis e pode APAGÁ-LOS sozinho por inatividade ou falta de
+   espaço. Aqui pedimos armazenamento persistente e oferecemos backup em arquivo.
+   ============================================================ */
+(function(){
+  "use strict";
+  const CHAVES_APP = /^enare/i;                     // todas as chaves do app
+  const box   = document.getElementById("bkpBox");
+  const stat  = document.getElementById("bkpStatus");
+  const sub   = document.getElementById("bkpSub");
+  if(!box) return;
+
+  function coletar(){
+    const dados = {};
+    for(let i=0;i<localStorage.length;i++){
+      const k = localStorage.key(i);
+      if(CHAVES_APP.test(k)) dados[k] = localStorage.getItem(k);
+    }
+    return dados;
+  }
+  function contarItens(d){
+    let n = 0;
+    try{
+      const pl = d["enarePlanilha_v1"] ? JSON.parse(d["enarePlanilha_v1"]) : null;
+      if(pl && pl.edits) for(const ab in pl.edits) n += Object.keys(pl.edits[ab]).length;
+    }catch(e){}
+    return n;
+  }
+
+  /* 1) pede ao navegador para NÃO descartar os dados deste app */
+  async function protegerArmazenamento(){
+    let persistido = false;
+    try{
+      if(navigator.storage && navigator.storage.persisted){
+        persistido = await navigator.storage.persisted();
+        if(!persistido && navigator.storage.persist) persistido = await navigator.storage.persist();
+      }
+    }catch(e){}
+    const d = coletar(), cel = contarItens(d);
+    const ultimo = localStorage.getItem("enareBkpData");
+    if(persistido){
+      box.classList.add("ok"); box.classList.remove("alerta");
+      stat.textContent = "✅ Dados protegidos neste aparelho";
+      sub.textContent = "O navegador foi instruído a não apagar seus dados. Mesmo assim, baixe um backup de vez em quando — é a única cópia fora do aparelho."
+        + (ultimo ? " Último backup: " + ultimo + "." : "");
+    }else{
+      box.classList.add("alerta"); box.classList.remove("ok");
+      stat.textContent = "⚠️ Baixe um backup — este navegador pode apagar os dados sozinho";
+      sub.textContent = "Não foi possível marcar o armazenamento como permanente. No iPhone/iPad isso melhora se você "
+        + "instalar o app na tela de início (Compartilhar → Adicionar à Tela de Início) e abri-lo por ali."
+        + (ultimo ? " Último backup: " + ultimo + "." : "");
+    }
+    if(cel) sub.textContent += " (" + cel + " célula(s) preenchida(s) na planilha)";
+    return persistido;
+  }
+
+  /* 2) backup em arquivo — a cópia que sobrevive a qualquer limpeza */
+  document.getElementById("bkpSalvar").onclick = function(){
+    const pacote = {
+      app: "Banca ENARE Farmácia",
+      versao: 1,
+      gerado_em: new Date().toISOString(),
+      dados: coletar()
+    };
+    const blob = new Blob([JSON.stringify(pacote,null,1)], {type:"application/json"});
+    const a = document.createElement("a"), u = URL.createObjectURL(blob);
+    const d = new Date(), p = n => String(n).padStart(2,"0");
+    a.href = u; a.download = `backup-enare-${d.getFullYear()}-${p(d.getMonth()+1)}-${p(d.getDate())}.json`;
+    document.body.appendChild(a); a.click();
+    setTimeout(()=>{ URL.revokeObjectURL(u); a.remove(); }, 800);
+    try{ localStorage.setItem("enareBkpData", d.toLocaleDateString("pt-BR")); }catch(e){}
+    protegerArmazenamento();
+  };
+
+  /* 3) restauração a partir do arquivo */
+  const inp = document.getElementById("bkpArquivo");
+  document.getElementById("bkpRestaurar").onclick = ()=> inp.click();
+  inp.onchange = function(){
+    const f = inp.files && inp.files[0]; if(!f) return;
+    const fr = new FileReader();
+    fr.onload = function(){
+      let pacote;
+      try{ pacote = JSON.parse(fr.result); }catch(e){ alert("Arquivo de backup inválido."); return; }
+      if(!pacote || !pacote.dados){ alert("Este arquivo não parece um backup do app."); return; }
+      const chaves = Object.keys(pacote.dados);
+      const quando = pacote.gerado_em ? new Date(pacote.gerado_em).toLocaleString("pt-BR") : "data desconhecida";
+      if(!confirm(`Restaurar o backup de ${quando}?\n\n${chaves.length} conjunto(s) de dados serão repostos, substituindo o que está no aparelho agora.`)) return;
+      let ok = 0;
+      chaves.forEach(k => { try{ localStorage.setItem(k, pacote.dados[k]); ok++; }catch(e){} });
+      alert(`Backup restaurado (${ok}/${chaves.length}). A página vai recarregar.`);
+      location.reload();
+    };
+    fr.readAsText(f);
+    inp.value = "";
+  };
+
+  protegerArmazenamento();
+  /* lembrete a cada 7 dias sem backup */
+  try{
+    const ult = localStorage.getItem("enareBkpISO");
+    if(!ult || (Date.now() - Date.parse(ult)) > 7*86400000){
+      document.getElementById("bkpSalvar").style.outline = "2px solid var(--amber)";
+    }
+  }catch(e){}
+  document.getElementById("bkpSalvar").addEventListener("click", function(){
+    try{ localStorage.setItem("enareBkpISO", new Date().toISOString()); }catch(e){}
+    this.style.outline = "";
+  });
+})();
+
 /* ---- PWA: registro do service worker + auto-atualização ---- */
 if ("serviceWorker" in navigator) {
   const hadController = !!navigator.serviceWorker.controller;

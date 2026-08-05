@@ -64,6 +64,13 @@
   .dd .clr{color:var(--ink-soft);font-style:italic;border-top:1px solid var(--line)}
 
   .hint{font-size:.74rem;color:var(--ink-soft);padding:7px 10px;background:var(--bg);border-top:1px solid var(--line)}
+  /* faixa de recuperação de dados */
+  .recup{display:none;align-items:center;gap:10px;background:#E8F6EE;border-bottom:1px solid #1F8A5B;
+    padding:10px 12px;font-size:.84rem;color:#14532d}
+  .recup.on{display:flex}
+  .recup b{color:#14532d}
+  .recup button{margin-left:auto;font:inherit;font-size:.78rem;font-weight:700;border:1px solid #1F8A5B;
+    background:#fff;color:#14532d;border-radius:8px;padding:5px 10px;cursor:pointer}
 </style>
 </head>
 <body>
@@ -77,6 +84,8 @@
   <span class="saved" id="saved">salvo no aparelho</span>
   <button class="btn" id="bReset">Restaurar original</button>
 </div>
+
+<div class="recup" id="recup"><span id="recupTxt"></span><button type="button" id="recupOk">Entendi</button></div>
 
 <div class="fbar">
   <div class="addr" id="addr">A1</div>
@@ -98,20 +107,142 @@
   var SH = WB.sheets||[];
   var KEY = "enarePlanilha_v1";
 
-  /* ---------- estado: base do .xlsx + edições do usuário ---------- */
-  var edits={};                 // {sheet:{A1:valor}}
-  var extraRows={};             // {sheet:n} linhas adicionadas
-  try{ var raw=localStorage.getItem(KEY); if(raw){ var o=JSON.parse(raw)||{}; edits=o.edits||{}; extraRows=o.extraRows||{}; } }catch(e){}
-  var saveT=null;
-  function save(){
-    clearTimeout(saveT);
-    saveT=setTimeout(function(){
-      try{ localStorage.setItem(KEY, JSON.stringify({edits:edits, extraRows:extraRows}));
-        var s=document.getElementById("saved"); s.textContent="salvo ✓";
-        setTimeout(function(){ s.textContent="salvo no aparelho"; },1200);
-      }catch(e){}
-    },200);
+  /* ============================================================
+     PERSISTÊNCIA RESILIENTE (não perder o que foi digitado)
+     Três camadas, porque o navegador pode apagar o armazenamento sozinho:
+       1) localStorage  — gravação SÍNCRONA e imediata a cada tecla confirmada
+       2) IndexedDB     — cópia principal, mais resistente à limpeza automática
+       3) backups rotativos (12 versões datadas) dentro do IndexedDB
+     Na abertura, se a camada 1 estiver vazia e houver dados nas outras,
+     a planilha se RECUPERA sozinha e avisa. Falha de gravação nunca é silenciosa.
+     ============================================================ */
+  var edits={}, extraRows={};
+  var BKP_MAX=12, DB=null, ultimoBkp=0;
+
+  function nCelulas(e){ var n=0; for(var s in e) n+=Object.keys(e[s]||{}).length; return n; }
+  function pacote(){ return {edits:edits, extraRows:extraRows, ts:Date.now()}; }
+  function faixaRecuperacao(html){
+    var el=document.getElementById("recup"), t=document.getElementById("recupTxt");
+    if(!el||!t) return;
+    t.innerHTML=html; el.classList.add("on");
+    var b=document.getElementById("recupOk");
+    if(b) b.onclick=function(){ el.classList.remove("on"); };
   }
+  function avisa(txt, tipo){
+    var s=document.getElementById("saved");
+    if(!s) return;
+    s.textContent=txt;
+    s.style.color = tipo==="erro" ? "var(--wrong)" : (tipo==="ok" ? "var(--right)" : "var(--ink-soft)");
+    s.style.fontWeight = tipo ? "800" : "400";
+  }
+
+  /* ---- camada 1: localStorage (síncrono) ---- */
+  function salvarLocal(){
+    try{ localStorage.setItem(KEY, JSON.stringify(pacote())); return true; }
+    catch(e){
+      avisa("⚠️ não consegui salvar — baixe um backup!", "erro");
+      return false;
+    }
+  }
+  function lerLocal(){
+    try{ var r=localStorage.getItem(KEY); return r? (JSON.parse(r)||null) : null; }catch(e){ return null; }
+  }
+
+  /* ---- camada 2 e 3: IndexedDB ---- */
+  function abrirDB(){
+    return new Promise(function(res){
+      if(DB) return res(DB);
+      if(!window.indexedDB) return res(null);
+      var rq;
+      try{ rq=indexedDB.open("enarePlanilhaDB",1); }catch(e){ return res(null); }
+      rq.onupgradeneeded=function(){
+        var db=rq.result;
+        if(!db.objectStoreNames.contains("estado")) db.createObjectStore("estado");
+        if(!db.objectStoreNames.contains("backups")) db.createObjectStore("backups",{keyPath:"ts"});
+      };
+      rq.onsuccess=function(){ DB=rq.result; res(DB); };
+      rq.onerror=function(){ res(null); };
+      setTimeout(function(){ res(DB); },2500);
+    });
+  }
+  function idb(store, modo, fn){
+    return abrirDB().then(function(db){
+      if(!db) return null;
+      return new Promise(function(res){
+        var tx, st;
+        try{ tx=db.transaction(store,modo); st=tx.objectStore(store); }catch(e){ return res(null); }
+        var rq=fn(st);
+        if(rq){ rq.onsuccess=function(){ res(rq.result); }; rq.onerror=function(){ res(null); }; }
+        else { tx.oncomplete=function(){ res(true); }; tx.onerror=function(){ res(null); }; }
+      });
+    }).catch(function(){ return null; });
+  }
+  function salvarDB(){
+    var p=pacote();
+    idb("estado","readwrite",function(st){ return st.put(p,"atual"); });
+    if(Date.now()-ultimoBkp > 120000 && nCelulas(edits)>0){   // 1 backup a cada 2 min de uso
+      ultimoBkp=Date.now();
+      idb("backups","readwrite",function(st){ return st.put(p); });
+      idb("backups","readonly",function(st){ return st.getAllKeys(); }).then(function(ks){
+        if(ks && ks.length>BKP_MAX){
+          ks.sort(function(a,b){ return a-b; }).slice(0, ks.length-BKP_MAX)
+            .forEach(function(k){ idb("backups","readwrite",function(st){ return st.delete(k); }); });
+        }
+      });
+    }
+  }
+
+  /* ---- gravação: imediata, sem atraso ---- */
+  function save(){
+    var ok=salvarLocal();
+    salvarDB();
+    if(ok){
+      var h=new Date(), p=function(n){ return String(n).padStart(2,"0"); };
+      avisa("salvo ✓ "+p(h.getHours())+":"+p(h.getMinutes()), "ok");
+      setTimeout(function(){ avisa("salvo no aparelho"); }, 1500);
+    }
+  }
+  /* rede de segurança: grava de novo ao sair/minimizar (iOS mata a aba sem avisar) */
+  window.addEventListener("pagehide", salvarLocal);
+  window.addEventListener("beforeunload", salvarLocal);
+  document.addEventListener("visibilitychange", function(){
+    if(document.visibilityState==="hidden") salvarLocal();
+  });
+
+  /* ---- carga inicial + AUTO-RECUPERAÇÃO ---- */
+  (function carregar(){
+    var loc=lerLocal();
+    if(loc){ edits=loc.edits||{}; extraRows=loc.extraRows||{}; }
+    // depois compara com o IndexedDB: se lá tiver MAIS conteúdo, recupera
+    abrirDB().then(function(){
+      return idb("estado","readonly",function(st){ return st.get("atual"); });
+    }).then(function(db){
+      if(!db) return null;
+      var aqui=nCelulas(edits), la=nCelulas(db.edits||{});
+      if(la>aqui){
+        edits=db.edits||{}; extraRows=db.extraRows||{};
+        salvarLocal(); invalida(); render();
+        faixaRecuperacao("<b>↻ Suas anotações foram recuperadas.</b> O navegador havia apagado a cópia principal, "
+          + "mas a planilha se restaurou pela cópia de segurança (<b>"+la+"</b> célula(s)). "
+          + "Para não depender disso, baixe um backup na faixa acima da planilha.");
+      }
+      return null;
+    }).then(function(){
+      if(nCelulas(edits)>0) return;
+      // nada em lugar nenhum: tenta o backup mais recente
+      return idb("backups","readonly",function(st){ return st.getAll(); }).then(function(bs){
+        if(!bs || !bs.length) return;
+        bs.sort(function(a,b){ return b.ts-a.ts; });
+        var b=bs[0];
+        if(nCelulas(b.edits||{})>0){
+          edits=b.edits||{}; extraRows=b.extraRows||{};
+          salvarLocal(); invalida(); render();
+          faixaRecuperacao("<b>↻ Planilha restaurada do backup de "+new Date(b.ts).toLocaleString("pt-BR")+".</b> "
+            + "As cópias principais tinham sido apagadas pelo navegador. Confira se está tudo aí e baixe um backup em arquivo.");
+        }
+      });
+    });
+  })();
 
   /* ---------- utilitários A1 ---------- */
   function colLetra(n){ var s=""; while(n>0){ var m=(n-1)%26; s=String.fromCharCode(65+m)+s; n=Math.floor((n-1)/26); } return s; }
@@ -460,7 +591,14 @@
   };
   document.getElementById("bReset").onclick=function(){
     if(!confirm("Restaurar a planilha original? Todas as suas anotações serão apagadas.")) return;
-    edits={}; extraRows={}; save(); invalida(); render();
+    if(!confirm("Tem certeza? Isso apaga também os backups internos desta planilha e não dá para desfazer.")) return;
+    edits={}; extraRows={};
+    salvarLocal();
+    // limpa também o IndexedDB e os backups, senão a auto-recuperação traria tudo de volta
+    idb("estado","readwrite",function(st){ return st.put(pacote(),"atual"); });
+    idb("backups","readwrite",function(st){ return st.clear(); });
+    invalida(); render();
+    avisa("planilha restaurada ao original");
   };
 
   /* ---------- exportar CSV ---------- */
