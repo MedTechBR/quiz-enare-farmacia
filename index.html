@@ -100,6 +100,12 @@
   .exames-frame{width:100%;height:min(86vh,940px);min-height:600px;border:0;border-radius:14px;
     box-shadow:var(--shadow);background:#111827;display:block}
   /* aba Treino — jogo embutido */
+  /* aviso de recuperação do histórico */
+  .migr{background:var(--right-bg);border:1.5px solid var(--right);border-radius:14px;
+    padding:11px 14px;margin-bottom:12px;font-size:.86rem;color:#14532d;line-height:1.5}
+  .migr b{color:#14532d}
+  .migr button{font:inherit;font-size:.78rem;font-weight:700;border:1px solid var(--right);
+    background:#fff;color:#14532d;border-radius:8px;padding:5px 10px;cursor:pointer;margin-left:8px}
   /* faixa de backup/proteção dos dados */
   .bkp{display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:var(--paper);
     border:1.5px solid var(--line);border-radius:14px;padding:11px 14px;margin-bottom:12px;box-shadow:var(--shadow)}
@@ -385,6 +391,7 @@
 </div>
 
 <script src="simulados.js"></script>
+<script src="migracao_respostas.js"></script>
 <script src="banco_edital.js"></script>
 <script>
 /* ============================================================
@@ -399,14 +406,56 @@ const BANK = (window.BANCO_EDITAL && Array.isArray(window.BANCO_EDITAL))
    ============================================================ */
 const STORE_KEY = "enareFarmaProgress_v1";
 const POS_KEY = "enareFarmaPos_v1";   // continua de onde parou
-let answers = loadAnswers();          // { idx: {sel, ok} }
+/* ============================================================
+   CHAVE ESTÁVEL DA QUESTÃO
+   O progresso NUNCA é guardado pela posição no banco — só por uma chave
+   derivada do próprio enunciado. Assim, reordenar/aumentar o banco não
+   embaralha o que já foi respondido. (Bug corrigido em 2026-08-06.)
+   ============================================================ */
+function hashTxt(s){                    // hash curto e estável (djb2 + fnv)
+  let h1=5381, h2=0x811c9dc5;
+  for(let i=0;i<s.length;i++){
+    const c=s.charCodeAt(i);
+    h1=((h1<<5)+h1+c)>>>0;
+    h2=Math.imul(h2^c, 0x01000193)>>>0;   // imul: multiplicação inteira exata em 32 bits
+  }
+  return (h1.toString(36)+h2.toString(36)).slice(0,10);
+}
+function chaveQ(q){
+  const t=String((q&&q.q)||"").normalize("NFD").replace(/[\u0300-\u036f]/g,"")
+          .toLowerCase().replace(/[^a-z0-9]/g,"");
+  return hashTxt(t);
+}
+const CHAVES = BANK.map(chaveQ);        // índice -> chave (cache)
+
+let answers = loadAnswers();          // { chave: {sel, ok} }
 let order = BANK.map((_,i)=>i);       // ordem de exibição (índices do BANK)
 let pos = 0;
 let activeFilter = "Todos os temas";
 
 function loadAnswers(){
-  try{ const r = localStorage.getItem(STORE_KEY); return r?JSON.parse(r):{}; }
-  catch(e){ return {}; }
+  let d={};
+  try{ const r = localStorage.getItem(STORE_KEY); d = r?(JSON.parse(r)||{}):{}; }catch(e){ d={}; }
+  /* --- migração única: formato antigo indexado por POSIÇÃO --- */
+  const chaves = new Set(CHAVES);
+  const antigas = Object.keys(d).filter(k => /^\d+$/.test(k));
+  if(antigas.length){
+    const mapa = window.MIGRACAO_RESPOSTAS || {};
+    const novo = {}; let migradas = 0, perdidas = 0;
+    Object.keys(d).forEach(k => {
+      if(!/^\d+$/.test(k)){ novo[k] = d[k]; return; }   // já é chave estável
+      const ch = mapa[k];
+      if(ch && chaves.has(ch)){ novo[ch] = d[k]; migradas++; }
+      else perdidas++;                                   // sem correspondência: descarta
+    });
+    d = novo;
+    try{ localStorage.setItem(STORE_KEY, JSON.stringify(d)); }catch(e){}
+    window.__migracao = {migradas, perdidas};
+  }
+  /* segurança: descarta qualquer chave que não exista no banco atual */
+  const limpo = {};
+  Object.keys(d).forEach(k => { if(chaves.has(k)) limpo[k] = d[k]; });
+  return limpo;
 }
 function saveAnswers(){
   try{ localStorage.setItem(STORE_KEY, JSON.stringify(answers)); }catch(e){}
@@ -462,8 +511,9 @@ function render(){
   if(order.length===0){ card.innerHTML = `<p class="enun">Nenhuma questão neste tema.</p>`; return; }
   const qi = order[pos];
   const q = BANK[qi];
-  const prev = answers[qi]; // já respondida?
-  try{ localStorage.setItem(POS_KEY, JSON.stringify({filter:activeFilter, qi})); }catch(e){}
+  const ck = CHAVES[qi];                 // chave estável desta questão
+  const prev = answers[ck]; // já respondida?
+  try{ localStorage.setItem(POS_KEY, JSON.stringify({filter:activeFilter, ck})); }catch(e){}
 
   card.innerHTML = `
     <div class="qhead">
@@ -490,36 +540,44 @@ function render(){
     </div>`;
 
   const optEls = [...card.querySelectorAll(".opt")];
-  const struck = getStruck(qi);
+  const struck = getStruck(ck);
   optEls.forEach(btn=>{
     const j = parseInt(btn.dataset.j);
     if(struck.has(j)) btn.classList.add("struck");
-    attachStrikeSwipe(btn, qi, j);
+    attachStrikeSwipe(btn, ck, j);
     btn.addEventListener("click", ()=>{ if(btn._swiped){ btn._swiped=false; return; } choose(qi, j); });
   });
   document.getElementById("prev").onclick = ()=>{ if(pos>0){pos--;render();} };
   document.getElementById("next").onclick = ()=>{ if(pos<order.length-1){pos++;render();} };
 
-  if(window.QuizInk && typeof window.QuizInk.switchTo==="function") window.QuizInk.switchTo("q"+qi);   // tinta da caneta fica só nesta questão
+  if(window.QuizInk && typeof window.QuizInk.switchTo==="function") window.QuizInk.switchTo("q"+ck);   // tinta da caneta fica só nesta questão
   if(prev) revealState(qi, prev.sel);
 }
 
-/* ---- riscar alternativa: arraste para o lado (eliminar) ---- */
+/* ---- riscar alternativa: arraste para o lado (eliminar) ----
+   Também indexado pela CHAVE ESTÁVEL da questão, nunca pela posição. */
 const STRIKE_KEY = "enareStrikes_v1";
 let strikes = {};
-try{ strikes = JSON.parse(localStorage.getItem(STRIKE_KEY)||"{}") || {}; }catch(e){ strikes={}; }
-function getStruck(qi){ return new Set(strikes[qi] || []); }
-function saveStruck(qi, set){
-  if(set.size) strikes[qi] = [...set]; else delete strikes[qi];
+try{
+  strikes = JSON.parse(localStorage.getItem(STRIKE_KEY)||"{}") || {};
+  /* descarta riscos do formato antigo (indexados por posição) */
+  if(Object.keys(strikes).some(k => /^\d+$/.test(k))){
+    const s2={}; Object.keys(strikes).forEach(k=>{ if(!/^\d+$/.test(k)) s2[k]=strikes[k]; });
+    strikes=s2; localStorage.setItem(STRIKE_KEY, JSON.stringify(strikes));
+  }
+}catch(e){ strikes={}; }
+function getStruck(k){ return new Set(strikes[k] || []); }
+function saveStruck(k, set){
+  if(set.size) strikes[k] = [...set]; else delete strikes[k];
   try{ localStorage.setItem(STRIKE_KEY, JSON.stringify(strikes)); }catch(e){}
 }
-function toggleStrike(qi, j, btn){
-  const set = getStruck(qi);
+function toggleStrike(k, j, btn){
+  const set = getStruck(k);
   if(set.has(j)){ set.delete(j); btn.classList.remove("struck"); }
   else { set.add(j); btn.classList.add("struck"); }
-  saveStruck(qi, set);
+  saveStruck(k, set);
 }
-function attachStrikeSwipe(btn, qi, j){
+function attachStrikeSwipe(btn, k, j){
   let sx=0, sy=0, dragging=false;
   btn.addEventListener("pointerdown", e=>{
     if(e.pointerType==="mouse" && e.button!==0) return;
@@ -541,16 +599,17 @@ function attachStrikeSwipe(btn, qi, j){
   function up(){
     if(!dragging) return; dragging=false;
     btn.style.transition="transform .18s ease"; btn.style.transform="";
-    if(btn._swiped) toggleStrike(qi, j, btn);
+    if(btn._swiped) toggleStrike(k, j, btn);
   }
   btn.addEventListener("pointerup", up);
   btn.addEventListener("pointercancel", up);
 }
 
 function choose(qi, j){
-  if(answers[qi]) return; // bloqueia re-resposta
+  const ck = CHAVES[qi];
+  if(answers[ck]) return; // bloqueia re-resposta
   const ok = (j === BANK[qi].correct);
-  answers[qi] = {sel:j, ok};
+  answers[ck] = {sel:j, ok, t:Date.now(), tema:BANK[qi].tema};
   saveAnswers();
   revealState(qi, j);
   refreshStats();
@@ -594,11 +653,28 @@ buildFilter();
   }
   order = BANK.map((_,i)=>i).filter(i=> activeFilter==="Todos os temas" || BANK[i].tema===activeFilter);
   pos = 0;
-  if(saved && typeof saved.qi==="number"){ const p=order.indexOf(saved.qi); if(p>=0) pos=p; }
+  /* retoma pela CHAVE da questão (formato antigo por índice é ignorado) */
+  if(saved && typeof saved.ck==="string"){
+    const p = order.findIndex(i => CHAVES[i]===saved.ck);
+    if(p>=0) pos=p;
+  }
   render();
+  if(window.__migracao && window.__migracao.migradas){
+    const m=window.__migracao;
+    const el=document.createElement("div");
+    el.className="migr";
+    el.innerHTML = "<b>↻ Seu histórico foi recuperado.</b> A reorganização do banco pelos temas do edital "
+      + "havia desalinhado as respostas salvas — <b>" + m.migradas + "</b> foram remapeadas para as questões certas"
+      + (m.perdidas ? " e " + m.perdidas + " não tinham correspondência e foram descartadas" : "")
+      + ". Agora o progresso é guardado por questão, não por posição, então isso não se repete."
+      + " <button type='button' id='migrOk'>Entendi</button>";
+    const painel=document.getElementById("panel-questoes");
+    painel.insertBefore(el, painel.firstChild);
+    document.getElementById("migrOk").onclick=()=>el.remove();
+  }
 })();
 /* salva a posição também ao sair/minimizar o app (reforço p/ iOS) */
-function savePosNow(){ try{ if(order[pos]!=null) localStorage.setItem(POS_KEY, JSON.stringify({filter:activeFilter, qi:order[pos]})); }catch(e){} }
+function savePosNow(){ try{ if(order[pos]!=null) localStorage.setItem(POS_KEY, JSON.stringify({filter:activeFilter, ck:CHAVES[order[pos]]})); }catch(e){} }
 window.addEventListener("pagehide", savePosNow);
 document.addEventListener("visibilitychange", ()=>{ if(document.visibilityState==="hidden") savePosNow(); });
 
