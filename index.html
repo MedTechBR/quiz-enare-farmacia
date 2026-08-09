@@ -106,6 +106,103 @@
   .migr b{color:#14532d}
   .migr button{font:inherit;font-size:.78rem;font-weight:700;border:1px solid var(--right);
     background:#fff;color:#14532d;border-radius:8px;padding:5px 10px;cursor:pointer;margin-left:8px}
+  /* ---------- PAINEL (desempenho, prioridade, metas, atividade) ---------- */
+  .pn-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:12px;margin-bottom:16px}
+  .pn-card{background:var(--paper);border:1px solid var(--line);border-radius:16px;
+    box-shadow:var(--shadow);padding:14px 16px}
+  .pn-card h3{font-size:.74rem;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-soft);
+    margin:0 0 8px;font-weight:700}
+  .pn-big{font-size:1.9rem;font-weight:800;color:var(--teal-deep);line-height:1.1}
+  .pn-sub{font-size:.8rem;color:var(--ink-soft);margin-top:3px;line-height:1.45}
+  .pn-sec{margin:22px 0 10px}
+  .pn-sec h2{font-size:1rem;margin:0 0 4px;color:var(--ink)}
+  .pn-sec p{font-size:.83rem;color:var(--ink-soft);margin:0;line-height:1.5}
+  /* lista de prioridade */
+  .pri{display:flex;flex-direction:column;gap:7px}
+  .pri-row{display:grid;grid-template-columns:26px 1fr auto;gap:10px;align-items:center;
+    background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:9px 12px;
+    cursor:pointer;text-align:left;font:inherit;width:100%}
+  .pri-row:hover{border-color:var(--teal)}
+  .pri-row .rk{font-weight:800;color:var(--ink-soft);font-size:.82rem}
+  .pri-t{font-size:.86rem;font-weight:600;color:var(--ink);line-height:1.35}
+  .pri-m{font-size:.74rem;color:var(--ink-soft);margin-top:3px}
+  .pri-bar{height:5px;border-radius:3px;background:var(--line);margin-top:5px;overflow:hidden}
+  .pri-bar i{display:block;height:100%;border-radius:3px;background:var(--wrong)}
+  .pri-score{font-size:.72rem;font-weight:800;padding:4px 8px;border-radius:999px;white-space:nowrap}
+  .pri-score.alta{background:var(--wrong-bg);color:var(--wrong)}
+  .pri-score.media{background:#fdf4e6;color:var(--amber)}
+  .pri-score.baixa{background:var(--right-bg);color:var(--right)}
+  .pri-score.novo{background:var(--teal-tint);color:var(--teal-deep)}
+  /* revisão espaçada por tema */
+  .rev-row{display:grid;grid-template-columns:1fr auto;gap:10px;align-items:center;
+    border-bottom:1px solid var(--line);padding:9px 2px;cursor:pointer;text-align:left;
+    font:inherit;width:100%;background:none}
+  .rev-row:last-child{border-bottom:0}
+  .rev-when{font-size:.74rem;font-weight:700;padding:3px 9px;border-radius:999px;white-space:nowrap}
+  .rev-when.atras{background:var(--wrong-bg);color:var(--wrong)}
+  .rev-when.hoje{background:#fdf4e6;color:var(--amber)}
+  .rev-when.ok{background:var(--right-bg);color:var(--right)}
+  /* heatmap de atividade */
+  .heat-wrap{overflow-x:auto;padding-bottom:4px}
+  .heat{display:grid;grid-auto-flow:column;grid-template-rows:repeat(7,11px);gap:3px;min-width:min-content}
+  .heat i{width:11px;height:11px;border-radius:2.5px;background:var(--line);display:block}
+  .heat i.n1{background:#BFE0D8}.heat i.n2{background:#7FC4B5}
+  .heat i.n3{background:#3D9184}.heat i.n4{background:var(--teal-deep)}
+  .heat-leg{display:flex;align-items:center;gap:5px;font-size:.72rem;color:var(--ink-soft);margin-top:8px}
+  .heat-leg i{width:11px;height:11px;border-radius:2.5px;display:block}
+  /* meta */
+  .meta-form{display:flex;gap:8px;flex-wrap:wrap;align-items:flex-end}
+  .meta-form label{font-size:.74rem;color:var(--ink-soft);font-weight:700;display:block;margin-bottom:4px}
+  .meta-form input{font:inherit;font-size:.88rem;padding:7px 9px;border:1px solid var(--line);
+    border-radius:9px;background:var(--paper);color:var(--ink);width:150px}
+  .pn-ritmo{font-size:.86rem;color:var(--ink);line-height:1.6;margin-top:10px}
+  .pn-ritmo b{color:var(--teal-deep)}
+  .pn-ritmo .alerta{color:var(--wrong);font-weight:700}
+  /* barra de blocos */
+  .bloco{display:flex;justify-content:space-between;font-size:.82rem;margin-bottom:5px}
+  .bloco b{color:var(--teal-deep)}
+  .bbar{height:8px;border-radius:4px;background:var(--line);overflow:hidden;margin-bottom:14px}
+  .bbar i{display:block;height:100%;background:var(--teal)}
+  /* ---------- CRONOGRAMA vivo (aba Revisão Final) ---------- */
+  .cr-top{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px;margin-bottom:14px}
+  .cr-kpi{background:var(--paper);border:1px solid var(--line);border-radius:14px;padding:12px 14px;box-shadow:var(--shadow)}
+  .cr-kpi .v{font-size:1.55rem;font-weight:800;color:var(--teal-deep);line-height:1.15}
+  .cr-kpi .l{font-size:.73rem;text-transform:uppercase;letter-spacing:.05em;color:var(--ink-soft);font-weight:700;margin-top:2px}
+  .cr-filtros{display:flex;gap:7px;flex-wrap:wrap;margin-bottom:12px}
+  .cr-fl{font:inherit;font-size:.79rem;font-weight:700;padding:6px 12px;border-radius:999px;
+    border:1px solid var(--line);background:var(--paper);color:var(--ink-soft);cursor:pointer}
+  .cr-fl.active{background:var(--teal);border-color:var(--teal);color:#fff}
+  .cr-sem{font-size:.76rem;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-soft);
+    font-weight:800;margin:18px 0 8px;padding-top:12px;border-top:1px solid var(--line)}
+  .cr-sem:first-child{border-top:0;padding-top:0;margin-top:0}
+  .cr-dia{display:grid;grid-template-columns:auto 1fr;gap:11px;background:var(--paper);
+    border:1px solid var(--line);border-radius:14px;padding:11px 13px;margin-bottom:8px;box-shadow:var(--shadow)}
+  .cr-dia.hoje{border-color:var(--teal);border-width:2px;background:var(--teal-tint)}
+  .cr-dia.atrasado{border-color:var(--wrong);background:var(--wrong-bg)}
+  .cr-dia.feito{opacity:.62}
+  .cr-dia.feito .cr-tit{text-decoration:line-through}
+  .cr-chk{appearance:none;-webkit-appearance:none;width:21px;height:21px;border:2px solid var(--line);
+    border-radius:6px;background:var(--paper);cursor:pointer;margin-top:2px;flex:none;position:relative}
+  .cr-chk:checked{background:var(--right);border-color:var(--right)}
+  .cr-chk:checked::after{content:"✓";position:absolute;inset:0;color:#fff;font-size:14px;font-weight:900;
+    display:flex;align-items:center;justify-content:center}
+  .cr-meta{display:flex;align-items:center;gap:7px;flex-wrap:wrap;margin-bottom:3px}
+  .cr-d{font-size:.73rem;font-weight:800;color:var(--ink-soft)}
+  .cr-tipo{font-size:.66rem;font-weight:800;letter-spacing:.05em;padding:2px 7px;border-radius:5px;text-transform:uppercase}
+  .cr-tipo.TEORIA{background:var(--teal-tint);color:var(--teal-deep)}
+  .cr-tipo.QUESTOES{background:#EDEAF6;color:#4C3B8F}
+  .cr-tipo.REVISAO{background:#fdf4e6;color:var(--amber)}
+  .cr-tipo.SIMULADO{background:var(--wrong-bg);color:var(--wrong)}
+  .cr-tipo.DESCANSO{background:var(--line);color:var(--ink-soft)}
+  .cr-flag{font-size:.68rem;font-weight:800;padding:2px 7px;border-radius:999px}
+  .cr-flag.hoje{background:var(--teal);color:#fff}
+  .cr-flag.atras{background:var(--wrong);color:#fff}
+  .cr-tit{font-size:.92rem;font-weight:700;color:var(--ink);line-height:1.35}
+  .cr-det{font-size:.82rem;color:var(--ink-soft);line-height:1.5;margin-top:3px}
+  .cr-temas{display:flex;gap:5px;flex-wrap:wrap;margin-top:7px}
+  .cr-tema{font:inherit;font-size:.73rem;font-weight:700;padding:3px 9px;border-radius:999px;
+    border:1px solid var(--teal);background:var(--paper);color:var(--teal-deep);cursor:pointer}
+  .cr-tema:hover{background:var(--teal);color:#fff}
   /* faixa de backup/proteção dos dados */
   .bkp{display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:var(--paper);
     border:1.5px solid var(--line);border-radius:14px;padding:11px 14px;margin-bottom:12px;box-shadow:var(--shadow)}
@@ -269,6 +366,7 @@
     <button class="tab" id="tabBtnE" data-tab="exames" role="tab">Exames</button>
     <button class="tab" id="tabBtnT" data-tab="treino" role="tab">Treino 🎮</button>
     <button class="tab" id="tabBtnFC" data-tab="flashcards" role="tab">Flashcards 🃏</button>
+    <button class="tab" id="tabBtnPN" data-tab="painel" role="tab">Painel 📈</button>
     <button class="tab" id="tabBtnRF" data-tab="revisao" role="tab">Revisão Final 📅</button>
     <button class="tab" id="tabBtnLE" data-tab="logerros" role="tab">Log de Erros 📊</button>
   </div>
@@ -367,10 +465,70 @@
     <iframe id="fcardsFrame" class="treino-frame" title="Flashcards — memorização ativa"></iframe>
   </div>
 
+  <div id="panel-painel" class="panel" hidden>
+    <p class="topics-intro"><b>Painel de estudo</b> — mostra onde você está perdendo ponto e o que revisar hoje.
+      A <b>prioridade</b> cruza o quanto o tema cai na prova (medido nas 260 questões das provas reais deste app)
+      com o quanto você erra nele. A <b>revisão</b> segue repetição espaçada por tema: quanto pior o desempenho, mais cedo volta.</p>
+
+    <div class="pn-grid" id="pnCards"><!-- via JS --></div>
+
+    <div class="pn-sec">
+      <h2>🎯 Meta até a prova</h2>
+      <p>Defina a data e quantas questões quer ter feito. O app calcula o ritmo necessário.</p>
+    </div>
+    <div class="pn-card">
+      <div class="meta-form">
+        <div><label for="mtData">Data da prova</label><input type="date" id="mtData"></div>
+        <div><label for="mtAlvo">Meta de questões</label><input type="number" id="mtAlvo" min="1" step="10" placeholder="ex.: 1500"></div>
+      </div>
+      <div class="pn-ritmo" id="pnRitmo"></div>
+    </div>
+
+    <div class="pn-sec">
+      <h2>🔥 O que estudar primeiro</h2>
+      <p>Ordenado por <b>impacto</b> = peso do tema na prova × sua taxa de erro. Toque para ir direto às questões do tema.</p>
+    </div>
+    <div class="pri" id="pnPri"><!-- via JS --></div>
+
+    <div class="pn-sec">
+      <h2>↻ Revisão espaçada por tema</h2>
+      <p>Temas <span style="color:var(--wrong);font-weight:700">atrasados</span> primeiro. O intervalo aumenta quando você vai bem e encurta quando erra.</p>
+    </div>
+    <div class="pn-card" id="pnRev"><!-- via JS --></div>
+
+    <div class="pn-sec">
+      <h2>📊 Desempenho por bloco do edital</h2>
+    </div>
+    <div class="pn-card" id="pnBlocos"><!-- via JS --></div>
+
+    <div class="pn-sec">
+      <h2>🗓️ Atividade</h2>
+      <p>Cada quadradinho é um dia; quanto mais escuro, mais questões respondidas.</p>
+    </div>
+    <div class="pn-card">
+      <div class="heat-wrap"><div class="heat" id="pnHeat"></div></div>
+      <div class="heat-leg">Menos
+        <i style="background:var(--line)"></i><i style="background:#BFE0D8"></i><i style="background:#7FC4B5"></i>
+        <i style="background:#3D9184"></i><i style="background:var(--teal-deep)"></i>Mais
+        <span style="margin-left:10px" id="pnStreak"></span>
+      </div>
+    </div>
+  </div>
+
   <div id="panel-revisao" class="panel" hidden>
-    <p class="topics-intro"><b>Cronograma de revisão final</b> — plano de 40 dias até a prova (13/09/2026, banca FGV), por semana e por bloco do edital, com teoria, questões, revisão espaçada e simulados.
-      <a id="pdfAbrir" href="dados/cronograma_enare_farmacia.pdf" target="_blank" rel="noopener" style="color:var(--teal-deep);font-weight:700">Abrir em tela cheia ↗</a></p>
-    <iframe id="revisaoFrame" class="treino-frame" title="Cronograma — revisão final"></iframe>
+    <p class="topics-intro"><b>Cronograma de revisão final</b> — o plano até a prova (13/09/2026, banca FGV), dia a dia.
+      Marque o que já fez; o que passou da data e continua aberto fica em <span style="color:var(--wrong);font-weight:700">vermelho</span>.
+      Toque nos temas de cada dia para ir direto às questões.
+      <a id="pdfAbrir" href="dados/cronograma_enare_farmacia.pdf" target="_blank" rel="noopener" style="color:var(--teal-deep);font-weight:700">Ver o PDF original ↗</a></p>
+
+    <div class="cr-top" id="crTop"><!-- via JS --></div>
+    <div class="cr-filtros">
+      <button class="cr-fl active" data-crf="tudo">Tudo</button>
+      <button class="cr-fl" data-crf="aberto">Em aberto</button>
+      <button class="cr-fl" data-crf="atrasado">Atrasados</button>
+      <button class="cr-fl" data-crf="hoje">Hoje e adiante</button>
+    </div>
+    <div id="crLista"><!-- via JS --></div>
   </div>
 
   <div id="panel-logerros" class="panel" hidden>
@@ -392,6 +550,8 @@
 
 <script src="simulados.js"></script>
 <script src="migracao_respostas.js"></script>
+<script src="incidencia.js"></script>
+<script src="cronograma.js"></script>
 <script src="banco_edital.js"></script>
 <script>
 /* ============================================================
@@ -611,6 +771,7 @@ function choose(qi, j){
   const ok = (j === BANK[qi].correct);
   answers[ck] = {sel:j, ok, t:Date.now(), tema:BANK[qi].tema};
   saveAnswers();
+  registraAtividade();          // alimenta o heatmap do Painel
   revealState(qi, j);
   refreshStats();
 }
@@ -820,6 +981,357 @@ function initLibrary(name){
 initLibrary("saude");
 initLibrary("farmacia");
 
+/* ============================================================
+   PAINEL — desempenho, prioridade de estudo, revisão espaçada,
+   meta até a prova e mapa de atividade.
+   Tudo é DERIVADO das respostas já salvas (nenhum estado novo a
+   manter em sincronia), exceto o log diário e a meta.
+   ============================================================ */
+const ATIV_KEY = "enareFarmaAtiv_v1";   // {"AAAA-MM-DD": nº de questões}
+const META_KEY = "enareFarmaMeta_v1";   // {data, alvo}
+
+function hojeISO(d){ const x=d||new Date();
+  return x.getFullYear()+"-"+String(x.getMonth()+1).padStart(2,"0")+"-"+String(x.getDate()).padStart(2,"0"); }
+function lerJSON(k,pad){ try{ return JSON.parse(localStorage.getItem(k)||"null") || pad; }catch(e){ return pad; } }
+function registraAtividade(){
+  const a = lerJSON(ATIV_KEY,{}), k = hojeISO();
+  a[k] = (a[k]||0) + 1;
+  try{ localStorage.setItem(ATIV_KEY, JSON.stringify(a)); }catch(e){}
+}
+
+(function(){
+  const painel = document.getElementById("panel-painel");
+  if(!painel) return;
+  const INC = window.INCIDENCIA_ENARE || {};
+  const INC_TOT = window.INCIDENCIA_TOTAL || 1;
+  const DIA = 86400000;
+
+  const codigo = t => (String(t).match(/^(\d+\.\d+)/)||[,""])[1];   // "6.11 Interações…" -> "6.11"
+
+  /* Agrega as respostas por tema do banco. */
+  function porTema(){
+    const m = {};
+    BANK.forEach((q,i)=>{
+      const t=q.tema;
+      if(!m[t]) m[t]={tema:t, cod:codigo(t), total:0, feitas:0, acertos:0, ultimo:0};
+      m[t].total++;
+      const a = answers[CHAVES[i]];
+      if(a){ m[t].feitas++; if(a.ok) m[t].acertos++; if(a.t && a.t>m[t].ultimo) m[t].ultimo=a.t; }
+    });
+    return Object.values(m);
+  }
+
+  /* Intervalo de revisão pela taxa de acerto (repetição espaçada simples). */
+  function intervaloDias(taxa, feitas){
+    if(feitas < 5) return 2;              // amostra pequena: revisita cedo
+    if(taxa < 0.50) return 1;
+    if(taxa < 0.70) return 3;
+    if(taxa < 0.85) return 7;
+    return 15;
+  }
+
+  function calcula(){
+    const temas = porTema();
+    temas.forEach(t=>{
+      const inc = INC[t.cod] || 0;
+      t.peso    = inc / INC_TOT;                       // fatia do tema na prova real
+      t.taxa    = t.feitas ? t.acertos/t.feitas : 0;
+      t.erro    = t.feitas ? 1 - t.taxa : 0.5;         // sem dado: assume 50% p/ não sumir da lista
+      t.novo    = t.feitas === 0;
+      /* impacto = quanto cai × quanto você erra. Escala 0-100 só p/ leitura. */
+      t.impacto = t.peso * t.erro * 1000;
+      t.intervalo = intervaloDias(t.taxa, t.feitas);
+      t.proxima   = t.ultimo ? t.ultimo + t.intervalo*DIA : 0;
+      t.atraso    = t.ultimo ? Math.floor((Date.now() - t.proxima)/DIA) : null;
+    });
+    return temas;
+  }
+
+  function irParaTema(tema){
+    const sel = document.getElementById("filter");
+    if([...sel.options].some(o=>o.value===tema)){
+      sel.value = tema; activeFilter = tema; applyFilter();
+    }
+    setTab("questoes");
+    window.scrollTo({top:0, behavior:"smooth"});
+  }
+
+  /* ---------- cartões do topo ---------- */
+  function cards(temas){
+    const feitas  = temas.reduce((s,t)=>s+t.feitas,0);
+    const acertos = temas.reduce((s,t)=>s+t.acertos,0);
+    const taxa    = feitas ? Math.round(100*acertos/feitas) : 0;
+    const semTocar= temas.filter(t=>t.novo).length;
+    const ativ    = lerJSON(ATIV_KEY,{});
+    const hoje    = ativ[hojeISO()] || 0;
+    const atrasados = temas.filter(t=>t.atraso!==null && t.atraso>=0).length;
+    const el = id => document.getElementById(id);
+    el("pnCards").innerHTML = `
+      <div class="pn-card"><h3>Questões feitas</h3>
+        <div class="pn-big">${feitas}</div>
+        <div class="pn-sub">de ${BANK.length} no banco · <b>${hoje}</b> hoje</div></div>
+      <div class="pn-card"><h3>Taxa de acerto</h3>
+        <div class="pn-big" style="color:${taxa>=70?"var(--right)":taxa>=50?"var(--teal-deep)":"var(--wrong)"}">${taxa}%</div>
+        <div class="pn-sub">${acertos} acertos · ${feitas-acertos} erros</div></div>
+      <div class="pn-card"><h3>Temas a revisar</h3>
+        <div class="pn-big" style="color:${atrasados?"var(--wrong)":"var(--right)"}">${atrasados}</div>
+        <div class="pn-sub">${atrasados? "com revisão atrasada" : "tudo em dia"}</div></div>
+      <div class="pn-card"><h3>Temas não iniciados</h3>
+        <div class="pn-big" style="color:${semTocar?"var(--amber)":"var(--right)"}">${semTocar}</div>
+        <div class="pn-sub">de ${temas.length} temas do edital</div></div>`;
+    return {feitas};
+  }
+
+  /* ---------- prioridade ---------- */
+  function prioridade(temas){
+    const lista = temas.slice().sort((a,b)=> b.impacto - a.impacto).slice(0,12);
+    const max = lista.length ? lista[0].impacto : 1;
+    document.getElementById("pnPri").innerHTML = lista.map((t,i)=>{
+      const cls = t.novo ? "novo" : t.impacto > max*0.66 ? "alta" : t.impacto > max*0.33 ? "media" : "baixa";
+      const rot = t.novo ? "não iniciado" : Math.round(100*t.erro)+"% de erro";
+      const inc = INC[t.cod]||0;
+      return `<button class="pri-row" data-tema="${t.tema.replace(/"/g,"&quot;")}">
+        <span class="rk">${i+1}</span>
+        <span>
+          <span class="pri-t">${t.tema}</span>
+          <span class="pri-m">${inc} questões nas provas reais (${(100*t.peso).toFixed(1)}%) · ${t.feitas}/${t.total} feitas · ${rot}</span>
+          <span class="pri-bar"><i style="width:${Math.max(4,Math.round(100*t.impacto/max))}%"></i></span>
+        </span>
+        <span class="pri-score ${cls}">${t.novo?"comece":"impacto "+t.impacto.toFixed(0)}</span>
+      </button>`;
+    }).join("") || `<p class="pn-sub">Responda algumas questões para o painel calcular sua prioridade.</p>`;
+    document.querySelectorAll("#pnPri .pri-row").forEach(b=>{
+      b.onclick = ()=> irParaTema(b.dataset.tema);
+    });
+  }
+
+  /* ---------- revisão espaçada ---------- */
+  function revisao(temas){
+    const com = temas.filter(t=>t.ultimo).sort((a,b)=> a.proxima - b.proxima).slice(0,12);
+    if(!com.length){
+      document.getElementById("pnRev").innerHTML =
+        `<p class="pn-sub">Ainda não há temas estudados. Assim que você responder questões de um tema, ele entra na fila de revisão.</p>`;
+      return;
+    }
+    document.getElementById("pnRev").innerHTML = com.map(t=>{
+      const d = t.atraso;
+      const cls = d>0 ? "atras" : d===0 ? "hoje" : "ok";
+      const txt = d>0 ? `atrasado ${d} dia${d>1?"s":""}` : d===0 ? "revisar hoje" : `em ${-d} dia${-d>1?"s":""}`;
+      return `<button class="rev-row" data-tema="${t.tema.replace(/"/g,"&quot;")}">
+        <span><span class="pri-t">${t.tema}</span>
+          <span class="pri-m">${Math.round(100*t.taxa)}% de acerto · intervalo de ${t.intervalo} dia${t.intervalo>1?"s":""}</span></span>
+        <span class="rev-when ${cls}">${txt}</span></button>`;
+    }).join("");
+    document.querySelectorAll("#pnRev .rev-row").forEach(b=>{
+      b.onclick = ()=> irParaTema(b.dataset.tema);
+    });
+  }
+
+  /* ---------- blocos do edital ---------- */
+  function blocos(temas){
+    const g = [
+      {rot:"1 · Conhecimentos Básicos em Saúde", pre:"1."},
+      {rot:"6 · Conhecimentos Específicos — Farmácia", pre:"6."}
+    ];
+    document.getElementById("pnBlocos").innerHTML = g.map(b=>{
+      const sub = temas.filter(t=>t.cod.startsWith(b.pre));
+      const f = sub.reduce((s,t)=>s+t.feitas,0), a = sub.reduce((s,t)=>s+t.acertos,0);
+      const tot = sub.reduce((s,t)=>s+t.total,0);
+      const taxa = f ? Math.round(100*a/f) : 0;
+      return `<div class="bloco"><span>${b.rot}</span>
+        <span><b>${taxa}%</b> · ${f}/${tot} feitas</span></div>
+        <div class="bbar"><i style="width:${f?Math.round(100*f/tot):0}%"></i></div>`;
+    }).join("");
+  }
+
+  /* ---------- meta ---------- */
+  function meta(feitas){
+    const m = lerJSON(META_KEY,{data:"", alvo:""});
+    const iData = document.getElementById("mtData"), iAlvo = document.getElementById("mtAlvo");
+    if(document.activeElement!==iData) iData.value = m.data||"";
+    if(document.activeElement!==iAlvo) iAlvo.value = m.alvo||"";
+    const out = document.getElementById("pnRitmo");
+    if(!m.data || !m.alvo){
+      out.innerHTML = `<span class="pn-sub">Preencha os dois campos para ver o ritmo necessário.</span>`;
+      return;
+    }
+    const alvo = +m.alvo;
+    const hoje0 = new Date(hojeISO()+"T00:00:00");
+    const prova = new Date(m.data+"T00:00:00");
+    const dias = Math.ceil((prova - hoje0)/DIA);
+    const faltam = Math.max(0, alvo - feitas);
+    if(dias < 0){ out.innerHTML = `<span class="alerta">A data da prova já passou.</span> Ajuste a data para recalcular o ritmo.`; return; }
+    if(faltam === 0){ out.innerHTML = `✓ <b>Meta batida!</b> ${feitas} de ${alvo} questões, com ${dias} dia${dias!==1?"s":""} de sobra.`; return; }
+    if(dias === 0){ out.innerHTML = `<span class="alerta">A prova é hoje.</span> Faltam <b>${faltam}</b> questões para a meta.`; return; }
+    const ritmo = Math.ceil(faltam/dias);
+    const pct = Math.round(100*Math.min(1,feitas/alvo));
+    const aperto = ritmo > 80 ? ` <span class="alerta">Esse ritmo é alto — considere ajustar a meta.</span>` : "";
+    out.innerHTML = `Você fez <b>${feitas}</b> de <b>${alvo}</b> questões (${pct}%). Faltam <b>${faltam}</b> em `
+      + `<b>${dias}</b> dia${dias>1?"s":""} → <b>~${ritmo} por dia</b>.${aperto}`;
+  }
+  function salvaMeta(){
+    const m = {data:document.getElementById("mtData").value, alvo:document.getElementById("mtAlvo").value};
+    try{ localStorage.setItem(META_KEY, JSON.stringify(m)); }catch(e){}
+    render();
+  }
+  document.getElementById("mtData").addEventListener("change", salvaMeta);
+  document.getElementById("mtAlvo").addEventListener("change", salvaMeta);
+
+  /* ---------- heatmap ---------- */
+  function heat(){
+    const ativ = lerJSON(ATIV_KEY,{});
+    const SEM = 26, hoje = new Date(hojeISO()+"T00:00:00");
+    /* alinha o fim da grade no sábado da semana atual */
+    const fim = new Date(hoje); fim.setDate(fim.getDate() + (6 - fim.getDay()));
+    const ini = new Date(fim);  ini.setDate(ini.getDate() - (SEM*7 - 1));
+    let html = "", streak = 0, contando = true;
+    for(let d = new Date(ini); d <= fim; d.setDate(d.getDate()+1)){
+      const k = hojeISO(d), n = ativ[k] || 0;
+      const nivel = n===0?0 : n<5?1 : n<15?2 : n<30?3 : 4;
+      const futuro = d > hoje;
+      html += `<i class="${nivel?"n"+nivel:""}" style="${futuro?"opacity:.35":""}" title="${k}: ${n} questão${n!==1?"ões":""}"></i>`;
+    }
+    document.getElementById("pnHeat").innerHTML = html;
+    /* ofensiva: dias consecutivos até hoje com ao menos 1 questão */
+    for(let d = new Date(hoje); ; d.setDate(d.getDate()-1)){
+      if((ativ[hojeISO(d)]||0) > 0) streak++;
+      else { if(hojeISO(d) !== hojeISO(hoje)) break; }      // hoje ainda zerado não quebra a ofensiva
+      if(streak > 400) break;
+    }
+    document.getElementById("pnStreak").innerHTML = streak>1 ? `🔥 <b>${streak} dias seguidos</b>` : "";
+  }
+
+  function render(){
+    const temas = calcula();
+    const {feitas} = cards(temas);
+    prioridade(temas); revisao(temas); blocos(temas); meta(feitas); heat();
+  }
+  window.__painelRender = render;
+})();
+
+/* ============================================================
+   CRONOGRAMA VIVO — aba Revisão Final
+   O plano do PDF vira uma lista de dias: o de hoje em destaque,
+   os vencidos e não feitos em vermelho, com marcação de concluído
+   e atalho para as questões do tema.
+   ============================================================ */
+const CRONO_KEY = "enareFarmaPlano_v1";     // {"12": true, …} dias concluídos
+
+(function(){
+  const painel = document.getElementById("panel-revisao");
+  const plano  = window.CRONOGRAMA;
+  if(!painel || !plano || !Array.isArray(plano.dias)) return;
+  const DIA = 86400000;
+  let filtro = "tudo";
+
+  const feitos = ()=> lerJSON(CRONO_KEY,{});
+  function marcar(d, on){
+    const f = feitos(); if(on) f[d]=true; else delete f[d];
+    try{ localStorage.setItem(CRONO_KEY, JSON.stringify(f)); }catch(e){}
+  }
+  /* nome completo do tema no banco a partir do código do edital ("6.10" -> "6.10 Gestão…") */
+  const nomeTema = cod => (BANK.find(q => String(q.tema).indexOf(cod+" ")===0)||{}).tema || null;
+  const dataBR = iso => { const p=String(iso).split("-"); return p.length===3 ? p[2]+"/"+p[1] : iso; };
+  const diaSem = iso => ["dom","seg","ter","qua","qui","sex","sáb"][new Date(iso+"T00:00:00").getDay()];
+
+  function estado(d){
+    const f = feitos();
+    const hoje = hojeISO();
+    if(f[d.d]) return "feito";
+    if(!d.data) return "aberto";
+    if(d.data === hoje) return "hoje";
+    return d.data < hoje ? "atrasado" : "futuro";
+  }
+
+  function topo(){
+    const f = feitos();
+    const total = plano.dias.length;
+    const concl = plano.dias.filter(d=>f[d.d]).length;
+    const atras = plano.dias.filter(d=>estado(d)==="atrasado").length;
+    const hoje0 = new Date(hojeISO()+"T00:00:00");
+    const prova = new Date((plano.prova||"2026-09-13")+"T00:00:00");
+    const faltam = Math.ceil((prova-hoje0)/DIA);
+    document.getElementById("crTop").innerHTML = `
+      <div class="cr-kpi"><div class="v" style="color:${faltam<=7?"var(--wrong)":"var(--teal-deep)"}">${faltam<0?"—":faltam}</div>
+        <div class="l">${faltam<0?"prova já passou":"dias até a prova"}</div></div>
+      <div class="cr-kpi"><div class="v">${concl}/${total}</div><div class="l">dias concluídos</div></div>
+      <div class="cr-kpi"><div class="v" style="color:${atras?"var(--wrong)":"var(--right)"}">${atras}</div>
+        <div class="l">${atras?"dias atrasados":"nada atrasado"}</div></div>
+      <div class="cr-kpi"><div class="v">${Math.round(100*concl/total)}%</div><div class="l">do plano cumprido</div></div>`;
+  }
+
+  function passa(d){
+    const e = estado(d);
+    if(filtro==="tudo") return true;
+    if(filtro==="aberto") return e!=="feito";
+    if(filtro==="atrasado") return e==="atrasado";
+    if(filtro==="hoje") return e==="hoje" || e==="futuro";
+    return true;
+  }
+
+  function lista(){
+    const alvo = document.getElementById("crLista");
+    const porSem = {};
+    plano.dias.forEach(d=>{
+      /* semana pelo índice do dia (7 em 7), como no PDF */
+      const n = Math.floor((d.d-1)/7)+1;
+      (porSem[n] = porSem[n] || []).push(d);
+    });
+    let html = "", vazio = true;
+    Object.keys(porSem).sort((a,b)=>a-b).forEach(n=>{
+      const dias = porSem[n].filter(passa);
+      if(!dias.length) return;
+      vazio = false;
+      const sem = (plano.semanas||[]).find(s=>String(s.n)===String(n));
+      html += `<div class="cr-sem">Semana ${n}${sem&&sem.foco?" · "+sem.foco:""}</div>`;
+      dias.forEach(d=>{
+        const e = estado(d);
+        const cls = e==="feito" ? "feito" : e==="hoje" ? "hoje" : e==="atrasado" ? "atrasado" : "";
+        const flag = e==="hoje" ? `<span class="cr-flag hoje">hoje</span>`
+                   : e==="atrasado" ? `<span class="cr-flag atras">atrasado</span>` : "";
+        const chips = (d.temas||[]).map(c=>{
+          const nome = nomeTema(c);
+          return nome ? `<button class="cr-tema" data-tema="${nome.replace(/"/g,"&quot;")}">${c} →</button>` : "";
+        }).join("");
+        html += `<div class="cr-dia ${cls}">
+          <input type="checkbox" class="cr-chk" data-d="${d.d}" ${e==="feito"?"checked":""}
+                 aria-label="Marcar dia ${d.d} como concluído">
+          <div>
+            <div class="cr-meta">
+              <span class="cr-d">D${d.d} · ${d.data?dataBR(d.data)+" ("+diaSem(d.data)+")":"—"}</span>
+              <span class="cr-tipo ${d.tipo}">${d.tipo}</span>${flag}
+            </div>
+            <div class="cr-tit">${d.titulo||""}</div>
+            ${d.det?`<div class="cr-det">${d.det}</div>`:""}
+            ${chips?`<div class="cr-temas">${chips}</div>`:""}
+          </div></div>`;
+      });
+    });
+    alvo.innerHTML = vazio ? `<p class="pn-sub">Nenhum dia neste filtro.</p>` : html;
+
+    alvo.querySelectorAll(".cr-chk").forEach(c=>{
+      c.onchange = ()=>{ marcar(c.dataset.d, c.checked); topo(); lista(); };
+    });
+    alvo.querySelectorAll(".cr-tema").forEach(b=>{
+      b.onclick = ()=>{
+        const sel = document.getElementById("filter"), tema = b.dataset.tema;
+        if([...sel.options].some(o=>o.value===tema)){ sel.value=tema; activeFilter=tema; applyFilter(); }
+        setTab("questoes"); window.scrollTo({top:0, behavior:"smooth"});
+      };
+    });
+  }
+
+  document.querySelectorAll(".cr-fl").forEach(b=>{
+    b.onclick = ()=>{
+      document.querySelectorAll(".cr-fl").forEach(x=>x.classList.remove("active"));
+      b.classList.add("active"); filtro = b.dataset.crf; lista();
+    };
+  });
+
+  function render(){ topo(); lista(); }
+  window.__cronoRender = render;
+})();
+
 /* ---- troca de abas ---- */
 const TABS = {
   questoes: {panel:"panel-questoes", btn:"tabBtnQ"},
@@ -829,6 +1341,7 @@ const TABS = {
   exames:   {panel:"panel-exames",   btn:"tabBtnE"},
   treino:   {panel:"panel-treino",   btn:"tabBtnT"},
   flashcards:{panel:"panel-flashcards", btn:"tabBtnFC"},
+  painel:   {panel:"panel-painel",   btn:"tabBtnPN"},
   revisao:  {panel:"panel-revisao",  btn:"tabBtnRF"},
   logerros: {panel:"panel-logerros", btn:"tabBtnLE"}
 };
@@ -842,7 +1355,8 @@ function setTab(name){
   if(name==="exames"){ const f=document.getElementById("examesFrame"); if(f && !f.src) f.src="exames/flashcards-lab.html"; }
   if(name==="treino"){ const f=document.getElementById("treinoFrame"); if(f && !f.src) f.src="treino/treino.html"; }
   if(name==="flashcards"){ const f=document.getElementById("fcardsFrame"); if(f && !f.src) f.src="flashcards/flashcards.html"; }
-  if(name==="revisao"){ const f=document.getElementById("revisaoFrame"); if(f && !f.src) f.src="dados/cronograma_enare_farmacia.pdf#view=FitH"; }
+  if(name==="painel" && window.__painelRender) window.__painelRender();
+  if(name==="revisao" && window.__cronoRender) window.__cronoRender();
   if(name==="logerros"){ const f=document.getElementById("planilhaFrame"); if(f && !f.src) f.src="planilha/planilha.html"; }
   try{ localStorage.setItem("enareTab", name); }catch(e){}
 }
@@ -853,6 +1367,7 @@ document.getElementById("tabBtnSim").onclick = ()=> setTab("simulado");
 document.getElementById("tabBtnE").onclick = ()=> setTab("exames");
 document.getElementById("tabBtnT").onclick = ()=> setTab("treino");
 document.getElementById("tabBtnFC").onclick = ()=> setTab("flashcards");
+document.getElementById("tabBtnPN").onclick = ()=> setTab("painel");
 document.getElementById("tabBtnRF").onclick = ()=> setTab("revisao");
 document.getElementById("tabBtnLE").onclick = ()=> setTab("logerros");
 

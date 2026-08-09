@@ -5,7 +5,7 @@
    - Estáticos (ícones/manifest): cache-first.
    Obs.: o progresso do usuário fica no localStorage, que NÃO é tocado por este cache. */
 
-const CACHE = "enare-farma-v28";
+const CACHE = "enare-farma-v29";
 const ASSETS = [
   "./",
   "./index.html",
@@ -18,6 +18,8 @@ const ASSETS = [
   "./simulados.js",
   "./banco_edital.js",
   "./migracao_respostas.js",
+  "./incidencia.js",
+  "./cronograma.js",
   "./exames/flashcards-lab.html",
   "./sim-img/aocp-q2.png",
   "./sim-img/aocp-q6.png",
