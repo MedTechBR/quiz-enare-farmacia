@@ -5,7 +5,7 @@
    - Estáticos (ícones/manifest): cache-first.
    Obs.: o progresso do usuário fica no localStorage, que NÃO é tocado por este cache. */
 
-const CACHE = "enare-farma-v32";
+const CACHE = "enare-farma-v33";
 const ASSETS = [
   "./",
   "./index.html",
@@ -63,7 +63,9 @@ const ASSETS = [
   "./farmacia/resolucoes-cff-585-586.html",
   "./farmacia/farmacoepidemiologia.html",
   "./farmacia/estudos-medicamentos-fases-eum.html",
-  "./farmacia/farmacovigilancia-ram.html"
+  "./farmacia/farmacovigilancia-ram.html",
+  "./farmacia/assistencia-farmaceutica-sus.html",
+  "./farmacia/centro-informacao-medicamentos.html"
 ];
 
 /* Pesados (best-effort): se falharem, NÃO impedem a instalação do SW. */

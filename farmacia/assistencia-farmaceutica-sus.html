@@ -1,0 +1,491 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Assistência Farmacêutica no SUS — Guia de revisão</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@500;600;700;800&family=IBM+Plex+Sans:ital,wght@0,400;0,500;0,600;1,400&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#E7E1D2;--surface:#FBF8F0;--surface-2:#F3EEE1;
+    --ink:#143C42;--ink-soft:#4E5F5C;--vermilion:#D6492A;--ochre:#B98220;--green:#3C6E47;--blue:#2C5A74;
+    --line:rgba(20,60,66,.22);--line-strong:rgba(20,60,66,.55);
+    --font-display:'Anton',Impact,sans-serif;--font-head:'Archivo',system-ui,sans-serif;--font-body:'IBM Plex Sans',system-ui,sans-serif;
+  }
+  *{box-sizing:border-box}
+  html{-webkit-text-size-adjust:100%;scroll-behavior:smooth}
+  body{margin:0;background:radial-gradient(circle at 100% -2%, rgba(214,73,42,.06), transparent 38%),var(--paper);
+    color:var(--ink);font-family:var(--font-body);line-height:1.55;padding:clamp(16px,3.5vw,44px) clamp(12px,4vw,40px) 80px}
+  .wrap{max-width:1080px;margin:0 auto}
+  .top-rule{height:6px;background:var(--ink)}
+  .kicker{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;font-family:var(--font-head);font-weight:700;text-transform:uppercase;letter-spacing:.15em;font-size:11px;color:var(--ink-soft);padding:9px 2px;border-bottom:1px solid var(--line)}
+  .kicker .dot{color:var(--vermilion)}
+  h1{font-family:var(--font-display);font-weight:400;line-height:.92;font-size:clamp(28px,5.4vw,60px);margin:16px 0 8px;text-transform:uppercase;letter-spacing:.5px}
+  h1 .accent{color:var(--vermilion)}
+  .dek{font-size:clamp(15px,2vw,17.5px);color:var(--ink-soft);max-width:66ch;border-top:3px double var(--line-strong);padding-top:12px}
+  .dek b{color:var(--ink);font-weight:600}
+  nav.toc{position:sticky;top:0;z-index:20;background:rgba(231,225,210,.94);backdrop-filter:blur(6px);margin:18px 0 8px;padding:10px 0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+  nav.toc ul{list-style:none;display:flex;gap:7px;flex-wrap:wrap;margin:0;padding:0}
+  nav.toc a{font-family:var(--font-head);font-weight:600;font-size:12px;text-decoration:none;color:var(--ink);border:1.5px solid var(--line-strong);border-radius:2px;padding:5px 10px;transition:background .12s,color .12s}
+  nav.toc a:hover{background:var(--ink);color:var(--surface)}
+  section{margin:38px 0 0;scroll-margin-top:64px}
+  .sec-head{display:flex;align-items:baseline;gap:14px;margin-bottom:14px;border-bottom:2px solid var(--ink);padding-bottom:8px}
+  .sec-num{font-family:var(--font-display);font-size:clamp(26px,4vw,40px);color:var(--vermilion);line-height:.8}
+  .sec-head h2{font-family:var(--font-head);font-weight:800;font-size:clamp(18px,3vw,25px);margin:0;letter-spacing:-.01em}
+  p{margin:0 0 12px}.lead{font-size:16px}
+  strong,b{color:var(--ink);font-weight:600}.hl{color:var(--vermilion);font-weight:600}
+  ul.clean{margin:0 0 12px;padding-left:18px}ul.clean li{margin:5px 0}
+  .box{background:var(--surface);border:1.5px solid var(--ink);border-radius:3px;box-shadow:4px 4px 0 var(--ink);padding:16px 18px;margin:14px 0}
+  .grid2{display:grid;gap:14px;grid-template-columns:repeat(auto-fit,minmax(250px,1fr))}
+  .bizu{border:1.5px dashed var(--green);background:rgba(60,110,71,.06);border-radius:3px;padding:13px 16px;margin:14px 0}
+  .bizu .tag{font-family:var(--font-head);font-weight:700;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--green);display:block;margin-bottom:5px}
+  .bizu b{color:var(--green)}
+  .trap{border:1.5px solid var(--vermilion);background:rgba(214,73,42,.05);border-radius:3px;padding:13px 16px;margin:14px 0}
+  .trap .tag{font-family:var(--font-head);font-weight:700;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--vermilion);display:block;margin-bottom:5px}
+  .note{border:1.5px solid var(--blue);background:rgba(44,90,116,.06);border-radius:3px;padding:13px 16px;margin:14px 0}
+  .note .tag{font-family:var(--font-head);font-weight:700;font-size:11px;letter-spacing:.13em;text-transform:uppercase;color:var(--blue);display:block;margin-bottom:5px}
+  .tbl{width:100%;border-collapse:collapse;margin:14px 0;font-size:12.5px;background:var(--surface)}
+  .tbl th,.tbl td{border:1px solid var(--line-strong);padding:8px 10px;text-align:left;vertical-align:top}
+  .tbl thead th{background:var(--ink);color:var(--surface);font-family:var(--font-head);font-weight:700;font-size:11px;text-transform:uppercase;letter-spacing:.03em}
+  .tbl tbody th{background:var(--surface-2);font-family:var(--font-head);font-weight:700;white-space:nowrap}
+  .tbl-scroll{overflow-x:auto}
+  .ynbox{display:grid;gap:12px;grid-template-columns:1fr 1fr;margin:12px 0}
+  .yn{border:1.5px solid var(--line-strong);border-radius:3px;padding:13px 15px}
+  .yn.no{border-color:var(--vermilion);background:rgba(214,73,42,.05)}
+  .yn.yes{border-color:var(--green);background:rgba(60,110,71,.06)}
+  .yn h4{font-family:var(--font-head);font-weight:800;margin:0 0 6px;font-size:14px;text-transform:uppercase;letter-spacing:.04em}
+  .yn.no h4{color:var(--vermilion)}.yn.yes h4{color:var(--green)}
+  .yn ul{margin:0;padding-left:16px;font-size:13px}.yn li{margin:4px 0}
+  .fc-grid{display:grid;gap:14px;grid-template-columns:repeat(auto-fill,minmax(300px,1fr));margin-top:14px}
+  .fc{background:var(--surface);border:1.5px solid var(--ink);border-radius:3px;box-shadow:4px 4px 0 var(--ink);padding:16px 17px;cursor:pointer;text-align:left;width:100%;font-family:var(--font-body);color:var(--ink);display:flex;flex-direction:column;gap:9px;transition:transform .12s,box-shadow .12s}
+  .fc:hover{transform:translate(-2px,-2px);box-shadow:6px 6px 0 var(--vermilion)}
+  .fc:focus-visible{outline:3px solid var(--vermilion);outline-offset:3px}
+  .fc .q{font-family:var(--font-head);font-weight:700;font-size:15px;line-height:1.28}
+  .fc .hint{font-family:var(--font-head);font-weight:600;font-size:10.5px;letter-spacing:.08em;text-transform:uppercase;color:var(--vermilion)}
+  .fc .ans{font-size:13.5px;color:var(--ink-soft)}
+  .fc:not(.open) .ans{display:none}.fc.open .hint{display:none}
+  .case .q::before{content:"CASO ";font-family:var(--font-display);color:var(--vermilion);font-size:12px;letter-spacing:.1em}
+  footer{margin:46px 0 0;padding-top:16px;border-top:1px solid var(--line);font-size:12.5px;color:var(--ink-soft)}
+  footer b{color:var(--ink)}
+  @media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto}}
+  @media (max-width:560px){.ynbox{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <div class="top-rule"></div>
+    <div class="kicker">
+      <span>Políticas de Saúde <span class="dot">·</span> Tema 6.1</span>
+      <span>Resmulti · ENARE 2026/2027 · Farmácia</span>
+    </div>
+    <h1>Assistência <span class="accent">Farmacêutica</span> no SUS</h1>
+    <p class="dek">Da <b>PNM/1998</b> à <b>PNAF/2004</b>; o <b>ciclo</b>, a <b>RENAME</b>, a <b>CONITEC</b> e os três <b>componentes</b> (Básico, Estratégico, Especializado) — com os números de financiamento <b>atualizados pela Portaria GM/MS nº 6.942/2025</b>. Este é o bloco que a banca mais cobra em política de saúde para o farmacêutico.</p>
+  </header>
+
+  <nav class="toc" aria-label="Índice">
+    <ul>
+      <li><a href="#conceito">1 · Conceito e evolução ★</a></li>
+      <li><a href="#ciclo">2 · Ciclo da AF ★</a></li>
+      <li><a href="#rename">3 · RENAME ★</a></li>
+      <li><a href="#conitec">4 · CONITEC ★</a></li>
+      <li><a href="#componentes">5 · Componentes ★★</a></li>
+      <li><a href="#financiamento">6 · Financiamento</a></li>
+      <li><a href="#qualifar">7 · QUALIFAR-SUS ★</a></li>
+      <li><a href="#judicializacao">8 · Judicialização</a></li>
+      <li><a href="#selecao">9 · Seleção &amp; CFT</a></li>
+      <li><a href="#indicadores">10 · Indicadores</a></li>
+      <li><a href="#autoteste">11 · Autoteste ★</a></li>
+    </ul>
+  </nav>
+
+  <!-- 1 -->
+  <section id="conceito">
+    <div class="sec-head"><span class="sec-num">01</span><h2>Conceito e evolução histórica ★</h2></div>
+    <p class="lead">A <b>Política Nacional de Assistência Farmacêutica (PNAF)</b>, aprovada pela <span class="hl">Resolução CNS nº 338, de 6 de maio de 2004</span>, define Assistência Farmacêutica como um <b>conjunto de ações voltadas à promoção, proteção e recuperação da saúde</b>, tanto individual quanto coletiva, <b>tendo o medicamento como insumo essencial</b> e visando ao <b>acesso</b> e ao <b>uso racional</b>.</p>
+    <div class="box">
+      <p><b>Definição-âncora (decorar a estrutura):</b></p>
+      <ul class="clean" style="margin-bottom:0">
+        <li>É um <b>conjunto de ações</b> — não é um serviço isolado nem uma atividade do balcão.</li>
+        <li>Envolve a <b>pesquisa, o desenvolvimento e a produção</b> de medicamentos e insumos, além da <b>seleção, programação, aquisição, distribuição, dispensação</b>, garantia de qualidade, acompanhamento e avaliação.</li>
+        <li>Tem o <b>medicamento como insumo essencial</b> e o objetivo de <b>acesso + uso racional</b>.</li>
+        <li>É <span class="hl">multiprofissional e intersetorial</span>, embora o farmacêutico seja o profissional de referência.</li>
+      </ul>
+    </div>
+
+    <p><b>Três conceitos que a banca adora embaralhar:</b></p>
+    <div class="tbl-scroll">
+    <table class="tbl">
+      <thead><tr><th>Conceito</th><th>Nível / objeto</th><th>Foco</th></tr></thead>
+      <tbody>
+        <tr><th>Assistência Farmacêutica</th><td><b>Macro / gestão</b> — sistema de saúde, população</td><td>Ciclo logístico-gerencial: garantir que o medicamento certo exista, com qualidade, no lugar e no tempo certos. Objeto = <b>o medicamento</b>.</td></tr>
+        <tr><th>Atenção Farmacêutica</th><td><b>Micro / paciente</b> — relação farmacêutico-usuário</td><td>Modelo de prática (origem: <i>pharmaceutical care</i>) com responsabilidade sanitária pelo resultado da farmacoterapia; acompanhamento e resolução de PRM. Objeto = <b>o paciente</b>.</td></tr>
+        <tr><th>Farmácia Clínica</th><td><b>Micro / prática assistencial</b></td><td>Área de atuação clínica do farmacêutico junto à equipe e ao paciente (conciliação, revisão da farmacoterapia, monitorização). No Brasil, regulamentada pelas <b>Res. CFF 585 e 586/2013</b>.</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="bizu"><span class="tag">★ Bizu</span> <b>AssistênciA = Amplo (gestão do medicamento). AtençãO = pessOa (cuidado do paciente).</b> A atenção farmacêutica é <b>parte</b> da assistência farmacêutica, e não o contrário. Uma AF bem estruturada é <b>pré-requisito</b> para haver atenção farmacêutica.</div>
+
+    <p><b>Linha do tempo normativa (a espinha dorsal do tema):</b></p>
+    <div class="tbl-scroll">
+    <table class="tbl">
+      <thead><tr><th>Ano</th><th>Norma</th><th>O que instituiu</th></tr></thead>
+      <tbody>
+        <tr><th>1971</th><td>CEME</td><td>Central de Medicamentos — modelo centralizado; <b>extinta em 1997</b>, abrindo espaço para a descentralização.</td></tr>
+        <tr><th>1990</th><td>Lei nº 8.080</td><td>Lei Orgânica da Saúde: inclui a <b>assistência terapêutica integral, inclusive farmacêutica</b>, no campo de atuação do SUS (art. 6º).</td></tr>
+        <tr><th>1998</th><td><b>Portaria GM/MS nº 3.916</b></td><td><span class="hl">Política Nacional de Medicamentos (PNM)</span> — 8 diretrizes: <b>adoção da RENAME</b>, <b>reorientação da AF</b>, <b>promoção do uso racional</b>, <b>promoção da produção</b>, garantia de segurança/eficácia/qualidade, desenvolvimento científico e recursos humanos.</td></tr>
+        <tr><th>1999</th><td>Lei nº 9.787</td><td>Lei dos <b>Genéricos</b>; consolida a <b>DCB</b> como nomenclatura oficial.</td></tr>
+        <tr><th>2004</th><td><b>Resolução CNS nº 338</b></td><td><span class="hl">Política Nacional de Assistência Farmacêutica (PNAF)</span> — parte integrante da Política Nacional de Saúde; consagra a AF como <b>ciclo</b> e eixo estratégico.</td></tr>
+        <tr><th>2011</th><td><b>Lei nº 12.401</b> (altera a 8.080/90)</td><td>Disciplina a <b>assistência terapêutica e a incorporação de tecnologias</b>; cria a <b>CONITEC</b>; dá base legal à <b>RENAME</b> e aos <b>PCDT</b>.</td></tr>
+        <tr><th>2011</th><td><b>Decreto nº 7.508</b></td><td>Regulamenta a Lei 8.080/90: RAS, Regiões de Saúde, <b>RENASES</b> e <b>RENAME</b>; o acesso se dá conforme a RENAME e as pactuações.</td></tr>
+        <tr><th>2012</th><td>Portaria GM/MS nº 1.214</td><td><b>QUALIFAR-SUS</b> — qualificação da AF no SUS (4 eixos).</td></tr>
+        <tr><th>2013</th><td>Portaria GM/MS nº 1.554</td><td>Financiamento e execução do <b>CEAF</b> (hoje nas Portarias de Consolidação nº 2 e nº 6, de 2017).</td></tr>
+        <tr><th>2017</th><td>Portarias de Consolidação nº 1 a 6</td><td>Compilam a normativa infralegal do SUS. A AF vive na <b>PRC nº 2</b> (políticas) e na <b>PRC nº 6</b> (financiamento).</td></tr>
+        <tr><th>2017</th><td><b>Portaria GM/MS nº 3.992</b></td><td>Extingue os <b>6 blocos</b> de financiamento e cria <b>2 blocos</b>: <b>Custeio</b> e <b>Investimento</b>.</td></tr>
+        <tr><th>2025</th><td><b>Portaria GM/MS nº 6.942, de 16/06/2025</b></td><td>Altera a PRC GM/MS nº 6/2017 e <b>reajusta os valores per capita do Componente Básico</b> (seção 5).</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="trap"><span class="tag">⚠ Pegadinha clássica</span>
+      <b>PNM ≠ PNAF.</b> A <b>PNM é de 1998</b> e veio por <b>Portaria GM/MS nº 3.916</b>; a <b>PNAF é de 2004</b> e veio por <b>Resolução do Conselho Nacional de Saúde (CNS) nº 338</b>. Trocar o instrumento normativo (portaria × resolução do CNS) ou o ano é a alternativa errada mais frequente. Guarde: <b>a PNAF é posterior e mais ampla — ela nasce como parte da Política Nacional de Saúde, não como um "anexo" da PNM.</b></div>
+  </section>
+
+  <!-- 2 -->
+  <section id="ciclo">
+    <div class="sec-head"><span class="sec-num">02</span><h2>O Ciclo da Assistência Farmacêutica ★</h2></div>
+    <p>A AF é organizada como um <b>ciclo sistêmico</b>: as etapas são <span class="hl">interdependentes e cíclicas</span>, de modo que <b>uma etapa mal executada compromete todas as demais</b>. Não é uma fila linear com começo e fim — é um sistema de retroalimentação.</p>
+
+    <div class="tbl-scroll">
+    <table class="tbl">
+      <thead><tr><th>Etapa</th><th>O que é</th><th>O que dá errado (e o efeito em cascata)</th></tr></thead>
+      <tbody>
+        <tr><th>1. Seleção</th><td>Escolha, por critérios técnicos (eficácia, segurança, qualidade, custo-efetividade, comodidade posológica), dos medicamentos disponibilizados. Produz a <b>lista padronizada</b> (RENAME → RESME/REMUME) e o <b>formulário terapêutico</b>.</td><td><b>Etapa central / eixo do ciclo.</b> Selecionar mal infla o elenco, encarece a compra e confunde a prescrição.</td></tr>
+        <tr><th>2. Programação</th><td>Estimar <b>quantidades</b> e <b>periodicidade</b>. Métodos: perfil <b>epidemiológico</b>, <b>consumo histórico</b>, <b>consumo ajustado</b> (corrigido pela demanda reprimida) e <b>oferta de serviços</b>.</td><td>Subprogramar → desabastecimento e judicialização. Superprogramar → capital imobilizado e <b>perda por validade</b>.</td></tr>
+        <tr><th>3. Aquisição</th><td>Procedimentos para obter o programado — em regra por <b>licitação</b> (Lei nº 14.133/2021). Inclui especificação técnica e qualificação de fornecedor.</td><td>Especificação frouxa → produto de baixa qualidade e impugnação de certame.</td></tr>
+        <tr><th>4. Armazenamento</th><td>Recebimento, estocagem, conservação (temperatura, umidade, luz), controle de estoque e segurança. Aplica <b>PEPS/FEFO</b> (primeiro a vencer, primeiro a sair).</td><td>Cadeia de frio rompida → perda de eficácia sem sinal visível. Estoque desorganizado → vencimento e falta ao mesmo tempo.</td></tr>
+        <tr><th>5. Distribuição</th><td>Suprimento das unidades com quantidade, qualidade e prazo adequados; transporte e rastreabilidade.</td><td>Distribuição irregular gera estoque informal nas unidades e distorce o consumo histórico da próxima programação.</td></tr>
+        <tr><th>6. Dispensação</th><td><b>Ato do farmacêutico</b> de fornecer o medicamento ao usuário <b>com orientação</b> sobre uso, guarda e conservação. É a <b>interface com o usuário</b> e a porta de entrada da atenção farmacêutica.</td><td>Falha aqui anula o investimento das cinco etapas anteriores.</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="bizu"><span class="tag">★ Bizu</span> Ordem do ciclo: <b>SE-PRO-AQUI-AR-DIS-DIS</b> → <b>Se</b>leção, <b>Pro</b>gramação, <b>Aqui</b>sição, <b>Ar</b>mazenamento, <b>Dis</b>tribuição, <b>Dis</b>pensação. Frase: <b>"<u>Se</u>lecionei, <u>pro</u>gramei, <u>adqui</u>ri, <u>arma</u>zenei, <u>distri</u>buí e <u>dispen</u>sei."</b> Os dois "DIS" no fim são a dupla que confunde: <b>distribuição vai à unidade; dispensação vai ao usuário.</b></div>
+
+    <div class="note"><span class="tag">ℹ Atividades transversais</span>
+      Percorrem todo o ciclo e costumam ser cobradas como "eixos de sustentação": <b>gestão/gerenciamento</b>, <b>sistemas de informação</b> (ex.: o HÓRUS e a Base Nacional de Dados de Ações e Serviços da AF — BNAFAR), <b>garantia da qualidade</b>, <b>farmacovigilância</b>, <b>uso racional de medicamentos</b> e <b>educação permanente</b>. Alguns autores acrescentam explicitamente ao ciclo a <b>utilização/acompanhamento</b> e o <b>descarte</b> — se a questão trouxer 7 ou 8 etapas, é essa a lógica.</div>
+
+    <div class="trap"><span class="tag">⚠ Pegadinha</span>
+      <b>Distribuição ≠ dispensação.</b> Distribuição é <b>logística entre serviços</b> (do almoxarifado central para a UBS/hospital). Dispensação é o <b>ato farmacêutico de entregar ao usuário com orientação</b>. Outra armadilha: dizer que "a aquisição é a etapa central do ciclo" — <span class="hl">a etapa central/norteadora é a SELEÇÃO</span>, porque é ela que define tudo o que será programado, comprado, armazenado e dispensado.</div>
+  </section>
+
+  <!-- 3 -->
+  <section id="rename">
+    <div class="sec-head"><span class="sec-num">03</span><h2>RENAME — Relação Nacional de Medicamentos Essenciais ★</h2></div>
+    <p><b>Base legal:</b> <span class="hl">Lei nº 12.401/2011</span> (que alterou a Lei nº 8.080/1990) e <span class="hl">Decreto nº 7.508/2011</span>. O Decreto 7.508 é explícito: o <b>acesso universal e igualitário à assistência farmacêutica</b> pressupõe, entre outros requisitos, que o medicamento esteja <b>prescrito por profissional habilitado</b>, que o usuário esteja <b>assistido por ações e serviços do SUS</b> e que a dispensação ocorra <b>em conformidade com a RENAME e as listas complementares estaduais/municipais</b>, ou com a RENAME do respectivo ente.</p>
+
+    <div class="grid2">
+      <div class="box"><p><b>Medicamento essencial (conceito OMS)</b></p><p>Aquele que atende às <b>necessidades prioritárias de saúde da população</b>, selecionado segundo <b>relevância em saúde pública</b>, <b>evidência de eficácia e segurança</b> e <b>custo-efetividade comparativa</b>. Deve estar disponível <b>a todo momento</b>, em <b>quantidades adequadas</b>, na <b>forma farmacêutica apropriada</b>, com <b>qualidade assegurada</b> e a <b>preço acessível</b>.</p></div>
+      <div class="box"><p><b>Atualização e edição vigente</b></p><p>A RENAME é <b>revista e publicada a cada 2 anos</b> (bienalmente) pelo Ministério da Saúde, com participação da CONITEC. A <span class="hl">edição vigente é a RENAME 2024</span>. Sua organização acompanha os <b>componentes da AF</b> (Básico, Estratégico e Especializado), além de insumos e medicamentos de uso hospitalar.</p></div>
+    </div>
+
+    <p><b>A cascata das listas (o mesmo raciocínio, em três esferas):</b></p>
+    <ul class="clean">
+      <li><b>RENAME</b> — nacional; base e teto de referência do que o SUS financia.</li>
+      <li><b>RESME</b> — Relação Estadual de Medicamentos Essenciais; lista complementar do Estado.</li>
+      <li><b>REMUME</b> — Relação Municipal de Medicamentos Essenciais; lista complementar do município, elaborada pela <b>CFT local</b>.</li>
+    </ul>
+    <p>Estados, Distrito Federal e municípios podem <b>ampliar</b> a relação, adotando listas complementares — <b>desde que assumam o financiamento</b> do que acrescentarem. A lógica é de <b>piso nacional + complementação local</b>, nunca de restrição do que já é nacional.</p>
+
+    <div class="bizu"><span class="tag">★ Bizu</span> <b>RE-NA-ME / RE-S-ME / RE-MU-ME</b>: o miolo denuncia a esfera — <b>NA</b>cional, e<b>S</b>tadual, <b>MU</b>nicipal. E a periodicidade: <b>RENAME = 2 em 2 anos</b> (assim como a legislatura de listas, não é anual!).</div>
+
+    <div class="trap"><span class="tag">⚠ Pegadinha</span>
+      <b>A RENAME não é anual.</b> A atualização é <span class="hl">bienal (a cada 2 anos)</span> — e a edição atual é a <b>RENAME 2024</b>. Outras armadilhas do mesmo bloco: (a) confundir <b>RENAME</b> (medicamentos) com <b>RENASES</b> (Relação Nacional de Ações e Serviços de Saúde), ambas criadas pelo Decreto 7.508/2011; (b) afirmar que o município pode <b>excluir</b> da REMUME um medicamento da RENAME — pode <b>complementar</b>, não suprimir a obrigação nacional.</div>
+  </section>
+
+  <!-- 4 -->
+  <section id="conitec">
+    <div class="sec-head"><span class="sec-num">04</span><h2>CONITEC — incorporação de tecnologias ★</h2></div>
+    <p>A <b>Comissão Nacional de Incorporação de Tecnologias no SUS (CONITEC)</b> foi criada pela <span class="hl">Lei nº 12.401/2011</span> (que inseriu o tema na Lei nº 8.080/1990) e regulamentada por decreto próprio. Sua natureza jurídica é a de órgão <b>de assessoramento</b>: ela <b>não incorpora</b> — ela <b>recomenda</b>.</p>
+
+    <div class="ynbox">
+      <div class="yn yes"><h4>✓ O que a CONITEC faz</h4>
+        <ul>
+          <li><b>Assessorar o Ministério da Saúde</b> na <b>incorporação, exclusão ou alteração</b> de tecnologias em saúde (medicamentos, produtos e procedimentos).</li>
+          <li>Assessorar na <b>constituição ou alteração de PCDT</b> (Protocolos Clínicos e Diretrizes Terapêuticas).</li>
+          <li>Avaliar <b>evidências de eficácia, acurácia, efetividade e segurança</b>.</li>
+          <li>Realizar <b>avaliação econômica comparativa</b> (custo-efetividade) frente às tecnologias já disponíveis no SUS e estimar o <b>impacto orçamentário</b>.</li>
+          <li>Submeter o relatório preliminar a <b>consulta pública</b> e, quando cabível, realizar <b>audiência pública</b>.</li>
+        </ul></div>
+      <div class="yn no"><h4>⚠ O que a CONITEC NÃO faz</h4>
+        <ul>
+          <li><b>Não decide</b> a incorporação: a <b>decisão final é do Ministério da Saúde</b>, por ato do Secretário responsável pela área de ciência, tecnologia e insumos estratégicos.</li>
+          <li><b>Não registra</b> medicamento — registro sanitário é da <b>ANVISA</b>, e é <b>pré-requisito</b> para a análise (não se incorpora tecnologia sem registro).</li>
+          <li><b>Não define preço</b> — teto de preço é da <b>CMED</b>.</li>
+          <li>Em regra, <b>não recomenda uso off-label</b> nem tecnologia experimental/sem registro.</li>
+        </ul></div>
+    </div>
+
+    <div class="box">
+      <p><b>Prazo — número de ouro da prova:</b></p>
+      <p style="margin-bottom:0">O processo administrativo de incorporação deve ser concluído em <span class="hl">até 180 (cento e oitenta) dias</span>, contados da data do protocolo do pedido, <b>prorrogável por mais 90 (noventa) dias corridos</b> quando as circunstâncias exigirem. Ou seja: <b>teto de 270 dias</b>.</p>
+    </div>
+
+    <div class="bizu"><span class="tag">★ Bizu</span> <b>"180 + 90 = 270"</b> — pense em <b>meio ano e meio</b>. E para a sequência do processo: <b>R-A-C-D</b> → <b>R</b>egistro na ANVISA (pré-requisito) → <b>A</b>nálise da CONITEC (evidência + economia) → <b>C</b>onsulta pública → <b>D</b>ecisão do Ministério da Saúde. <b>Quem recomenda é a CONITEC; quem decide é o MS.</b></div>
+
+    <div class="trap"><span class="tag">⚠ Pegadinha</span>
+      Alternativa clássica: <i>"a CONITEC é o órgão responsável por incorporar tecnologias ao SUS"</i> — <b>errado</b>. Ela é <b>assessora/consultiva</b>; a incorporação é ato do Ministério da Saúde. Outra: trocar o prazo por "90 dias prorrogáveis por 180" (invertido) ou por "120 dias". E ainda: dizer que a consulta pública é <b>facultativa</b> — no rito da incorporação, o relatório vai a <b>consulta pública</b>; o que é facultativo/condicionado é a <b>audiência pública</b>.</div>
+
+    <div class="note"><span class="tag">ℹ Conexão com a integralidade</span>
+      A Lei nº 12.401/2011 fixou que a assistência terapêutica integral consiste na dispensação de medicamentos e produtos <b>conforme as relações e protocolos oficiais</b> e vedou, em regra, o pagamento pelo SUS de medicamento <b>sem registro na ANVISA</b> ou de uso <b>experimental</b>. É exatamente esse artigo que o Judiciário confronta nas ações individuais — daí a seção 8.</div>
+  </section>
+
+  <!-- 5 -->
+  <section id="componentes">
+    <div class="sec-head"><span class="sec-num">05</span><h2>Componentes da AF — Básico, Estratégico e Especializado ★★</h2></div>
+    <p class="lead">Este é o coração do tema. O bloco de medicamentos do SUS se organiza em <b>três componentes</b>, que se distinguem por <b>quem financia</b>, <b>quem adquire</b>, <b>quem executa</b> e <b>qual o nível de atenção</b>.</p>
+
+    <div class="tbl-scroll">
+    <table class="tbl">
+      <thead><tr><th>Eixo</th><th>Básico (CBAF)</th><th>Estratégico (CESAF)</th><th>Especializado (CEAF)</th></tr></thead>
+      <tbody>
+        <tr><th>Objeto</th><td>Agravos prevalentes e prioritários da <b>atenção primária</b> (HAS, DM, saúde mental, saúde da mulher, insumos para diabetes, fitoterápicos, homeopáticos).</td><td>Doenças de <b>perfil endêmico</b>, com impacto socioeconômico e <b>controle/tratamento com protocolo nacional</b>.</td><td>Linhas de cuidado de <b>doenças raras, crônicas complexas ou de alto custo</b>, em nível <b>ambulatorial</b>, definidas em <b>PCDT</b>.</td></tr>
+        <tr><th>Financiamento</th><td><span class="hl">Tripartite</span> (União + Estado + Município), por <b>valores per capita/ano</b>.</td><td><b>Exclusivo da União</b> (Ministério da Saúde).</td><td><b>Varia por grupo</b> (1A, 1B, 2 e 3) — ver quadro abaixo.</td></tr>
+        <tr><th>Aquisição</th><td>Em regra <b>descentralizada</b> — pelo <b>município</b> (ou pelo Estado, conforme pactuação na CIB).</td><td><span class="hl">Centralizada pelo Ministério da Saúde</span>, que adquire e repassa fisicamente aos Estados.</td><td>Depende do grupo: MS (1A), Estados com repasse do MS (1B), Estados com recursos próprios (2), municípios (3).</td></tr>
+        <tr><th>Execução / gestão</th><td><b>Municipal</b> (farmácias das UBS e Farmácia Básica).</td><td>Estadual e municipal, na ponta dos programas.</td><td><b>Estadual</b> — as Farmácias/Centrais de Medicamentos Especializados (as "farmácias de alto custo").</td></tr>
+        <tr><th>Norma-base</th><td>PRC GM/MS nº 6/2017, alterada pela <b>Portaria GM/MS nº 6.942/2025</b>.</td><td>PRC GM/MS nº 2/2017 e nº 6/2017.</td><td>Origem na <b>Portaria GM/MS nº 1.554/2013</b>; hoje na <b>PRC GM/MS nº 2/2017 (Anexo XXVIII)</b> e na <b>PRC GM/MS nº 6/2017 (arts. 535 a 552)</b>.</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <h3 style="font-family:var(--font-head);font-weight:800;font-size:17px;margin:26px 0 6px">5.1 · Componente Básico (CBAF) — os valores atualizados</h3>
+    <p>Destina-se aos agravos prevalentes na <b>atenção primária</b>. O financiamento é <b>tripartite</b>, expresso em <b>valores per capita por ano</b>. A <span class="hl">Portaria GM/MS nº 6.942, de 16 de junho de 2025</span>, que alterou a Portaria de Consolidação GM/MS nº 6/2017, reajustou esses valores e introduziu a <b>modulação da parcela federal pelo IDHM</b> do município: <b>quanto menor o IDHM, maior o repasse da União</b> — lógica de equidade.</p>
+
+    <div class="tbl-scroll">
+    <table class="tbl">
+      <thead><tr><th>Esfera</th><th>Critério</th><th>Valor per capita / ano</th></tr></thead>
+      <tbody>
+        <tr><th rowspan="5">União</th><td>Município com IDHM <b>muito alto</b></td><td><b>R$ 8,20</b></td></tr>
+        <tr><td>Município com IDHM <b>alto</b></td><td><b>R$ 8,30</b></td></tr>
+        <tr><td>Município com IDHM <b>médio</b></td><td><b>R$ 8,55</b></td></tr>
+        <tr><td>Município com IDHM <b>baixo</b></td><td><b>R$ 8,80</b></td></tr>
+        <tr><td>Município com IDHM <b>muito baixo</b></td><td><span class="hl">R$ 9,05</span></td></tr>
+        <tr><th>Estados / DF</th><td>Valor único</td><td><b>R$ 3,01</b></td></tr>
+        <tr><th>Municípios</th><td>Valor único</td><td><b>R$ 3,01</b></td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="trap"><span class="tag">⚠ Pegadinha de ouro</span>
+      O valor federal de <b>R$ 5,58 per capita/ano</b> — repetido em incontáveis apostilas, resumos e provas antigas — está <span class="hl">SUPERADO</span>. Desde a <b>Portaria GM/MS nº 6.942, de 16/06/2025</b>, a parcela da União vai de <b>R$ 8,20 a R$ 9,05</b>, conforme o <b>IDHM</b> do município, e as parcelas de Estados e Municípios são de <b>R$ 3,01</b> cada. Se a questão for de 2026/2027 e trouxer "R$ 5,58" ou "R$ 2,36 estadual/municipal", é distrator de norma revogada. Cuidado também com a inversão: <b>é o município com PIOR IDHM que recebe MAIS</b> da União, não o contrário.</div>
+
+    <div class="bizu"><span class="tag">★ Bizu</span> <b>"3,01 + 3,01 = 6,02 fixos; a União é que varia (8,20 → 9,05)."</b> Estado e município pagam <b>igual entre si</b> e <b>não variam</b>; a União <b>modula pelo IDHM</b>. E a direção da modulação: <b>IDHM baixo, repasse alto</b> — equidade, não igualdade.</div>
+
+    <p>Além dos medicamentos, os recursos do CBAF custeiam <b>insumos</b> (ex.: tiras reagentes, lancetas e seringas do Programa de Diabetes) e <b>medicamentos e insumos do componente de saúde da mulher/planejamento familiar</b>, fitoterápicos e homeopáticos padronizados. A aplicação dos recursos é vinculada — <b>não podem ser usados para pagar pessoal ou obras</b>.</p>
+
+    <h3 style="font-family:var(--font-head);font-weight:800;font-size:17px;margin:26px 0 6px">5.2 · Componente Estratégico (CESAF)</h3>
+    <p>Reúne os medicamentos de <b>programas estratégicos</b> — agravos com <b>perfil endêmico</b>, relevância em saúde pública e <b>protocolo/vigilância nacional</b>. A marca registrada é a <span class="hl">aquisição centralizada pelo Ministério da Saúde</span>, que compra e <b>distribui fisicamente</b> aos Estados, que repassam aos municípios. Não há repasse financeiro per capita: <b>o insumo chega, não o dinheiro</b>.</p>
+    <ul class="clean">
+      <li><b>Tuberculose</b> e <b>hanseníase</b>;</li>
+      <li><b>HIV/aids</b> e demais <b>infecções sexualmente transmissíveis (IST)</b>;</li>
+      <li><b>Endemias focais</b>: malária, leishmaniose, doença de Chagas, e outras doenças negligenciadas;</li>
+      <li><b>Influenza</b> (antivirais) e <b>tabagismo</b> (programa de cessação);</li>
+      <li><b>Imunobiológicos</b> (vacinas, soros e imunoglobulinas do PNI);</li>
+      <li><b>Sangue e hemoderivados</b>;</li>
+      <li><b>Alimentação e nutrição</b> (ex.: micronutrientes, suplementação de ferro e vitamina A).</li>
+    </ul>
+
+    <div class="bizu"><span class="tag">★ Bizu</span> Para lembrar o elenco do CESAF: <b>"THIS TIME"</b> → <b>T</b>uberculose, <b>H</b>anseníase, <b>I</b>ST/HIV, <b>S</b>angue e hemoderivados, <b>T</b>abagismo, <b>I</b>munobiológicos, <b>M</b>alária e endemias focais, <b>E</b>ndemia gripal (influenza) + alimentação e nutrição. Regra de bolso: <b>se é doença com vigilância epidemiológica e notificação, o medicamento é ESTRATÉGICO e vem pronto do MS.</b></div>
+
+    <h3 style="font-family:var(--font-head);font-weight:800;font-size:17px;margin:26px 0 6px">5.3 · Componente Especializado (CEAF) — os quatro grupos</h3>
+    <p>Definido como <b>estratégia de acesso a medicamentos no âmbito do SUS</b>, o CEAF é caracterizado pela <span class="hl">busca da garantia da integralidade do tratamento medicamentoso em nível ambulatorial</span>, cujas <b>linhas de cuidado estão definidas em Protocolos Clínicos e Diretrizes Terapêuticas (PCDT)</b> publicados pelo Ministério da Saúde. Base normativa: origem na <b>Portaria GM/MS nº 1.554/2013</b>, hoje consolidada na <b>PRC GM/MS nº 2/2017 (Anexo XXVIII)</b> e na <b>PRC GM/MS nº 6/2017 (arts. 535 a 552)</b>.</p>
+
+    <div class="tbl-scroll">
+    <table class="tbl">
+      <thead><tr><th>Grupo</th><th>Quem financia</th><th>Quem adquire</th><th>Quem executa / dispensa</th><th>Lógica</th></tr></thead>
+      <tbody>
+        <tr><th>1A</th><td><b>União (MS)</b> — 100%</td><td><span class="hl">Ministério da Saúde (aquisição centralizada)</span></td><td>Estados / DF</td><td>Maior complexidade, maior custo unitário, refratariedade a linhas anteriores. O MS compra e entrega o produto.</td></tr>
+        <tr><th>1B</th><td><b>União (MS)</b> — 100%</td><td><b>Estados / DF</b>, com <span class="hl">repasse financeiro do MS</span></td><td>Estados / DF</td><td>Mesma lógica do 1A, mas a compra é descentralizada: <b>o dinheiro é federal, a licitação é estadual</b>.</td></tr>
+        <tr><th>2</th><td><b>Estados / DF</b></td><td><b>Estados / DF</b> (recursos próprios)</td><td>Estados / DF</td><td>Responsabilidade estadual integral — financiamento <b>e</b> aquisição.</td></tr>
+        <tr><th>3</th><td><b>Tripartite</b> (é financiamento do <b>Componente Básico</b>)</td><td>Municípios (gestão municipal, conforme pactuação)</td><td>Municípios</td><td>Medicamentos do <b>CBAF</b> indicados pelos PCDT como <b>primeira linha de cuidado</b> para as doenças contempladas no CEAF.</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>O acesso ao CEAF depende de <b>abertura de processo administrativo</b> com documentação clínica (laudo LME, prescrição, exames), <b>análise da conformidade com o PCDT</b> (CID contemplado, critérios de inclusão e exclusão, exames comprobatórios) e <b>renovação periódica</b> com reavaliação de resposta terapêutica. A dispensação é <b>ambulatorial</b>.</p>
+
+    <div class="trap"><span class="tag">⚠ Pegadinha nº 1 — CESAF × CEAF</span>
+      As siglas são quase idênticas e as bancas exploram isso sem piedade. <b>CESAF = E de ESTRATÉGICO</b> (endemias/programas, aquisição <b>centralizada</b> pelo MS, financiamento <b>exclusivo da União</b>). <b>CEAF = ESPECIALIZADO</b> (PCDT, alto custo, <b>nível ambulatorial</b>, gestão <b>estadual</b>, dividido em <b>grupos 1A/1B/2/3</b>). Se a questão falar em <b>PCDT e grupos</b>, é <b>CEAF</b>; se falar em <b>tuberculose/HIV/imunobiológicos</b>, é <b>CESAF</b>.</div>
+
+    <div class="trap"><span class="tag">⚠ Pegadinha nº 2 — o Grupo 2</span>
+      <b>O Grupo 2 NÃO é do Ministério da Saúde.</b> É o grupo em que <b>o Estado financia E adquire</b> com recursos próprios. Da mesma forma, o <b>Grupo 3 não é do Estado</b>: são medicamentos do <b>Componente Básico</b>, indicados pelo PCDT como <b>primeira linha</b>, com <b>financiamento tripartite e gestão municipal</b>. E cuidado com a diferença fina entre 1A e 1B: <b>nos dois o dinheiro é federal</b> — o que muda é <b>quem faz a compra</b> (1A = o MS compra; 1B = o Estado compra com repasse do MS).</div>
+
+    <div class="bizu"><span class="tag">★ Bizu</span> Os quatro grupos do CEAF em uma frase: <b>"1A o MS <u>A</u>dquire; 1B o MS <u>B</u>anca e o Estado compra; 2 é <u>D</u>uplamente do Estado (paga e compra); 3 são <u>T</u>rês esferas (tripartite, básico, município)."</b> Contador de esferas: <b>1A e 1B → 1 esfera paga (União); 2 → 1 esfera (Estado); 3 → 3 esferas.</b></div>
+  </section>
+
+  <!-- 6 -->
+  <section id="financiamento">
+    <div class="sec-head"><span class="sec-num">06</span><h2>Financiamento — dos 6 blocos aos 2 blocos</h2></div>
+    <p>Até 2017, os recursos federais do SUS eram transferidos em <b>seis blocos</b> de financiamento (Atenção Básica; Atenção de Média e Alta Complexidade; Vigilância em Saúde; <b>Assistência Farmacêutica</b>; Gestão do SUS; Investimentos na Rede). A <span class="hl">Portaria GM/MS nº 3.992, de 28 de dezembro de 2017</span>, alterou a PRC GM/MS nº 6/2017 e <b>extinguiu esse arranjo</b>, passando a <b>dois blocos</b>:</p>
+
+    <div class="grid2">
+      <div class="box"><p><b>Bloco de Custeio das Ações e Serviços Públicos de Saúde</b></p><p>Reúne o custeio de tudo o que antes eram cinco blocos — inclusive a <span class="hl">Assistência Farmacêutica, que passou a ser um GRUPO dentro do Bloco de Custeio</span>. Os recursos ficam em <b>conta única</b> por bloco, com maior flexibilidade de aplicação, mas <b>vinculação de finalidade preservada</b> e prestação de contas por grupo.</p></div>
+      <div class="box"><p><b>Bloco de Investimento na Rede de Serviços Públicos de Saúde</b></p><p>Destinado a <b>obras, aquisição de equipamentos e material permanente</b> — despesas de capital. Não se mistura com custeio.</p></div>
+    </div>
+
+    <div class="trap"><span class="tag">⚠ Pegadinha</span>
+      <b>"Bloco da Assistência Farmacêutica" não existe mais</b> desde a Portaria GM/MS nº 3.992/2017. Quando a questão (ou uma norma antiga) citar o "Bloco da AF", leia como <b>grupo dentro do Bloco de Custeio</b>. Alternativa errada frequente: dizer que a Portaria 3.992/2017 criou <b>três</b> blocos, ou que ela <b>acabou com a vinculação</b> dos recursos — ela <b>flexibilizou a movimentação financeira</b>, mas a <b>finalidade continua vinculada</b>.</div>
+
+    <div class="note"><span class="tag">ℹ Pano de fundo constitucional</span>
+      <b>EC nº 29/2000</b> — estabeleceu a obrigatoriedade de aplicação de percentuais mínimos em ações e serviços públicos de saúde pelas três esferas. <b>LC nº 141/2012</b> — regulamentou a EC 29 e fixou os pisos: <b>Municípios e DF: 15%</b> da receita de impostos e transferências; <b>Estados e DF: 12%</b>; a União, pelo critério então vigente, aplicava o montante do ano anterior corrigido pela variação nominal do PIB (regra depois alterada pela EC 86/2015 e pela EC 95/2016). A LC 141 também define o que <b>é</b> e o que <b>não é</b> ação e serviço público de saúde — e a <b>aquisição de medicamentos</b> conta; o <b>saneamento em bloco</b> e a <b>merenda escolar</b>, não.</div>
+  </section>
+
+  <!-- 7 -->
+  <section id="qualifar">
+    <div class="sec-head"><span class="sec-num">07</span><h2>QUALIFAR-SUS — os 4 eixos ★</h2></div>
+    <p>O <b>Programa Nacional de Qualificação da Assistência Farmacêutica no âmbito do SUS (QUALIFAR-SUS)</b> foi instituído pela <span class="hl">Portaria GM/MS nº 1.214, de 13 de junho de 2012</span> (hoje incorporada às Portarias de Consolidação). Objetivo: <b>contribuir para o aperfeiçoamento, a implementação e a integração sistêmica da AF nas Redes de Atenção à Saúde</b>, qualificando serviços, práticas e a gestão. Estrutura-se em <span class="hl">quatro eixos</span>.</p>
+
+    <div class="tbl-scroll">
+    <table class="tbl">
+      <thead><tr><th>Eixo</th><th>Objeto</th><th>Traduzindo</th></tr></thead>
+      <tbody>
+        <tr><th>Estrutura</th><td>Contribuir para a <b>estruturação física e tecnológica</b> dos serviços de AF e para a <b>qualificação dos recursos humanos</b>.</td><td>Farmácia com área adequada, mobiliário, equipamentos, condições de armazenamento, computador e farmacêutico no quadro. É o eixo do <b>"lugar e das pessoas"</b>.</td></tr>
+        <tr><th>Educação</th><td>Promover a <b>educação permanente e a capacitação</b> dos profissionais envolvidos na AF, com foco na qualificação dos processos de trabalho.</td><td>Formação continuada, cursos, apoio institucional. É o eixo do <b>"saber fazer"</b>.</td></tr>
+        <tr><th>Informação</th><td>Produzir e disseminar <b>informação e evidência</b> para subsidiar a gestão e a tomada de decisão; qualificar os <b>sistemas de informação</b> da AF.</td><td>Registro de dados no sistema (ex.: HÓRUS/BNAFAR), monitoramento, indicadores. É o eixo do <b>"dado que vira decisão"</b>.</td></tr>
+        <tr><th>Cuidado</th><td>Inserir a AF nas práticas <b>clínicas</b>, contribuindo para a <b>integralidade do cuidado</b> e para o <b>uso racional</b>.</td><td>Farmacêutico atuando na clínica: dispensação orientada, revisão da farmacoterapia, atenção farmacêutica. É o eixo do <b>"paciente"</b>.</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <div class="bizu"><span class="tag">★ Bizu</span> <b>"E-E-I-C"</b> → <b>"<u>É</u> <u>E</u>ssencial <u>I</u>nformar o <u>C</u>uidado"</b>: <b>E</b>strutura, <b>E</b>ducação, <b>I</b>nformação, <b>C</b>uidado. Uma segunda âncora, se preferir imagens: os quatro eixos respondem a <b>"onde" (Estrutura), "quem sabe" (Educação), "o que se registra" (Informação) e "para quem" (Cuidado)</b>.</div>
+
+    <div class="trap"><span class="tag">⚠ Pegadinha</span>
+      A banca troca um eixo por um vocábulo plausível que <b>não existe</b> no programa. <span class="hl">NÃO são eixos do QUALIFAR-SUS:</span> "Financiamento", "Gestão", "Assistência", "Logística", "Avaliação", "Controle Social", "Uso Racional". São <b>exatamente quatro</b>: <b>Estrutura, Educação, Informação e Cuidado</b>. Outra confusão comum: atribuir o QUALIFAR-SUS à Resolução CNS 338/2004 — <b>não</b>: é a <b>Portaria GM/MS nº 1.214/2012</b>.</div>
+  </section>
+
+  <!-- 8 -->
+  <section id="judicializacao">
+    <div class="sec-head"><span class="sec-num">08</span><h2>Judicialização e estratégias de acesso</h2></div>
+    <p><b>Judicialização da saúde</b> é o fenômeno pelo qual o cidadão recorre ao <b>Poder Judiciário</b> para obter prestações de saúde — sobretudo medicamentos — que não lhe foram fornecidas administrativamente. Cresceu de forma acelerada e hoje representa um dos maiores desafios de gestão da AF, com impacto orçamentário desproporcional ao número de beneficiados.</p>
+
+    <p><b>Causas mais citadas:</b></p>
+    <ul class="clean">
+      <li><b>Desabastecimento</b> e falhas do ciclo (programação subdimensionada, atraso na licitação, ruptura de estoque);</li>
+      <li><b>Desconhecimento</b> do usuário e do prescritor sobre as listas oficiais e os fluxos do CEAF;</li>
+      <li><b>Prescrição fora do PCDT</b> ou de medicamento <b>não incorporado</b> — inclusive <b>sem registro na ANVISA</b> ou de uso <b>off-label</b>;</li>
+      <li><b>Defasagem</b> entre a inovação disponível no mercado e o ritmo da incorporação;</li>
+      <li><b>Indução da demanda</b> por interesse comercial;</li>
+      <li>Barreiras burocráticas de acesso (documentação, deslocamento, renovação de processo).</li>
+    </ul>
+
+    <div class="box">
+      <p><b>Resposta institucional — a lógica do "acesso conforme a política":</b></p>
+      <ul class="clean" style="margin-bottom:0">
+        <li>O SUS financia e dispensa conforme a <b>RENAME</b> e os <b>PCDT</b>. O que não está incorporado, em regra, não é obrigação de fornecimento — daí a importância do rito da <b>CONITEC</b> como via <b>legítima e coletiva</b> de ampliação do acesso (qualquer interessado pode <b>demandar a incorporação</b>).</li>
+        <li><b>NatJus</b> (Núcleos de Apoio Técnico do Judiciário) e o <b>e-NatJus</b>, estruturados pelo <b>CNJ</b> em articulação com o Ministério da Saúde: fornecem ao magistrado <b>notas técnicas baseadas em evidência</b> antes da decisão, reduzindo decisões contrárias à evidência disponível. Também atuam os <b>Comitês Estaduais de Saúde</b> do Judiciário.</li>
+        <li>Tribunais superiores firmaram <b>teses/critérios</b> para o fornecimento de medicamentos não padronizados — em linhas gerais exigindo <b>laudo médico fundamentado</b> quanto à imprescindibilidade e à ineficácia das alternativas do SUS, <b>registro na ANVISA</b> e demonstração de <b>incapacidade financeira</b>. Para a prova de farmácia, o que importa é a <b>lógica</b>: registro sanitário + evidência + esgotamento das alternativas oficiais.</li>
+      </ul>
+    </div>
+
+    <div class="note"><span class="tag">ℹ Farmácia Popular do Brasil</span>
+      Programa de <b>ampliação do acesso</b> criado pela <b>Lei nº 10.858/2004</b> e pelo <b>Decreto nº 5.090/2004</b>, operando por meio da <b>rede privada credenciada</b> ("Aqui Tem Farmácia Popular"), com <b>copagamento</b> ou <b>gratuidade</b> para os grupos priorizados — historicamente <b>hipertensão, diabetes e asma</b> gratuitos, e demais linhas (contracepção, dislipidemia, osteoporose, rinite, Parkinson, glaucoma, fraldas geriátricas) com desconto. <b>Não substitui</b> o Componente Básico: é <b>complementar</b> e opera fora da rede própria do SUS.</div>
+
+    <div class="trap"><span class="tag">⚠ Pegadinha</span>
+      Errado dizer que a <b>Farmácia Popular é um dos componentes da Assistência Farmacêutica</b> — <span class="hl">os componentes são apenas três (Básico, Estratégico e Especializado)</span>; a Farmácia Popular é um <b>programa de acesso</b> à parte, executado por credenciamento de farmácias privadas. Também é errado afirmar que a <b>judicialização é vedada</b> ou que o SUS <b>nunca</b> fornece medicamento fora da RENAME: fornece por determinação judicial e, excepcionalmente, por vias administrativas específicas — a regra geral, porém, é a política.</div>
+  </section>
+
+  <!-- 9 -->
+  <section id="selecao">
+    <div class="sec-head"><span class="sec-num">09</span><h2>Seleção, padronização e a CFT</h2></div>
+    <p>A <b>seleção</b> é a etapa que sustenta o restante do ciclo. Ela é conduzida pela <span class="hl">Comissão de Farmácia e Terapêutica (CFT)</span> — instância <b>colegiada, multiprofissional e consultiva/deliberativa</b>, formalmente instituída no hospital ou na secretaria de saúde, cuja função é padronizar o elenco, avaliar solicitações de inclusão/exclusão e assessorar tecnicamente a instituição.</p>
+
+    <div class="grid2">
+      <div class="box"><p><b>Composição típica da CFT</b></p><p>Médicos de diferentes especialidades, <b>farmacêuticos</b> (frequentemente na secretaria executiva, pelo domínio técnico do processo), enfermeiros e, conforme o serviço, representantes de infectologia/CCIH, nutrição, gestão e controle social. Deve ter <b>regimento interno</b>, periodicidade definida de reuniões e <b>critérios explícitos e públicos</b> de decisão, com declaração de conflito de interesses.</p></div>
+      <div class="box"><p><b>Produtos da seleção</b></p><ul class="clean" style="margin-bottom:0"><li><b>Lista padronizada</b> (REMUME / RESME / padronização hospitalar);</li><li><b>Formulário Terapêutico</b> — documento com informações técnico-científicas isentas sobre cada item padronizado (indicações, posologia, ajustes, interações, orientações de dispensação). O nacional é o <b>Formulário Terapêutico Nacional</b>, complementar à RENAME;</li><li><b>Protocolos e fluxos</b> de uso e de solicitação de item não padronizado.</li></ul></div>
+    </div>
+
+    <p><b>Critérios de seleção (memorizar a hierarquia):</b></p>
+    <ul class="clean">
+      <li><b>1º Eficácia comprovada</b> — evidência científica de melhor qualidade disponível para a indicação;</li>
+      <li><b>2º Segurança</b> — melhor perfil de reações adversas e interações; preferência por fármacos com experiência de uso consolidada;</li>
+      <li><b>3º Qualidade</b> — registro na ANVISA, fornecedores qualificados, estabilidade;</li>
+      <li><b>4º Custo / custo-efetividade</b> — <span class="hl">o custo é critério de desempate entre alternativas comparáveis, nunca o critério inicial</span>;</li>
+      <li><b>5º Comodidade posológica e adesão</b>; disponibilidade no mercado; existência de <b>apresentação adequada</b> à população-alvo (pediatria, disfagia).</li>
+      <li>Preferência por <b>monofármacos</b> sobre associações em dose fixa (salvo vantagem comprovada) e adoção da <b>DCB</b> na padronização.</li>
+    </ul>
+
+    <div class="bizu"><span class="tag">★ Bizu</span> Ordem dos critérios: <b>E-S-Q-C</b> → <b>"<u>E</u>ficácia, <u>S</u>egurança, <u>Q</u>ualidade, <u>C</u>usto"</b> — nessa ordem, sempre. Frase: <b>"Eu Sempre Quero Comprovação."</b> Se a alternativa colocar o <b>preço na frente da eficácia</b>, está errada.</div>
+
+    <div class="trap"><span class="tag">⚠ Pegadinha</span>
+      A CFT <b>não é órgão de compras</b> nem de fiscalização de prescrição — ela <b>padroniza e assessora tecnicamente</b>. E cuidado com a inversão de sentido: uma lista padronizada <b>enxuta</b> é sinal de <b>boa</b> seleção (menos itens, mais qualidade, melhor gestão), e não de restrição de acesso. Também é errado dizer que a seleção é atribuição <b>exclusiva</b> do farmacêutico: é <b>multiprofissional</b>, com o farmacêutico como articulador técnico.</div>
+  </section>
+
+  <!-- 10 -->
+  <section id="indicadores">
+    <div class="sec-head"><span class="sec-num">10</span><h2>Indicadores e ferramentas de gestão</h2></div>
+    <p>A avaliação da AF usa indicadores que a OMS agrupa classicamente em <b>estrutura</b>, <b>processo</b> e <b>resultado</b> (ou, na versão de uso de medicamentos: <b>indicadores de prescrição</b>, <b>de atendimento ao paciente</b> e <b>de estabelecimento de saúde</b>).</p>
+
+    <div class="tbl-scroll">
+    <table class="tbl">
+      <thead><tr><th>Categoria</th><th>Exemplos</th></tr></thead>
+      <tbody>
+        <tr><th>Estrutura</th><td><b>Farmacêutico responsável técnico</b>; área física adequada; <b>CFT constituída</b>; sistema informatizado implantado; REMUME atualizada.</td></tr>
+        <tr><th>Processo</th><td><b>Percentual de disponibilidade</b> dos itens da lista padronizada (indicador-síntese do abastecimento); <b>nº médio de medicamentos por prescrição</b>; <b>% de prescrições por DCB/genérico</b>; <b>% com antibiótico</b>; <b>% com injetável</b>; <b>% de itens efetivamente dispensados</b>; tempo médio de dispensação; perdas por validade.</td></tr>
+        <tr><th>Resultado</th><td>Conhecimento do usuário sobre a posologia após a dispensação; <b>adesão ao tratamento</b>; controle da condição clínica (PA, HbA1c); redução de eventos adversos; satisfação do usuário.</td></tr>
+      </tbody>
+    </table>
+    </div>
+
+    <p>Do lado logístico, três ferramentas (detalhadas no guia próprio de gestão e logística):</p>
+    <ul class="clean">
+      <li><b>Curva ABC</b> — pelo <b>valor financeiro</b>: <b>A</b> ≈ 20% dos itens e ~80% do valor; <b>B</b> intermediário; <b>C</b> muitos itens, pouco valor.</li>
+      <li><b>Curva XYZ</b> — pela <b>criticidade</b>: <b>X</b> pouco crítico, <b>Y</b> intermediário, <b>Z</b> <span class="hl">imprescindível</span> (falta = risco de vida ou paralisação do serviço).</li>
+      <li><b>Curva PQR / classificação VEN</b> — popularidade de consumo e triagem em <b>V</b>ital, <b>E</b>ssencial, <b>N</b>ão essencial.</li>
+    </ul>
+
+    <div class="trap"><span class="tag">⚠ Pegadinha</span>
+      <b>ABC ≠ XYZ.</b> A curva <b>ABC é financeira</b> (valor); a <b>XYZ é de criticidade clínica</b>. Um item pode ser <b>C</b> (baratíssimo) e <b>Z</b> (imprescindível) ao mesmo tempo — a adrenalina é o exemplo canônico. A gestão inteligente cruza as duas: itens <b>AZ</b> exigem controle máximo. Na curva ABC, os itens <b>A</b> são <b>poucos itens com muito valor</b> — inverter isso é o erro clássico.</div>
+  </section>
+
+  <!-- 11 -->
+  <section id="autoteste">
+    <div class="sec-head"><span class="sec-num">11</span><h2>Autoteste ★</h2></div>
+    <p>Responda mentalmente e clique para conferir.</p>
+    <div class="fc-grid" id="caseGrid"></div>
+  </section>
+
+  <footer>
+    <b>Fontes-base:</b> Portaria GM/MS nº 3.916/1998 (PNM); Resolução CNS nº 338/2004 (PNAF); Lei nº 8.080/1990 com as alterações da Lei nº 12.401/2011; Decreto nº 7.508/2011; Portaria GM/MS nº 1.214/2012 (QUALIFAR-SUS); Portaria GM/MS nº 1.554/2013 (CEAF); Portarias de Consolidação GM/MS nº 2/2017 (Anexo XXVIII) e nº 6/2017 (arts. 535 a 552); Portaria GM/MS nº 3.992/2017 (blocos de financiamento); <b>Portaria GM/MS nº 6.942, de 16/06/2025</b> (valores per capita do CBAF); RENAME 2024; EC nº 29/2000 e LC nº 141/2012. <b>Observação:</b> conteúdo resumido e parafraseado para estudo — confronte sempre com a redação vigente das normas e com o edital da sua banca.
+  </footer>
+
+</div>
+
+<script>
+  const cases = [
+    {q:"Qual norma instituiu a Política Nacional de Assistência Farmacêutica e qual instituiu a Política Nacional de Medicamentos?", a:"PNAF = Resolução CNS nº 338/2004. PNM = Portaria GM/MS nº 3.916/1998. Cuidado com o instrumento: a PNAF veio por RESOLUÇÃO do Conselho Nacional de Saúde; a PNM, por PORTARIA ministerial. A PNAF é posterior e mais ampla, integrando a Política Nacional de Saúde."},
+    {q:"Enumere, na ordem, as etapas do ciclo da Assistência Farmacêutica e diga qual é a etapa central.", a:"Seleção, programação, aquisição, armazenamento, distribuição e dispensação. A etapa central/norteadora é a SELEÇÃO — é ela que define tudo o que será programado, comprado, estocado e dispensado. O ciclo é sistêmico: uma etapa mal executada compromete todas as demais."},
+    {q:"De quanto em quanto tempo a RENAME é atualizada e qual a edição vigente?", a:"A cada 2 anos (bienalmente) — NÃO é anual. A edição vigente é a RENAME 2024. Base legal: Lei nº 12.401/2011 (que alterou a Lei 8.080/90) e Decreto nº 7.508/2011. As listas complementares são a RESME (estadual) e a REMUME (municipal), e o ente que amplia assume o financiamento."},
+    {q:"A CONITEC incorpora tecnologias ao SUS? Qual o prazo do processo?", a:"Não — ela ASSESSORA o Ministério da Saúde na incorporação, exclusão ou alteração de tecnologias e na constituição/alteração de PCDT. A decisão final é do Ministério da Saúde (Secretário da área). Prazo: até 180 dias do protocolo, prorrogável por mais 90 dias — teto de 270 dias. Exige registro prévio na ANVISA e consulta pública."},
+    {q:"Quais os valores per capita/ano do Componente Básico após a Portaria GM/MS nº 6.942, de 16/06/2025?", a:"União: de R$ 8,20 a R$ 9,05 conforme o IDHM do município (muito alto 8,20; alto 8,30; médio 8,55; baixo 8,80; muito baixo 9,05) — quanto menor o IDHM, maior o repasse. Estados/DF: R$ 3,01. Municípios: R$ 3,01. O valor federal de R$ 5,58 está SUPERADO."},
+    {q:"Diferencie CESAF e CEAF em uma frase cada.", a:"CESAF (Estratégico): medicamentos de programas estratégicos/endemias (tuberculose, hanseníase, HIV/IST, malária e endemias focais, influenza, tabagismo, imunobiológicos, sangue e hemoderivados, alimentação e nutrição), com financiamento exclusivo da União e AQUISIÇÃO CENTRALIZADA pelo MS. CEAF (Especializado): garantia da integralidade do tratamento em nível AMBULATORIAL, com linhas de cuidado definidas em PCDT, gestão estadual e divisão em grupos 1A, 1B, 2 e 3."},
+    {q:"Quem financia e quem adquire cada grupo do CEAF?", a:"1A: financia a União e ADQUIRE o Ministério da Saúde (centralizado). 1B: financia a União, mas ADQUIREM os Estados, com repasse financeiro do MS. 2: financiamento E aquisição pelos Estados/DF. 3: medicamentos do Componente Básico indicados pelo PCDT como 1ª linha de cuidado — financiamento tripartite e gestão municipal."},
+    {q:"O que mudou no financiamento federal do SUS com a Portaria GM/MS nº 3.992/2017?", a:"Extinguiu os 6 blocos de financiamento e criou 2: Bloco de Custeio das Ações e Serviços Públicos de Saúde e Bloco de Investimento na Rede de Serviços Públicos de Saúde. A Assistência Farmacêutica deixou de ser um bloco e passou a ser um GRUPO dentro do Bloco de Custeio. A movimentação ficou mais flexível, mas a vinculação de finalidade permanece."},
+    {q:"Quais são os quatro eixos do QUALIFAR-SUS e qual a norma que o instituiu?", a:"Estrutura, Educação, Informação e Cuidado — instituído pela Portaria GM/MS nº 1.214/2012. Estrutura = estruturação física/tecnológica e recursos humanos; Educação = educação permanente; Informação = produção e uso da informação e qualificação dos sistemas; Cuidado = inserção da AF nas práticas clínicas e uso racional. Mnemônico: 'É Essencial Informar o Cuidado'."},
+    {q:"Quais os critérios de seleção de medicamentos e em que ordem se aplicam?", a:"Eficácia, Segurança, Qualidade e só então Custo/custo-efetividade ('Eu Sempre Quero Comprovação'), somados a comodidade posológica, disponibilidade e adequação da apresentação. O custo é critério de desempate entre alternativas comparáveis, jamais o primeiro filtro. Quem conduz é a CFT — colegiada e multiprofissional —, que gera a lista padronizada e o formulário terapêutico."},
+    {q:"A Farmácia Popular é um componente da Assistência Farmacêutica?", a:"Não. Os componentes são apenas três: Básico, Estratégico e Especializado. A Farmácia Popular (Lei nº 10.858/2004 e Decreto nº 5.090/2004) é um PROGRAMA de ampliação do acesso, executado por credenciamento da rede privada ('Aqui Tem Farmácia Popular'), com gratuidade ou copagamento — complementar, e não substitutivo, ao Componente Básico."},
+    {q:"Qual a diferença entre a curva ABC e a curva XYZ, e por que cruzá-las?", a:"ABC classifica os itens pelo VALOR financeiro (A = poucos itens, muito valor); XYZ classifica pela CRITICIDADE clínica (Z = imprescindível). Um item pode ser C e Z ao mesmo tempo — a adrenalina é o exemplo clássico: barata e vital. Cruzar as curvas identifica os itens AZ, que exigem o controle gerencial mais rigoroso."}
+  ];
+  const grid = document.getElementById('caseGrid');
+  cases.forEach(c=>{
+    const b=document.createElement('button');b.className='fc';b.type='button';
+    b.innerHTML=`<span class="q">${c.q}</span><span class="hint">Ver resposta</span><span class="ans">${c.a}</span>`;
+    b.addEventListener('click',()=>b.classList.toggle('open'));
+    grid.appendChild(b);
+  });
+</script>
+</body>
+</html>
