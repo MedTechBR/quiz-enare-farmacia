@@ -80,6 +80,11 @@
     border-radius:8px;padding:3px 9px}
   .badge{font-size:.7rem;text-transform:uppercase;letter-spacing:.06em;color:var(--ink-soft);
     border:1px solid var(--line);border-radius:999px;padding:3px 10px}
+  /* procedência: questão de prova REAL (banca/ano/instituição) */
+  .fonte{font-size:.7rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;
+    color:var(--teal-deep);background:var(--teal-tint);border:1px solid var(--teal);
+    border-radius:999px;padding:3px 10px;white-space:nowrap}
+  .fonte a{color:inherit;text-decoration:none;border-bottom:1px dotted currentColor}
   .enun{font-size:1.02rem;color:var(--ink);margin-bottom:16px;white-space:pre-line}
   .enun em{font-style:italic;color:var(--ink-soft)}
 
@@ -566,6 +571,7 @@ const BANK = (window.BANCO_EDITAL && Array.isArray(window.BANCO_EDITAL))
    ============================================================ */
 const STORE_KEY = "enareFarmaProgress_v1";
 const POS_KEY = "enareFarmaPos_v1";   // continua de onde parou
+const FILTRO_REAIS = "__provas_reais__";   // filtro especial: só questões de prova real
 /* ============================================================
    CHAVE ESTÁVEL DA QUESTÃO
    O progresso NUNCA é guardado pela posição no banco — só por uma chave
@@ -634,15 +640,23 @@ function buildFilter(){
   const op = t => `<option value="${t}">${t} (${cont[t]})</option>`;
   const grupo = (rot, arr) => arr.length ? `<optgroup label="${rot}">${arr.map(op).join("")}</optgroup>` : "";
   const sel = document.getElementById("filter");
+  const nReais = BANK.filter(q=>q.fonte).length;
   sel.innerHTML =
     `<option value="Todos os temas">Todos os temas (${BANK.length})</option>` +
+    (nReais ? `<option value="${FILTRO_REAIS}">★ Só questões de prova real (${nReais})</option>` : "") +
     grupo("1 · Conhecimentos Básicos em Saúde", basicos) +
     grupo("6 · Conhecimentos Específicos — Farmácia", farma) +
     grupo("Outros", outros);
   sel.onchange = ()=>{ activeFilter = sel.value; applyFilter(); };
 }
+/* um único lugar decide se a questão entra no filtro atual */
+function passaFiltro(i){
+  if(activeFilter === "Todos os temas") return true;
+  if(activeFilter === FILTRO_REAIS) return !!BANK[i].fonte;
+  return BANK[i].tema === activeFilter;
+}
 function applyFilter(){
-  order = BANK.map((_,i)=>i).filter(i=> activeFilter==="Todos os temas" || BANK[i].tema===activeFilter);
+  order = BANK.map((_,i)=>i).filter(passaFiltro);
   pos = 0;
   render();
 }
@@ -665,6 +679,15 @@ function refreshStats(){
 
 /* ---- render da questão ---- */
 const LETTERS = ["A","B","C","D","E"];
+/* rótulo curto da procedência: "FGV · ENARE 2024" (instituição some se for igual à banca) */
+function rotuloFonte(f){
+  if(!f) return "";
+  const banca = f.banca || "", inst = f.instituicao || "", ano = f.ano || "";
+  const quem = (inst && inst !== banca) ? `${banca} · ${inst}` : (banca || inst);
+  /* não repete o ano quando a instituição já o traz (ex.: "ENARE 2024/2025") */
+  const temAno = ano && new RegExp(`\\b${ano}\\b`).test(quem);
+  return temAno ? quem : [quem, ano].filter(Boolean).join(" ");
+}
 function render(){
   refreshStats();
   const card = document.getElementById("card");
@@ -679,6 +702,7 @@ function render(){
     <div class="qhead">
       <span class="num">Questão ${pos+1} de ${order.length}</span>
       <span class="badge">${q.tema}</span>
+      ${q.fonte ? `<span class="fonte" title="Questão de prova real">★ ${rotuloFonte(q.fonte)}</span>` : ""}
     </div>
     <div class="enun">${q.q}</div>
     ${q.img?`<figure class="qfig"><img src="${q.img}" alt="Figura da questão"></figure>`:""}
@@ -812,7 +836,7 @@ buildFilter();
     const sel=document.getElementById("filter");
     if([...sel.options].some(o=>o.value===saved.filter)){ activeFilter=saved.filter; sel.value=saved.filter; }
   }
-  order = BANK.map((_,i)=>i).filter(i=> activeFilter==="Todos os temas" || BANK[i].tema===activeFilter);
+  order = BANK.map((_,i)=>i).filter(passaFiltro);
   pos = 0;
   /* retoma pela CHAVE da questão (formato antigo por índice é ignorado) */
   if(saved && typeof saved.ck==="string"){
