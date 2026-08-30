@@ -208,6 +208,64 @@
   .cr-tema{font:inherit;font-size:.73rem;font-weight:700;padding:3px 9px;border-radius:999px;
     border:1px solid var(--teal);background:var(--paper);color:var(--teal-deep);cursor:pointer}
   .cr-tema:hover{background:var(--teal);color:#fff}
+  .sim-hoje .topic{border-color:var(--teal);box-shadow:0 0 0 2px var(--teal-tint),var(--shadow)}
+  .sim-hoje .kind{color:var(--teal-deep);font-weight:800}
+  .sim-atras .topic{border-color:var(--wrong)}
+  .sim-atras .kind{color:var(--wrong);font-weight:800}
+  /* ---------- IMPRESSÃO / PDF do simulado ---------- */
+  #printArea{display:none}
+  .sim-item{position:relative}
+  .sim-print{position:absolute;top:8px;right:8px;font:inherit;font-size:.72rem;font-weight:700;
+    border:1px solid var(--line);background:var(--paper);color:var(--teal-deep);
+    border-radius:999px;padding:4px 9px;cursor:pointer;z-index:2}
+  .sim-print:hover{border-color:var(--teal);background:var(--teal-tint)}
+  /* modal de opções */
+  .pm-back{position:fixed;inset:0;background:rgba(20,48,46,.45);display:flex;align-items:center;
+    justify-content:center;padding:18px;z-index:60}
+  .pm{background:var(--paper);border-radius:16px;box-shadow:var(--shadow);max-width:420px;width:100%;
+    padding:18px 20px;border:1px solid var(--line)}
+  .pm h3{margin:0 0 4px;font-size:1rem;color:var(--ink)}
+  .pm p{margin:0 0 14px;font-size:.84rem;color:var(--ink-soft);line-height:1.5}
+  .pm-op{display:block;width:100%;text-align:left;font:inherit;font-size:.88rem;color:var(--ink);
+    background:var(--paper);border:1.5px solid var(--line);border-radius:11px;padding:10px 12px;
+    margin-bottom:8px;cursor:pointer}
+  .pm-op:hover{border-color:var(--teal);background:var(--teal-tint)}
+  .pm-op b{display:block;color:var(--teal-deep)}
+  .pm-op span{font-size:.78rem;color:var(--ink-soft)}
+  .pm-chk{display:flex;align-items:center;gap:8px;font-size:.84rem;color:var(--ink);margin:4px 0 14px}
+  .pm-fim{display:flex;justify-content:flex-end;gap:8px}
+
+  @media print{
+    /* some com o app inteiro; imprime só o caderno */
+    body > *{display:none !important}
+    body > #printArea{display:block !important}
+    body{background:#fff;margin:0;padding:0}
+    @page{size:A4;margin:14mm 12mm}
+    #printArea{color:#000;font-size:10.5pt;line-height:1.42}
+    .pr-cab{border-bottom:2px solid #000;padding-bottom:8px;margin-bottom:14px}
+    .pr-cab h1{font-size:15pt;margin:0 0 3px}
+    .pr-cab .sub{font-size:9pt;color:#333}
+    .pr-id{display:flex;gap:16px;margin-top:9px;font-size:9pt}
+    .pr-id span{flex:1;border-bottom:1px solid #000;padding-bottom:2px}
+    .pq{break-inside:avoid;page-break-inside:avoid;margin:0 0 13px}
+    .pq .en{margin:0 0 5px;text-align:justify;white-space:pre-line}
+    .pq .en b{font-weight:700}
+    .pq .op{margin:0 0 2px 14px;text-indent:-14px}
+    .pq img{max-width:78%;max-height:88mm;display:block;margin:6px 0}
+    .pq .num{font-weight:700}
+    .pr-tit{font-size:12pt;font-weight:700;border-bottom:1.5px solid #000;
+      margin:20px 0 10px;padding-bottom:4px;break-before:page;page-break-before:always}
+    .pr-tit.sq{break-before:auto;page-break-before:auto}
+    .pg{break-inside:avoid;page-break-inside:avoid;margin:0 0 10px;font-size:9.6pt}
+    .pg .cab{font-weight:700}
+    .pg .cm{color:#222}
+    /* folha de respostas */
+    .pr-fr{display:grid;grid-template-columns:repeat(4,1fr);gap:3px 14px;font-size:9pt}
+    .pr-fr div{border-bottom:1px dotted #999;padding:2px 0}
+    .pr-fr b{display:inline-block;width:26px}
+    .pr-rod{margin-top:16px;padding-top:6px;border-top:1px solid #999;font-size:8pt;color:#555}
+    a[href]:after{content:""}
+  }
   /* faixa de backup/proteção dos dados */
   .bkp{display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:var(--paper);
     border:1.5px solid var(--line);border-radius:14px;padding:11px 14px;margin-bottom:12px;box-shadow:var(--shadow)}
@@ -445,6 +503,7 @@
         <button class="ghost" data-simback>← Sair</button>
         <span class="vt" data-simtitle></span>
         <button class="ghost" data-simpalette>Nº das questões</button>
+        <button class="ghost" data-simprint>🖨 PDF</button>
         <button class="btn" data-simfinish>Finalizar</button>
       </div>
       <div class="sim-palette" data-palette hidden></div>
@@ -553,7 +612,10 @@
   </div>
 </div>
 
+<div id="printArea" aria-hidden="true"></div>
+
 <script src="simulados.js"></script>
+<script src="simulados_diarios.js"></script>
 <script src="migracao_respostas.js"></script>
 <script src="incidencia.js"></script>
 <script src="cronograma.js"></script>
@@ -1400,6 +1462,40 @@ document.getElementById("tabBtnRF").onclick = ()=> setTab("revisao");
 document.getElementById("tabBtnLE").onclick = ()=> setTab("logerros");
 
 /* ============================================================
+   SIMULADOS DIÁRIOS — um por dia até a prova.
+   O arquivo guarda só a CHAVE da questão + a nova posição da correta
+   (40 KB em vez de 1,9 MB); a questão é remontada aqui a partir do BANK.
+   ============================================================ */
+(function(){
+  if(!window.SIMULADOS_DIARIOS || !BANK.length) return;
+  const porChave = Object.create(null);
+  BANK.forEach((q,i)=>{ porChave[CHAVES[i]] = q; });
+  const VERD = /^(\s*(?:<b>\s*)?(?:Corret[ao]|Gabarito|Resposta|Alternativa\s+correta|Letra)\s*[:\-—]?\s*(?:<\/b>\s*)?)([A-E])\b/i;
+  let perdidas = 0;
+  const expandidos = window.SIMULADOS_DIARIOS.map(sm => ({
+    id: sm.id, data: sm.data, title: sm.title, sub: sm.sub,
+    questions: sm.questions.map(ref => {
+      const base = porChave[ref.k];
+      if(!base){ perdidas++; return null; }          // questão saiu do banco: descarta
+      const ops = base.ops.slice();
+      let correct = base.correct, c = base.c;
+      if(ref.a != null && ref.a < ops.length && ref.a !== correct){
+        const t = ops[correct]; ops[correct] = ops[ref.a]; ops[ref.a] = t;
+        correct = ref.a;
+        const m = String(c||"").match(VERD);          // veredito segue a nova letra
+        if(m && m[2] !== LETTERS[correct]) c = c.slice(0, m[1].length) + LETTERS[correct] + c.slice(m[1].length + 1);
+      }
+      const o = {q:base.q, ops, correct, c, tema:base.tema};
+      if(base.img) o.img = base.img;
+      if(base.fonte) o.fonte = base.fonte;
+      return o;
+    }).filter(Boolean)
+  })).filter(sm => sm.questions.length);
+  window.SIMULADOS = expandidos.concat(window.SIMULADOS || []);
+  if(perdidas) console.warn("simulados diários: "+perdidas+" questões não encontradas no banco");
+})();
+
+/* ============================================================
    SIMULADO — provas reais (window.SIMULADOS), com nota final
    ============================================================ */
 (function(){
@@ -1428,10 +1524,24 @@ document.getElementById("tabBtnLE").onclick = ()=> setTab("logerros");
       const status = (st&&st.finished) ? "✓ Concluído — toque para ver a nota"
                     : answered ? `Em andamento · ${answered}/${total} respondidas`
                     : `${total} questões · toque para começar`;
+      const wrap=document.createElement("div"); wrap.className="sim-item";
       const b=document.createElement("button"); b.className="topic"; b.type="button";
-      b.innerHTML=`<span class="kind">Simulado</span><h3>${sim.title}</h3><p>${sim.sub}</p><span class="n">${status}</span>`;
+      /* destaca o simulado do dia e marca os que já passaram sem serem feitos */
+      let sel="Simulado", extra="";
+      if(sim.data){
+        const h=hojeISO();
+        if(sim.data===h){ sel="▶ Hoje"; wrap.classList.add("sim-hoje"); }
+        else if(sim.data<h && !(st&&st.finished)){ sel="Atrasado"; wrap.classList.add("sim-atras"); }
+        else if(sim.data>h){ const d=Math.round((new Date(sim.data)-new Date(h))/86400000);
+                             extra=` · em ${d} dia${d>1?"s":""}`; }
+      }
+      b.innerHTML=`<span class="kind">${sel}</span><h3>${sim.title}</h3><p>${sim.sub}</p><span class="n">${status}${extra}</span>`;
       b.onclick=()=>openSim(sim);
-      grid.appendChild(b);
+      const pr=document.createElement("button"); pr.className="sim-print"; pr.type="button";
+      pr.textContent="🖨 PDF"; pr.title="Imprimir ou salvar em PDF";
+      pr.onclick=(e)=>{ e.stopPropagation(); modalImpressao(sim); };
+      wrap.appendChild(b); wrap.appendChild(pr);
+      grid.appendChild(wrap);
     });
   }
   function openSim(sim){
@@ -1515,10 +1625,11 @@ document.getElementById("tabBtnLE").onclick = ()=> setTab("logerros");
         <div style="font-size:.86rem;color:var(--ink-soft);line-height:1.7">
           ✓ ${g.correct-g.annul} certas &nbsp;·&nbsp; ✗ ${g.wrong} erradas<br>— ${g.blank} em branco &nbsp;·&nbsp; ⦿ ${g.annul} anuladas</div>
       </div>
-      <div class="nav"><button class="btn sec" data-redo>Refazer do zero</button><button class="btn" data-toplist>Voltar aos simulados</button></div>
+      <div class="nav"><button class="btn sec" data-redo>Refazer do zero</button><button class="btn sec" data-resprint>🖨 PDF</button><button class="btn" data-toplist>Voltar aos simulados</button></div>
       <div class="sim-rev">${rev}</div>`;
     resCard.querySelector("[data-redo]").onclick=()=>{ if(confirm("Refazer este simulado do zero? Suas respostas serão apagadas.")){ cur.state={answers:{},pos:0,finished:false}; saveState(); startRun(); } };
     resCard.querySelector("[data-toplist]").onclick=()=>{ renderList(); show("list"); };
+    resCard.querySelector("[data-resprint]").onclick=()=>modalImpressao(sim);
     resCard.querySelectorAll(".sim-rev .it").forEach(el=>{
       el.onclick=()=>{ const idx=parseInt(el.dataset.qidx); if(!isNaN(idx)) renderReview(idx); };
     });
@@ -1562,6 +1673,106 @@ document.getElementById("tabBtnLE").onclick = ()=> setTab("logerros");
   panel.querySelector("[data-simback]").onclick   = ()=>{ renderList(); show("list"); };
   panel.querySelector("[data-simfinish]").onclick = confirmFinish;
   panel.querySelector("[data-simpalette]").onclick= ()=>{ if(paletteEl.hidden){ renderPalette(); paletteEl.hidden=false; } else { paletteEl.hidden=true; } };
+
+
+  /* ============================================================
+     IMPRESSÃO / PDF do simulado
+     Usa window.print() + CSS @media print — NÃO html2pdf/html2canvas,
+     que já rendeu página em branco em outro app deste ecossistema.
+     O usuário escolhe "Salvar como PDF" no diálogo do próprio sistema.
+     ============================================================ */
+  const printArea = document.getElementById("printArea");
+  const esc = t => String(t==null?"":t);
+
+  function cabecalho(sim, subtitulo){
+    const hoje = new Date().toLocaleDateString("pt-BR");
+    return `<div class="pr-cab">
+      <h1>${esc(sim.title)}</h1>
+      <div class="sub">${esc(sim.sub||"")} · ${sim.questions.length} questões · ${esc(subtitulo)}</div>
+      <div class="pr-id"><span>Nome:</span><span>Data: ${hoje}</span><span>Tempo:</span></div>
+    </div>`;
+  }
+  function bloco(q, i, opt){
+    const img = q.img ? `<img src="${esc(q.img)}" alt="Figura da questão ${i+1}">` : "";
+    const ops = q.ops.map((o,j)=>`<div class="op">(${LET[j]}) ${esc(o)}</div>`).join("");
+    const marca = (opt.minhas && cur && cur.state) ? (()=>{
+      const sel = cur.state.answers[i];
+      if(q.correct===-1) return ` <b>[ANULADA]</b>`;
+      const suaLetra = sel==null ? "em branco" : LET[sel];
+      const ok = sel===q.correct;
+      return ` <b>[sua resposta: ${suaLetra} — gabarito: ${LET[q.correct]} ${ok?"✓":"✗"}]</b>`;
+    })() : "";
+    return `<div class="pq"><div class="en"><span class="num">${i+1}.</span> ${esc(q.q)}${marca}</div>${img}${ops}</div>`;
+  }
+  function folhaRespostas(n){
+    let c="";
+    for(let i=0;i<n;i++) c += `<div><b>${i+1}.</b> A B C D E</div>`;
+    return `<div class="pr-tit">Folha de respostas</div><div class="pr-fr">${c}</div>`;
+  }
+  function gabaritoComentado(sim, seq){
+    const itens = sim.questions.map((q,i)=>{
+      if(q.correct===-1) return `<div class="pg"><span class="cab">${i+1}. ANULADA</span></div>`;
+      return `<div class="pg"><span class="cab">${i+1}. Gabarito: ${LET[q.correct]}</span>`
+           + (q.c?`<div class="cm">${esc(q.c)}</div>`:"") + `</div>`;
+    }).join("");
+    return `<div class="pr-tit${seq?" sq":""}">Gabarito comentado</div>${itens}`;
+  }
+  function imprimir(sim, opt){
+    let html = cabecalho(sim, opt.rotulo);
+    if(opt.questoes) html += sim.questions.map((q,i)=>bloco(q,i,opt)).join("");
+    if(opt.folha)    html += folhaRespostas(sim.questions.length);
+    if(opt.gabarito) html += gabaritoComentado(sim, !opt.questoes && !opt.folha);
+    html += `<div class="pr-rod">Banca ENARE · Farmácia — gerado em ${new Date().toLocaleString("pt-BR")}</div>`;
+    printArea.innerHTML = html;
+    const imgs = [...printArea.querySelectorAll("img")];
+    const pronto = ()=> setTimeout(()=>{ window.print(); }, 60);
+    if(!imgs.length) return pronto();
+    /* espera as figuras carregarem, senão saem em branco no PDF */
+    let faltam = imgs.length;
+    const conta = ()=>{ if(--faltam<=0) pronto(); };
+    imgs.forEach(im=>{ if(im.complete) conta(); else { im.onload=conta; im.onerror=conta; } });
+    setTimeout(()=>{ if(faltam>0){ faltam=0; pronto(); } }, 4000);   // trava de segurança
+  }
+
+  function modalImpressao(sim){
+    const concluido = (()=>{ const st=loadState(sim.id); return !!(st&&st.finished); })();
+    const back=document.createElement("div"); back.className="pm-back";
+    back.innerHTML = `<div class="pm" role="dialog" aria-modal="true" aria-label="Imprimir simulado">
+      <h3>🖨 Imprimir / salvar em PDF</h3>
+      <p><b>${esc(sim.title)}</b> · ${sim.questions.length} questões.<br>
+         No diálogo que abrir, escolha <b>“Salvar como PDF”</b> no destino.</p>
+      <button class="pm-op" data-op="prova"><b>Caderno de prova</b><span>Só as questões, sem gabarito — para responder no papel.</span></button>
+      <button class="pm-op" data-op="prova_gab"><b>Caderno + gabarito comentado</b><span>As questões e, no fim, o gabarito com os comentários.</span></button>
+      <button class="pm-op" data-op="gab"><b>Só o gabarito comentado</b><span>Para corrigir e revisar depois.</span></button>
+      ${concluido?`<button class="pm-op" data-op="minhas"><b>Minha correção</b><span>As questões com a sua resposta e o gabarito ao lado.</span></button>`:""}
+      <label class="pm-chk"><input type="checkbox" id="pmFolha"> Incluir folha de respostas em branco</label>
+      <div class="pm-fim"><button class="ghost" data-fechar>Cancelar</button></div>
+    </div>`;
+    document.body.appendChild(back);
+    const fechar=()=>back.remove();
+    back.querySelector("[data-fechar]").onclick=fechar;
+    back.onclick=e=>{ if(e.target===back) fechar(); };
+    document.addEventListener("keydown", function esc2(e){
+      if(e.key==="Escape"){ fechar(); document.removeEventListener("keydown",esc2); }
+    });
+    back.querySelectorAll(".pm-op").forEach(b=>{
+      b.onclick=()=>{
+        const folha=back.querySelector("#pmFolha").checked;
+        const o=b.dataset.op;
+        const opt={ questoes:o!=="gab", gabarito:o==="prova_gab"||o==="gab"||o==="minhas",
+                    minhas:o==="minhas", folha,
+                    rotulo:{prova:"caderno de prova",prova_gab:"com gabarito comentado",
+                            gab:"gabarito comentado",minhas:"minha correção"}[o] };
+        /* "minha correção" precisa do estado carregado */
+        if(o==="minhas" && (!cur || cur.sim.id!==sim.id)) cur={sim, state:loadState(sim.id)||{answers:{}}};
+        fechar();
+        imprimir(sim, opt);
+      };
+    });
+  }
+  window.__imprimirSimulado = modalImpressao;
+
+  panel.querySelector("[data-simprint]").onclick = ()=>{ if(cur) modalImpressao(cur.sim); };
 
   window.__simRefresh = ()=>{ if(!vList.hidden) renderList(); };
   renderList(); show("list");
