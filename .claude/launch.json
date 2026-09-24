@@ -1,11 +1,6 @@
 {
   "version": "0.0.1",
   "configurations": [
-    {
-      "name": "quiz-enare",
-      "runtimeExecutable": "python3",
-      "runtimeArgs": ["-m", "http.server", "4599"],
-      "port": 4599
-    }
+    { "name": "quiz-enare", "runtimeExecutable": "python3", "runtimeArgs": ["servir.py", "4599"], "port": 4599 }
   ]
 }
