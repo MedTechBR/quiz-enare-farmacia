@@ -561,6 +561,12 @@
   .f-reais .ic{color:var(--c-ambar)}
   .f-reais.on{background:var(--acSup);border-color:var(--ac);color:var(--acInk);box-shadow:0 0 0 1px var(--ac) inset}
   body:has(.mtt-pai) .penbar{display:none}   /* a caneta flutuante não cobre o painel de temas */
+  body:has(.msn-pai) .penbar{display:none}   /* nem o formulário de sinalizar erro */
+  .qhead .q-sinal,.qhead .msn-btn{margin-left:auto}
+  .qhead .msn-btn{color:var(--ink-soft);opacity:1}
+  .qhead .msn-btn.msn-on{color:var(--msn-alerta)}
+  .f-sinal{flex:none}
+  .f-sinal.on{background:var(--acSup);border-color:var(--ac);color:var(--acInk);box-shadow:0 0 0 1px var(--ac) inset}
   select:focus,input:focus{outline:0;border-color:var(--ac);box-shadow:0 0 0 4px color-mix(in srgb,var(--ac) 16%,transparent)}
   .badge{text-transform:none;letter-spacing:0;font-size:12.5px;font-weight:600;background:var(--sup2);border:0;color:var(--ink-soft);padding:5px 12px}
   .num{background:var(--acSup);color:var(--acInk);border-radius:999px;padding:5px 13px;font-size:13px;font-weight:650}
@@ -856,6 +862,7 @@
       <button type="button" id="filter" aria-label="Filtrar por tema">Todos os temas</button>
       <button type="button" class="ghost f-reais" id="fReais" aria-pressed="false" title="Mostrar só questões de prova real"><svg class="ic"><use href="#i-star-filled"/></svg><span>Prova real</span></button>
     </div>
+    <button type="button" class="ghost f-sinal" id="fSinal" aria-pressed="false" hidden title="Mostrar só as questões que você sinalizou com erro"><svg class="ic" viewBox="0 0 24 24"><path d="M5 21V4m0 0h11l-2 4 2 4H5"/></svg><span>Sinalizadas</span></button>
     <button class="ghost" id="shuffle">Embaralhar</button>
     <button class="ghost" id="reset">Zerar desempenho</button>
   </div>
@@ -970,6 +977,12 @@
     </div>
     <div class="pn-card" id="pnBlocos"><!-- via JS --></div>
 
+    <div class="pn-sec" id="pnSinalSec">
+      <h2><span class="ico" style="--k:var(--c-rosa)"><svg class="ic" viewBox="0 0 24 24"><path d="M5 21V4m0 0h11l-2 4 2 4H5"/></svg></span>Questões sinalizadas</h2>
+      <p>Questões que você marcou com erro pela bandeira no canto da questão. Elas também chegam à equipe que revisa o banco.</p>
+    </div>
+    <div class="pn-card" id="pnSinal"><!-- via JS (mtsinal.js) --></div>
+
     <div class="pn-sec">
       <h2><span class="ico" style="--k:var(--c-ciano)"><svg class="ic"><use href="#i-calendar-stats"/></svg></span>Atividade</h2>
       <p>Cada quadradinho é um dia; quanto mais escuro, mais questões respondidas.</p>
@@ -1026,6 +1039,7 @@
 <script src="cronograma.js"></script>
 <script src="banco_edital.js"></script>
 <script src="mtfiltro.js"></script>
+<script src="mtsinal.js"></script>
 <script>
 /* ============================================================
    BANCO DE QUESTÕES — Leva 1
@@ -1067,6 +1081,33 @@ let order = BANK.map((_,i)=>i);       // ordem de exibição (índices do BANK)
 let pos = 0;
 let activeFilter = [];                 // temas escolhidos (LISTA); [] = todos os temas
 let soReais = false;                   // filtro à parte: só questões de prova real
+let soSinal = false;                   // filtro à parte: só questões sinalizadas com erro
+
+/* ---- sinalizar questão com erro (mtsinal.js) ----
+   {chave estável: {tipo, nota, ts, q, tema, extra, resolvido}} — mesma chave do progresso.
+   Fica no localStorage (prefixo "enare", então entra no backup) e vai à caixa central do Matheus. */
+const SINAL_KEY = "enareSinal_v1";
+let sinal = {};
+try{ sinal = JSON.parse(localStorage.getItem(SINAL_KEY)||"{}") || {}; }catch(e){ sinal = {}; }
+const SINAL = MTSinal.cria({
+  app: "Banca ENARE Farmácia",
+  exemplo: "Ex.: a correta seria a C, porque… (se souber, diga a fonte: RDC, bula, diretriz)",
+  le: () => sinal,
+  grava: obj => {
+    sinal = obj;
+    try{ localStorage.setItem(SINAL_KEY, JSON.stringify(sinal)); }catch(e){}
+    if(typeof pintaSinal === "function") pintaSinal();
+  },
+  central: { app: "quiz-enare-farmacia" }     // sem conta MedTech: o componente manda um id aleatório do aparelho
+});
+/* texto curto para localizar a questão na caixa central */
+function extraSinal(q, letraCorreta, onde){
+  const partes = [];
+  if(onde) partes.push(onde);
+  if(q.fonte) partes.push("real " + rotuloFonte(q.fonte));
+  if(letraCorreta) partes.push("gabarito: " + letraCorreta);
+  return partes.join(" · ");
+}
 let filtroCtl = null;                  // seletor de vários temas (mtfiltro.js)
 
 function loadAnswers(){
@@ -1114,7 +1155,7 @@ function buildFilter(){
     selecionados: activeFilter,
     rotuloTodos: "Todos os temas",
     titulo: "Temas do edital",
-    conta: ids => contaFiltro(ids, soReais),
+    conta: ids => contaFiltro(ids, soReais, soSinal),
     aoMudar: ids => { activeFilter = ids; applyFilter(); }
   });
   const bR = document.getElementById("fReais");
@@ -1123,6 +1164,17 @@ function buildFilter(){
   bR.title = `Mostrar só questões de prova real (${nReais} no banco)`;
   bR.onclick = ()=>{ soReais = !soReais; pintaReais(); applyFilter(); };
   pintaReais();
+  document.getElementById("fSinal").onclick = ()=>{ soSinal = !soSinal; pintaSinal(); applyFilter(); };
+  pintaSinal();
+}
+/* o botão "Sinalizadas" só aparece quando há questão sinalizada (ou quando o filtro está ligado) */
+function pintaSinal(){
+  const b = document.getElementById("fSinal"); if(!b) return;
+  const n = Object.keys(sinal).length;
+  b.hidden = !n && !soSinal;
+  b.setAttribute("aria-pressed", soSinal ? "true" : "false");
+  b.classList.toggle("on", soSinal);
+  b.querySelector("span").textContent = n ? `Sinalizadas (${n})` : "Sinalizadas";
 }
 function pintaReais(){
   const bR = document.getElementById("fReais");
@@ -1130,11 +1182,12 @@ function pintaReais(){
   bR.classList.toggle("on", soReais);
 }
 /* quantas questões um conjunto de temas dá (com o filtro de prova real) */
-function contaFiltro(temas, reais){
+function contaFiltro(temas, reais, sinalizadas){
   const set = new Set(temas);
   let n = 0;
   for(let i=0;i<BANK.length;i++){
     if(reais && !BANK[i].fonte) continue;
+    if(sinalizadas && !sinal[CHAVES[i]]) continue;
     if(set.size && !set.has(BANK[i].tema)) continue;
     n++;
   }
@@ -1143,8 +1196,9 @@ function contaFiltro(temas, reais){
 /* converte o filtro gravado (string antiga de um tema, "Todos os temas", o filtro
    especial de prova real ou a lista nova) para {temas, reais} */
 function lerFiltroGravado(saved){
-  const out = {temas:[], reais:false};
+  const out = {temas:[], reais:false, sinal:false};
   if(!saved) return out;
+  out.sinal = !!saved.sinal;
   if(Array.isArray(saved.filter)){
     out.temas = MTTemas.lista(saved.filter).filter(t => TEMAS_VALIDOS.has(t));
     out.reais = !!saved.reais;
@@ -1158,9 +1212,9 @@ function lerFiltroGravado(saved){
 /* atalhos do Painel/Revisão final: abrem UM tema (gravado como [tema]) */
 function abrirTema(tema){
   if(!TEMAS_VALIDOS.has(tema)) return false;
-  activeFilter = [tema]; soReais = false;
+  activeFilter = [tema]; soReais = false; soSinal = false;
   if(filtroCtl) filtroCtl.define(activeFilter);
-  pintaReais();
+  pintaReais(); pintaSinal();
   applyFilter();
   return true;
 }
@@ -1168,6 +1222,7 @@ function abrirTema(tema){
 let _temasSet = null, _temasRef = null;
 function passaFiltro(i){
   if(soReais && !BANK[i].fonte) return false;
+  if(soSinal && !sinal[CHAVES[i]]) return false;
   if(!activeFilter.length) return true;
   if(_temasRef !== activeFilter){ _temasRef = activeFilter; _temasSet = new Set(activeFilter); }
   return _temasSet.has(BANK[i].tema);
@@ -1213,13 +1268,14 @@ function render(){
   const q = BANK[qi];
   const ck = CHAVES[qi];                 // chave estável desta questão
   const prev = answers[ck]; // já respondida?
-  try{ localStorage.setItem(POS_KEY, JSON.stringify({filter:activeFilter, reais:soReais, ck})); }catch(e){}
+  try{ localStorage.setItem(POS_KEY, JSON.stringify({filter:activeFilter, reais:soReais, sinal:soSinal, ck})); }catch(e){}
 
   card.innerHTML = `
     <div class="qhead">
       <span class="num">Questão ${pos+1} de ${order.length}</span>
       <span class="badge">${q.tema}</span>
       ${q.fonte ? `<span class="fonte" title="Questão de prova real"><svg class="ic"><use href="#i-star-filled"/></svg> ${rotuloFonte(q.fonte)}</span>` : ""}
+      <span class="q-sinal" id="qSinal"></span>
     </div>
     <div class="enun">${q.q}</div>
     ${q.img?`<figure class="qfig"><img src="${q.img}" alt="Figura da questão"></figure>`:""}
@@ -1240,6 +1296,7 @@ function render(){
       <button class="btn" id="next" ${pos>=order.length-1?"disabled":""}>Próxima →</button>
     </div>`;
 
+  SINAL.botao(document.getElementById("qSinal"), {chave:ck, q:q.q, tema:q.tema, extra:extraSinal(q, LETTERS[q.correct])});
   const optEls = [...card.querySelectorAll(".opt")];
   const struck = getStruck(ck);
   optEls.forEach(btn=>{
@@ -1349,7 +1406,7 @@ document.getElementById("reset").onclick = ()=>{
 (function initResume(){
   let saved=null; try{ saved=JSON.parse(localStorage.getItem(POS_KEY)||"null"); }catch(e){}
   const f = lerFiltroGravado(saved);        // aceita o formato antigo (um tema só) e o novo (lista)
-  activeFilter = f.temas; soReais = f.reais;
+  activeFilter = f.temas; soReais = f.reais; soSinal = f.sinal;
   buildFilter();
   order = BANK.map((_,i)=>i).filter(passaFiltro);
   pos = 0;
@@ -1374,7 +1431,7 @@ document.getElementById("reset").onclick = ()=>{
   }
 })();
 /* salva a posição também ao sair/minimizar o app (reforço p/ iOS) */
-function savePosNow(){ try{ if(order[pos]!=null) localStorage.setItem(POS_KEY, JSON.stringify({filter:activeFilter, reais:soReais, ck:CHAVES[order[pos]]})); }catch(e){} }
+function savePosNow(){ try{ if(order[pos]!=null) localStorage.setItem(POS_KEY, JSON.stringify({filter:activeFilter, reais:soReais, sinal:soSinal, ck:CHAVES[order[pos]]})); }catch(e){} }
 window.addEventListener("pagehide", savePosNow);
 document.addEventListener("visibilitychange", ()=>{ if(document.visibilityState==="hidden") savePosNow(); });
 
@@ -1960,6 +2017,35 @@ document.getElementById("tabBtnMais").onclick = ()=>{
 document.getElementById("maisFundo").onclick = fechaMais;
 document.addEventListener("keydown", e=>{ if(e.key==="Escape") fechaMais(); });
 
+/* ---- lista "Questões sinalizadas" (Painel) ---- */
+(function(){
+  const cont = document.getElementById("pnSinal");
+  if(!cont) return;
+  SINAL.lista(cont, {
+    titulo: "Questões sinalizadas",
+    abreQuestao: chave => {
+      const idx = CHAVES.indexOf(chave);
+      if(idx < 0){
+        /* questão que só existe num simulado de prova (fora do banco): abre a revisão do simulado */
+        const aviso = window.__simAbreSinal ? window.__simAbreSinal(chave) : null;
+        if(aviso === null) alert("Esta questão não está mais no banco nem nos simulados.");
+        else if(aviso) alert(aviso);
+        return;
+      }
+      if(!passaFiltro(idx)){               // o filtro atual esconde a questão: volta para todos os temas
+        activeFilter = []; soReais = false; soSinal = false;
+        if(filtroCtl) filtroCtl.define([]);
+        pintaReais(); pintaSinal();
+        order = BANK.map((_,i)=>i).filter(passaFiltro);
+      }
+      pos = Math.max(0, order.indexOf(idx));
+      render();
+      setTab("questoes");
+      window.scrollTo({top:0, behavior:"smooth"});
+    }
+  });
+})();
+
 /* questão: entra deslizando a cada troca; acerto pulsa e erro treme só na hora da resposta */
 (function(){
   const _render = render, _choose = choose;
@@ -2199,7 +2285,7 @@ aplicaSecao("questoes");   /* cor, título e selo da aba inicial */
     titleEl.textContent=sim.title; paletteEl.hidden=true;
     card.innerHTML=`
       <div class="qhead"><span class="num">Revisão · Questão ${i+1} de ${n}</span>
-        <span class="badge">${annul?"Anulada":(ok?"Acertou":"Errou")}</span></div>
+        <span class="badge">${annul?"Anulada":(ok?"Acertou":"Errou")}</span><span class="q-sinal" data-sinal></span></div>
       <div class="enun">${q.q}</div>
       ${q.img?`<figure class="qfig"><img src="${q.img}" alt="Figura da questão"></figure>`:""}
       <div class="opts">${q.ops.map((o,j)=>{
@@ -2218,6 +2304,8 @@ aplicaSecao("questoes");   /* cor, título e selo da aba inicial */
         <button class="btn sec" data-rback>Voltar ao resultado</button>
         <button class="btn" data-rnext ${i>=n-1?"disabled":""}>Próxima →</button>
       </div>`;
+    SINAL.botao(card.querySelector("[data-sinal]"), {chave:chaveQ(q), q:q.q, tema:q.tema||sim.title,
+      extra:extraSinal(q, annul?"anulada":LET[q.correct], sim.title+" Q"+(i+1))});
     const rp=card.querySelector("[data-rprev]"); if(rp) rp.onclick=()=>{ if(i>0) renderReview(i-1); };
     const rn=card.querySelector("[data-rnext]"); if(rn) rn.onclick=()=>{ if(i<n-1) renderReview(i+1); };
     card.querySelector("[data-rback]").onclick=()=>renderResult();
@@ -2225,6 +2313,20 @@ aplicaSecao("questoes");   /* cor, título e selo da aba inicial */
     window.scrollTo({top:0,behavior:"instant"});
   }
 
+  /* lista "Questões sinalizadas": abre a revisão de uma questão que só existe num simulado.
+     Devolve o texto de aviso quando não dá (simulado ainda não terminado), ou "" quando abriu. */
+  window.__simAbreSinal = function(chave){
+    for(const sim of window.SIMULADOS){
+      const i = sim.questions.findIndex(q => chaveQ(q) === chave);
+      if(i < 0) continue;
+      const st = loadState(sim.id);
+      setTab("simulado");
+      if(st && st.finished){ cur = {sim, state:st}; renderReview(i); return ""; }
+      renderList(); show("list");
+      return `Esta questão é a Q${i+1} do simulado "${sim.title}". Termine esse simulado para abrir a revisão dela.`;
+    }
+    return null;
+  };
   panel.querySelector("[data-simback]").onclick   = ()=>{ renderList(); show("list"); };
   panel.querySelector("[data-simfinish]").onclick = confirmFinish;
   panel.querySelector("[data-simpalette]").onclick= ()=>{ if(paletteEl.hidden){ renderPalette(); paletteEl.hidden=false; } else { paletteEl.hidden=true; } };
