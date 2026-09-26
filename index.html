@@ -551,6 +551,16 @@
   .ghost:hover{border-color:var(--ac);color:var(--acInk);background:var(--acSup);transform:translateY(-1px)}
   .ghost:active{transform:scale(.96)}
   select{border-radius:999px;min-height:44px;padding-left:16px;font-size:15px}
+  /* filtro de vários temas (mtfiltro.js): as cores seguem a cor da seção (--ac mora no body) */
+  body{--mtt-cor:var(--ac);--mtt-sobre:#fff;--mtt-superficie:var(--sup);--mtt-texto:var(--ink);
+    --mtt-borda:var(--line);--mtt-realce:var(--acSup);--mtt-campo:var(--sup);--mtt-raio:var(--rG);--mtt-raio-btn:999px}
+  .filtros{display:flex;gap:10px;align-items:center;min-width:0;flex:1 1 360px;max-width:100%}
+  .filtros .mtt-btn{flex:1 1 auto;min-width:0;padding:0 14px 0 16px;font-size:15px;justify-content:space-between}
+  .filtros .mtt-btn .mtt-rot{flex:1}
+  .f-reais{flex:none}
+  .f-reais .ic{color:var(--c-ambar)}
+  .f-reais.on{background:var(--acSup);border-color:var(--ac);color:var(--acInk);box-shadow:0 0 0 1px var(--ac) inset}
+  body:has(.mtt-pai) .penbar{display:none}   /* a caneta flutuante não cobre o painel de temas */
   select:focus,input:focus{outline:0;border-color:var(--ac);box-shadow:0 0 0 4px color-mix(in srgb,var(--ac) 16%,transparent)}
   .badge{text-transform:none;letter-spacing:0;font-size:12.5px;font-weight:600;background:var(--sup2);border:0;color:var(--ink-soft);padding:5px 12px}
   .num{background:var(--acSup);color:var(--acInk);border-radius:999px;padding:5px 13px;font-size:13px;font-weight:650}
@@ -717,7 +727,7 @@
     .metric .v{font-size:1.05rem}
     .metric .l{font-size:11px;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
     .controls{gap:8px;margin-bottom:10px}
-    .controls select{flex:1 1 100%}
+    .controls select,.controls .filtros{flex:1 1 100%}
     .controls .ghost{flex:1 1 0;justify-content:center;min-height:40px;font-size:13.5px}
     .qhead{gap:6px;margin-bottom:12px}
     .opts-hint{font-size:12px;margin-bottom:8px}
@@ -842,7 +852,10 @@
   </div>
 
   <div class="controls">
-    <select id="filter" aria-label="Filtrar por tema"></select>
+    <div class="filtros">
+      <button type="button" id="filter" aria-label="Filtrar por tema">Todos os temas</button>
+      <button type="button" class="ghost f-reais" id="fReais" aria-pressed="false" title="Mostrar só questões de prova real"><svg class="ic"><use href="#i-star-filled"/></svg><span>Prova real</span></button>
+    </div>
     <button class="ghost" id="shuffle">Embaralhar</button>
     <button class="ghost" id="reset">Zerar desempenho</button>
   </div>
@@ -1012,6 +1025,7 @@
 <script src="incidencia.js"></script>
 <script src="cronograma.js"></script>
 <script src="banco_edital.js"></script>
+<script src="mtfiltro.js"></script>
 <script>
 /* ============================================================
    BANCO DE QUESTÕES — Leva 1
@@ -1051,7 +1065,9 @@ const CHAVES = BANK.map(chaveQ);        // índice -> chave (cache)
 let answers = loadAnswers();          // { chave: {sel, ok} }
 let order = BANK.map((_,i)=>i);       // ordem de exibição (índices do BANK)
 let pos = 0;
-let activeFilter = "Todos os temas";
+let activeFilter = [];                 // temas escolhidos (LISTA); [] = todos os temas
+let soReais = false;                   // filtro à parte: só questões de prova real
+let filtroCtl = null;                  // seletor de vários temas (mtfiltro.js)
 
 function loadAnswers(){
   let d={};
@@ -1081,33 +1097,80 @@ function saveAnswers(){
   try{ localStorage.setItem(STORE_KEY, JSON.stringify(answers)); }catch(e){}
 }
 
-/* ---- filtro de temas ---- */
+/* ---- filtro de temas (vários de uma vez — mtfiltro.js) ----
+   activeFilter = lista de temas ([] = todos). "Só prova real" virou um botão à parte,
+   que se combina com os temas (antes era uma opção a mais do <select>). */
+const TEMAS_VALIDOS = new Set(BANK.map(q => q.tema));
 function buildFilter(){
   /* temas do EDITAL ENARE 2026/2027 — item 1 (Básicos) e item 6 (Farmácia), com contagem */
   const cont = {};
   BANK.forEach(q => { cont[q.tema] = (cont[q.tema]||0) + 1; });
   const cod = t => { const m = String(t).match(/^(\d+)\.(\d+)/); return m ? [ +m[1], +m[2] ] : [9,9]; };
   const temas = Object.keys(cont).sort((a,b)=>{ const x=cod(a), y=cod(b); return x[0]-y[0] || x[1]-y[1]; });
-  const basicos = temas.filter(t => t.startsWith("1."));
-  const farma   = temas.filter(t => t.startsWith("6."));
-  const outros  = temas.filter(t => !t.startsWith("1.") && !t.startsWith("6."));
-  const op = t => `<option value="${t}">${t} (${cont[t]})</option>`;
-  const grupo = (rot, arr) => arr.length ? `<optgroup label="${rot}">${arr.map(op).join("")}</optgroup>` : "";
-  const sel = document.getElementById("filter");
+  const grupoDe = t => t.startsWith("1.") ? "1 · Conhecimentos Básicos em Saúde"
+                     : t.startsWith("6.") ? "6 · Conhecimentos Específicos — Farmácia" : "Outros";
+  filtroCtl = MTTemas.monta(document.getElementById("filter"), {
+    opcoes: temas.map(t => ({id:t, nome:t, grupo:grupoDe(t), n:cont[t]})),
+    selecionados: activeFilter,
+    rotuloTodos: "Todos os temas",
+    titulo: "Temas do edital",
+    conta: ids => contaFiltro(ids, soReais),
+    aoMudar: ids => { activeFilter = ids; applyFilter(); }
+  });
+  const bR = document.getElementById("fReais");
   const nReais = BANK.filter(q=>q.fonte).length;
-  sel.innerHTML =
-    `<option value="Todos os temas">Todos os temas (${BANK.length})</option>` +
-    (nReais ? `<option value="${FILTRO_REAIS}">Só questões de prova real (${nReais})</option>` : "") +
-    grupo("1 · Conhecimentos Básicos em Saúde", basicos) +
-    grupo("6 · Conhecimentos Específicos — Farmácia", farma) +
-    grupo("Outros", outros);
-  sel.onchange = ()=>{ activeFilter = sel.value; applyFilter(); };
+  if(!nReais){ bR.hidden = true; }
+  bR.title = `Mostrar só questões de prova real (${nReais} no banco)`;
+  bR.onclick = ()=>{ soReais = !soReais; pintaReais(); applyFilter(); };
+  pintaReais();
+}
+function pintaReais(){
+  const bR = document.getElementById("fReais");
+  bR.setAttribute("aria-pressed", soReais ? "true" : "false");
+  bR.classList.toggle("on", soReais);
+}
+/* quantas questões um conjunto de temas dá (com o filtro de prova real) */
+function contaFiltro(temas, reais){
+  const set = new Set(temas);
+  let n = 0;
+  for(let i=0;i<BANK.length;i++){
+    if(reais && !BANK[i].fonte) continue;
+    if(set.size && !set.has(BANK[i].tema)) continue;
+    n++;
+  }
+  return n;
+}
+/* converte o filtro gravado (string antiga de um tema, "Todos os temas", o filtro
+   especial de prova real ou a lista nova) para {temas, reais} */
+function lerFiltroGravado(saved){
+  const out = {temas:[], reais:false};
+  if(!saved) return out;
+  if(Array.isArray(saved.filter)){
+    out.temas = MTTemas.lista(saved.filter).filter(t => TEMAS_VALIDOS.has(t));
+    out.reais = !!saved.reais;
+  } else if(saved.filter === FILTRO_REAIS){
+    out.reais = true;
+  } else if(saved.filter && saved.filter !== "Todos os temas"){
+    out.temas = MTTemas.lista(saved.filter).filter(t => TEMAS_VALIDOS.has(t));
+  }
+  return out;
+}
+/* atalhos do Painel/Revisão final: abrem UM tema (gravado como [tema]) */
+function abrirTema(tema){
+  if(!TEMAS_VALIDOS.has(tema)) return false;
+  activeFilter = [tema]; soReais = false;
+  if(filtroCtl) filtroCtl.define(activeFilter);
+  pintaReais();
+  applyFilter();
+  return true;
 }
 /* um único lugar decide se a questão entra no filtro atual */
+let _temasSet = null, _temasRef = null;
 function passaFiltro(i){
-  if(activeFilter === "Todos os temas") return true;
-  if(activeFilter === FILTRO_REAIS) return !!BANK[i].fonte;
-  return BANK[i].tema === activeFilter;
+  if(soReais && !BANK[i].fonte) return false;
+  if(!activeFilter.length) return true;
+  if(_temasRef !== activeFilter){ _temasRef = activeFilter; _temasSet = new Set(activeFilter); }
+  return _temasSet.has(BANK[i].tema);
 }
 function applyFilter(){
   order = BANK.map((_,i)=>i).filter(passaFiltro);
@@ -1145,12 +1208,12 @@ function rotuloFonte(f){
 function render(){
   refreshStats();
   const card = document.getElementById("card");
-  if(order.length===0){ card.innerHTML = `<p class="enun">Nenhuma questão neste tema.</p>`; return; }
+  if(order.length===0){ card.innerHTML = `<p class="enun">Nenhuma questão com estes filtros.</p>`; return; }
   const qi = order[pos];
   const q = BANK[qi];
   const ck = CHAVES[qi];                 // chave estável desta questão
   const prev = answers[ck]; // já respondida?
-  try{ localStorage.setItem(POS_KEY, JSON.stringify({filter:activeFilter, ck})); }catch(e){}
+  try{ localStorage.setItem(POS_KEY, JSON.stringify({filter:activeFilter, reais:soReais, ck})); }catch(e){}
 
   card.innerHTML = `
     <div class="qhead">
@@ -1283,13 +1346,11 @@ document.getElementById("reset").onclick = ()=>{
 };
 
 /* ---- init (continua de onde parou) ---- */
-buildFilter();
 (function initResume(){
   let saved=null; try{ saved=JSON.parse(localStorage.getItem(POS_KEY)||"null"); }catch(e){}
-  if(saved && saved.filter){
-    const sel=document.getElementById("filter");
-    if([...sel.options].some(o=>o.value===saved.filter)){ activeFilter=saved.filter; sel.value=saved.filter; }
-  }
+  const f = lerFiltroGravado(saved);        // aceita o formato antigo (um tema só) e o novo (lista)
+  activeFilter = f.temas; soReais = f.reais;
+  buildFilter();
   order = BANK.map((_,i)=>i).filter(passaFiltro);
   pos = 0;
   /* retoma pela CHAVE da questão (formato antigo por índice é ignorado) */
@@ -1313,7 +1374,7 @@ buildFilter();
   }
 })();
 /* salva a posição também ao sair/minimizar o app (reforço p/ iOS) */
-function savePosNow(){ try{ if(order[pos]!=null) localStorage.setItem(POS_KEY, JSON.stringify({filter:activeFilter, ck:CHAVES[order[pos]]})); }catch(e){} }
+function savePosNow(){ try{ if(order[pos]!=null) localStorage.setItem(POS_KEY, JSON.stringify({filter:activeFilter, reais:soReais, ck:CHAVES[order[pos]]})); }catch(e){} }
 window.addEventListener("pagehide", savePosNow);
 document.addEventListener("visibilitychange", ()=>{ if(document.visibilityState==="hidden") savePosNow(); });
 
@@ -1530,10 +1591,7 @@ function registraAtividade(){
   }
 
   function irParaTema(tema){
-    const sel = document.getElementById("filter");
-    if([...sel.options].some(o=>o.value===tema)){
-      sel.value = tema; activeFilter = tema; applyFilter();
-    }
+    abrirTema(tema);
     setTab("questoes");
     window.scrollTo({top:0, behavior:"smooth"});
   }
@@ -1796,8 +1854,7 @@ const CRONO_KEY = "enareFarmaPlano_v1";     // {"12": true, …} dias concluído
     });
     alvo.querySelectorAll(".cr-tema").forEach(b=>{
       b.onclick = ()=>{
-        const sel = document.getElementById("filter"), tema = b.dataset.tema;
-        if([...sel.options].some(o=>o.value===tema)){ sel.value=tema; activeFilter=tema; applyFilter(); }
+        abrirTema(b.dataset.tema);
         setTab("questoes"); window.scrollTo({top:0, behavior:"smooth"});
       };
     });
