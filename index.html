@@ -565,6 +565,8 @@
   body:has(.mtt-pai) .penbar{display:none}   /* a caneta flutuante não cobre o painel de temas */
   body:has(.msn-pai) .penbar{display:none}   /* nem o formulário de sinalizar erro */
   .qhead .q-sinal,.qhead .msn-btn{margin-left:auto}
+  .por-alt{margin:10px 0 0;padding-left:1.1em}
+  .por-alt li{margin:4px 0}
   .qhead .msn-btn{color:var(--ink-soft);opacity:1}
   .qhead .msn-btn.msn-on{color:var(--msn-alerta)}
   .f-sinal{flex:none}
@@ -1039,6 +1041,7 @@
 <script src="banco_edital.js"></script>
 <script src="mtfiltro.js"></script>
 <script src="mtsinal.js"></script>
+<script src="mterrata.js"></script>
 <script>
 /* ============================================================
    BANCO DE QUESTÕES — Leva 1
@@ -1082,6 +1085,90 @@ let pos = 0;
 let activeFilter = [];                 // temas escolhidos (LISTA); [] = todos os temas
 let soReais = false;                   // filtro à parte: só questões de prova real
 let soSinal = false;                   // filtro à parte: só questões sinalizadas com erro
+
+/* ---- erratas da administração (mterrata.js, 10/10/2026) ----
+   Questão corrigida no painel do MedTech chega com os campos novos (o original fica guardado no próprio
+   objeto e volta se a errata for desfeita). Questão tirada do ar some da EXIBIÇÃO (filtro, contagens,
+   sorteio, simulados, painel); o BANK não perde nem reordena nada e o progresso dela fica guardado como está.
+   A chave é sempre a do enunciado ORIGINAL (CHAVES, calculado acima; nos simulados, q._ch).
+   Os textos da errata são texto puro e o app desenha q/ops/c como HTML: vão escapados (MTErrata.paraHtml). */
+const IDX = new Map(CHAVES.map((k,i)=>[k,i]));          // chave -> índice no BANK
+const SIM_REAIS = (window.SIMULADOS||[]).flatMap(sim => sim.questions||[]);   // provas reais (antes dos diários)
+SIM_REAIS.forEach(q => { q._ch = chaveQ(q); });
+let DIARIOS = null;                                      // simulados diários já montados (ver montaDiarios)
+const origDe = (q,k) => window.MTErrata ? MTErrata.original(q,k) : q[k];
+const CAMPOS_ERR = window.MTErrata ? {
+  enunciado:{k:"q", fmt:MTErrata.paraHtml}, alternativas:{k:"ops", fmt:MTErrata.paraHtml},
+  gabarito:"correct", comentario:{k:"c", fmt:MTErrata.paraHtml}, porAlt:{k:"porAlt", fmt:MTErrata.paraHtml}
+} : {};
+function aplicaErratas(m){
+  if(!window.MTErrata) return;
+  BANK.forEach((q,i) => MTErrata.aplicaCampos(q, m.get(CHAVES[i]), CAMPOS_ERR));
+  SIM_REAIS.forEach(q => MTErrata.aplicaCampos(q, m.get(q._ch), CAMPOS_ERR));
+  if(DIARIOS) montaDiarios();                            // os diários são cópias do banco: remonta
+}
+const ER = window.MTErrata ? MTErrata.cria({
+  app: "quiz-enare-farmacia", nome: "Banca ENARE Farmácia",
+  token: () => (window.MTS && MTS.usuario) ? MTS.usuario.getIdToken() : null,
+  aplica: aplicaErratas,
+  depois: () => errataRedesenha(),
+  abreQuestao: chave => abreQuestaoChave(chave)
+}) : {oculta:()=>false, corrigida:()=>null, gabaritoMudou:()=>false, selo:()=>""};
+/* resposta antiga reavaliada pelo gabarito corrigido (a.sel é o índice no banco); o salvo não muda */
+function okResp(ck, a){
+  if(!a) return false;
+  if(typeof a.sel==="number" && ER.gabaritoMudou(ck)){
+    const q = BANK[IDX.get(ck)];
+    if(q) return q.correct===-1 || a.sel===q.correct;   // anulada: ponto para todos
+  }
+  return !!a.ok;
+}
+const visivelQ = i => !ER.oculta(CHAVES[i]);
+const nVisiveis = () => { let n=0; for(let i=0;i<BANK.length;i++) if(visivelQ(i)) n++; return n; };
+/* abre uma questão pela chave (aviso de resposta e lista de sinalizadas) */
+function abreQuestaoChave(chave){
+  if(ER.oculta(chave)){ alert("Essa questão foi retirada do ar pela revisão."); return; }
+  const idx = IDX.has(chave) ? IDX.get(chave) : -1;
+  if(idx < 0){
+    /* questão que só existe num simulado de prova (fora do banco): abre a revisão do simulado */
+    const aviso = window.__simAbreSinal ? window.__simAbreSinal(chave) : null;
+    if(aviso === null) alert("Esta questão não está mais no banco nem nos simulados.");
+    else if(aviso) alert(aviso);
+    return;
+  }
+  if(!passaFiltro(idx)){               // o filtro atual esconde a questão: volta para todos os temas
+    activeFilter = []; soReais = false; soSinal = false;
+    if(filtroCtl) filtroCtl.define([]);
+    pintaReais(); pintaSinal();
+    order = BANK.map((_,i)=>i).filter(passaFiltro);
+  }
+  pos = Math.max(0, order.indexOf(idx));
+  render();
+  setTab("questoes");
+  window.scrollTo({top:0, behavior:"smooth"});
+}
+/* chegou lista nova de erratas da rede (já aplicada): refaz filtro e contagens e redesenha o que está à vista,
+   sem tirar o usuário da questão em que está (se ela saiu do ar, vai para a seguinte) */
+function errataRedesenha(){
+  recontaTemas();
+  const ck = order.length ? CHAVES[order[pos]] : null;
+  order = BANK.map((_,i)=>i).filter(passaFiltro);
+  pos = posPorChave(ck);
+  render(); pintaSinal();
+  const vis = id => { const el = document.getElementById(id); return !!el && !el.hidden; };
+  if(window.__simErrata) window.__simErrata();
+  if(vis("panel-painel") && window.__painelRender) window.__painelRender();
+}
+/* posição na ordem atual da questão de chave ck; se ela não está à vista, a seguinte no banco */
+function posPorChave(ck){
+  if(!ck || !order.length) return 0;
+  const p = order.findIndex(i => CHAVES[i]===ck);
+  if(p >= 0) return p;
+  const idx = IDX.get(ck);
+  if(idx == null) return 0;
+  const q = order.findIndex(i => i > idx);
+  return q >= 0 ? q : order.length-1;
+}
 
 /* ---- sinalizar questão com erro (mtsinal.js) ----
    {chave estável: {tipo, nota, ts, q, tema, extra, resolvido}} — mesma chave do progresso.
@@ -1147,14 +1234,14 @@ function saveAnswers(){
 const TEMAS_VALIDOS = new Set(BANK.map(q => q.tema));
 function buildFilter(){
   /* temas do EDITAL ENARE 2026/2027 — item 1 (Básicos) e item 6 (Farmácia), com contagem */
-  const cont = {};
-  BANK.forEach(q => { cont[q.tema] = (cont[q.tema]||0) + 1; });
+  const cont = contaPorTema();
   const cod = t => { const m = String(t).match(/^(\d+)\.(\d+)/); return m ? [ +m[1], +m[2] ] : [9,9]; };
   const temas = Object.keys(cont).sort((a,b)=>{ const x=cod(a), y=cod(b); return x[0]-y[0] || x[1]-y[1]; });
   const grupoDe = t => t.startsWith("1.") ? "1 · Conhecimentos Básicos em Saúde"
                      : t.startsWith("6.") ? "6 · Conhecimentos Específicos — Farmácia" : "Outros";
+  OPC_TEMAS = temas.map(t => ({id:t, nome:t, grupo:grupoDe(t), n:cont[t]}));
   filtroCtl = MTTemas.monta(document.getElementById("filter"), {
-    opcoes: temas.map(t => ({id:t, nome:t, grupo:grupoDe(t), n:cont[t]})),
+    opcoes: OPC_TEMAS,
     selecionados: activeFilter,
     rotuloTodos: "Todos os temas",
     titulo: "Temas do edital",
@@ -1162,18 +1249,36 @@ function buildFilter(){
     aoMudar: ids => { activeFilter = ids; applyFilter(); }
   });
   const bR = document.getElementById("fReais");
-  const nReais = BANK.filter(q=>q.fonte).length;
-  if(!nReais){ bR.hidden = true; }
-  bR.title = `Mostrar só questões de prova real (${nReais} no banco)`;
+  pintaNReais();
   bR.onclick = ()=>{ soReais = !soReais; pintaReais(); applyFilter(); };
   pintaReais();
   document.getElementById("fSinal").onclick = ()=>{ soSinal = !soSinal; pintaSinal(); applyFilter(); };
   pintaSinal();
 }
+/* questões à vista por tema (as tiradas do ar pela revisão não contam) */
+let OPC_TEMAS = null;
+function contaPorTema(){
+  const cont = {};
+  BANK.forEach((q,i) => { if(visivelQ(i)) cont[q.tema] = (cont[q.tema]||0) + 1; });
+  return cont;
+}
+function pintaNReais(){
+  const bR = document.getElementById("fReais");
+  const nReais = BANK.filter((q,i)=>q.fonte && visivelQ(i)).length;
+  bR.hidden = !nReais;
+  bR.title = `Mostrar só questões de prova real (${nReais} no banco)`;
+}
+/* lista nova de erratas: o seletor de temas lê o n destes objetos ao abrir */
+function recontaTemas(){
+  if(!OPC_TEMAS) return;
+  const cont = contaPorTema();
+  OPC_TEMAS.forEach(o => { o.n = cont[o.id] || 0; });
+  pintaNReais();
+}
 /* o botão "Sinalizadas" só aparece quando há questão sinalizada (ou quando o filtro está ligado) */
 function pintaSinal(){
   const b = document.getElementById("fSinal"); if(!b) return;
-  const n = Object.keys(sinal).length;
+  const n = Object.keys(sinal).filter(k => !ER.oculta(k)).length;   // tiradas do ar não contam (o registro fica)
   b.hidden = !n && !soSinal;
   b.setAttribute("aria-pressed", soSinal ? "true" : "false");
   b.classList.toggle("on", soSinal);
@@ -1189,6 +1294,7 @@ function contaFiltro(temas, reais, sinalizadas){
   const set = new Set(temas);
   let n = 0;
   for(let i=0;i<BANK.length;i++){
+    if(!visivelQ(i)) continue;
     if(reais && !BANK[i].fonte) continue;
     if(sinalizadas && !sinal[CHAVES[i]]) continue;
     if(set.size && !set.has(BANK[i].tema)) continue;
@@ -1224,6 +1330,7 @@ function abrirTema(tema){
 /* um único lugar decide se a questão entra no filtro atual */
 let _temasSet = null, _temasRef = null;
 function passaFiltro(i){
+  if(!visivelQ(i)) return false;          // tirada do ar pela revisão (errata)
   if(soReais && !BANK[i].fonte) return false;
   if(soSinal && !sinal[CHAVES[i]]) return false;
   if(!activeFilter.length) return true;
@@ -1238,14 +1345,15 @@ function applyFilter(){
 
 /* ---- estatísticas ---- */
 function refreshStats(){
-  const ansKeys = Object.keys(answers);
+  const ansKeys = Object.keys(answers).filter(k => !ER.oculta(k));   // tiradas do ar: fora da conta (o salvo fica)
   const ans = ansKeys.length;
-  const right = ansKeys.filter(k=>answers[k].ok).length;
+  const right = ansKeys.filter(k=>okResp(k, answers[k])).length;
   const rate = ans? Math.round((right/ans)*100):0;
   document.getElementById("mAns").textContent = ans;
   document.getElementById("mRight").textContent = right;
-  document.getElementById("mTotal").textContent = BANK.length;
-  document.getElementById("footCount").textContent = BANK.length;
+  const nb = nVisiveis();
+  document.getElementById("mTotal").textContent = nb;
+  document.getElementById("footCount").textContent = nb;
   document.getElementById("ringTxt").textContent = rate+"%";
   document.getElementById("ringFill").setAttribute("stroke-dasharray", `${rate} ${100-rate}`);
   document.getElementById("ringFill").setAttribute("stroke",
@@ -1278,6 +1386,7 @@ function render(){
       <span class="num">Questão ${pos+1} de ${order.length}</span>
       <span class="badge">${q.tema}</span>
       ${q.fonte ? `<span class="fonte" title="Questão de prova real"><svg class="ic"><use href="#i-star-filled"/></svg> ${rotuloFonte(q.fonte)}</span>` : ""}
+      ${ER.selo(ck)}
       <span class="q-sinal" id="qSinal"></span>
     </div>
     <div class="enun">${q.q}</div>
@@ -1299,7 +1408,7 @@ function render(){
       <button class="btn" id="next" ${pos>=order.length-1?"disabled":""}>Próxima →</button>
     </div>`;
 
-  SINAL.botao(document.getElementById("qSinal"), {chave:ck, q:q.q, tema:q.tema, extra:extraSinal(q, LETTERS[q.correct])});
+  SINAL.botao(document.getElementById("qSinal"), {chave:ck, q:q.q, tema:q.tema, extra:extraSinal(q, q.correct===-1 ? "anulada" : LETTERS[q.correct])});
   const optEls = [...card.querySelectorAll(".opt")];
   const struck = getStruck(ck);
   optEls.forEach(btn=>{
@@ -1369,7 +1478,7 @@ function attachStrikeSwipe(btn, k, j){
 function choose(qi, j){
   const ck = CHAVES[qi];
   if(answers[ck]) return; // bloqueia re-resposta
-  const ok = (j === BANK[qi].correct);
+  const ok = (j === BANK[qi].correct) || BANK[qi].correct === -1;   // anulada pela revisão: ponto para todos
   answers[ck] = {sel:j, ok, t:Date.now(), tema:BANK[qi].tema};
   saveAnswers();
   registraAtividade();          // alimenta o heatmap do Painel
@@ -1380,18 +1489,25 @@ function choose(qi, j){
 function revealState(qi, sel){
   const q = BANK[qi];
   const optEls = [...document.querySelectorAll(".opt")];
+  const anul = q.correct === -1;           // anulada pela revisão (errata)
   optEls.forEach((btn,j)=>{
     btn.disabled = true;
     if(j===q.correct) btn.classList.add("right");
-    else if(j===sel) btn.classList.add("wrong");
+    else if(j===sel && !anul) btn.classList.add("wrong");
     else btn.classList.add("dim");
   });
-  const ok = (sel===q.correct);
+  const ok = anul || (sel===q.correct);  /* gabarito corrigido: a resposta antiga é reavaliada aqui (o salvo não muda) */
   const fb = document.getElementById("fb");
   fb.classList.add("show", ok?"ok":"no");
-  document.getElementById("verdict").innerHTML =
-    ok ? '<svg class="ic"><use href="#i-check"/></svg> Resposta correta' : `<svg class="ic"><use href="#i-x"/></svg> Resposta incorreta. Gabarito: ${LETTERS[q.correct]}`;
-  document.getElementById("fbbody").innerHTML = q.c;
+  document.getElementById("verdict").innerHTML = anul ? "Questão anulada pela revisão: ponto para todos"
+    : ok ? '<svg class="ic"><use href="#i-check"/></svg> Resposta correta' : `<svg class="ic"><use href="#i-x"/></svg> Resposta incorreta. Gabarito: ${LETTERS[q.correct]}`;
+  document.getElementById("fbbody").innerHTML = (q.c||"") + porAltHtml(q.porAlt);
+}
+
+/* comentário por alternativa (só vem de errata; texto já escapado) */
+function porAltHtml(pa){
+  if(!Array.isArray(pa) || !pa.some(Boolean)) return "";
+  return `<ul class="por-alt">${pa.map((t,j)=> t ? `<li><b>${LETTERS[j]}</b> ${t}</li>` : "").join("")}</ul>`;
 }
 
 /* ---- controles globais ---- */
@@ -1415,10 +1531,7 @@ document.getElementById("reset").onclick = ()=>{
   order = BANK.map((_,i)=>i).filter(passaFiltro);
   pos = 0;
   /* retoma pela CHAVE da questão (formato antigo por índice é ignorado) */
-  if(saved && typeof saved.ck==="string"){
-    const p = order.findIndex(i => CHAVES[i]===saved.ck);
-    if(p>=0) pos=p;
-  }
+  if(saved && typeof saved.ck==="string") pos = posPorChave(saved.ck);   // tirada do ar: segue para a próxima
   render();
   if(window.__migracao && window.__migracao.migradas){
     const m=window.__migracao;
@@ -1618,11 +1731,12 @@ function registraAtividade(){
   function porTema(){
     const m = {};
     BANK.forEach((q,i)=>{
+      if(!visivelQ(i)) return;               // tirada do ar pela revisão: fora do painel (o salvo fica)
       const t=q.tema;
       if(!m[t]) m[t]={tema:t, cod:codigo(t), total:0, feitas:0, acertos:0, ultimo:0};
       m[t].total++;
       const a = answers[CHAVES[i]];
-      if(a){ m[t].feitas++; if(a.ok) m[t].acertos++; if(a.t && a.t>m[t].ultimo) m[t].ultimo=a.t; }
+      if(a){ m[t].feitas++; if(okResp(CHAVES[i], a)) m[t].acertos++; if(a.t && a.t>m[t].ultimo) m[t].ultimo=a.t; }
     });
     return Object.values(m);
   }
@@ -1672,7 +1786,7 @@ function registraAtividade(){
     el("pnCards").innerHTML = `
       <div class="pn-card"><h3>Questões feitas</h3>
         <div class="pn-big">${feitas}</div>
-        <div class="pn-sub">de ${BANK.length} no banco · <b>${hoje}</b> hoje</div></div>
+        <div class="pn-sub">de ${nVisiveis()} no banco · <b>${hoje}</b> hoje</div></div>
       <div class="pn-card"><h3>Taxa de acerto</h3>
         <div class="pn-big" style="color:${taxa>=70?"var(--right)":taxa>=50?"var(--teal-deep)":"var(--wrong)"}">${taxa}%</div>
         <div class="pn-sub">${acertos} acertos · ${feitas-acertos} erros</div></div>
@@ -1940,7 +2054,7 @@ const CRONO_KEY = "enareFarmaPlano_v1";     // {"12": true, …} dias concluído
    no celular e movimento. Só interface — nenhum dado salvo muda.
    ============================================================ */
 const SECOES = {
-  questoes:  ["Questões","list-check",()=>`${BANK.length.toLocaleString("pt-BR")} questões nos temas do edital`],
+  questoes:  ["Questões","list-check",()=>`${nVisiveis().toLocaleString("pt-BR")} questões nos temas do edital`],
   simulado:  ["Simulados","clipboard-check",()=>"Provas reais e um simulado por dia"],
   flashcards:["Flashcards","cards",()=>"Memorização com repetição espaçada"],
   treino:    ["Treino","device-gamepad-2",()=>"Fixação em fases curtas"],
@@ -2029,26 +2143,7 @@ document.addEventListener("keydown", e=>{ if(e.key==="Escape") fechaMais(); });
   if(!cont) return;
   SINAL.lista(cont, {
     titulo: "Questões sinalizadas",
-    abreQuestao: chave => {
-      const idx = CHAVES.indexOf(chave);
-      if(idx < 0){
-        /* questão que só existe num simulado de prova (fora do banco): abre a revisão do simulado */
-        const aviso = window.__simAbreSinal ? window.__simAbreSinal(chave) : null;
-        if(aviso === null) alert("Esta questão não está mais no banco nem nos simulados.");
-        else if(aviso) alert(aviso);
-        return;
-      }
-      if(!passaFiltro(idx)){               // o filtro atual esconde a questão: volta para todos os temas
-        activeFilter = []; soReais = false; soSinal = false;
-        if(filtroCtl) filtroCtl.define([]);
-        pintaReais(); pintaSinal();
-        order = BANK.map((_,i)=>i).filter(passaFiltro);
-      }
-      pos = Math.max(0, order.indexOf(idx));
-      render();
-      setTab("questoes");
-      window.scrollTo({top:0, behavior:"smooth"});
-    }
+    abreQuestao: chave => abreQuestaoChave(chave)   // mesma rota do aviso de resposta (errata)
   });
 })();
 
@@ -2113,34 +2208,48 @@ aplicaSecao("questoes");   /* cor, título e selo da aba inicial */
    O arquivo guarda só a CHAVE da questão + a nova posição da correta
    (40 KB em vez de 1,9 MB); a questão é remontada aqui a partir do BANK.
    ============================================================ */
-(function(){
+/* Erratas (10/10/2026): a troca de lugar usa o gabarito ORIGINAL do banco, então a ordem das alternativas na
+   tela não muda quando a revisão corrige o gabarito; as respostas salvas (posição na tela) continuam apontando
+   para a mesma alternativa e são reavaliadas pelo gabarito novo. Remontado a cada lista nova de erratas
+   (mesmos objetos de simulado; só a lista de questões é trocada). */
+function montaDiarios(){
   if(!window.SIMULADOS_DIARIOS || !BANK.length) return;
   const porChave = Object.create(null);
   BANK.forEach((q,i)=>{ porChave[CHAVES[i]] = q; });
   const VERD = /^(\s*(?:<b>\s*)?(?:Corret[ao]|Gabarito|Resposta|Alternativa\s+correta|Letra)\s*[:\-—]?\s*(?:<\/b>\s*)?)([A-E])\b/i;
   let perdidas = 0;
-  const expandidos = window.SIMULADOS_DIARIOS.map(sm => ({
-    id: sm.id, data: sm.data, title: sm.title, sub: sm.sub,
-    questions: sm.questions.map(ref => {
+  const monta = sm => sm.questions.map(ref => {
       const base = porChave[ref.k];
       if(!base){ perdidas++; return null; }          // questão saiu do banco: descarta
       const ops = base.ops.slice();
+      const pa = Array.isArray(base.porAlt) ? base.porAlt.slice() : null;
+      const c0 = origDe(base, "correct");            // gabarito do banco antes de qualquer errata
       let correct = base.correct, c = base.c;
-      if(ref.a != null && ref.a < ops.length && ref.a !== correct){
-        const t = ops[correct]; ops[correct] = ops[ref.a]; ops[ref.a] = t;
-        correct = ref.a;
+      if(ref.a != null && ref.a < ops.length && c0 >= 0 && c0 < ops.length && ref.a !== c0){
+        const t = ops[c0]; ops[c0] = ops[ref.a]; ops[ref.a] = t;
+        if(pa && ref.a < pa.length && c0 < pa.length){ const u = pa[c0]; pa[c0] = pa[ref.a]; pa[ref.a] = u; }
+        correct = correct === c0 ? ref.a : correct === ref.a ? c0 : correct;
         const m = String(c||"").match(VERD);          // veredito segue a nova letra
-        if(m && m[2] !== LETTERS[correct]) c = c.slice(0, m[1].length) + LETTERS[correct] + c.slice(m[1].length + 1);
+        if(correct >= 0 && m && m[2] !== LETTERS[correct]) c = c.slice(0, m[1].length) + LETTERS[correct] + c.slice(m[1].length + 1);
       }
-      const o = {q:base.q, ops, correct, c, tema:base.tema};
+      const o = {q:base.q, ops, correct, c, tema:base.tema, _ch:ref.k};
+      if(pa) o.porAlt = pa;
       if(base.img) o.img = base.img;
       if(base.fonte) o.fonte = base.fonte;
       return o;
-    }).filter(Boolean)
+    }).filter(Boolean);
+  if(DIARIOS){                                       // remontagem: mesmos objetos (o simulado aberto guarda referência)
+    DIARIOS.forEach(sm => { const raw = window.SIMULADOS_DIARIOS.find(x => x.id === sm.id); if(raw) sm.questions = monta(raw); });
+    return;
+  }
+  DIARIOS = window.SIMULADOS_DIARIOS.map(sm => ({
+    id: sm.id, data: sm.data, title: sm.title, sub: sm.sub,
+    questions: monta(sm)
   })).filter(sm => sm.questions.length);
-  window.SIMULADOS = expandidos.concat(window.SIMULADOS || []);
+  window.SIMULADOS = DIARIOS.concat(window.SIMULADOS || []);
   if(perdidas) console.warn("simulados diários: "+perdidas+" questões não encontradas no banco");
-})();
+}
+montaDiarios();
 
 /* ============================================================
    SIMULADO — provas reais (window.SIMULADOS), com nota final
@@ -2162,12 +2271,17 @@ aplicaSecao("questoes");   /* cor, título e selo da aba inicial */
   const loadState = (id)=>{ try{ return JSON.parse(localStorage.getItem(key(id))||"null"); }catch(e){ return null; } };
   const saveState = ()=>{ if(cur){ try{ localStorage.setItem(key(cur.sim.id), JSON.stringify(cur.state)); }catch(e){} } };
   const show = (v)=>{ vList.hidden=v!=="list"; vRun.hidden=v!=="run"; vRes.hidden=v!=="result"; };
+  /* erratas: questão tirada do ar some da exibição do simulado. As respostas continuam guardadas pela
+     posição ORIGINAL (state.answers[i], state.pos): nada é reindexado; só se pula a posição oculta e se
+     numera pelas que estão à vista. */
+  const visiveis = sim => { const v=[]; sim.questions.forEach((q,i)=>{ if(!ER.oculta(q._ch||chaveQ(q))) v.push(i); }); return v; };
+  const respondidas = (sim, st) => { const v=new Set(visiveis(sim)); return Object.keys((st&&st.answers)||{}).filter(k=>v.has(+k)).length; };
 
   function renderList(){
     grid.innerHTML="";
     window.SIMULADOS.forEach(sim=>{
-      const st=loadState(sim.id), total=sim.questions.length;
-      const answered = st ? Object.keys(st.answers||{}).length : 0;
+      const st=loadState(sim.id), total=visiveis(sim).length;
+      const answered = respondidas(sim, st);
       const status = (st&&st.finished) ? "Concluído · toque para ver a nota"
                     : answered ? `Em andamento · ${answered}/${total} respondidas`
                     : `${total} questões · toque para começar`;
@@ -2200,17 +2314,20 @@ aplicaSecao("questoes");   /* cor, título e selo da aba inicial */
   function startRun(){ show("run"); titleEl.textContent=cur.sim.title; paletteEl.hidden=true; renderQuestion(); }
 
   function renderQuestion(){
-    const {sim,state}=cur, n=sim.questions.length, q=sim.questions[state.pos], sel=state.answers[state.pos];
+    const {sim,state}=cur, vis=visiveis(sim), n=vis.length;
+    if(!n){ renderList(); show("list"); return; }
+    if(!vis.includes(state.pos)){ const p=vis.find(i=>i>state.pos); state.pos = p!=null ? p : vis[n-1]; }   // tirada do ar: a seguinte
+    const k=vis.indexOf(state.pos), q=sim.questions[state.pos], sel=state.answers[state.pos];
     card.innerHTML=`
-      <div class="qhead"><span class="num">Questão ${state.pos+1} de ${n}</span>
-        <span class="badge">${Object.keys(state.answers).length}/${n} respondidas</span></div>
+      <div class="qhead"><span class="num">Questão ${k+1} de ${n}</span>
+        <span class="badge">${respondidas(sim, state)}/${n} respondidas</span>${ER.selo(q._ch||chaveQ(q))}</div>
       <div class="enun">${q.q}</div>
       ${q.img?`<figure class="qfig"><img src="${q.img}" alt="Figura da questão"></figure>`:""}
       <div class="opts-hint"><svg class="ic"><use href="#i-arrows-horizontal"/></svg> Arraste uma alternativa para o lado para riscá-la</div>
       <div class="opts">${q.ops.map((o,j)=>`<button class="opt${sel===j?' sel':''}" data-j="${j}"><span class="key">${LET[j]}</span><span class="txt">${o}</span></button>`).join("")}</div>
       <div class="nav">
-        <button class="btn sec" data-prev ${state.pos===0?"disabled":""}>← Anterior</button>
-        ${state.pos>=n-1?'<button class="btn" data-finish2>Finalizar prova</button>':'<button class="btn" data-next>Próxima →</button>'}
+        <button class="btn sec" data-prev ${k===0?"disabled":""}>← Anterior</button>
+        ${k>=n-1?'<button class="btn" data-finish2>Finalizar prova</button>':'<button class="btn" data-next>Próxima →</button>'}
       </div>`;
     const skey = "S:"+sim.id+":"+state.pos;          // risco isolado por simulado+questão
     const sStruck = window.getStruck ? window.getStruck(skey) : new Set();
@@ -2222,47 +2339,49 @@ aplicaSecao("questoes");   /* cor, título e selo da aba inicial */
         if(btn._swiped){ btn._swiped=false; return; }   // foi arraste p/ riscar, não seleção
         state.answers[state.pos]=parseInt(btn.dataset.j); saveState();
         card.querySelectorAll(".opt").forEach(o=>o.classList.remove("sel")); btn.classList.add("sel");
-        card.querySelector(".badge").textContent=`${Object.keys(state.answers).length}/${n} respondidas`;
+        card.querySelector(".badge").textContent=`${respondidas(sim, state)}/${n} respondidas`;
       };
     });
-    const p=card.querySelector("[data-prev]"); if(p) p.onclick=()=>{ if(state.pos>0){state.pos--;saveState();renderQuestion();} };
-    const nx=card.querySelector("[data-next]"); if(nx) nx.onclick=()=>{ if(state.pos<n-1){state.pos++;saveState();renderQuestion();} };
+    const p=card.querySelector("[data-prev]"); if(p) p.onclick=()=>{ if(k>0){state.pos=vis[k-1];saveState();renderQuestion();} };
+    const nx=card.querySelector("[data-next]"); if(nx) nx.onclick=()=>{ if(k<n-1){state.pos=vis[k+1];saveState();renderQuestion();} };
     const f2=card.querySelector("[data-finish2]"); if(f2) f2.onclick=confirmFinish;
     if(window.QuizInk && typeof window.QuizInk.switchTo==="function") window.QuizInk.switchTo(skey);  // tinta da caneta fica só nesta questão do simulado
     window.scrollTo({top:0,behavior:"instant"});
   }
   function renderPalette(){
-    const {sim,state}=cur, n=sim.questions.length; paletteEl.innerHTML="";
-    for(let i=0;i<n;i++){
+    const {sim,state}=cur; paletteEl.innerHTML="";
+    visiveis(sim).forEach((i,k)=>{
       const c=document.createElement("button");
       c.className="sim-cell"+(state.answers[i]!=null?" ans":"")+(i===state.pos?" cur":"");
-      c.textContent=i+1; c.onclick=()=>{ state.pos=i; saveState(); paletteEl.hidden=true; renderQuestion(); };
+      c.textContent=k+1; c.onclick=()=>{ state.pos=i; saveState(); paletteEl.hidden=true; renderQuestion(); };
       paletteEl.appendChild(c);
-    }
+    });
   }
   function confirmFinish(){
-    const {sim,state}=cur, n=sim.questions.length, answered=Object.keys(state.answers).length;
+    const {sim,state}=cur, n=visiveis(sim).length, answered=respondidas(sim, state);
     const msg = answered<n ? `Você respondeu ${answered} de ${n} questões. Finalizar e ver a nota mesmo assim?` : "Finalizar a prova e ver a nota final?";
     if(confirm(msg)){ state.finished=true; saveState(); renderResult(); }
   }
   function grade(){
-    const {sim,state}=cur; let correct=0,annul=0,wrong=0,blank=0;
-    sim.questions.forEach((q,i)=>{
-      const sel=state.answers[i];
+    /* gabarito corrigido pela revisão: a nota é recalculada aqui com o gabarito novo (o salvo não muda) */
+    const {sim,state}=cur, vis=visiveis(sim); let correct=0,annul=0,wrong=0,blank=0;
+    vis.forEach(i=>{
+      const q=sim.questions[i], sel=state.answers[i];
       if(q.correct===-1){ annul++; correct++; }
       else if(sel==null){ blank++; }
       else if(sel===q.correct){ correct++; }
       else { wrong++; }
     });
-    return {correct,annul,wrong,blank,total:sim.questions.length};
+    return {correct,annul,wrong,blank,total:vis.length};
   }
   function renderResult(){
     show("result");
-    const {sim,state}=cur, g=grade(), pct=Math.round(100*g.correct/g.total);
-    const rev = sim.questions.map((q,i)=>{
-      if(q.correct===-1) return `<div class="it an" data-qidx="${i}"><span><b>Q${i+1}</b> · Anulada (ponto para todos)</span><span class="chev">›</span></div>`;
+    const {sim,state}=cur, g=grade(), pct=g.total?Math.round(100*g.correct/g.total):0;
+    const rev = visiveis(sim).map((i,k)=>{
+      const q=sim.questions[i];
+      if(q.correct===-1) return `<div class="it an" data-qidx="${i}"><span><b>Q${k+1}</b> · Anulada (ponto para todos)</span><span class="chev">›</span></div>`;
       const sel=state.answers[i], ok=sel===q.correct, yours = sel==null? "em branco" : LET[sel];
-      return `<div class="it ${ok?'ok':'no'}" data-qidx="${i}"><span><b>Q${i+1}</b> · sua resposta: <b>${yours}</b> — gabarito: <b>${LET[q.correct]}</b></span><span class="chev">›</span></div>`;
+      return `<div class="it ${ok?'ok':'no'}" data-qidx="${i}"><span><b>Q${k+1}</b> · sua resposta: <b>${yours}</b> — gabarito: <b>${LET[q.correct]}</b></span><span class="chev">›</span></div>`;
     }).join("");
     resCard.innerHTML=`
       <div class="qhead"><span class="num">Resultado</span><span class="badge">${sim.title}</span></div>
@@ -2284,14 +2403,15 @@ aplicaSecao("questoes");   /* cor, título e selo da aba inicial */
   }
   function renderReview(i){
     show("run");
-    const {sim,state}=cur, n=sim.questions.length, q=sim.questions[i], sel=state.answers[i];
+    const {sim,state}=cur, vis=visiveis(sim), n=vis.length, k=vis.indexOf(i), q=sim.questions[i], sel=state.answers[i];
+    if(k<0){ renderResult(); return; }              // tirada do ar pela revisão
     const annul=q.correct===-1, ok=sel===q.correct;
     const verdict = annul ? "Questão anulada: ponto para todos"
       : ok ? '<svg class="ic"><use href="#i-check"/></svg> Você acertou' : `<svg class="ic"><use href="#i-x"/></svg> Você marcou ${sel==null?"em branco":LET[sel]}. Gabarito: ${LET[q.correct]}`;
     titleEl.textContent=sim.title; paletteEl.hidden=true;
     card.innerHTML=`
-      <div class="qhead"><span class="num">Revisão · Questão ${i+1} de ${n}</span>
-        <span class="badge">${annul?"Anulada":(ok?"Acertou":"Errou")}</span><span class="q-sinal" data-sinal></span></div>
+      <div class="qhead"><span class="num">Revisão · Questão ${k+1} de ${n}</span>
+        <span class="badge">${annul?"Anulada":(ok?"Acertou":"Errou")}</span>${ER.selo(q._ch||chaveQ(q))}<span class="q-sinal" data-sinal></span></div>
       <div class="enun">${q.q}</div>
       ${q.img?`<figure class="qfig"><img src="${q.img}" alt="Figura da questão"></figure>`:""}
       <div class="opts">${q.ops.map((o,j)=>{
@@ -2303,17 +2423,17 @@ aplicaSecao("questoes");   /* cor, título e selo da aba inicial */
       }).join("")}</div>
       <div class="feedback show ${annul?"ok":(ok?"ok":"no")}">
         <div class="verdict">${verdict}</div>
-        ${q.c?`<div class="body">${q.c}</div>`:`<div class="body" style="color:var(--ink-soft)">Comentário em preparação para esta questão.</div>`}
+        ${q.c?`<div class="body">${q.c}${porAltHtml(q.porAlt)}</div>`:`<div class="body" style="color:var(--ink-soft)">Comentário em preparação para esta questão.</div>`}
       </div>
       <div class="nav">
-        <button class="btn sec" data-rprev ${i===0?"disabled":""}>← Anterior</button>
+        <button class="btn sec" data-rprev ${k===0?"disabled":""}>← Anterior</button>
         <button class="btn sec" data-rback>Voltar ao resultado</button>
-        <button class="btn" data-rnext ${i>=n-1?"disabled":""}>Próxima →</button>
+        <button class="btn" data-rnext ${k>=n-1?"disabled":""}>Próxima →</button>
       </div>`;
-    SINAL.botao(card.querySelector("[data-sinal]"), {chave:chaveQ(q), q:q.q, tema:q.tema||sim.title,
+    SINAL.botao(card.querySelector("[data-sinal]"), {chave:q._ch||chaveQ(q), q:q.q, tema:q.tema||sim.title,   // chave do enunciado ORIGINAL
       extra:extraSinal(q, annul?"anulada":LET[q.correct], sim.title+" Q"+(i+1))});
-    const rp=card.querySelector("[data-rprev]"); if(rp) rp.onclick=()=>{ if(i>0) renderReview(i-1); };
-    const rn=card.querySelector("[data-rnext]"); if(rn) rn.onclick=()=>{ if(i<n-1) renderReview(i+1); };
+    const rp=card.querySelector("[data-rprev]"); if(rp) rp.onclick=()=>{ if(k>0) renderReview(vis[k-1]); };
+    const rn=card.querySelector("[data-rnext]"); if(rn) rn.onclick=()=>{ if(k<n-1) renderReview(vis[k+1]); };
     card.querySelector("[data-rback]").onclick=()=>renderResult();
     if(window.QuizInk && typeof window.QuizInk.switchTo==="function") window.QuizInk.switchTo("R:"+sim.id+":"+i);
     window.scrollTo({top:0,behavior:"instant"});
@@ -2323,13 +2443,13 @@ aplicaSecao("questoes");   /* cor, título e selo da aba inicial */
      Devolve o texto de aviso quando não dá (simulado ainda não terminado), ou "" quando abriu. */
   window.__simAbreSinal = function(chave){
     for(const sim of window.SIMULADOS){
-      const i = sim.questions.findIndex(q => chaveQ(q) === chave);
+      const i = sim.questions.findIndex(q => (q._ch||chaveQ(q)) === chave);
       if(i < 0) continue;
       const st = loadState(sim.id);
       setTab("simulado");
       if(st && st.finished){ cur = {sim, state:st}; renderReview(i); return ""; }
       renderList(); show("list");
-      return `Esta questão é a Q${i+1} do simulado "${sim.title}". Termine esse simulado para abrir a revisão dela.`;
+      return `Esta questão é a Q${visiveis(sim).indexOf(i)+1} do simulado "${sim.title}". Termine esse simulado para abrir a revisão dela.`;
     }
     return null;
   };
@@ -2351,11 +2471,11 @@ aplicaSecao("questoes");   /* cor, título e selo da aba inicial */
     const hoje = new Date().toLocaleDateString("pt-BR");
     return `<div class="pr-cab">
       <h1>${esc(sim.title)}</h1>
-      <div class="sub">${esc(sim.sub||"")} · ${sim.questions.length} questões · ${esc(subtitulo)}</div>
+      <div class="sub">${esc(sim.sub||"")} · ${visiveis(sim).length} questões · ${esc(subtitulo)}</div>
       <div class="pr-id"><span>Nome:</span><span>Data: ${hoje}</span><span>Tempo:</span></div>
     </div>`;
   }
-  function bloco(q, i, opt){
+  function bloco(q, i, opt, k){   // i = posição no simulado (respostas); k = número à vista
     const img = q.img ? `<img src="${esc(q.img)}" alt="Figura da questão ${i+1}">` : "";
     const ops = q.ops.map((o,j)=>`<div class="op">(${LET[j]}) ${esc(o)}</div>`).join("");
     const marca = (opt.minhas && cur && cur.state) ? (()=>{
@@ -2365,7 +2485,7 @@ aplicaSecao("questoes");   /* cor, título e selo da aba inicial */
       const ok = sel===q.correct;
       return ` <b>[sua resposta: ${suaLetra} — gabarito: ${LET[q.correct]} ${ok?"✓":"✗"}]</b>`;
     })() : "";
-    return `<div class="pq"><div class="en"><span class="num">${i+1}.</span> ${esc(q.q)}${marca}</div>${img}${ops}</div>`;
+    return `<div class="pq"><div class="en"><span class="num">${k+1}.</span> ${esc(q.q)}${marca}</div>${img}${ops}</div>`;
   }
   function folhaRespostas(n){
     let c="";
@@ -2373,17 +2493,19 @@ aplicaSecao("questoes");   /* cor, título e selo da aba inicial */
     return `<div class="pr-tit">Folha de respostas</div><div class="pr-fr">${c}</div>`;
   }
   function gabaritoComentado(sim, seq){
-    const itens = sim.questions.map((q,i)=>{
-      if(q.correct===-1) return `<div class="pg"><span class="cab">${i+1}. ANULADA</span></div>`;
-      return `<div class="pg"><span class="cab">${i+1}. Gabarito: ${LET[q.correct]}</span>`
+    const itens = visiveis(sim).map((i,k)=>{
+      const q=sim.questions[i];
+      if(q.correct===-1) return `<div class="pg"><span class="cab">${k+1}. ANULADA</span></div>`;
+      return `<div class="pg"><span class="cab">${k+1}. Gabarito: ${LET[q.correct]}</span>`
            + (q.c?`<div class="cm">${esc(q.c)}</div>`:"") + `</div>`;
     }).join("");
     return `<div class="pr-tit${seq?" sq":""}">Gabarito comentado</div>${itens}`;
   }
   function imprimir(sim, opt){
     let html = cabecalho(sim, opt.rotulo);
-    if(opt.questoes) html += sim.questions.map((q,i)=>bloco(q,i,opt)).join("");
-    if(opt.folha)    html += folhaRespostas(sim.questions.length);
+    const vis = visiveis(sim);
+    if(opt.questoes) html += vis.map((i,k)=>bloco(sim.questions[i],i,opt,k)).join("");
+    if(opt.folha)    html += folhaRespostas(vis.length);
     if(opt.gabarito) html += gabaritoComentado(sim, !opt.questoes && !opt.folha);
     html += `<div class="pr-rod">Banca ENARE · Farmácia — gerado em ${new Date().toLocaleString("pt-BR")}</div>`;
     printArea.innerHTML = html;
@@ -2402,7 +2524,7 @@ aplicaSecao("questoes");   /* cor, título e selo da aba inicial */
     const back=document.createElement("div"); back.className="pm-back";
     back.innerHTML = `<div class="pm" role="dialog" aria-modal="true" aria-label="Imprimir simulado">
       <h3><span class="ico"><svg class="ic"><use href="#i-printer"/></svg></span>Imprimir ou salvar em PDF</h3>
-      <p><b>${esc(sim.title)}</b> · ${sim.questions.length} questões.<br>
+      <p><b>${esc(sim.title)}</b> · ${visiveis(sim).length} questões.<br>
          No diálogo que abrir, escolha <b>“Salvar como PDF”</b> no destino.</p>
       <button class="pm-op" data-op="prova"><b>Caderno de prova</b><span>Só as questões, sem gabarito — para responder no papel.</span></button>
       <button class="pm-op" data-op="prova_gab"><b>Caderno + gabarito comentado</b><span>As questões e, no fim, o gabarito com os comentários.</span></button>
@@ -2437,7 +2559,15 @@ aplicaSecao("questoes");   /* cor, título e selo da aba inicial */
 
   panel.querySelector("[data-simprint]").onclick = ()=>{ if(cur) modalImpressao(cur.sim); };
 
-  window.__simRefresh = ()=>{ if(!vList.hidden) renderList(); };
+  let sujo = false;                                  // errata chegou com a aba fechada: redesenha ao abrir
+  window.__simRefresh = ()=>{ if(sujo){ window.__simErrata(); return; } if(!vList.hidden) renderList(); };
+  /* lista nova de erratas (já aplicada e com os diários remontados): redesenha a vista aberta */
+  window.__simErrata = ()=>{
+    sujo = panel.hidden; if(sujo) return;
+    if(!vList.hidden) renderList();
+    else if(!vRes.hidden && cur) renderResult();
+    else if(!vRun.hidden && cur && !cur.state.finished) renderQuestion();
+  };
   /* chegou estado de simulado de outro aparelho: atualiza o aberto NO MESMO objeto (os botões guardam referência) */
   window.__simRecebe = ()=>{
     if(cur){

@@ -8,7 +8,7 @@
    /_mtacesso.js?v=8 vão no precache, para o app abrir sem internet depois do primeiro login.
    Obs.: o progresso do usuário fica no localStorage (e na conta), que NÃO é tocado por este cache. */
 
-const CACHE = "enare-farma-v43";
+const CACHE = "enare-farma-v44";
 const ASSETS = [
   "./",
   "./index.html",
@@ -30,6 +30,7 @@ const ASSETS = [
   "./cronograma.js",
   "./mtfiltro.js",
   "./mtsinal.js",
+  "./mterrata.js",
   "./mtsync.js",
   "./conta-enare.js",
   "/vendor/firebase/firebase-app-compat.js",

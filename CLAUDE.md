@@ -20,3 +20,11 @@ medtechbr.com.br/quiz-enare-farmacia/. Deploy: git push (GitHub Pages). A cada d
   sobe lápide, a menos que venha dos botões de zerar do app (`window.__enareZerou`).
 - Backup por arquivo saiu da interface; o cartão Conta fica no fim do Painel.
 - Teste: cópia fora do repo com `fake-firebase.js` (nunca publicar), servida com `node srv.mjs <pasta> <porta>`.
+
+## Erratas da administração (10/10/2026)
+- `mterrata.js` = cópia fiel de `~/Documents/Claude/_mterrata/` (não editar aqui); id no servidor `quiz-enare-farmacia`.
+  Chave = `CHAVES[i]` (hash do enunciado ORIGINAL; nos simulados de prova, `q._ch`). Campos `q`, `ops`, `c` vão
+  escapados (`MTErrata.paraHtml`), `correct` é o gabarito. Tirada do ar some só da exibição (`passaFiltro`,
+  contagens, painel, simulados por `visiveis(sim)`); o BANK e as respostas por posição dos simulados não mudam.
+- Simulados diários: a troca de lugar da correta usa o gabarito ORIGINAL, então a tela não muda quando a errata
+  troca o gabarito; a nota é recalculada na exibição.
