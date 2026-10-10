@@ -337,6 +337,7 @@
   document.getElementById("dueCta").onclick=function(){ iniciar(null); };
   document.getElementById("btnReset").onclick=function(){
     if(confirm("Zerar o progresso dos flashcards (agendamentos e ofensiva)?")){
+      try{ var _z=window.parent||window; _z.__enareZerou=_z.__enareZerou||{}; _z.__enareZerou.fcards=Date.now(); }catch(_e){}
       st={cards:{}, streak:0, last:"", rev:0}; save(); pintaDecks();
     }
   };
@@ -348,6 +349,16 @@
     else if(revelado && (e.key==="1"||e.key==="2"||e.key==="3")){
       elRate.querySelectorAll(".rb")[parseInt(e.key,10)-1].click();
     }
+  });
+
+  /* chegou versão nova pela conta (gravada pela página principal) ou por outra aba */
+  window.addEventListener("storage", function(e){
+    if(e.key!==KEY || (e.storageArea && e.storageArea!==localStorage) || !e.newValue) return;
+    var n=null; try{ n=JSON.parse(e.newValue); }catch(x){ return; }
+    if(!n || typeof n!=="object") return;
+    st=Object.assign({cards:{}, streak:0, last:"", rev:0}, n);
+    if(!st.cards || typeof st.cards!=="object") st.cards={};
+    if(!elStudy.classList.contains("on")) pintaDecks();
   });
 
   pintaDecks();

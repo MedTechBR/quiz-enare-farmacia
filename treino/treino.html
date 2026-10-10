@@ -411,9 +411,17 @@
   };
   document.getElementById("btnReset").onclick=function(){
     if(confirm("Zerar seu progresso do Treino (XP, fases e vidas)?")){
+      try{ var _z=window.parent||window; _z.__enareZerou=_z.__enareZerou||{}; _z.__enareZerou.treino=Date.now(); }catch(_e){}
       st={xp:0,vidas:5,streak:0,ultimo:null,fases:{}}; save(); renderTrilha(); toast("Progresso zerado");
     }
   };
+
+  /* chegou versão nova pela conta (gravada pela página principal) ou por outra aba */
+  window.addEventListener("storage", function(e){
+    if(e.key!==KEY || (e.storageArea && e.storageArea!==localStorage) || !e.newValue) return;
+    st=load(); if(!st.fases || typeof st.fases!=="object") st.fases={};
+    hud(); if(UN.length) renderTrilha();
+  });
 
   if(!UN.length){
     document.getElementById("trilha").innerHTML='<p class="sub">Conteúdo do treino não carregado.</p>';

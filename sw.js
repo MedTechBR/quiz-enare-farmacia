@@ -1,11 +1,14 @@
 /* Service Worker — Banca ENARE Farmácia (PWA)
    Estratégia:
    - HTML (navegação): network-first → cai para o cache quando offline.
-     Assim, quando há internet, sempre pega a versão mais nova do banco de questões.
-   - Estáticos (ícones/manifest): cache-first.
-   Obs.: o progresso do usuário fica no localStorage, que NÃO é tocado por este cache. */
+   - Estáticos da mesma origem: stale-while-revalidate (serve do cache e sempre revalida; cura
+     precache envenenado pela borda do CDN sem depender de novo deploy).
+   - Outras origens (Firebase, Cloud Functions, Mercado Pago) e /planos.json: não passam por aqui.
+   Conta (10/10/2026): mtsync.js, conta-enare.js, o SDK do Firebase vendorizado do site e o
+   /_mtacesso.js?v=8 vão no precache, para o app abrir sem internet depois do primeiro login.
+   Obs.: o progresso do usuário fica no localStorage (e na conta), que NÃO é tocado por este cache. */
 
-const CACHE = "enare-farma-v41";
+const CACHE = "enare-farma-v42";
 const ASSETS = [
   "./",
   "./index.html",
@@ -27,6 +30,12 @@ const ASSETS = [
   "./cronograma.js",
   "./mtfiltro.js",
   "./mtsinal.js",
+  "./mtsync.js",
+  "./conta-enare.js",
+  "/vendor/firebase/firebase-app-compat.js",
+  "/vendor/firebase/firebase-auth-compat.js",
+  "/vendor/firebase/firebase-firestore-compat.js",
+  "/_mtacesso.js?v=8",
   "./exames/flashcards-lab.html",
   "./sim-img/aocp-q2.png",
   "./sim-img/aocp-q6.png",
@@ -82,7 +91,7 @@ self.addEventListener("install", (e) => {
   e.waitUntil(
     caches.open(CACHE)
       .then((c) =>
-        c.addAll(ASSETS).then(() =>
+        c.addAll(ASSETS.map((u) => new Request(u, { cache: "reload" }))).then(() =>
           Promise.all(ASSETS_OPCIONAIS.map((u) => c.add(u).catch(() => null)))
         )
       )
@@ -101,6 +110,11 @@ self.addEventListener("activate", (e) => {
 self.addEventListener("fetch", (e) => {
   const req = e.request;
   if (req.method !== "GET") return;
+  const url = new URL(req.url);
+  // Firestore/Auth/Cloud Functions/Mercado Pago: nunca do cache (o canal do Firestore usa GET)
+  if (url.origin !== location.origin) return;
+  // catálogo de planos (paywall): sempre da rede; sem rede o _mtacesso libera (falha aberta)
+  if (url.pathname === "/planos.json") return;
 
   const isNav = req.mode === "navigate" ||
     (req.headers.get("accept") || "").includes("text/html");
@@ -119,15 +133,14 @@ self.addEventListener("fetch", (e) => {
     return;
   }
 
-  // cache-first para estáticos
+  // stale-while-revalidate para estáticos da mesma origem
   e.respondWith(
-    caches.match(req).then((cached) =>
-      cached ||
-      fetch(req).then((res) => {
-        const copy = res.clone();
-        caches.open(CACHE).then((c) => c.put(req, copy));
+    caches.open(CACHE).then((c) => c.match(req).then((hit) => {
+      const rede = fetch(req, { cache: "no-cache" }).then((res) => {
+        if (res.ok) c.put(req, res.clone());
         return res;
-      }).catch(() => cached)
-    )
+      }).catch(() => hit);
+      return hit || rede;
+    }))
   );
 });

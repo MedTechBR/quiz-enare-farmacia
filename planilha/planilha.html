@@ -81,7 +81,7 @@
   <button class="btn" id="bCsv">⤓ CSV</button>
   <button class="btn" id="bLimpaEx">Apagar exemplo</button>
   <span class="grow"></span>
-  <span class="saved" id="saved">salvo no aparelho</span>
+  <span class="saved" id="saved">salvo</span>
   <button class="btn" id="bReset">Restaurar original</button>
 </div>
 
@@ -140,7 +140,7 @@
   function salvarLocal(){
     try{ localStorage.setItem(KEY, JSON.stringify(pacote())); return true; }
     catch(e){
-      avisa("⚠️ não consegui salvar — baixe um backup!", "erro");
+      avisa("não consegui salvar neste aparelho (armazenamento cheio?)", "erro");
       return false;
     }
   }
@@ -199,7 +199,7 @@
     if(ok){
       var h=new Date(), p=function(n){ return String(n).padStart(2,"0"); };
       avisa("salvo ✓ "+p(h.getHours())+":"+p(h.getMinutes()), "ok");
-      setTimeout(function(){ avisa("salvo no aparelho"); }, 1500);
+      setTimeout(function(){ avisa("salvo"); }, 1500);
     }
   }
   /* rede de segurança: grava de novo ao sair/minimizar (iOS mata a aba sem avisar) */
@@ -224,11 +224,13 @@
         salvarLocal(); invalida(); render();
         faixaRecuperacao("<b>↻ Suas anotações foram recuperadas.</b> O navegador havia apagado a cópia principal, "
           + "mas a planilha se restaurou pela cópia de segurança (<b>"+la+"</b> célula(s)). "
-          + "Para não depender disso, baixe um backup na faixa acima da planilha.");
+          + "Ela volta a ser salva na sua conta.");
       }
       return null;
     }).then(function(){
-      if(nCelulas(edits)>0) return;
+      /* só quando a chave SUMIU do aparelho: chave presente e vazia é planilha zerada de propósito
+         (aqui ou em outro aparelho da conta) e não pode ser desfeita pelo backup interno */
+      if(nCelulas(edits)>0 || loc) return;
       // nada em lugar nenhum: tenta o backup mais recente
       return idb("backups","readonly",function(st){ return st.getAll(); }).then(function(bs){
         if(!bs || !bs.length) return;
@@ -238,11 +240,22 @@
           edits=b.edits||{}; extraRows=b.extraRows||{};
           salvarLocal(); invalida(); render();
           faixaRecuperacao("<b>↻ Planilha restaurada do backup de "+new Date(b.ts).toLocaleString("pt-BR")+".</b> "
-            + "As cópias principais tinham sido apagadas pelo navegador. Confira se está tudo aí e baixe um backup em arquivo.");
+            + "As cópias principais tinham sido apagadas pelo navegador. Confira se está tudo aí.");
         }
       });
     });
   })();
+
+  /* chegou versão nova pela conta (gravada pela página principal) ou por outra aba: usa ela e
+     atualiza a cópia do IndexedDB, para a auto-recuperação não trazer a versão antiga de volta */
+  window.addEventListener("storage", function(e){
+    if(e.key!==KEY || (e.storageArea && e.storageArea!==localStorage) || !e.newValue) return;
+    var p=null; try{ p=JSON.parse(e.newValue); }catch(x){ return; }
+    if(!p || typeof p!=="object") return;
+    edits=p.edits||{}; extraRows=p.extraRows||{};
+    idb("estado","readwrite",function(st){ return st.put(pacote(),"atual"); });
+    invalida(); render();
+  });
 
   /* ---------- utilitários A1 ---------- */
   function colLetra(n){ var s=""; while(n>0){ var m=(n-1)%26; s=String.fromCharCode(65+m)+s; n=Math.floor((n-1)/26); } return s; }
@@ -592,6 +605,7 @@
   document.getElementById("bReset").onclick=function(){
     if(!confirm("Restaurar a planilha original? Todas as suas anotações serão apagadas.")) return;
     if(!confirm("Tem certeza? Isso apaga também os backups internos desta planilha e não dá para desfazer.")) return;
+    try{ var _z=window.parent||window; _z.__enareZerou=_z.__enareZerou||{}; _z.__enareZerou.planilha=Date.now(); }catch(_e){}   /* zerar de propósito: a conta também zera */
     edits={}; extraRows={};
     salvarLocal();
     // limpa também o IndexedDB e os backups, senão a auto-recuperação traria tudo de volta
