@@ -5,10 +5,10 @@
      precache envenenado pela borda do CDN sem depender de novo deploy).
    - Outras origens (Firebase, Cloud Functions, Mercado Pago) e /planos.json: não passam por aqui.
    Conta (10/10/2026): mtsync.js, conta-enare.js, o SDK do Firebase vendorizado do site e o
-   /_mtacesso.js?v=11 vão no precache, para o app abrir sem internet depois do primeiro login.
+   /_mtacesso.js?v=12 vão no precache, para o app abrir sem internet depois do primeiro login.
    Obs.: o progresso do usuário fica no localStorage (e na conta), que NÃO é tocado por este cache. */
 
-const CACHE = "enare-farma-v46";
+const CACHE = "enare-farma-v47";
 const ASSETS = [
   "./",
   "./index.html",
@@ -36,7 +36,7 @@ const ASSETS = [
   "/vendor/firebase/firebase-app-compat.js",
   "/vendor/firebase/firebase-auth-compat.js",
   "/vendor/firebase/firebase-firestore-compat.js",
-  "/_mtacesso.js?v=11",
+  "/_mtacesso.js?v=12",
   "./exames/flashcards-lab.html",
   "./sim-img/aocp-q2.png",
   "./sim-img/aocp-q6.png",
