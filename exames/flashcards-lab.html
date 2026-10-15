@@ -2,298 +2,217 @@
 <html lang="pt-BR">
 <head>
 <meta charset="UTF-8">
-<title>Flashcards — Exames Laboratoriais (ENARE/FGV)</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Spectral:wght@400;500;600;700&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Exames laboratoriais · Banca ENARE</title>
 <style>
-  :root{
-    --bg:#111827;
-    --bg-2:#171f30;
-    --paper:#F7F2E6;
-    --paper-2:#EFE8D6;
-    --ink:#22293B;
-    --ink-soft:#565F76;
-    --line:#D8CFB4;
-    --line-strong:#C7BC9C;
-  }
-  *{box-sizing:border-box;}
-  body{
-    margin:0;
-    background:
-      radial-gradient(1200px 700px at 15% -10%, #1c2740 0%, transparent 60%),
-      var(--bg);
-    color:var(--paper);
-    font-family:'Inter',sans-serif;
-    padding:28px 16px 56px;
-  }
-  .wrap{max-width:760px;margin:0 auto;}
-  .masthead{
-    display:flex;
-    justify-content:space-between;
-    align-items:flex-end;
-    border-bottom:2px solid #2b3550;
-    padding-bottom:14px;
-    margin-bottom:20px;
-    gap:12px;
-    flex-wrap:wrap;
-  }
-  .masthead h1{
-    font-family:'Spectral',serif;
-    font-weight:600;
-    font-size:22px;
-    margin:0 0 4px;
-    letter-spacing:0.2px;
-  }
-  .masthead p{
-    margin:0;
-    font-size:12.5px;
-    color:#9AA6C4;
-    font-family:'IBM Plex Mono',monospace;
-  }
-  .counter{
-    font-family:'IBM Plex Mono',monospace;
-    font-size:13px;
-    color:#C9D2EA;
-    text-align:right;
-  }
-  .counter b{color:#fff;font-weight:600;}
+@font-face{font-family:"Inter";font-weight:400;font-display:swap;src:url(../fonts/inter-400.woff2) format("woff2")}
+@font-face{font-family:"Inter";font-weight:500;font-display:swap;src:url(../fonts/inter-500.woff2) format("woff2")}
+@font-face{font-family:"Inter";font-weight:600;font-display:swap;src:url(../fonts/inter-600.woff2) format("woff2")}
+@font-face{font-family:"Inter";font-weight:700;font-display:swap;src:url(../fonts/inter-700.woff2) format("woff2")}
+:root{
+  --papel:#F5F6FB; --sup:#fff; --sup2:#F1F3F9; --sup3:#E7EAF3; --ink:#141827; --ink2:#5D6579; --ink3:#667085;
+  --linha:#E3E7F0; --ac:#BE185D; --acSup:#FCEAF2; --acInk:#9D174D;
+  --ok:#047857; --okSup:#E3F6EE; --err:#DC2626; --errSup:#FEECEC;
+  --sombra:0 1px 2px rgba(20,24,39,.04),0 4px 14px rgba(20,24,39,.05); --sombraM:0 12px 30px rgba(20,24,39,.10);
+  --mola:cubic-bezier(.34,1.56,.64,1); --suave:cubic-bezier(.22,1,.36,1);
+}
+*{box-sizing:border-box;-webkit-tap-highlight-color:transparent}
+html,body{margin:0}
+body{font-family:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--papel);color:var(--ink);
+  font-size:15px;line-height:1.5;padding:4px 2px 40px}
+.ic{width:1em;height:1em;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;vertical-align:-.14em;flex:0 0 auto}
+button{font:inherit;color:inherit}
+h1,h2,h3{letter-spacing:-.02em;margin:0}
 
-  .chips{
-    display:flex;
-    flex-wrap:wrap;
-    gap:6px;
-    margin-bottom:22px;
-  }
-  .chip{
-    font-family:'IBM Plex Mono',monospace;
-    font-size:11px;
-    letter-spacing:0.3px;
-    padding:5px 10px;
-    border-radius:3px;
-    border:1px solid #2e3a58;
-    background:#1a2338;
-    color:#AEB8D4;
-    cursor:pointer;
-    user-select:none;
-    transition:transform .12s ease;
-  }
-  .chip:hover{border-color:#4a5a86;}
-  .chip.active{
-    background:var(--chip-bg,#3a4568);
-    color:var(--chip-fg,#fff);
-    border-color:transparent;
-  }
+/* topo: progresso + modo */
+.topo{display:flex;align-items:center;gap:14px;flex-wrap:wrap;margin-bottom:14px}
+.prog{flex:1;min-width:220px;display:flex;align-items:center;gap:12px;background:var(--sup);border:1px solid var(--linha);
+  border-radius:20px;padding:12px 16px;box-shadow:var(--sombra)}
+.prog .anel{width:46px;height:46px;flex:0 0 auto}
+.prog .anel circle{fill:none;stroke-width:5}
+.prog .anel .arco{stroke:var(--ok);stroke-linecap:round;transition:stroke-dashoffset 1s var(--suave)}
+.prog b{font-size:18px;font-variant-numeric:tabular-nums}
+.prog span{display:block;font-size:13px;color:var(--ink2)}
+.modo{display:inline-flex;background:var(--sup3);border-radius:999px;padding:4px;gap:2px}
+.modo button{border:0;background:none;border-radius:999px;padding:9px 16px;font-weight:600;font-size:14px;cursor:pointer;color:var(--ink2);
+  display:inline-flex;align-items:center;gap:7px;min-height:40px;transition:background .2s,color .2s}
+.modo button[aria-pressed="true"]{background:var(--sup);color:var(--acInk);box-shadow:var(--sombra)}
 
-  .stage{
-    perspective:1600px;
-    margin-bottom:18px;
-  }
-  .card{
-    position:relative;
-    width:100%;
-    min-height:340px;
-    transform-style:preserve-3d;
-    transition:transform .5s cubic-bezier(.4,.2,.2,1);
-    cursor:pointer;
-  }
-  .card.flipped{transform:rotateY(180deg);}
-  .face{
-    position:absolute;
-    inset:0;
-    backface-visibility:hidden;
-    border-radius:6px;
-    background:var(--paper);
-    color:var(--ink);
-    box-shadow:0 18px 40px -14px rgba(0,0,0,.55), 0 2px 0 rgba(0,0,0,.15);
-    display:flex;
-    flex-direction:column;
-    overflow:hidden;
-  }
-  .face::before{
-    content:"";
-    position:absolute;
-    top:0;left:0;right:0;
-    height:10px;
-    background:repeating-linear-gradient(90deg, transparent 0 6px, rgba(0,0,0,.06) 6px 7px);
-  }
-  .tab{
-    position:absolute;
-    top:0;
-    right:28px;
-    width:78px;
-    height:26px;
-    border-radius:0 0 5px 5px;
-    background:var(--tab-color,#888);
-    color:#fff;
-    font-family:'IBM Plex Mono',monospace;
-    font-size:9.5px;
-    letter-spacing:.4px;
-    display:flex;
-    align-items:center;
-    justify-content:center;
-    text-align:center;
-    padding:0 4px;
-    line-height:1.15;
-    box-shadow:0 3px 6px rgba(0,0,0,.25);
-  }
-  .face-body{
-    padding:38px 34px 28px;
-    flex:1;
-    display:flex;
-    flex-direction:column;
-  }
-  .eyebrow{
-    font-family:'IBM Plex Mono',monospace;
-    font-size:11px;
-    color:var(--ink-soft);
-    letter-spacing:.5px;
-    text-transform:uppercase;
-    margin-bottom:14px;
-  }
-  .front .param-name{
-    font-family:'Spectral',serif;
-    font-weight:600;
-    font-size:30px;
-    line-height:1.15;
-    margin:0 0 10px;
-  }
-  .front .hint{
-    margin-top:auto;
-    font-size:12px;
-    color:var(--ink-soft);
-    border-top:1px dashed var(--line-strong);
-    padding-top:12px;
-  }
-  .back .param-name-small{
-    font-family:'Spectral',serif;
-    font-weight:600;
-    font-size:17px;
-    margin:0 0 16px;
-    color:var(--ink-soft);
-  }
-  .back h3{
-    font-size:11px;
-    text-transform:uppercase;
-    letter-spacing:.5px;
-    color:var(--ink-soft);
-    margin:0 0 6px;
-    font-family:'IBM Plex Mono',monospace;
-  }
-  .back .purpose{
-    font-size:15px;
-    line-height:1.55;
-    margin:0 0 20px;
-  }
-  .refbox{
-    background:var(--paper-2);
-    border:1px solid var(--line);
-    border-radius:4px;
-    padding:12px 14px;
-    font-family:'IBM Plex Mono',monospace;
-    font-size:14px;
-    line-height:1.6;
-    white-space:pre-wrap;
-    margin-bottom:14px;
-  }
-  .note{
-    font-size:12px;
-    color:var(--ink-soft);
-    font-style:italic;
-    margin-top:auto;
-  }
-  .back{transform:rotateY(180deg);}
+/* busca e filtros */
+.busca{position:relative;margin-bottom:12px}
+.busca .ic{position:absolute;left:16px;top:50%;transform:translateY(-50%);color:var(--ink3);font-size:18px}
+.busca input{width:100%;font:inherit;font-size:16px;border:1.5px solid var(--linha);background:var(--sup);border-radius:999px;
+  padding:12px 16px 12px 46px;min-height:48px;color:var(--ink);outline:0}
+.busca input:focus{border-color:var(--ac);box-shadow:0 0 0 4px color-mix(in srgb,var(--ac) 15%,transparent)}
+.grupos{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+.grupo{--k:var(--ac);border:0;cursor:pointer;border-radius:999px;padding:8px 14px 8px 8px;display:inline-flex;align-items:center;gap:8px;
+  background:color-mix(in srgb,var(--k) 11%,#fff);color:color-mix(in srgb,var(--k) 82%,#141827);font-weight:600;font-size:14px;
+  min-height:40px;transition:transform .2s var(--mola),background .2s,color .2s}
+.grupo .bola{width:26px;height:26px;border-radius:50%;background:var(--k);color:#fff;display:grid;place-items:center;font-size:12px;font-weight:700}
+.grupo:hover{transform:translateY(-2px)}
+.grupo[aria-pressed="true"]{background:var(--k);color:#fff;box-shadow:0 8px 18px color-mix(in srgb,var(--k) 32%,transparent)}
+.grupo[aria-pressed="true"] .bola{background:#fff;color:var(--k)}
+.cats{display:flex;gap:6px;overflow-x:auto;padding:2px 2px 8px;margin-bottom:6px;scrollbar-width:thin}
+.cats[hidden]{display:none}
+.cat{flex:0 0 auto;border:1.5px solid var(--linha);background:var(--sup);border-radius:999px;padding:6px 12px;font-size:13px;font-weight:600;
+  color:var(--ink2);cursor:pointer;min-height:34px;white-space:nowrap;transition:border-color .15s,color .15s,background .15s}
+.cat[aria-pressed="true"]{border-color:var(--k);color:color-mix(in srgb,var(--k) 85%,#141827);background:color-mix(in srgb,var(--k) 10%,#fff)}
+.filtroSt{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin:4px 0 14px;font-size:13.5px;color:var(--ink2)}
+.filtroSt button{border:0;background:none;cursor:pointer;font-weight:600;color:var(--ink2);padding:4px 8px;border-radius:999px}
+.filtroSt button[aria-pressed="true"]{background:var(--sup3);color:var(--ink)}
 
-  .controls{
-    display:flex;
-    align-items:center;
-    justify-content:space-between;
-    gap:10px;
-  }
-  .navgroup{display:flex;gap:8px;}
-  button.ctl{
-    font-family:'Inter',sans-serif;
-    font-size:13px;
-    font-weight:500;
-    background:#1a2338;
-    color:#DCE2F2;
-    border:1px solid #2e3a58;
-    border-radius:5px;
-    padding:9px 14px;
-    cursor:pointer;
-  }
-  button.ctl:hover{background:#232e4a;}
-  button.ctl:active{transform:scale(.97);}
-  .keyhint{
-    font-family:'IBM Plex Mono',monospace;
-    font-size:11px;
-    color:#6C7796;
-    text-align:center;
-    margin-top:14px;
-  }
-  .footnote{
-    margin-top:26px;
-    font-size:11.5px;
-    color:#7883A3;
-    line-height:1.6;
-    border-top:1px solid #232d47;
-    padding-top:14px;
-  }
+/* consulta: cartões de referência */
+.lista{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:12px}
+.item{--k:var(--ac);background:var(--sup);border:1px solid var(--linha);border-radius:20px;padding:15px 16px 14px;box-shadow:var(--sombra);
+  position:relative;overflow:hidden;cursor:pointer;text-align:left;width:100%;display:flex;flex-direction:column;gap:8px;
+  transition:transform .2s var(--mola),box-shadow .2s;animation:sobe .45s var(--suave) both;animation-delay:calc(var(--i,0)*30ms)}
+.item::before{content:"";position:absolute;inset:0 0 auto 0;height:4px;background:var(--k)}
+.item:hover{transform:translateY(-3px);box-shadow:var(--sombraM)}
+.item .cab{display:flex;align-items:flex-start;gap:8px}
+.item .cab small{font-size:12px;font-weight:600;color:color-mix(in srgb,var(--k) 82%,#141827)}
+.item h3{font-size:15.5px;line-height:1.3;flex:1}
+.item .ref{background:color-mix(in srgb,var(--k) 8%,#fff);border-radius:14px;padding:9px 12px;font-size:14px;font-weight:600;
+  white-space:pre-line;font-variant-numeric:tabular-nums;color:var(--ink)}
+.item .ref em{display:block;font-style:normal;font-size:11.5px;font-weight:600;color:var(--ink2);margin-bottom:2px}
+.item .fin{font-size:13.5px;color:var(--ink2);display:none}
+.item .fin em{font-style:normal;font-weight:600;color:var(--ink)}
+.item.aberto .fin{display:block;animation:desliza .3s ease both}
+.item .mais{font-size:12.5px;font-weight:600;color:var(--ink3)}
+.item.aberto .mais{display:none}
+.selo{font-size:11.5px;font-weight:700;border-radius:999px;padding:3px 9px;white-space:nowrap}
+.selo.sei{background:var(--okSup);color:var(--ok)}
+.selo.rever{background:var(--errSup);color:#B91C1C}
+.vazio{grid-column:1/-1;text-align:center;color:var(--ink2);padding:40px 12px}
+.vazio button{margin-top:10px}
+
+/* treino: cartão que vira */
+.treino[hidden],.lista[hidden],.fim[hidden]{display:none}
+.passo{display:flex;align-items:center;gap:10px;margin-bottom:12px;font-size:13.5px;color:var(--ink2);font-weight:600}
+.passo .barra{flex:1;height:8px;border-radius:999px;background:var(--sup3);overflow:hidden}
+.passo .barra i{display:block;height:100%;background:var(--ac);border-radius:999px;transition:width .5s var(--suave)}
+.palco{perspective:1400px}
+.cartao{--k:var(--ac);position:relative;min-height:320px;cursor:pointer;transform-style:preserve-3d;transition:transform .6s var(--suave)}
+.cartao.virado{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;-webkit-backface-visibility:hidden;background:var(--sup);border:1px solid var(--linha);
+  border-radius:26px;box-shadow:var(--sombraM);padding:26px 24px;display:flex;flex-direction:column;overflow:auto}
+.face::before{content:"";position:absolute;inset:0 0 auto 0;height:6px;background:var(--k);border-radius:26px 26px 0 0}
+.face.verso{transform:rotateY(180deg)}
+.face .cat-t{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;color:color-mix(in srgb,var(--k) 82%,#141827)}
+.face .cat-t i{width:10px;height:10px;border-radius:50%;background:var(--k)}
+.frente{justify-content:center;align-items:center;text-align:center;gap:14px}
+.frente h2{font-size:clamp(22px,4vw,30px);line-height:1.2;font-weight:700}
+.frente p{color:var(--ink2);font-size:14px;margin:0}
+.frente .vira{display:inline-flex;align-items:center;gap:7px;font-size:13px;font-weight:600;color:var(--acInk);background:var(--acSup);
+  border-radius:999px;padding:6px 13px}
+.verso h3{font-size:18px;margin:10px 0 12px}
+.verso .lbl{font-size:12.5px;font-weight:700;color:var(--ink2);margin:0 0 4px}
+.verso .fin{margin:0 0 14px;font-size:15px}
+.verso .ref{background:color-mix(in srgb,var(--k) 9%,#fff);border-radius:16px;padding:12px 14px;font-weight:600;font-size:15.5px;
+  white-space:pre-line;font-variant-numeric:tabular-nums}
+.notas{display:flex;gap:10px;margin-top:16px}
+.notas button{flex:1;border:0;border-radius:999px;min-height:52px;font-weight:700;font-size:15px;cursor:pointer;display:inline-flex;
+  align-items:center;justify-content:center;gap:8px;transition:transform .15s var(--mola),filter .2s}
+.notas button:active{transform:scale(.96)}
+.notas .nao{background:var(--errSup);color:#B91C1C}
+.notas .sim{background:var(--ok);color:#fff;box-shadow:0 8px 18px color-mix(in srgb,var(--ok) 30%,transparent)}
+.notas button:disabled{opacity:.45;cursor:default}
+.dica{text-align:center;font-size:12.5px;color:var(--ink3);margin-top:10px}
+.nav2{display:flex;justify-content:space-between;margin-top:10px}
+.nav2 button{border:1.5px solid var(--linha);background:var(--sup);border-radius:999px;padding:8px 14px;font-weight:600;font-size:13.5px;
+  cursor:pointer;display:inline-flex;align-items:center;gap:6px;min-height:40px}
+.fim{background:var(--sup);border:1px solid var(--linha);border-radius:26px;box-shadow:var(--sombraM);padding:28px 22px;text-align:center;
+  animation:pop .45s var(--mola) both}
+.fim h2{font-size:22px;margin:6px 0}
+.fim .nums{display:flex;gap:12px;justify-content:center;margin:18px 0}
+.fim .nums div{border-radius:18px;padding:12px 18px;min-width:110px}
+.fim .nums b{display:block;font-size:26px;font-variant-numeric:tabular-nums}
+.fim .nums .a{background:var(--okSup);color:var(--ok)}.fim .nums .b{background:var(--errSup);color:#B91C1C}
+.bt{border:0;border-radius:999px;min-height:46px;padding:10px 20px;font-weight:600;cursor:pointer;background:var(--ac);color:#fff;
+  box-shadow:0 6px 16px color-mix(in srgb,var(--ac) 28%,transparent);display:inline-flex;align-items:center;gap:8px;transition:transform .15s var(--mola)}
+.bt:hover{transform:translateY(-1px)}
+.bt.sec{background:var(--sup);color:var(--ink);border:1.5px solid var(--linha);box-shadow:none}
+.acoesFim{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+.rodape{margin-top:22px;font-size:12.5px;color:var(--ink3);line-height:1.6}
+.rodape button{border:0;background:none;color:var(--ink2);text-decoration:underline;cursor:pointer;padding:0;font-size:12.5px}
+@keyframes sobe{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes desliza{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+@keyframes pop{from{opacity:0;transform:scale(.9)}to{opacity:1;transform:none}}
+@media(max-width:560px){
+  .lista{grid-template-columns:1fr}
+  .modo{width:100%}.modo button{flex:1;justify-content:center}
+  .cartao{min-height:360px}.face{padding:22px 18px}
+  .fim .nums div{min-width:0;flex:1}
+}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
-<div class="wrap">
+<svg aria-hidden="true" style="display:none" xmlns="http://www.w3.org/2000/svg">
+  <symbol id="i-busca" viewBox="0 0 24 24"><circle cx="10" cy="10" r="7"/><path d="M21 21l-6-6"/></symbol>
+  <symbol id="i-lista" viewBox="0 0 24 24"><path d="M9 6h11M9 12h11M9 18h11M5 6v.01M5 12v.01M5 18v.01"/></symbol>
+  <symbol id="i-cartas" viewBox="0 0 24 24"><rect x="3" y="6" width="13" height="15" rx="2"/><path d="M8 3h11a2 2 0 0 1 2 2v13"/></symbol>
+  <symbol id="i-vira" viewBox="0 0 24 24"><path d="M4 12a8 8 0 0 1 14-5.3L20 9M20 4v5h-5M20 12a8 8 0 0 1-14 5.3L4 15M4 20v-5h5"/></symbol>
+  <symbol id="i-certo" viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></symbol>
+  <symbol id="i-esq" viewBox="0 0 24 24"><path d="M15 6l-6 6 6 6"/></symbol>
+  <symbol id="i-dir" viewBox="0 0 24 24"><path d="M9 6l6 6-6 6"/></symbol>
+  <symbol id="i-trofeu" viewBox="0 0 24 24"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0zM7 6H4a3 3 0 0 0 3 4M17 6h3a3 3 0 0 1-3 4"/></symbol>
+</svg>
 
-  <div class="masthead">
-    <div>
-      <h1>Painel de exames laboratoriais</h1>
-      <p>estudo dirigido · residência multiprofissional (farmácia) · ENARE / FGV</p>
-    </div>
-    <div class="counter" id="counter"></div>
+<div class="topo">
+  <div class="prog">
+    <svg class="anel" viewBox="0 0 48 48" aria-hidden="true"><circle cx="24" cy="24" r="20" stroke="var(--sup3)"/>
+      <circle class="arco" id="arco" cx="24" cy="24" r="20" stroke-dasharray="125.7" stroke-dashoffset="125.7" transform="rotate(-90 24 24)"/></svg>
+    <div><b id="nSei">0</b> <span id="nSeiTxt">de 0 exames que você já domina</span></div>
   </div>
-
-  <div class="chips" id="chips"></div>
-
-  <div class="stage">
-    <div class="card" id="card">
-      <div class="face front">
-        <div class="tab" id="tabFront"></div>
-        <div class="face-body">
-          <div class="eyebrow" id="eyebrowFront"></div>
-          <p class="param-name" id="paramName"></p>
-          <p class="hint">Toque no cartão para ver finalidade e valores de referência</p>
-        </div>
-      </div>
-      <div class="face back">
-        <div class="tab" id="tabBack"></div>
-        <div class="face-body">
-          <p class="param-name-small" id="paramNameSmall"></p>
-          <h3 id="purposeLabel">Finalidade</h3>
-          <p class="purpose" id="purpose"></p>
-          <h3 id="refLabel">Valores de referência</h3>
-          <div class="refbox" id="refbox"></div>
-          <p class="note" id="noteText"></p>
-        </div>
-      </div>
-    </div>
+  <div class="modo" role="group" aria-label="Modo">
+    <button type="button" id="mConsulta" aria-pressed="true"><svg class="ic"><use href="#i-lista"/></svg>Consultar</button>
+    <button type="button" id="mTreino" aria-pressed="false"><svg class="ic"><use href="#i-cartas"/></svg>Treinar</button>
   </div>
-
-  <div class="controls">
-    <div class="navgroup">
-      <button class="ctl" id="prevBtn">&larr; anterior</button>
-      <button class="ctl" id="nextBtn">próximo &rarr;</button>
-    </div>
-    <div class="navgroup">
-      <button class="ctl" id="shuffleBtn">embaralhar</button>
-      <button class="ctl" id="flipBtn">virar</button>
-    </div>
-  </div>
-
-  <p class="keyhint">setas ← → navegam · espaço vira o cartão · clique nos rótulos acima para filtrar por sistema</p>
-
-  <p class="footnote">Valores de referência variam conforme método, kit e laboratório — usados aqui como faixas de estudo mais cobradas em provas, não substituem o laudo do laboratório de origem.</p>
-
 </div>
+
+<div class="busca"><svg class="ic"><use href="#i-busca"/></svg>
+  <input id="q" type="search" placeholder="Buscar exame, fármaco ou valor (ex.: potássio, digoxina, INR)" autocomplete="off" enterkeyhint="search" aria-label="Buscar"></div>
+<div class="grupos" id="grupos"></div>
+<div class="cats" id="cats" hidden></div>
+<div class="filtroSt" id="filtroSt">Mostrar:
+  <button type="button" data-st="todos" aria-pressed="true">Todos</button>
+  <button type="button" data-st="rever" aria-pressed="false">Para rever</button>
+  <button type="button" data-st="novos" aria-pressed="false">Ainda não treinados</button>
+</div>
+
+<div class="lista" id="lista"></div>
+
+<section class="treino" id="treino" hidden>
+  <div class="passo"><span id="passoTxt">1 de 10</span><div class="barra"><i id="passoBarra"></i></div></div>
+  <div class="palco"><div class="cartao" id="cartao" tabindex="0" role="button" aria-label="Virar o cartão">
+    <div class="face frente"><span class="cat-t"><i></i><span id="fCat"></span></span><h2 id="fNome"></h2>
+      <p>Qual a finalidade e o valor de referência?</p><span class="vira"><svg class="ic"><use href="#i-vira"/></svg>Toque para virar</span></div>
+    <div class="face verso"><span class="cat-t"><i></i><span id="vCat"></span></span><h3 id="vNome"></h3>
+      <p class="lbl" id="vFinL"></p><p class="fin" id="vFin"></p><p class="lbl" id="vRefL"></p><div class="ref" id="vRef"></div></div>
+  </div></div>
+  <div class="notas">
+    <button type="button" class="nao" id="bNao" disabled><svg class="ic"><use href="#i-x"/></svg>Não lembrei</button>
+    <button type="button" class="sim" id="bSim" disabled><svg class="ic"><use href="#i-certo"/></svg>Lembrei</button>
+  </div>
+  <p class="dica" id="dica">Vire o cartão e diga se lembrou. Os que você erra voltam no fim da rodada.</p>
+  <div class="nav2"><button type="button" id="bAnt"><svg class="ic"><use href="#i-esq"/></svg>Anterior</button>
+    <button type="button" id="bPula">Pular<svg class="ic"><use href="#i-dir"/></svg></button></div>
+</section>
+
+<section class="fim" id="fim" hidden>
+  <svg class="ic" style="font-size:44px;color:var(--ac)"><use href="#i-trofeu"/></svg>
+  <h2 id="fimTit">Rodada concluída</h2><p id="fimSub" style="color:var(--ink2);margin:0"></p>
+  <div class="nums"><div class="a"><b id="fimA">0</b>lembrei</div><div class="b"><b id="fimB">0</b>para rever</div></div>
+  <div class="acoesFim">
+    <button type="button" class="bt" id="fimRever"><svg class="ic"><use href="#i-vira"/></svg>Treinar os que errei</button>
+    <button type="button" class="bt sec" id="fimNova">Nova rodada</button>
+    <button type="button" class="bt sec" id="fimLista">Voltar à lista</button>
+  </div>
+</section>
+
+<p class="rodape">Valores de referência variam conforme método, kit e laboratório. São as faixas mais cobradas em prova e não substituem o laudo do laboratório de origem.
+  <button type="button" id="zerar">Recomeçar o que já marquei</button></p>
 
 <script>
 const DATA = [
@@ -439,88 +358,193 @@ const DATA = [
  {cat:"Evitar no idoso (critérios de Beers)", color:"#4A4A4A", name:"Digoxina em doses altas", purposeLabel:"Por que evitar", purpose:"Maior risco de toxicidade pela redução fisiológica da função renal no idoso.", refLabel:"Observação clínica", ref:"Evitar doses > 0,125 mg/dia\ncomo dose de manutenção habitual"},
 ];
 
-let order = DATA.map((_,i)=>i);
-let filterCat = null;
-let pos = 0;
-let flipped = false;
+/* ============================================================
+   Exames laboratoriais: consultar (lista com busca) e treinar
+   (cartão que vira + "lembrei / não lembrei"). O que você marcou
+   fica em enareExames_v1 e sincroniza com a conta (coleção exames).
+   ============================================================ */
+(function(){
+  "use strict";
+  var KEY="enareExames_v1";
+  var GRUPOS=[
+    {id:"lab", nome:"Laboratório", cor:"#2563EB", cats:["Hematologia","Coagulação","Função renal","Função hepática","Eletrólitos","Gasometria arterial",
+      "Metabolismo glicídico","Perfil lipídico","Metabolismo do ferro","Tireoide","Marcadores cardíacos","Marcadores inflamatórios","Marcadores tumorais","Urina","Metabolismo das purinas"]},
+    {id:"mon", nome:"Monitorização terapêutica", cor:"#7C3AED", cats:["Monitorização terapêutica (IT estreito)"]},
+    {id:"pop", nome:"Populações especiais", cor:"#0F766E", cats:["Pediatria","Gestação","Idoso"]},
+    {id:"evi", nome:"Fármacos a evitar", cor:"#C2410C", cats:["Evitar na gestação","Evitar na pediatria","Evitar no idoso (critérios de Beers)"]}
+  ];
+  var corGrupo={}; GRUPOS.forEach(function(g){ g.cats.forEach(function(c){ corGrupo[c]=g; }); });
+  DATA.forEach(function(d){ if(!corGrupo[d.cat]){ corGrupo[d.cat]=GRUPOS[0]; GRUPOS[0].cats.push(d.cat); } });
+  function norm(t){ return String(t||"").normalize("NFD").replace(/[̀-ͯ]/g,"").toLowerCase(); }
+  function slug(t){ return norm(t).replace(/[^a-z0-9]+/g,"-").replace(/^-|-$/g,""); }
+  DATA.forEach(function(d){ d.id=slug(d.cat)+"~"+slug(d.name); d.k=corGrupo[d.cat].cor; d.busca=norm(d.name+" "+d.cat+" "+d.purpose+" "+d.ref); });
 
-const cats = [...new Set(DATA.map(d=>d.cat))];
-const colorOf = c => DATA.find(d=>d.cat===c).color;
+  /* ---------- estado salvo: {id:{s:1 (lembrei) | 0 (rever), t:momento}} ---------- */
+  var marcas=ler();
+  function ler(){ try{ var v=JSON.parse(localStorage.getItem(KEY)||"{}"); return (v&&typeof v==="object"&&!Array.isArray(v))?v:{}; }catch(e){ return {}; } }
+  function grava(){ try{ localStorage.setItem(KEY, JSON.stringify(marcas)); }catch(e){} }
+  function marca(id,sei){ marcas[id]={s:sei?1:0,t:Date.now()}; grava(); placar(); }
+  window.addEventListener("storage",function(e){ if(e.key===KEY){ marcas=ler(); placar(); if(modo==="consulta") lista(); } });
 
-const chipsEl = document.getElementById('chips');
-cats.forEach(cat=>{
-  const chip = document.createElement('div');
-  chip.className = 'chip';
-  chip.textContent = cat;
-  chip.style.setProperty('--chip-bg', colorOf(cat));
-  chip.style.setProperty('--chip-fg', '#fff');
-  chip.onclick = ()=>{
-    filterCat = filterCat===cat ? null : cat;
-    rebuildOrder();
-    render();
-  };
-  chip.dataset.cat = cat;
-  chipsEl.appendChild(chip);
-});
-
-function rebuildOrder(){
-  order = DATA.map((_,i)=>i).filter(i=> !filterCat || DATA[i].cat===filterCat);
-  pos = 0;
-  flipped = false;
-  document.querySelectorAll('.chip').forEach(c=>{
-    c.classList.toggle('active', c.dataset.cat===filterCat);
-  });
-}
-
-function render(){
-  const card = document.getElementById('card');
-  card.classList.toggle('flipped', flipped);
-  const idx = order[pos];
-  const d = DATA[idx];
-
-  document.getElementById('eyebrowFront').textContent = d.cat;
-  document.getElementById('paramName').textContent = d.name;
-  document.getElementById('tabFront').textContent = d.cat;
-  document.getElementById('tabFront').style.setProperty('--tab-color', d.color);
-
-  document.getElementById('paramNameSmall').textContent = d.name;
-  document.getElementById('purposeLabel').textContent = d.purposeLabel || 'Finalidade';
-  document.getElementById('purpose').textContent = d.purpose;
-  document.getElementById('refLabel').textContent = d.refLabel || 'Valores de referência';
-  document.getElementById('refbox').textContent = d.ref;
-  document.getElementById('tabBack').textContent = d.cat;
-  document.getElementById('tabBack').style.setProperty('--tab-color', d.color);
-  document.getElementById('noteText').textContent = '';
-
-  document.getElementById('counter').innerHTML =
-    '<b>'+(pos+1)+'</b> / '+order.length+(filterCat? '  ·  '+filterCat : '  ·  todos os sistemas');
-}
-
-function next(){ flipped=false; pos = (pos+1)%order.length; render(); }
-function prev(){ flipped=false; pos = (pos-1+order.length)%order.length; render(); }
-function flip(){ flipped = !flipped; render(); }
-function shuffle(){
-  for(let i=order.length-1;i>0;i--){
-    const j = Math.floor(Math.random()*(i+1));
-    [order[i],order[j]]=[order[j],order[i]];
+  /* ---------- filtros ---------- */
+  var grupoSel=null, catSel=null, stSel="todos", modo="consulta";
+  var elG=document.getElementById("grupos"), elC=document.getElementById("cats"), elQ=document.getElementById("q");
+  function filtrados(){
+    var q=norm(elQ.value.trim()), termos=q?q.split(/\s+/):[];
+    return DATA.filter(function(d){
+      if(grupoSel && corGrupo[d.cat].id!==grupoSel) return false;
+      if(catSel && d.cat!==catSel) return false;
+      var m=marcas[d.id];
+      if(stSel==="rever" && !(m && m.s===0)) return false;
+      if(stSel==="novos" && m) return false;
+      return termos.every(function(t){ return d.busca.indexOf(t)>=0; });
+    });
   }
-  pos = 0; flipped=false; render();
-}
+  function grupos(){
+    elG.innerHTML="";
+    [{id:null,nome:"Todos",cor:"#BE185D"}].concat(GRUPOS).forEach(function(g){
+      var n=DATA.filter(function(d){ return !g.id || corGrupo[d.cat].id===g.id; }).length;
+      var b=document.createElement("button"); b.type="button"; b.className="grupo"; b.style.setProperty("--k",g.cor);
+      b.setAttribute("aria-pressed",String(grupoSel===g.id));
+      b.innerHTML='<span class="bola">'+n+'</span>'+g.nome;
+      b.onclick=function(){ grupoSel=g.id; catSel=null; grupos(); cats(); atualiza(); };
+      elG.appendChild(b);
+    });
+  }
+  function cats(){
+    var g=GRUPOS.filter(function(x){ return x.id===grupoSel; })[0];
+    if(!g || g.cats.length<2){ elC.hidden=true; elC.innerHTML=""; return; }
+    elC.hidden=false; elC.style.setProperty("--k",g.cor); elC.innerHTML="";
+    [null].concat(g.cats).forEach(function(c){
+      var n=DATA.filter(function(d){ return c?d.cat===c:corGrupo[d.cat].id===g.id; }).length; if(!n) return;
+      var b=document.createElement("button"); b.type="button"; b.className="cat"; b.style.setProperty("--k",g.cor);
+      b.setAttribute("aria-pressed",String(catSel===c));
+      b.textContent=(c||"Todos")+" · "+n;
+      b.onclick=function(){ catSel=c; cats(); atualiza(); };
+      elC.appendChild(b);
+    });
+  }
+  document.querySelectorAll("#filtroSt button").forEach(function(b){
+    b.onclick=function(){ stSel=b.dataset.st; document.querySelectorAll("#filtroSt button").forEach(function(x){ x.setAttribute("aria-pressed",String(x===b)); }); atualiza(); };
+  });
+  var tq; elQ.addEventListener("input",function(){ clearTimeout(tq); tq=setTimeout(atualiza,120); });
 
-document.getElementById('card').addEventListener('click', flip);
-document.getElementById('nextBtn').addEventListener('click', e=>{e.stopPropagation(); next();});
-document.getElementById('prevBtn').addEventListener('click', e=>{e.stopPropagation(); prev();});
-document.getElementById('flipBtn').addEventListener('click', e=>{e.stopPropagation(); flip();});
-document.getElementById('shuffleBtn').addEventListener('click', e=>{e.stopPropagation(); shuffle();});
+  function placar(){
+    var sei=DATA.filter(function(d){ var m=marcas[d.id]; return m&&m.s===1; }).length;
+    document.getElementById("nSei").textContent=sei;
+    document.getElementById("nSeiTxt").textContent="de "+DATA.length+" exames que você já domina";
+    document.getElementById("arco").style.strokeDashoffset=String(125.7*(1-sei/DATA.length));
+  }
 
-document.addEventListener('keydown', e=>{
-  if(e.key==='ArrowRight') next();
-  else if(e.key==='ArrowLeft') prev();
-  else if(e.key===' '){ e.preventDefault(); flip(); }
-});
+  /* ---------- consultar ---------- */
+  function esc(t){ return String(t==null?"":t).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
+  function lista(){
+    var el=document.getElementById("lista"), l=filtrados();
+    if(!l.length){
+      el.innerHTML='<div class="vazio">Nenhum exame com esse filtro.<br><button type="button" class="bt sec" id="limpa">Limpar busca e filtros</button></div>';
+      document.getElementById("limpa").onclick=limpa; return;
+    }
+    el.innerHTML=l.map(function(d,i){
+      var m=marcas[d.id], selo=m?(m.s?'<span class="selo sei">domino</span>':'<span class="selo rever">rever</span>'):"";
+      return '<button type="button" class="item" style="--k:'+d.k+';--i:'+Math.min(i,16)+'" data-id="'+esc(d.id)+'" aria-expanded="false">'+
+        '<span class="cab"><span style="flex:1"><small>'+esc(d.cat)+'</small><h3>'+esc(d.name)+'</h3></span>'+selo+'</span>'+
+        '<span class="ref"><em>'+esc(d.refLabel||"Valores de referência")+'</em>'+esc(d.ref)+'</span>'+
+        '<span class="fin"><em>'+esc(d.purposeLabel||"Finalidade")+':</em> '+esc(d.purpose)+'</span>'+
+        '<span class="mais">Toque para ver a finalidade</span></button>';
+    }).join("");
+    el.querySelectorAll(".item").forEach(function(b){
+      b.onclick=function(){ var a=b.classList.toggle("aberto"); b.setAttribute("aria-expanded",String(a)); };
+    });
+  }
+  function limpa(){ elQ.value=""; grupoSel=null; catSel=null; stSel="todos";
+    document.querySelectorAll("#filtroSt button").forEach(function(x){ x.setAttribute("aria-pressed",String(x.dataset.st==="todos")); });
+    grupos(); cats(); atualiza(); }
 
-rebuildOrder();
-render();
+  /* ---------- treinar ---------- */
+  var fila=[], pos=0, virado=false, erros=[], acertos=0, ronda=0;
+  function embaralha(a){ for(var i=a.length-1;i>0;i--){ var j=Math.floor(Math.random()*(i+1)); var t=a[i]; a[i]=a[j]; a[j]=t; } return a; }
+  function comeca(itens){
+    /* os ainda não treinados e os marcados para rever vêm primeiro */
+    var peso=function(d){ var m=marcas[d.id]; return !m?1:(m.s===0?0:2); };
+    fila=embaralha(itens.slice()).sort(function(a,b){ return peso(a)-peso(b); }).slice(0,20);
+    pos=0; erros=[]; acertos=0; ronda++;
+    document.getElementById("fim").hidden=true; document.getElementById("treino").hidden=false;
+    if(!fila.length){ document.getElementById("treino").hidden=true; document.getElementById("lista").hidden=false; modo="consulta"; botoesModo(); lista(); return; }
+    mostra();
+  }
+  function mostra(){
+    var d=fila[pos], c=document.getElementById("cartao");
+    virado=false; c.classList.remove("virado"); c.style.setProperty("--k",d.k);
+    document.getElementById("fCat").textContent=d.cat; document.getElementById("vCat").textContent=d.cat;
+    document.getElementById("fNome").textContent=d.name; document.getElementById("vNome").textContent=d.name;
+    document.getElementById("vFinL").textContent=d.purposeLabel||"Finalidade";
+    document.getElementById("vFin").textContent=d.purpose;
+    document.getElementById("vRefL").textContent=d.refLabel||"Valores de referência";
+    document.getElementById("vRef").textContent=d.ref;
+    document.getElementById("passoTxt").textContent=(pos+1)+" de "+fila.length;
+    document.getElementById("passoBarra").style.width=(100*pos/fila.length)+"%";
+    document.getElementById("bNao").disabled=true; document.getElementById("bSim").disabled=true;
+    document.getElementById("bAnt").disabled=pos===0;
+  }
+  function vira(){
+    virado=!virado; document.getElementById("cartao").classList.toggle("virado",virado);
+    document.getElementById("bNao").disabled=!virado; document.getElementById("bSim").disabled=!virado;
+  }
+  function nota(sei){
+    if(!virado) return;
+    var d=fila[pos]; marca(d.id,sei);
+    if(sei) acertos++; else erros.push(d);
+    avanca();
+  }
+  function avanca(){ if(pos<fila.length-1){ pos++; mostra(); } else fim(); }
+  function fim(){
+    document.getElementById("treino").hidden=true; var f=document.getElementById("fim"); f.hidden=false;
+    document.getElementById("fimA").textContent=acertos; document.getElementById("fimB").textContent=erros.length;
+    document.getElementById("fimTit").textContent=erros.length?"Rodada concluída":"Rodada perfeita";
+    document.getElementById("fimSub").textContent=erros.length?"Repita só os que você não lembrou até zerar a lista.":"Você lembrou de todos os exames desta rodada.";
+    document.getElementById("fimRever").hidden=!erros.length;
+  }
+  document.getElementById("cartao").onclick=vira;
+  document.getElementById("cartao").onkeydown=function(e){ if(e.key==="Enter"){ e.preventDefault(); vira(); } };
+  document.getElementById("bSim").onclick=function(){ nota(true); };
+  document.getElementById("bNao").onclick=function(){ nota(false); };
+  document.getElementById("bPula").onclick=avanca;
+  document.getElementById("bAnt").onclick=function(){ if(pos>0){ pos--; mostra(); } };
+  document.getElementById("fimRever").onclick=function(){ comeca(erros); };
+  document.getElementById("fimNova").onclick=function(){ comeca(filtrados()); };
+  document.getElementById("fimLista").onclick=function(){ setModo("consulta"); };
+  document.addEventListener("keydown",function(e){
+    if(modo!=="treino" || document.getElementById("treino").hidden || e.target===elQ) return;
+    if(e.key===" "){ e.preventDefault(); vira(); }
+    else if(e.key==="1"||e.key==="ArrowDown") nota(false);
+    else if(e.key==="2"||e.key==="ArrowUp") nota(true);
+    else if(e.key==="ArrowRight") avanca();
+    else if(e.key==="ArrowLeft"&&pos>0){ pos--; mostra(); }
+  });
+
+  /* ---------- modo ---------- */
+  function botoesModo(){
+    document.getElementById("mConsulta").setAttribute("aria-pressed",String(modo==="consulta"));
+    document.getElementById("mTreino").setAttribute("aria-pressed",String(modo==="treino"));
+  }
+  function setModo(m){
+    modo=m; botoesModo();
+    document.getElementById("lista").hidden=m!=="consulta";
+    if(m==="consulta"){ document.getElementById("treino").hidden=true; document.getElementById("fim").hidden=true; lista(); }
+    else comeca(filtrados());
+  }
+  function atualiza(){ if(modo==="consulta") lista(); else comeca(filtrados()); }
+  document.getElementById("mConsulta").onclick=function(){ setModo("consulta"); };
+  document.getElementById("mTreino").onclick=function(){ setModo("treino"); };
+  document.getElementById("zerar").onclick=function(){
+    if(!confirm("Apagar as marcações de 'domino' e 'rever' de todos os exames?")) return;
+    try{ var z=window.parent||window; z.__enareZerou=z.__enareZerou||{}; z.__enareZerou.exames=Date.now(); }catch(e){}
+    marcas={}; grava(); placar(); atualiza();
+  };
+
+  grupos(); cats(); placar(); lista();
+  window.__exames={DATA:DATA, filtrados:filtrados, setModo:setModo};
+})();
 </script>
 </body>
 </html>

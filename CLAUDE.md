@@ -28,3 +28,14 @@ medtechbr.com.br/quiz-enare-farmacia/. Deploy: git push (GitHub Pages). A cada d
   contagens, painel, simulados por `visiveis(sim)`); o BANK e as respostas por posição dos simulados não mudam.
 - Simulados diários: a troca de lugar da correta usa o gabarito ORIGINAL, então a tela não muda quando a errata
   troca o gabarito; a nota é recalculada na exibição.
+
+## Treino, Exames e Log de erros (15/10/2026)
+- Treino: 5 vidas por DIA. `diaVidas` guarda o dia da contagem; data nova = 5 vidas (`renovaVidas`). Zerar NÃO
+  devolve vidas. `parada` = {f:"u-l", i, acertos, erros}: gravada a cada exercício e ao sair; ao reabrir a fase
+  retoma em `i` (o exercício errado volta primeiro). Fase sem erro continua devolvendo as vidas na hora.
+  Ambos sincronizam sozinhos como "#diaVidas"/"#parada" na coleção `treino`.
+- Exames: `exames/flashcards-lab.html` reescrito (tema claro, Consultar com busca e filtros por grupo, Treinar com
+  cartão que vira + Lembrei/Não lembrei). DATA (119 cartões) idêntica à anterior. Marcações em `enareExames_v1`
+  = {"<cat>~<nome>": {s:1|0, t}}, coleção `exames` (mapa) na conta. Id combina categoria e nome porque ácido
+  valproico e tetraciclinas aparecem em duas categorias.
+- Log de erros saiu da navegação. `planilha/` e a coleção `planilha` CONTINUAM (dado do usuário não se apaga).

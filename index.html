@@ -106,7 +106,7 @@
   .opts-hint{font-size:.76rem;color:var(--ink-soft);margin:2px 2px 10px;display:flex;align-items:center;gap:6px}
   /* aba Exames — deck de flashcards embutido */
   .exames-frame{width:100%;height:min(86vh,940px);min-height:600px;border:0;border-radius:14px;
-    box-shadow:var(--shadow);background:#111827;display:block}
+    box-shadow:none;background:transparent;display:block}
   /* aba Treino — jogo embutido */
   /* aviso de recuperação do histórico */
   .migr{background:var(--right-bg);border:1.5px solid var(--right);border-radius:14px;
@@ -443,7 +443,6 @@
   body[data-aba="farmacia"]{--ac:var(--c-teal)}
   body[data-aba="painel"]{--ac:var(--c-ciano)}
   body[data-aba="revisao"]{--ac:var(--c-violeta)}
-  body[data-aba="logerros"]{--ac:var(--c-cinza)}
   /* os apelidos antigos passam a seguir a cor da seção (declarados no body, onde --ac existe) */
   body{
     --acSup:color-mix(in srgb,var(--ac) 11%,#fff);
@@ -841,7 +840,6 @@
     <span class="navGrupo">Acompanhar</span>
     <button class="tab" id="tabBtnPN" data-tab="painel" type="button" style="--c:var(--c-ciano)" data-prim><span class="ico"><svg class="ic"><use href="#i-chart-donut"/></svg></span><span class="lb">Painel</span></button>
     <button class="tab" id="tabBtnRF" data-tab="revisao" type="button" style="--c:var(--c-violeta)" data-prim><span class="ico"><svg class="ic"><use href="#i-calendar-event"/></svg></span><span class="lb">Revisão final</span></button>
-    <button class="tab" id="tabBtnLE" data-tab="logerros" type="button" style="--c:var(--c-cinza)"><span class="ico"><svg class="ic"><use href="#i-table"/></svg></span><span class="lb">Log de erros</span></button>
     <button class="tab tab-mais" id="tabBtnMais" type="button" aria-haspopup="dialog" aria-expanded="false"><span class="ico"><svg class="ic"><use href="#i-layout-grid"/></svg></span><span class="lb">Mais</span></button>
   </nav>
   <div class="mais-fundo" id="maisFundo" hidden></div>
@@ -1025,10 +1023,6 @@
     <div id="crLista"><!-- via JS --></div>
   </div>
 
-  <div id="panel-logerros" class="panel" hidden>
-    <p class="topics-intro"><b>Log de erros</b> — a mesma planilha do Excel, editável aqui: digite nas células, use as <b>listas suspensas</b> e o <b>Resumo por Tema</b> se recalcula sozinho. Suas anotações ficam salvas na sua conta; dá para <b>exportar em .xlsx</b> e abrir no Excel.</p>
-    <iframe id="planilhaFrame" class="planilha-frame" title="Log de erros — planilha"></iframe>
-  </div>
   </main>
 </div>
 
@@ -2063,8 +2057,7 @@ const SECOES = {
   saude:     ["Saúde Pública","building-hospital",()=>"Guias de revisão do SUS"],
   farmacia:  ["Farmácia","pill",()=>"Apostila, mapas mentais e guias"],
   painel:    ["Painel","chart-donut",()=>"Onde você está perdendo ponto"],
-  revisao:   ["Revisão final","calendar-event",()=>"O plano, dia a dia"],
-  logerros:  ["Log de erros","table",()=>"Sua planilha de erros"]
+  revisao:   ["Revisão final","calendar-event",()=>"O plano, dia a dia"]
 };
 const MOVE_OK = !window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -2173,8 +2166,7 @@ const TABS = {
   treino:   {panel:"panel-treino",   btn:"tabBtnT"},
   flashcards:{panel:"panel-flashcards", btn:"tabBtnFC"},
   painel:   {panel:"panel-painel",   btn:"tabBtnPN"},
-  revisao:  {panel:"panel-revisao",  btn:"tabBtnRF"},
-  logerros: {panel:"panel-logerros", btn:"tabBtnLE"}
+  revisao:  {panel:"panel-revisao",  btn:"tabBtnRF"}
 };
 function setTab(name){
   if(!TABS[name]) name = "questoes";
@@ -2188,7 +2180,6 @@ function setTab(name){
   if(name==="flashcards"){ const f=document.getElementById("fcardsFrame"); if(f && !f.src) f.src="flashcards/flashcards.html"; }
   if(name==="painel" && window.__painelRender) window.__painelRender();
   if(name==="revisao" && window.__cronoRender) window.__cronoRender();
-  if(name==="logerros"){ const f=document.getElementById("planilhaFrame"); if(f && !f.src) f.src="planilha/planilha.html"; }
   try{ localStorage.setItem("enareTab", name); }catch(e){}
   aplicaSecao(name);
 }
@@ -2201,7 +2192,6 @@ document.getElementById("tabBtnT").onclick = ()=> setTab("treino");
 document.getElementById("tabBtnFC").onclick = ()=> setTab("flashcards");
 document.getElementById("tabBtnPN").onclick = ()=> setTab("painel");
 document.getElementById("tabBtnRF").onclick = ()=> setTab("revisao");
-document.getElementById("tabBtnLE").onclick = ()=> setTab("logerros");
 aplicaSecao("questoes");   /* cor, título e selo da aba inicial */
 
 /* ============================================================

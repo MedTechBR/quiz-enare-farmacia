@@ -41,11 +41,12 @@
     plano: "enareFarmaPlano_v1",         /* dias do cronograma concluídos */
     planilha: "enarePlanilha_v1",        /* log de erros: célula por célula */
     fcards: "enareFcards_v1",            /* flashcards: cartão por cartão */
-    treino: "enareTreino_v1"             /* treino: fase por fase */
+    treino: "enareTreino_v1",            /* treino: fase por fase */
+    exames: "enareExames_v1"             /* exames: "domino"/"rever" por cartão */
   };
   const TODAS = {
     resp: { tipo: "mapa" }, riscos: { tipo: "mapa" }, sinal: { tipo: "mapa" }, ocultos: { tipo: "mapa" },
-    plano: { tipo: "mapa" }, sim: { tipo: "mapa" }, planilha: { tipo: "mapa" }, fcards: { tipo: "mapa" }, treino: { tipo: "mapa" },
+    plano: { tipo: "mapa" }, sim: { tipo: "mapa" }, planilha: { tipo: "mapa" }, fcards: { tipo: "mapa" }, treino: { tipo: "mapa" }, exames: { tipo: "mapa" },
     ativ: { tipo: "soma" },
     meta: { tipo: "doc" }
   };
@@ -261,7 +262,7 @@
     const d = MTS.descreve();
     slot.innerHTML = `<p class="conta-quem">Conectado como <b>${esc(u.displayName || u.email || "")}</b>${u.displayName && u.email ? ` <span>(${esc(u.email)})</span>` : ""}</p>
       <p class="conta-sit ${d.cl}" id="contaSit" role="status">${esc(d.txt)}</p>
-      <p class="conta-txt">Suas respostas, simulados, flashcards, treino, log de erros, revisão e sinalizações são salvos na conta enquanto você estuda e aparecem iguais no celular e no computador. Sem internet o app continua funcionando e envia depois.</p>
+      <p class="conta-txt">Suas respostas, simulados, flashcards, treino, exames, revisão e sinalizações são salvos na conta enquanto você estuda e aparecem iguais no celular e no computador. Sem internet o app continua funcionando e envia depois.</p>
       <button class="ghost" id="contaSair" type="button">Sair da conta</button>`;
     slot.querySelector("#contaSair").onclick = () => { if (confirm("Sair da conta? A tela de entrada volta e seu progresso continua salvo na conta.")) MTS.sair() };
   }
