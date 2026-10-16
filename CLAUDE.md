@@ -1,7 +1,11 @@
-# Banca ENARE Farmácia
+# AprovaFarma (ex-Banca ENARE Farmácia)
 
 PWA de estudo para a residência multiprofissional em Farmácia (ENARE). No ar em
 medtechbr.com.br/quiz-enare-farmacia/. Deploy: git push (GitHub Pages). A cada deploy, subir `CACHE` no `sw.js`.
+
+## Nome (15/10/2026)
+- Nome visível = AprovaFarma (título, manifest, marca, `NOME` do conta-enare, MTErrata/MTSinal). Ids internos MANTIDOS:
+  pasta/URL `quiz-enare-farmacia`, app de sync `enare-farmacia`, produto `enarefarmacia`, chaves `enare*` do localStorage.
 
 ## Conta e venda (10/10/2026)
 - Vendido no MedTech (linha "provas", R$ 49,90/mês ou R$ 397/ano; produto `enarefarmacia` no `planos.json` do site).

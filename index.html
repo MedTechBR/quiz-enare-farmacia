@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-<title>Banca ENARE · Farmácia Multiprofissional</title>
-<meta name="description" content="App de estudo de questões — ENARE Farmácia/Multiprofissional. Progresso salvo na sua conta MedTech.">
+<title>AprovaFarma · Questões de residência e concursos em Farmácia</title>
+<meta name="description" content="AprovaFarma: questões comentadas de provas reais, simulados e revisão para residência e concursos em Farmácia. Progresso salvo na sua conta MedTech.">
 <link rel="manifest" href="manifest.webmanifest">
 <meta name="theme-color" content="#F5F6FB">
 <link rel="icon" type="image/png" sizes="192x192" href="icon-192.png">
@@ -13,7 +13,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-<meta name="apple-mobile-web-app-title" content="Banca ENARE">
+<meta name="apple-mobile-web-app-title" content="AprovaFarma">
 <!-- conta MedTech + sincronização (cópia de ~/Documents/Claude/_mtsync/mtsync.js). Síncrono no <head>: o portão
      cobre a tela antes do primeiro pixel do app e só sai com a conta confirmada. Adaptador: conta-enare.js -->
 <script src="mtsync.js"></script>
@@ -836,7 +836,7 @@
   <div class="wrap">
     <div class="brand">
       <span class="logo"><svg class="ic"><use href="#i-pill"/></svg></span>
-      <h1>Banca ENARE</h1>
+      <h1>AprovaFarma</h1>
       <span class="tag" id="topoSecao">Questões</span>
       <p>Banco de questões no padrão FGV/ENARE + guias de estudo. Aba <b>Questões</b>: responda e acompanhe sua taxa de acerto. Aba <b>Saúde Pública</b>: revise o SUS por tema. Aba <b>Farmácia</b>: apostila, mapas mentais, guias de revisão e questões comentadas. Aba <b>Exames</b>: flashcards de exames laboratoriais.</p>
     </div>
@@ -845,7 +845,7 @@
 
 <div class="wrap">
   <nav class="tabs" aria-label="Seções">
-    <div class="marca"><span class="logo"><svg class="ic"><use href="#i-pill"/></svg></span><span><b>Banca ENARE</b><small>Farmácia Multiprofissional</small></span></div>
+    <div class="marca"><span class="logo"><svg class="ic"><use href="#i-pill"/></svg></span><span><b>AprovaFarma</b><small>Residência e concursos em Farmácia</small></span></div>
     <span class="navGrupo">Estudar</span>
     <button class="tab active" id="tabBtnQ" data-tab="questoes" type="button" aria-current="page" style="--c:var(--c-azul)" data-prim><span class="ico"><svg class="ic"><use href="#i-list-check"/></svg></span><span class="lb">Questões</span></button>
     <button class="tab" id="tabBtnSim" data-tab="simulado" type="button" style="--c:var(--c-laranja)" data-prim><span class="ico"><svg class="ic"><use href="#i-clipboard-check"/></svg></span><span class="lb">Simulados</span></button>
@@ -1130,7 +1130,7 @@ function aplicaErratas(m){
   if(DIARIOS) montaDiarios();                            // os diários são cópias do banco: remonta
 }
 const ER = window.MTErrata ? MTErrata.cria({
-  app: "quiz-enare-farmacia", nome: "Banca ENARE Farmácia",
+  app: "quiz-enare-farmacia", nome: "AprovaFarma",
   token: () => (window.MTS && MTS.usuario) ? MTS.usuario.getIdToken() : null,
   aplica: aplicaErratas,
   depois: () => errataRedesenha(),
@@ -1199,7 +1199,7 @@ const SINAL_KEY = "enareSinal_v1";
 let sinal = {};
 try{ sinal = JSON.parse(localStorage.getItem(SINAL_KEY)||"{}") || {}; }catch(e){ sinal = {}; }
 const SINAL = MTSinal.cria({
-  app: "Banca ENARE Farmácia",
+  app: "AprovaFarma",
   exemplo: "Ex.: a correta seria a C, porque… (se souber, diga a fonte: RDC, bula, diretriz)",
   le: () => sinal,
   grava: obj => {
@@ -2608,7 +2608,7 @@ montaDiarios();
     if(opt.questoes) html += vis.map((i,k)=>bloco(sim.questions[i],i,opt,k)).join("");
     if(opt.folha)    html += folhaRespostas(vis.length);
     if(opt.gabarito) html += gabaritoComentado(sim, !opt.questoes && !opt.folha);
-    html += `<div class="pr-rod">Banca ENARE · Farmácia — gerado em ${new Date().toLocaleString("pt-BR")}</div>`;
+    html += `<div class="pr-rod">AprovaFarma · gerado em ${new Date().toLocaleString("pt-BR")}</div>`;
     printArea.innerHTML = html;
     const imgs = [...printArea.querySelectorAll("img")];
     const pronto = ()=> setTimeout(()=>{ window.print(); }, 60);

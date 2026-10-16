@@ -1,4 +1,4 @@
-/* conta-enare.js — liga o mtsync.js (conta MedTech + sincronização) à Banca ENARE Farmácia (10/10/2026).
+/* conta-enare.js — liga o mtsync.js (conta MedTech + sincronização) ao AprovaFarma (ex-Banca ENARE Farmácia, 10/10/2026).
    O motor é a cópia de ~/Documents/Claude/_mtsync/mtsync.js (não editar aqui). Este arquivo só diz ao
    motor onde o app guarda cada coisa e como redesenhar a tela quando chega dado de outro aparelho.
 
@@ -22,7 +22,7 @@
        esse progresso. */
 (function () {
   "use strict";
-  const APP = "enare-farmacia", ACESSO = "enarefarmacia", NOME = "Banca ENARE Farmácia";
+  const APP = "enare-farmacia", ACESSO = "enarefarmacia", NOME = "AprovaFarma";
   const PREF = "enare_";                 /* o motor grava enare_mts e enare_mts_uid: fora de tudo o que sincroniza */
   const FILA_SINAL = "msn_fila:quiz-enare-farmacia";   /* fila da caixa central (mtsinal.js) */
   const IDB_PLANILHA = "enarePlanilhaDB";

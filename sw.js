@@ -1,4 +1,4 @@
-/* Service Worker — Banca ENARE Farmácia (PWA)
+/* Service Worker — AprovaFarma (ex-Banca ENARE Farmácia, PWA)
    Estratégia:
    - HTML (navegação): network-first → cai para o cache quando offline.
    - Estáticos da mesma origem: stale-while-revalidate (serve do cache e sempre revalida; cura
@@ -8,7 +8,7 @@
    /_mtacesso.js?v=12 vão no precache, para o app abrir sem internet depois do primeiro login.
    Obs.: o progresso do usuário fica no localStorage (e na conta), que NÃO é tocado por este cache. */
 
-const CACHE = "enare-farma-v54";
+const CACHE = "enare-farma-v55";
 const ASSETS = [
   "./",
   "./index.html",
