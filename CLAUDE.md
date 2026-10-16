@@ -46,3 +46,11 @@ medtechbr.com.br/quiz-enare-farmacia/. Deploy: git push (GitHub Pages). A cada d
 - Refazer erradas: `refazer` = rodada com as erradas do momento (lista fixa até sair). Responder grava por cima
   em `answers[ck]` com `refeita:n`; acertou = sai dos erros. Botão `#fErradas` em Questões e `#pnRefazer` no Painel.
 - Treino no tema vivo (CSS no fim do <style>, sprite próprio, sem emoji; ★ das notas ficou).
+
+## Provas reais (15/10/2026)
+- Cadernos e gabaritos OFICIAIS em `provas-reais/` (fora do git): ENARE Farmácia 2024/25, 2025/26, 2026/27 (Tipo 1;
+  gerais q1–20 = as do Enfermare/Fisiare) e EBSERH Farmacêutico 2023 (IBFC, cód. 160) e 2024 (FGV, Grupo 5).
+  URLs e armadilhas em `provas-reais/relatorios/extracao_*.md`. Briefs: `docs/BRIEF_EXTRACAO_FARMA.md` (extração) e
+  `docs/BRIEF_COMENTARIO_FARMA.md` (tema + `c` + `porAlt`); junção conferida contra a extração por `docs/junta_reais.py`.
+- Descartes por gabarito que ensinaria errado ficam em `provas-reais/comentadas/*.descartes.md` (ex.: EBSERH 2024 q21,
+  descartada também no Enfermare/Fisiare).
