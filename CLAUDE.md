@@ -39,3 +39,10 @@ medtechbr.com.br/quiz-enare-farmacia/. Deploy: git push (GitHub Pages). A cada d
   = {"<cat>~<nome>": {s:1|0, t}}, coleção `exames` (mapa) na conta. Id combina categoria e nome porque ácido
   valproico e tetraciclinas aparecem em duas categorias.
 - Log de erros saiu da navegação. `planilha/` e a coleção `planilha` CONTINUAM (dado do usuário não se apaga).
+- Data da prova = do USUÁRIO (`enareFarmaMeta_v1.data`, sincroniza). `dataProva()`/`gravaDataProva()`; cartão
+  "Quando é a sua prova?" (`[data-dataprova]`) em Simulados e Revisão final. Cronograma: D42 = dia da prova
+  (datas calculadas em `aplicaDatas`); simulados diários: o 13º cai 2 dias antes (`datasDiarios`). Sem data:
+  "Simulado NN"/"Dia N" e nada atrasado. Evento `enare:dataprova` redesenha tudo.
+- Refazer erradas: `refazer` = rodada com as erradas do momento (lista fixa até sair). Responder grava por cima
+  em `answers[ck]` com `refeita:n`; acertou = sai dos erros. Botão `#fErradas` em Questões e `#pnRefazer` no Painel.
+- Treino no tema vivo (CSS no fim do <style>, sprite próprio, sem emoji; ★ das notas ficou).

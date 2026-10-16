@@ -215,6 +215,24 @@
   .sim-hoje .kind{color:var(--teal-deep);font-weight:800}
   .sim-atras .topic{border-color:var(--wrong)}
   .sim-atras .kind{color:var(--wrong);font-weight:800}
+  .f-erradas.on,.f-erradas[aria-pressed="true"]{background:var(--wrong-bg);border-color:var(--wrong);color:#B91C1C}
+  .pn-refazer{display:flex;align-items:center;gap:12px;flex-wrap:wrap;border-radius:20px;padding:14px 16px;margin:0 0 18px;
+    background:var(--wrong-bg);border:1px solid color-mix(in srgb,var(--wrong) 25%,transparent)}
+  .pn-refazer[hidden]{display:none}
+  .pn-refazer .dp-ic{width:38px;height:38px;border-radius:50%;background:var(--wrong);color:#fff;display:grid;place-items:center;font-size:19px}
+  .pn-refazer .dp-t{flex:1;min-width:200px;font-size:14px}.pn-refazer .dp-t b{display:block;font-size:15px}
+  .pn-refazer .btn{background:var(--wrong);box-shadow:0 6px 16px color-mix(in srgb,var(--wrong) 28%,transparent)}
+  .refazendo{display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-size:13.5px;font-weight:600;color:#B91C1C;
+    background:var(--wrong-bg);border-radius:999px;padding:6px 14px;margin:0 0 12px}
+  [hidden]{display:none!important}   /* o atributo hidden sempre vence o display dos componentes */
+  /* ---------- data da prova (escolhida pelo usuário) ---------- */
+  .data-prova{display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:var(--paper);border:1px solid var(--line);
+    border-radius:20px;padding:12px 16px;margin:0 0 14px;box-shadow:var(--shadow)}
+  .data-prova.pede{border:1.5px dashed var(--ac);background:var(--acSup)}
+  .data-prova .dp-ic{width:38px;height:38px;border-radius:50%;background:var(--ac);color:#fff;display:grid;place-items:center;font-size:19px;flex:0 0 auto}
+  .data-prova .dp-t{flex:1;min-width:180px;font-size:14px;line-height:1.45}
+  .data-prova .dp-t b{display:block;font-size:15px}
+  .data-prova input{font:inherit;font-size:16px;border:1.5px solid var(--line);border-radius:999px;padding:8px 14px;min-height:42px;background:#fff;color:var(--ink)}
   /* ---------- IMPRESSÃO / PDF do simulado ---------- */
   #printArea{display:none}
   .sim-item{position:relative}
@@ -868,6 +886,7 @@
       <button type="button" class="ghost f-reais" id="fReais" aria-pressed="false" title="Mostrar só questões de prova real"><svg class="ic"><use href="#i-star-filled"/></svg><span>Prova real</span></button>
     </div>
     <button type="button" class="ghost f-sinal" id="fSinal" aria-pressed="false" hidden title="Mostrar só as questões que você sinalizou com erro"><svg class="ic" viewBox="0 0 24 24"><path d="M5 21V4m0 0h11l-2 4 2 4H5"/></svg><span>Sinalizadas</span></button>
+    <button type="button" class="ghost f-erradas" id="fErradas" aria-pressed="false" hidden title="Responder de novo só as questões que você errou"><svg class="ic"><use href="#i-refresh"/></svg><span>Refazer erradas</span></button>
     <button class="ghost" id="shuffle">Embaralhar</button>
     <button class="ghost" id="reset">Zerar desempenho</button>
   </div>
@@ -912,6 +931,7 @@
   <div id="panel-simulado" class="panel" hidden>
     <div class="sim-list" data-view="list">
       <p class="topics-intro">Simulados no formato da <b>prova real (FGV/ENARE)</b>: você responde tudo <b>sem ver o gabarito</b> e, ao finalizar, recebe a <b>nota final</b>. O progresso fica salvo — dá para pausar e continuar depois.</p>
+      <div class="data-prova" data-dataprova></div>
       <div class="topics" data-simgrid><!-- via JS --></div>
     </div>
     <div class="sim-run" data-view="run" hidden>
@@ -951,6 +971,9 @@
       com o quanto você erra nele. A <b>revisão</b> segue repetição espaçada por tema: quanto pior o desempenho, mais cedo volta.</p>
 
     <div class="pn-grid" id="pnCards"><!-- via JS --></div>
+    <div class="pn-refazer" id="pnRefazer" hidden><span class="dp-ic"><svg class="ic"><use href="#i-refresh"/></svg></span>
+      <span class="dp-t"><b id="pnRefazerN"></b>Responda de novo só as que você errou. Acertou, ela sai da lista.</span>
+      <button type="button" class="btn" id="pnRefazerBt">Refazer minhas erradas</button></div>
 
     <div class="pn-sec">
       <h2><span class="ico" style="--k:var(--c-azul)"><svg class="ic"><use href="#i-target"/></svg></span>Meta até a prova</h2>
@@ -1008,10 +1031,10 @@
   </div>
 
   <div id="panel-revisao" class="panel" hidden>
-    <p class="topics-intro"><b>Cronograma de revisão final</b> — o plano até a prova (13/09/2026, banca FGV), dia a dia.
+    <p class="topics-intro"><b>Cronograma de revisão final</b>: um plano de 42 dias que termina no dia da sua prova.
       Marque o que já fez; o que passou da data e continua aberto fica em <span style="color:var(--wrong);font-weight:700">vermelho</span>.
-      Toque nos temas de cada dia para ir direto às questões.
-      <a id="pdfAbrir" href="dados/cronograma_enare_farmacia.pdf" target="_blank" rel="noopener" style="color:var(--teal-deep);font-weight:700">Ver o PDF original ↗</a></p>
+      Toque nos temas de cada dia para ir direto às questões.</p>
+    <div class="data-prova" data-dataprova></div>
 
     <div class="cr-top" id="crTop"><!-- via JS --></div>
     <div class="cr-filtros">
@@ -1080,6 +1103,10 @@ let pos = 0;
 let activeFilter = [];                 // temas escolhidos (LISTA); [] = todos os temas
 let soReais = false;                   // filtro à parte: só questões de prova real
 let soSinal = false;                   // filtro à parte: só questões sinalizadas com erro
+/* REFAZER ERRADAS: rodada com as questões erradas no momento em que começou (a lista fica fixa até sair,
+   para a questão acertada não sumir da tela). Responder de novo grava por cima em answers[ck] (marcando
+   "refeita"); acertou = sai dos erros, errou de novo = continua lá. */
+let refazer = null;                    // {set:Set(ck), feitas:{ck:{sel,ok}}, n}
 
 /* ---- erratas da administração (mterrata.js, 10/10/2026) ----
    Questão corrigida no painel do MedTech chega com os campos novos (o original fica guardado no próprio
@@ -1249,6 +1276,8 @@ function buildFilter(){
   pintaReais();
   document.getElementById("fSinal").onclick = ()=>{ soSinal = !soSinal; pintaSinal(); applyFilter(); };
   pintaSinal();
+  document.getElementById("fErradas").onclick = ()=>{ if(refazer) saiRefazer(); else entraRefazer(); };
+  pintaErradas();
 }
 /* questões à vista por tema (as tiradas do ar pela revisão não contam) */
 let OPC_TEMAS = null;
@@ -1326,6 +1355,7 @@ function abrirTema(tema){
 let _temasSet = null, _temasRef = null;
 function passaFiltro(i){
   if(!visivelQ(i)) return false;          // tirada do ar pela revisão (errata)
+  if(refazer && !refazer.set.has(CHAVES[i])) return false;
   if(soReais && !BANK[i].fonte) return false;
   if(soSinal && !sinal[CHAVES[i]]) return false;
   if(!activeFilter.length) return true;
@@ -1334,12 +1364,35 @@ function passaFiltro(i){
 }
 function applyFilter(){
   order = BANK.map((_,i)=>i).filter(passaFiltro);
+  if(refazer) for(let i=order.length-1;i>0;i--){ const r=Math.floor(Math.random()*(i+1)); [order[i],order[r]]=[order[r],order[i]]; }
   pos = 0;
   render();
 }
+function chavesErradas(){
+  return Object.keys(answers).filter(k => IDX.has(k) && visivelQ(IDX.get(k)) && !okResp(k, answers[k]));
+}
+function pintaErradas(){
+  const n = chavesErradas().length, b = document.getElementById("fErradas");
+  if(b){
+    b.hidden = !n && !refazer;
+    b.setAttribute("aria-pressed", refazer ? "true" : "false");
+    b.classList.toggle("on", !!refazer);
+    b.querySelector("span").textContent = refazer ? "Sair da revisão" : `Refazer erradas (${n})`;
+  }
+  const pn = document.getElementById("pnRefazer");
+  if(pn){ pn.hidden = !n; document.getElementById("pnRefazerN").textContent = `${n} quest${n>1?"ões":"ão"} errada${n>1?"s":""} esperando revisão`; }
+}
+function entraRefazer(){
+  const ks = chavesErradas();
+  if(!ks.length){ refazer = null; pintaErradas(); return; }
+  refazer = {set:new Set(ks), feitas:{}, n:ks.length};
+  pintaErradas(); applyFilter();
+}
+function saiRefazer(){ refazer = null; pintaErradas(); applyFilter(); }
 
 /* ---- estatísticas ---- */
 function refreshStats(){
+  try{ pintaErradas(); }catch(e){}
   const ansKeys = Object.keys(answers).filter(k => !ER.oculta(k));   // tiradas do ar: fora da conta (o salvo fica)
   const ans = ansKeys.length;
   const right = ansKeys.filter(k=>okResp(k, answers[k])).length;
@@ -1373,10 +1426,12 @@ function render(){
   const qi = order[pos];
   const q = BANK[qi];
   const ck = CHAVES[qi];                 // chave estável desta questão
-  const prev = answers[ck]; // já respondida?
+  const prev = refazer ? refazer.feitas[ck] : answers[ck]; // já respondida? (na revisão, só conta a rodada atual)
   try{ localStorage.setItem(POS_KEY, JSON.stringify({filter:activeFilter, reais:soReais, sinal:soSinal, ck})); }catch(e){}
 
+  const acertadas = refazer ? Object.values(refazer.feitas).filter(x=>x.ok).length : 0;
   card.innerHTML = `
+    ${refazer ? `<div class="refazendo"><svg class="ic"><use href="#i-refresh"/></svg>Revisando erradas: ${Object.keys(refazer.feitas).length} de ${refazer.n} refeitas · ${acertadas} acertada${acertadas===1?"":"s"}</div>` : ""}
     <div class="qhead">
       <span class="num">Questão ${pos+1} de ${order.length}</span>
       <span class="badge">${q.tema}</span>
@@ -1472,6 +1527,16 @@ function attachStrikeSwipe(btn, k, j){
 
 function choose(qi, j){
   const ck = CHAVES[qi];
+  if(refazer){
+    if(refazer.feitas[ck]) return;
+    const okR = (j === BANK[qi].correct) || BANK[qi].correct === -1;
+    refazer.feitas[ck] = {sel:j, ok:okR};
+    answers[ck] = {sel:j, ok:okR, t:Date.now(), tema:BANK[qi].tema, refeita:((answers[ck]&&answers[ck].refeita)||0)+1};
+    saveAnswers(); registraAtividade(); revealState(qi, j); refreshStats(); pintaErradas();
+    const r = document.querySelector("#card .refazendo"), ac = Object.values(refazer.feitas).filter(x=>x.ok).length;
+    if(r) r.lastChild.textContent = `Revisando erradas: ${Object.keys(refazer.feitas).length} de ${refazer.n} refeitas · ${ac} acertada${ac===1?"":"s"}`;
+    return;
+  }
   if(answers[ck]) return; // bloqueia re-resposta
   const ok = (j === BANK[qi].correct) || BANK[qi].correct === -1;   // anulada pela revisão: ponto para todos
   answers[ck] = {sel:j, ok, t:Date.now(), tema:BANK[qi].tema};
@@ -1703,6 +1768,28 @@ initLibrary("farmacia");
    ============================================================ */
 const ATIV_KEY = "enareFarmaAtiv_v1";   // {"AAAA-MM-DD": nº de questões}
 const META_KEY = "enareFarmaMeta_v1";   // {data, alvo}
+/* A DATA DA PROVA é do usuário (campo "data" da meta, que sincroniza com a conta). Cronograma e simulados
+   diários são calculados a partir dela; sem data, aparecem só como "Dia N"/"Simulado N". */
+function dataProva(){ let m={}; try{ m=JSON.parse(localStorage.getItem(META_KEY)||"{}")||{}; }catch(e){} return /^\d{4}-\d{2}-\d{2}$/.test(m.data||"") ? m.data : null; }
+function somaDias(iso, n){ const d=new Date(iso+"T12:00:00"); d.setDate(d.getDate()+n); return hojeISO(d); }
+function gravaDataProva(v){
+  let m={}; try{ m=JSON.parse(localStorage.getItem(META_KEY)||"{}")||{}; }catch(e){}
+  m.data=v||""; try{ localStorage.setItem(META_KEY, JSON.stringify(m)); }catch(e){}
+  document.dispatchEvent(new CustomEvent("enare:dataprova"));
+}
+/* cartão "quando é a sua prova?" (Revisão final e Simulados) */
+function pintaDataProva(){
+  const dp=dataProva(), br=dp?dp.split("-").reverse().join("/"):"";
+  const falta=dp?Math.ceil((new Date(dp+"T00:00:00")-new Date(hojeISO()+"T00:00:00"))/86400000):null;
+  document.querySelectorAll("[data-dataprova]").forEach(el=>{
+    el.classList.toggle("pede", !dp);
+    el.innerHTML = `<span class="dp-ic"><svg class="ic"><use href="#i-calendar-event"/></svg></span>
+      <span class="dp-t">${dp ? `<b>Prova em ${br}</b>${falta>0?`faltam ${falta} dia${falta>1?"s":""}`:falta===0?"é hoje":"essa data já passou: troque para a próxima prova"}`
+                                : `<b>Quando é a sua prova?</b>Informe a data e o app monta o cronograma e um simulado por dia até lá.`}</span>
+      <input type="date" aria-label="Data da prova" value="${dp||""}" min="${hojeISO()}">`;
+    el.querySelector("input").onchange=e=>gravaDataProva(e.target.value);
+  });
+}
 
 function hojeISO(d){ const x=d||new Date();
   return x.getFullYear()+"-"+String(x.getMonth()+1).padStart(2,"0")+"-"+String(x.getDate()).padStart(2,"0"); }
@@ -1883,8 +1970,10 @@ function registraAtividade(){
   }
   function salvaMeta(){
     const m = {data:document.getElementById("mtData").value, alvo:document.getElementById("mtAlvo").value};
+    const antes=dataProva();
     try{ localStorage.setItem(META_KEY, JSON.stringify(m)); }catch(e){}
     render();
+    if(antes!==dataProva()) document.dispatchEvent(new CustomEvent("enare:dataprova"));
   }
   document.getElementById("mtData").addEventListener("change", salvaMeta);
   document.getElementById("mtAlvo").addEventListener("change", salvaMeta);
@@ -1918,7 +2007,7 @@ function registraAtividade(){
     const {feitas} = cards(temas);
     prioridade(temas); revisao(temas); blocos(temas); meta(feitas); heat();
   }
-  window.__painelRender = render;
+  window.__painelRender = function(){ render(); pintaErradas(); };
 })();
 
 /* ============================================================
@@ -1961,11 +2050,10 @@ const CRONO_KEY = "enareFarmaPlano_v1";     // {"12": true, …} dias concluído
     const concl = plano.dias.filter(d=>f[d.d]).length;
     const atras = plano.dias.filter(d=>estado(d)==="atrasado").length;
     const hoje0 = new Date(hojeISO()+"T00:00:00");
-    const prova = new Date((plano.prova||"2026-09-13")+"T00:00:00");
-    const faltam = Math.ceil((prova-hoje0)/DIA);
+    const faltam = plano.prova ? Math.ceil((new Date(plano.prova+"T00:00:00")-hoje0)/DIA) : -1;
     document.getElementById("crTop").innerHTML = `
       <div class="cr-kpi"><div class="v" style="color:${faltam<=7?"var(--wrong)":"var(--teal-deep)"}">${faltam<0?"—":faltam}</div>
-        <div class="l">${faltam<0?"prova já passou":"dias até a prova"}</div></div>
+        <div class="l">${!plano.prova?"defina a data da prova":faltam<0?"prova já passou":"dias até a prova"}</div></div>
       <div class="cr-kpi"><div class="v">${concl}/${total}</div><div class="l">dias concluídos</div></div>
       <div class="cr-kpi"><div class="v" style="color:${atras?"var(--wrong)":"var(--right)"}">${atras}</div>
         <div class="l">${atras?"dias atrasados":"nada atrasado"}</div></div>
@@ -1995,7 +2083,7 @@ const CRONO_KEY = "enareFarmaPlano_v1";     // {"12": true, …} dias concluído
       if(!dias.length) return;
       vazio = false;
       const sem = (plano.semanas||[]).find(s=>String(s.n)===String(n));
-      html += `<div class="cr-sem">Semana ${n}${sem&&sem.foco?" · "+sem.foco:""}</div>`;
+      html += `<div class="cr-sem">Semana ${n}${sem&&sem.foco?" · "+sem.foco.replace(/\s*\(\d{2}(?:\/\d{2})?[–-]\d{2}\/\d{2}\)/,""):""}</div>`;
       dias.forEach(d=>{
         const e = estado(d);
         const cls = e==="feito" ? "feito" : e==="hoje" ? "hoje" : e==="atrasado" ? "atrasado" : "";
@@ -2039,7 +2127,13 @@ const CRONO_KEY = "enareFarmaPlano_v1";     // {"12": true, …} dias concluído
     };
   });
 
-  function render(){ topo(); lista(); }
+  /* D1..D42: o último dia do plano é o dia da prova */
+  function aplicaDatas(){
+    const dp=dataProva(), n=plano.dias.length;
+    plano.dias.forEach(d=>{ d.data = dp ? somaDias(dp, d.d - n) : ""; });
+    plano.prova = dp;
+  }
+  function render(){ aplicaDatas(); topo(); lista(); }
   window.__cronoRender = render;
 })();
 
@@ -2192,7 +2286,12 @@ document.getElementById("tabBtnT").onclick = ()=> setTab("treino");
 document.getElementById("tabBtnFC").onclick = ()=> setTab("flashcards");
 document.getElementById("tabBtnPN").onclick = ()=> setTab("painel");
 document.getElementById("tabBtnRF").onclick = ()=> setTab("revisao");
-aplicaSecao("questoes");   /* cor, título e selo da aba inicial */
+aplicaSecao("questoes");
+pintaDataProva();
+document.getElementById("pnRefazerBt").onclick = ()=>{ setTab("questoes"); entraRefazer(); window.scrollTo({top:0,behavior:"smooth"}); };
+function aoMudarData(){ pintaDataProva(); datasDiarios(); if(window.__simRefresh) window.__simRefresh(); if(window.__cronoRender) window.__cronoRender(); if(window.__painelRender) window.__painelRender(); }
+document.addEventListener("enare:dataprova", aoMudarData);
+window.addEventListener("storage", e=>{ if(e.key===META_KEY) aoMudarData(); });   /* cor, título e selo da aba inicial */
 
 /* ============================================================
    SIMULADOS DIÁRIOS — um por dia até a prova.
@@ -2238,7 +2337,17 @@ function montaDiarios(){
     questions: monta(sm)
   })).filter(sm => sm.questions.length);
   window.SIMULADOS = DIARIOS.concat(window.SIMULADOS || []);
+  datasDiarios();
   if(perdidas) console.warn("simulados diários: "+perdidas+" questões não encontradas no banco");
+}
+function datasDiarios(){
+  if(!DIARIOS) return;
+  const dp=dataProva(), N=DIARIOS.length, sem=["dom","seg","ter","qua","qui","sex","sáb"];
+  DIARIOS.forEach((sm,i)=>{
+    sm.data = dp ? somaDias(dp, -2-(N-1-i)) : "";
+    const nn=String(i+1).padStart(2,"0");
+    sm.title = "Simulado "+nn + (sm.data ? " · "+sm.data.slice(8)+"/"+sm.data.slice(5,7)+" ("+sem[new Date(sm.data+"T12:00:00").getDay()]+")" : "");
+  });
 }
 montaDiarios();
 
@@ -2269,6 +2378,7 @@ montaDiarios();
   const respondidas = (sim, st) => { const v=new Set(visiveis(sim)); return Object.keys((st&&st.answers)||{}).filter(k=>v.has(+k)).length; };
 
   function renderList(){
+    datasDiarios(); pintaDataProva();
     grid.innerHTML="";
     window.SIMULADOS.forEach(sim=>{
       const st=loadState(sim.id), total=visiveis(sim).length;

@@ -139,19 +139,133 @@
   .toast{position:fixed;left:50%;top:14px;transform:translate(-50%,-140%);background:var(--ink);color:#fff;
     padding:10px 16px;border-radius:999px;font-weight:800;font-size:.86rem;z-index:80;transition:transform .25s}
   .toast.on{transform:translate(-50%,0)}
+
+  /* ============================================================
+     15/10/2026 · camada VIVA do app aplicada ao Treino (mesma do index):
+     Inter local, papel claro, verde da seção, pílulas e círculos, sombras suaves
+     em vez do degrau 3D, sem gradiente, ícones no lugar de emoji.
+     ============================================================ */
+  @font-face{font-family:"Inter";font-weight:400;font-display:swap;src:url(../fonts/inter-400.woff2) format("woff2")}
+  @font-face{font-family:"Inter";font-weight:500;font-display:swap;src:url(../fonts/inter-500.woff2) format("woff2")}
+  @font-face{font-family:"Inter";font-weight:600;font-display:swap;src:url(../fonts/inter-600.woff2) format("woff2")}
+  @font-face{font-family:"Inter";font-weight:700;font-display:swap;src:url(../fonts/inter-700.woff2) format("woff2")}
+  :root{
+    --bg:#F5F6FB; --paper:#fff; --ink:#141827; --soft:#5D6579; --line:#E3E7F0; --sup2:#F1F3F9; --sup3:#E7EAF3;
+    --verde:#047857; --verde-d:#065F46; --verde-bg:#E3F6EE;
+    --vermelho:#DC2626; --vermelho-d:#B91C1C; --vermelho-bg:#FEECEC;
+    --roxo:#7C3AED; --azul:#2563EB; --amarelo:#B45309; --laranja:#C2410C; --rosa:#BE185D; --ciano:#0E7490;
+    --sombra:0 1px 2px rgba(20,24,39,.04),0 4px 14px rgba(20,24,39,.05); --sombraM:0 12px 30px rgba(20,24,39,.10);
+    --mola:cubic-bezier(.34,1.56,.64,1); --suave:cubic-bezier(.22,1,.36,1);
+  }
+  body{font-family:"Inter",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:var(--bg);font-size:15px}
+  .ic{width:1em;height:1em;flex:0 0 auto;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;vertical-align:-.14em}
+  .ic.cheio{fill:currentColor;stroke:none}
+  h1.tt{font-size:24px;letter-spacing:-.02em;font-weight:700}
+  .hud{background:color-mix(in srgb,var(--bg) 92%,transparent)}
+  .pill{border:1px solid var(--line);font-weight:600;font-size:14px;padding:6px 13px;box-shadow:var(--sombra)}
+  .pill .ic{font-size:16px}
+  .pill.xp{color:var(--amarelo)} .pill.vidas{color:var(--vermelho)} .pill.streak{color:var(--laranja)}
+  .pill.vidas.zero{background:var(--vermelho-bg);border-color:color-mix(in srgb,var(--vermelho) 35%,transparent)}
+  .btn{border-radius:999px;font-weight:600;min-height:46px;padding:11px 22px;background:var(--verde);
+    box-shadow:0 6px 16px color-mix(in srgb,var(--verde) 28%,transparent);transition:transform .15s var(--mola),filter .2s}
+  .btn:hover{filter:brightness(1.08);transform:translateY(-1px)}
+  .btn:active{transform:scale(.96);box-shadow:0 6px 16px color-mix(in srgb,var(--verde) 28%,transparent)}
+  .btn:disabled{background:var(--sup3);color:#667085;box-shadow:none;transform:none;filter:none}
+  .btn.ghost{background:var(--paper);color:var(--ink);border:1.5px solid var(--line);box-shadow:none}
+  /* trilha */
+  .unit{--k:var(--verde);background:color-mix(in srgb,var(--k) 10%,#fff);color:var(--ink);border:0;box-shadow:none;border-radius:22px;padding:14px 16px}
+  .unit .ico{width:44px;height:44px;border-radius:50%;background:var(--k);color:#fff;display:grid;place-items:center;font-size:17px;font-weight:700;
+    box-shadow:0 8px 18px color-mix(in srgb,var(--k) 32%,transparent);flex:0 0 auto}
+  .unit h2{font-size:16px;letter-spacing:-.01em;color:color-mix(in srgb,var(--k) 75%,#141827)}
+  .unit .mn{color:var(--soft);opacity:1;font-size:13px}
+  .node .circ{width:66px;height:66px;font-size:20px;font-weight:700;box-shadow:0 8px 18px color-mix(in srgb,var(--k,var(--verde)) 30%,transparent);
+    transition:transform .2s var(--mola),box-shadow .2s}
+  .node .circ:hover:not(.lock){transform:translateY(-3px) scale(1.04)}
+  .node .circ:active{transform:scale(.94)}
+  .node .circ.lock{background:var(--sup3);color:#667085;box-shadow:none}
+  .node .circ.done{background:#F59E0B;color:#fff;box-shadow:0 8px 18px rgba(245,158,11,.30)}
+  .node .lbl{font-size:13px;font-weight:600}
+  .node .stars{color:#D97706;font-size:13px}
+  .node.cur .circ{animation:pulso 1.8s ease-in-out infinite}
+  @keyframes pulso{0%,100%{box-shadow:0 0 0 0 color-mix(in srgb,var(--k,var(--verde)) 40%,transparent),0 8px 18px rgba(0,0,0,.08)}
+    50%{box-shadow:0 0 0 10px transparent,0 8px 18px rgba(0,0,0,.08)}}
+  .node .volta{color:var(--azul);background:color-mix(in srgb,var(--azul) 10%,#fff);font-weight:600;font-size:12px;padding:3px 10px}
+  /* lição */
+  .lbar .x{width:40px;height:40px;border-radius:50%;background:var(--paper);border:1px solid var(--line);display:grid;place-items:center;font-size:18px;color:var(--soft)}
+  .prog{height:10px;background:var(--sup3)}
+  .prog i{transition:width .5s var(--suave)}
+  .hearts{display:inline-flex;gap:2px;color:var(--vermelho);font-size:17px}
+  .hearts .vazio{color:var(--sup3)}
+  .mnemo{background:color-mix(in srgb,#F59E0B 10%,#fff);border:0;border-radius:18px;padding:12px 16px}
+  .mnemo b{text-transform:none;letter-spacing:0;font-size:13px;font-weight:700;color:#92400E;display:flex;align-items:center;gap:6px}
+  .card{border:1px solid var(--line);border-radius:24px;padding:22px 20px;box-shadow:var(--sombraM);animation:entra .4s var(--suave) both}
+  @keyframes entra{from{opacity:0;transform:translateX(22px)}to{opacity:1;transform:none}}
+  .kind{text-transform:none;letter-spacing:0;font-size:13px;font-weight:600;padding:5px 12px}
+  .k-fill{background:color-mix(in srgb,var(--roxo) 11%,#fff)} .k-quiz{background:color-mix(in srgb,var(--azul) 11%,#fff)}
+  .k-vf{background:color-mix(in srgb,var(--rosa) 11%,#fff)} .k-mem{background:color-mix(in srgb,var(--ciano) 11%,#fff);color:var(--ciano)}
+  .qtxt{font-size:17px;font-weight:600;line-height:1.55}
+  .opt{border:1.5px solid var(--line);border-radius:18px;box-shadow:none;padding:11px 14px;gap:12px;
+    transition:transform .18s var(--mola),border-color .15s,background .15s}
+  .opt:hover:not(:disabled){border-color:var(--verde);background:var(--verde-bg)}
+  @media(hover:hover){.opt:hover:not(:disabled){transform:translateX(4px)}}
+  .opt:active{transform:scale(.985)}
+  .opt .kx{width:32px;height:32px;border-radius:50%;border:0;background:var(--sup2);font-weight:700;font-size:13px;transition:background .2s,color .2s}
+  .opt:hover:not(:disabled) .kx{background:var(--verde);color:#fff}
+  .opt.ok,.opt.no,.vfbtn.ok,.vfbtn.no,.opt.sel{box-shadow:none}
+  .opt.ok{animation:acerto .5s var(--mola)} .opt.ok .kx{background:var(--verde);color:#fff}
+  .opt.no{animation:treme .45s} .opt.no .kx{background:var(--vermelho);color:#fff}
+  .vfbtn{border:1.5px solid var(--line);border-radius:20px;box-shadow:none;font-weight:700;transition:transform .18s var(--mola)}
+  .vfbtn:hover:not(:disabled){transform:translateY(-2px)}
+  .vfbtn .em{width:44px;height:44px;border-radius:50%;display:grid;place-items:center;margin:0 auto 8px;font-size:22px;color:#fff}
+  .vfbtn[data-v="1"] .em{background:var(--verde)} .vfbtn[data-v="0"] .em{background:var(--vermelho)}
+  .memc{border:1.5px solid var(--line);border-radius:16px;box-shadow:none;font-weight:600;transition:transform .2s var(--mola)}
+  .memc:hover{transform:translateY(-2px)}
+  .memc.match{animation:acerto .45s var(--mola)}
+  .memc.miss{animation:treme .4s}
+  .memhint{display:flex;align-items:center;gap:6px}
+  /* rodapé de resposta */
+  .fb{border-radius:24px 24px 0 0;box-shadow:0 -10px 30px rgba(20,24,39,.10)}
+  .fb.ok{border-top:0} .fb.no{border-top:0}
+  .fb .tit{font-weight:700;font-size:17px;display:inline-flex;align-items:center;gap:8px}
+  .fb .tit .ic{font-size:22px}
+  .fb.no .go{background:var(--vermelho);box-shadow:0 6px 16px color-mix(in srgb,var(--vermelho) 28%,transparent)}
+  /* fim e aviso */
+  .end .big{width:84px;height:84px;border-radius:50%;margin:0 auto 10px;display:grid;place-items:center;font-size:40px;color:#fff;
+    background:var(--verde);box-shadow:0 14px 30px color-mix(in srgb,var(--verde) 35%,transparent);animation:pop .5s var(--mola) both}
+  .end .big.ouro{background:#F59E0B;box-shadow:0 14px 30px rgba(245,158,11,.35)}
+  .end h2{font-size:22px;letter-spacing:-.02em}
+  .end .stat div{border:0;border-radius:18px;background:color-mix(in srgb,var(--verde) 9%,#fff);box-shadow:none}
+  .av{border-radius:26px}
+  .av .cor{width:64px;height:64px;border-radius:50%;margin:0 auto 12px;display:grid;place-items:center;font-size:30px;color:#fff;background:var(--vermelho)}
+  .toast{border-radius:999px;font-weight:600}
+  @keyframes pop{from{transform:scale(.5);opacity:0}to{transform:none;opacity:1}}
+  @keyframes acerto{0%{transform:scale(1)}35%{transform:scale(1.03)}100%{transform:scale(1)}}
+  @keyframes treme{0%,100%{transform:translateX(0)}20%{transform:translateX(-7px)}40%{transform:translateX(6px)}60%{transform:translateX(-4px)}80%{transform:translateX(2px)}}
+  @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 </style>
 
+<svg aria-hidden="true" style="display:none" xmlns="http://www.w3.org/2000/svg">
+  <symbol id="i-raio" viewBox="0 0 24 24"><path d="M13 3L4 14h7l-1 7 9-11h-7z"/></symbol>
+  <symbol id="i-coracao" viewBox="0 0 24 24"><path d="M19.5 12.6L12 20l-7.5-7.4A5 5 0 0 1 12 6a5 5 0 0 1 7.5 6.6z"/></symbol>
+  <symbol id="i-chama" viewBox="0 0 24 24"><path d="M12 21c-3.9 0-7-2.7-7-6.5C5 10 9 8.5 9 4c2.5 1.5 4.5 4 4.5 7 1-.6 1.5-1.8 1.5-3 2.3 1.6 4 4.2 4 6.6C19 18.3 15.9 21 12 21z"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6L6 18M6 6l12 12"/></symbol>
+  <symbol id="i-certo" viewBox="0 0 24 24"><path d="M5 12l5 5L20 7"/></symbol>
+  <symbol id="i-lampada" viewBox="0 0 24 24"><path d="M9 18h6M10 21h4M12 3a6 6 0 0 0-3.5 10.9c.6.5 1 1.2 1 2.1h5c0-.9.4-1.6 1-2.1A6 6 0 0 0 12 3z"/></symbol>
+  <symbol id="i-trofeu" viewBox="0 0 24 24"><path d="M8 21h8M12 17v4M7 4h10v5a5 5 0 0 1-10 0zM7 6H4a3 3 0 0 0 3 4M17 6h3a3 3 0 0 1-3 4"/></symbol>
+  <symbol id="i-estrela" viewBox="0 0 24 24"><path d="M12 3l2.8 5.7 6.2.9-4.5 4.4 1 6.2L12 17.3 6.5 20.2l1-6.2L3 9.6l6.2-.9z"/></symbol>
+  <symbol id="i-cadeado" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V7a4 4 0 0 1 8 0v4"/></symbol>
+</svg>
 <div class="wrap">
   <!-- ===== TRILHA ===== -->
   <section id="scHome" class="screen on">
     <div class="hud">
-      <span class="pill xp">⚡ <b id="hXp">0</b> XP</span>
-      <span class="pill vidas">❤️ <b id="hVidas">5</b></span>
-      <span class="pill streak">🔥 <b id="hStreak">0</b></span>
+      <span class="pill xp"><svg class="ic cheio"><use href="#i-raio"/></svg> <b id="hXp">0</b> XP</span>
+      <span class="pill vidas"><svg class="ic cheio"><use href="#i-coracao"/></svg> <b id="hVidas">5</b></span>
+      <span class="pill streak"><svg class="ic cheio"><use href="#i-chama"/></svg> <b id="hStreak">0</b></span>
       <span class="sp"></span>
       <button class="btn ghost" id="btnReset" style="padding:8px 12px;font-size:.8rem">Zerar</button>
     </div>
-    <h1 class="tt">Treino 🎮</h1>
+    <h1 class="tt">Treino</h1>
     <p class="sub">Fixe o conteúdo com mnemônicos, completando fases. Complete a frase, jogo da memória, quiz e verdadeiro ou falso.</p>
     <div id="trilha"></div>
     <p class="sub" style="text-align:center;margin-top:24px">Você tem 5 vidas por dia. Se acabarem, elas voltam no dia seguinte e você continua do ponto em que parou. Fase sem nenhum erro devolve as vidas na hora.</p>
@@ -160,9 +274,9 @@
   <!-- ===== LIÇÃO ===== -->
   <section id="scLic" class="screen">
     <div class="lbar">
-      <button class="x" id="btnSair" aria-label="Sair da lição">✕</button>
+      <button class="x" id="btnSair" aria-label="Sair da lição"><svg class="ic"><use href="#i-x"/></svg></button>
       <div class="prog"><i id="progBar" style="width:0%"></i></div>
-      <span class="hearts" id="hearts">❤️❤️❤️❤️❤️</span>
+      <span class="hearts" id="hearts" aria-label="Vidas"></span>
     </div>
     <div class="mnemo" id="mnemoBox"><b>Mnemônico da fase</b><span id="mnemoTxt"></span></div>
     <div class="card" id="exCard"></div>
@@ -171,7 +285,7 @@
   <!-- ===== FIM ===== -->
   <section id="scEnd" class="screen">
     <div class="end">
-      <div class="big" id="endEmoji">🎉</div>
+      <div class="big" id="endEmoji"><svg class="ic"><use href="#i-trofeu"/></svg></div>
       <h2 id="endTit">Fase concluída!</h2>
       <p class="sub" id="endSub"></p>
       <div class="stat">
@@ -192,7 +306,7 @@
 </div></div>
 <div class="toast" id="toast"></div>
 <div class="av-fundo" id="avFundo" hidden><div class="av" role="dialog" aria-modal="true" aria-labelledby="avTit">
-  <div class="cor">💔</div><h3 id="avTit"></h3><p id="avTxt"></p>
+  <div class="cor"><svg class="ic cheio"><use href="#i-coracao"/></svg></div><h3 id="avTit"></h3><p id="avTxt"></p>
   <button class="btn wide" id="avOk">Entendi</button>
 </div></div>
 
@@ -201,7 +315,7 @@
 (function(){
   "use strict";
   var UN = (window.TREINO_UNIDADES||[]);
-  var CORES = ["#7C5CFF","#2E86DE","#00BCD4","#2FBF71","#FF8A3D","#FF5FA2","#E8556D","#8E6BD0"];
+  var CORES = ["#047857","#2563EB","#7C3AED","#0E7490","#C2410C","#BE185D","#4F46E5","#B45309"];   /* texto branco ≥ 4,5:1 */
   var KEY="enareTreino_v1";
   var st = load();
 
@@ -260,8 +374,8 @@
     UN.forEach(function(un,ui){
       var cor=CORES[ui%CORES.length];
       var h=document.createElement("div");
-      h.className="unit"; h.style.background=cor;
-      h.innerHTML='<span class="ico">'+(un.icone||"📘")+'</span><div><h2>'+un.unidade+'</h2>'+
+      h.className="unit"; h.style.setProperty("--k",cor);
+      h.innerHTML='<span class="ico">'+(ui+1)+'</span><div><h2>'+un.unidade+'</h2>'+
         '<div class="mn">'+un.licoes.length+' fases · '+un.licoes.reduce(function(a,l){return a+l.itens.length;},0)+' exercícios</div></div>';
       wrap.appendChild(h);
       var tr=document.createElement("div"); tr.className="trail";
@@ -270,8 +384,9 @@
         var node=document.createElement("div"); node.className="node"+(lib&&!f?" cur":"");
         var b=document.createElement("button");
         b.className="circ"+(f?" done":(lib?"":" lock"));
-        if(!f&&lib) b.style.background=cor, b.style.boxShadow="0 6px 0 rgba(0,0,0,.2)";
-        b.textContent = f? "★" : (lib? (li+1) : "🔒");
+        b.style.setProperty("--k",cor); if(!f&&lib) b.style.background=cor;
+        b.innerHTML = f? '<svg class="ic cheio"><use href="#i-estrela"/></svg>' : (lib? String(li+1) : '<svg class="ic"><use href="#i-cadeado"/></svg>');
+        b.setAttribute("aria-label", lic.titulo+(f?" (concluída)":lib?"":" (bloqueada)"));
         b.disabled=!lib;
         b.onclick=function(){ if(lib) abrir(ui,li); };
         node.appendChild(b);
@@ -307,7 +422,8 @@
     tela("scLic"); passo();
   }
   function coracoes(){
-    document.getElementById("hearts").textContent = "❤️".repeat(Math.max(0,st.vidas))+"🖤".repeat(Math.max(0,5-st.vidas));
+    var h=""; for(var k=0;k<5;k++) h+='<svg class="ic cheio'+(k<st.vidas?'':' vazio')+'"><use href="#i-coracao"/></svg>';
+    var el=document.getElementById("hearts"); el.innerHTML=h; el.setAttribute("aria-label",st.vidas+" de 5 vidas");
   }
   function passo(){
     if(!cur) return;
@@ -328,7 +444,7 @@
     var partes=String(it.frase).split("___");
     c.innerHTML='<span class="kind k-fill">Complete a frase</span>'+
       '<p class="qtxt">'+esc(partes[0])+'<span class="gap" id="gap">?</span>'+esc(partes[1]||"")+'</p>'+
-      (it.dica?'<p class="memhint">💡 '+esc(it.dica)+'</p>':'')+
+      (it.dica?'<p class="memhint"><svg class="ic"><use href="#i-lampada"/></svg> '+esc(it.dica)+'</p>':'')+
       '<div class="opts" id="opts"></div>';
     var box=c.querySelector("#opts");
     it.opcoes.forEach(function(o,j){
@@ -364,8 +480,8 @@
   }
   function exVF(c,it){
     c.innerHTML='<span class="kind k-vf">Verdadeiro ou falso</span><p class="qtxt">'+esc(it.afirm)+'</p>'+
-      '<div class="vfrow"><button class="vfbtn" data-v="1"><span class="em">✅</span>Verdadeiro</button>'+
-      '<button class="vfbtn" data-v="0"><span class="em">❌</span>Falso</button></div>';
+      '<div class="vfrow"><button class="vfbtn" data-v="1"><span class="em"><svg class="ic"><use href="#i-certo"/></svg></span>Verdadeiro</button>'+
+      '<button class="vfbtn" data-v="0"><span class="em"><svg class="ic"><use href="#i-x"/></svg></span>Falso</button></div>';
     [].forEach.call(c.querySelectorAll(".vfbtn"),function(b){
       b.onclick=function(){
         [].forEach.call(c.querySelectorAll(".vfbtn"),function(x){x.disabled=true;});
@@ -427,7 +543,8 @@
     save(); hud(); coracoes();
     var fb=document.getElementById("fb");
     fb.className="fb on "+(ok?"ok":"no");
-    document.getElementById("fbTit").textContent = ok? (["Boa! 🎉","Isso! ⚡","Mandou bem! 💪","Perfeito! ✨"][Math.floor(Math.random()*4)]) : "Quase! Fixe assim:";
+    document.getElementById("fbTit").innerHTML = (ok?'<svg class="ic"><use href="#i-certo"/></svg>':'<svg class="ic"><use href="#i-x"/></svg>') +
+      (ok? ["Boa!","Isso!","Mandou bem!","Perfeito!"][Math.floor(Math.random()*4)] : "Quase. Fixe assim:");
     document.getElementById("fbExp").textContent = exp||"";
     document.getElementById("fbGo").textContent = (cur.i>=cur.itens.length-1)?"Terminar":"Continuar";
   }
@@ -448,7 +565,8 @@
     if(st.parada && st.parada.f===k) delete st.parada;
     if(!ant || (ant.estrelas||0)<estrelas) st.fases[k]={estrelas:estrelas,pct:pct};
     marcarDia(); save(); hud();
-    document.getElementById("endEmoji").textContent = estrelas===3?"🏆":(estrelas===2?"🎉":"💪");
+    var big=document.getElementById("endEmoji"); big.classList.toggle("ouro", estrelas===3);
+    big.innerHTML = '<svg class="ic'+(estrelas===3?'':' cheio')+'"><use href="#i-'+(estrelas===3?'trofeu':'estrela')+'"/></svg>';
     document.getElementById("endTit").textContent = estrelas===3?"Fase perfeita!":"Fase concluída!";
     document.getElementById("endSub").textContent = cur.lic.titulo + (bonus?" · +20 XP de bônus (sem erros) e vidas restauradas!":"");
     document.getElementById("endXp").innerHTML = (cur.acertos*10+bonus)+"<span>XP ganho</span>";
