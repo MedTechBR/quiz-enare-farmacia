@@ -52,5 +52,9 @@ medtechbr.com.br/quiz-enare-farmacia/. Deploy: git push (GitHub Pages). A cada d
   gerais q1–20 = as do Enfermare/Fisiare) e EBSERH Farmacêutico 2023 (IBFC, cód. 160) e 2024 (FGV, Grupo 5).
   URLs e armadilhas em `provas-reais/relatorios/extracao_*.md`. Briefs: `docs/BRIEF_EXTRACAO_FARMA.md` (extração) e
   `docs/BRIEF_COMENTARIO_FARMA.md` (tema + `c` + `porAlt`); junção conferida contra a extração por `docs/junta_reais.py`.
+- Residências (15/10): HCPA 2021–2025 e UFCSPA (FUNDMED, 4 alternativas), UFPA 2022–2025 (CEPS), SES-PE 2022–2026
+  (IAUPE/UPENET, 4 perfis; Hospitalar 2025 por OCR conferido). `fonte.instituicao` = selo curto ("SES-PE 2026 ·
+  Hospitalar"), nome completo em `fonte.prova`; `ano` = ano de APLICAÇÃO. HCFMUSP, UNICAMP e UERJ não têm caderno de Farmácia.
+  `docs/junta_reais.py` casa por enunciado+alternativas inteiros (duas questões diferentes começam igual).
 - Descartes por gabarito que ensinaria errado ficam em `provas-reais/comentadas/*.descartes.md` (ex.: EBSERH 2024 q21,
   descartada também no Enfermare/Fisiare).

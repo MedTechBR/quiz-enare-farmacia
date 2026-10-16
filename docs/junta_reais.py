@@ -7,13 +7,13 @@ banco=json.loads(b[i0:i1]); TEMAS={q["tema"] for q in banco}
 def norm(s): return re.sub(r'[^a-z0-9]','',unicodedata.normalize('NFKD',str(s)).encode('ascii','ignore').decode().lower())
 ext={}
 for f in glob.glob("provas-reais/cand_*.json"):
-    for c in json.load(open(f,encoding="utf-8")): ext[norm(c["q"])[:200]]=c
-vistos={norm(q["q"])[:200] for q in banco}
+    for c in json.load(open(f,encoding="utf-8")): ext[norm(c["q"])+"|"+"|".join(norm(a) for a in c["alts"])]=c
+vistos={norm(q["q"])+"|"+"|".join(norm(a) for a in q["ops"]) for q in banco}
 novas=[]; rej=collections.Counter(); porArq={}
 for f in sorted(glob.glob("provas-reais/comentadas/*.json")):
     ok=0
     for q in json.load(open(f,encoding="utf-8")):
-        k=norm(q.get("q",""))[:200]; e=ext.get(k)
+        k=norm(q.get("q",""))+"|"+"|".join(norm(a) for a in q.get("ops",[])); e=ext.get(k)
         if not e: rej["nao bate com a extracao"]+=1; continue
         if q.get("correct")!=e["gab"]: rej["gabarito alterado"]+=1; continue
         if [norm(x) for x in q.get("ops",[])]!=[norm(x) for x in e["alts"]]: rej["alternativas alteradas"]+=1; continue
