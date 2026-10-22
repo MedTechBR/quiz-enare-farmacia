@@ -1433,7 +1433,7 @@ function render(){
   const q = BANK[qi];
   const ck = CHAVES[qi];                 // chave estável desta questão
   const prev = refazer ? refazer.feitas[ck] : answers[ck]; // já respondida? (na revisão, só conta a rodada atual)
-  try{ localStorage.setItem(POS_KEY, JSON.stringify({filter:activeFilter, reais:soReais, sinal:soSinal, ck})); }catch(e){}
+  if(!window.__enareSaiu){ try{ localStorage.setItem(POS_KEY, JSON.stringify({filter:activeFilter, reais:soReais, sinal:soSinal, ck})); }catch(e){} }
 
   const acertadas = refazer ? Object.values(refazer.feitas).filter(x=>x.ok).length : 0;
   card.innerHTML = `
@@ -1614,7 +1614,8 @@ document.getElementById("reset").onclick = ()=>{
   }
 })();
 /* salva a posição também ao sair/minimizar o app (reforço p/ iOS) */
-function savePosNow(){ try{ if(order[pos]!=null) localStorage.setItem(POS_KEY, JSON.stringify({filter:activeFilter, reais:soReais, sinal:soSinal, ck:CHAVES[order[pos]]})); }catch(e){} }
+function savePosNow(){ try{ if(window.__enareSaiu) return;   /* saindo da conta: o aparelho fica limpo */
+  if(order[pos]!=null) localStorage.setItem(POS_KEY, JSON.stringify({filter:activeFilter, reais:soReais, sinal:soSinal, ck:CHAVES[order[pos]]})); }catch(e){} }
 window.addEventListener("pagehide", savePosNow);
 document.addEventListener("visibilitychange", ()=>{ if(document.visibilityState==="hidden") savePosNow(); });
 

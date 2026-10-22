@@ -17,9 +17,11 @@ medtechbr.com.br/quiz-enare-farmacia/. Deploy: git push (GitHub Pages). A cada d
   `meta` = doc. Fora: `enareFarmaPos_v1`, `enareTab`, `enareBkp*` e as chaves do motor (`enare_mts`, `enare_mts_uid`).
 - Mudanças são vistas por setItem embrulhado, evento `storage` (iframes) e varredura a cada 4 s. Planilha,
   flashcards e treino se atualizam pelo evento `storage` quando chega dado de outro aparelho.
-- REGRA DO DONO: progresso local nunca é apagado. Reserva imutável no IndexedDB `enare-reserva`
-  (`antes-da-conta`, gravada antes do primeiro login). Sair e troca de conta NÃO limpam o aparelho, só gravam
-  `saida-<uid>-<momento>` na reserva; por isso outra conta que entrar no mesmo aparelho recebe esse progresso.
+- PROGRESSO É DA CONTA (22/10/2026, substitui a antiga "progresso local nunca é apagado"; Matheus: "o progresso em todos
+  os apps tem que ser na conta, não no aparelho"). Sair e troca de conta: o mtsync espera a fila subir, `limparLocal` grava a
+  reserva `saida-<uid>-<momento>` no IndexedDB `enare-reserva` e DEPOIS remove as chaves enare* (menos `enare_`, do motor),
+  a planilha no IndexedDB e a fila de sinalizações, com o removeItem original (não vira lápide na nuvem). `__enareSaiu`
+  impede o app de regravar a posição antes do recarregamento. Migração do primeiro login (`antes-da-conta`) continua.
   Chave com JSON ilegível fica fora da sincronização. Coleção que esvazia de uma vez (3+ itens para 0) não
   sobe lápide, a menos que venha dos botões de zerar do app (`window.__enareZerou`).
 - Backup por arquivo saiu da interface; o cartão Conta fica no fim do Painel.

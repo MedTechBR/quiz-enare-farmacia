@@ -17,9 +17,10 @@
        conferida lendo de volta). Nada neste arquivo apaga a reserva.
      - Chave com JSON ilegível: a coleção fica FORA da sincronização (nem sobe vazia, nem é regravada).
      - gravar() nunca remove chave e nunca troca coleção com itens por coleção vazia.
-     - Sair da conta / troca de conta: limparLocal NÃO apaga nada; só copia o estado para a reserva
-       ("saida-<uid>-<momento>"). Consequência aceita: outra conta que entrar neste aparelho recebe
-       esse progresso. */
+     - Sair da conta / troca de conta (MUDOU em 22/10/2026, pedido do Matheus: "o progresso em todos os apps tem
+       que ser na conta, não no aparelho"): o mtsync primeiro espera a fila subir; aqui o estado vai para a reserva
+       ("saida-<uid>-<momento>", segurança) e DEPOIS o progresso sai do aparelho (chaves enare*, planilha no
+       IndexedDB, fila de sinalizações). Quem entrar em seguida vê só o que é da conta dela. A reserva fica. */
 (function () {
   "use strict";
   const APP = "enare-farmacia", ACESSO = "enarefarmacia", NOME = "AprovaFarma";
@@ -225,10 +226,17 @@
     } finally { try { db.close() } catch (e) {} }
   }
 
-  /* ---------- sair / troca de conta: NADA é apagado do aparelho (regra do dono) ---------- */
+  /* ---------- sair / troca de conta: o progresso é da conta, não do aparelho ---------- */
   async function limparLocal() {
     const uid = getRaw(PREF + "mts_uid") || "sem-uid";
     try { await reserva("saida-" + uid + "-" + new Date().toISOString(), false) } catch (e) {}
+    window.__enareSaiu = true;                               /* o app para de gravar posição/aba daqui até recarregar */
+    try {
+      const ks = []; for (let i = 0; i < localStorage.length; i++) { const k = localStorage.key(i); if (k && k.startsWith("enare") && !k.startsWith(PREF)) ks.push(k) }
+      ks.forEach(k => oRem.call(localStorage, k));          /* direto: não pode virar lápide na nuvem */
+      oRem.call(localStorage, FILA_SINAL);
+    } catch (e) {}
+    await new Promise(r => { try { const q = indexedDB.deleteDatabase(IDB_PLANILHA); q.onsuccess = q.onerror = q.onblocked = () => r() } catch (e) { r() } });
   }
 
   /* ---------- chave com JSON ilegível: a coleção fica fora da sincronização ----------

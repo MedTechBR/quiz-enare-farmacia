@@ -8,7 +8,7 @@
    /_mtacesso.js?v=12 vão no precache, para o app abrir sem internet depois do primeiro login.
    Obs.: o progresso do usuário fica no localStorage (e na conta), que NÃO é tocado por este cache. */
 
-const CACHE = "enare-farma-v57";
+const CACHE = "enare-farma-v58";
 const ASSETS = [
   "./",
   "./index.html",

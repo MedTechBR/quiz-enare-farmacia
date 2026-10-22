@@ -76,7 +76,8 @@
     if (novos.length) grava();
     ultimo = { ctx: ctx, res: res };
     if (novos.length) {
-      if (primeira) { primeira = false; boasVindas(novos); }
+      /* muitos de uma vez (primeira vez, ou o progresso chegou da conta num aparelho limpo): um aviso só */
+      if (primeira || novos.length >= 4) { var p0 = primeira; primeira = false; boasVindas(novos, !p0); }
       else novos.forEach(function (e) { fila.push(e); });
       proximo();
     }
@@ -162,13 +163,14 @@
     ov.onclick = function (ev) { if (ev.target === ov) fecha(); };
     ov.querySelector(".cq-ok").focus();
   }
-  function boasVindas(lista) {
+  function boasVindas(lista, chegou) {
+    if (mostrando) { fila = fila.concat(lista); return; }
     mostrando = true;
     var ov = document.createElement("div");
     ov.className = "cq-ov";
     ov.innerHTML = '<div class="cq-card" role="dialog" aria-modal="true" aria-label="Seus emblemas">' +
-      '<p class="cq-tag">Conquistas</p><h2>Você já tinha ' + lista.length + " emblema" + (lista.length > 1 ? "s" : "") + "</h2>" +
-      '<p class="cq-frase">Contamos o que você estudou até aqui. Daqui para a frente, cada emblema novo aparece na hora.</p>' +
+      '<p class="cq-tag">Conquistas</p><h2>' + (chegou ? "Você ganhou " : "Você já tinha ") + lista.length + " emblema" + (lista.length > 1 ? "s" : "") + "</h2>" +
+      '<p class="cq-frase">' + (chegou ? "Seu progresso da conta chegou a este aparelho." : "Contamos o que você estudou até aqui. Daqui para a frente, cada emblema novo aparece na hora.") + "</p>" +
       '<div class="cq-mini">' + lista.slice(0, 12).map(function (e) { return medalha(e, true, 44); }).join("") + "</div>" +
       '<button type="button" class="cq-ok">Ver no Painel</button></div>';
     document.body.appendChild(ov);
