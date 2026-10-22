@@ -62,3 +62,14 @@ medtechbr.com.br/quiz-enare-farmacia/. Deploy: git push (GitHub Pages). A cada d
   `docs/junta_reais.py` casa por enunciado+alternativas inteiros (duas questões diferentes começam igual).
 - Descartes por gabarito que ensinaria errado ficam em `provas-reais/comentadas/*.descartes.md` (ex.: EBSERH 2024 q21,
   descartada também no Enfermare/Fisiare).
+
+## Conquistas (22/10/2026)
+- Motor comum `mtconquistas.js` = cópia fiel de `~/Documents/Claude/_mtconquistas/` (não editar aqui). Emblemas e dados do
+  app em `conquistas-farma.js` (carregado depois do script principal; lê answers/BANK/CHAVES/okResp/ATIV_KEY).
+- 46 emblemas em 6 famílias (sequência, questões, acertos, domínio por tema 20+ questões e 75%+, outras abas, surpresas
+  secretas). Ganho fica ganho: `enareFarmaConq_v1` {id: momento}, coleção `conq` (mapa). Primeira vez sem nada salvo:
+  um aviso só com os que a pessoa já merecia.
+- Dia de estudo = 5+ questões no dia (`ativ`) OU sessão concluída de flashcards/treino (`enareFarmaDias_v1`, coleção `dias`,
+  gravada pelo iframe via `parent.MTConquistas.sessao()`). Ofensiva recalculada do histórico: a cada 7 dias de estudo, 1 folga
+  (máx. 2); dia sem estudo gasta a folga sem quebrar. O "dias seguidos" do mapa de atividade usa essa mesma conta.
+- Painel: seção `#pnConqSec`/`#pnConq` logo abaixo dos cartões do topo.

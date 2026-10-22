@@ -565,6 +565,7 @@
     if(st.parada && st.parada.f===k) delete st.parada;
     if(!ant || (ant.estrelas||0)<estrelas) st.fases[k]={estrelas:estrelas,pct:pct};
     marcarDia(); save(); hud();
+    try{ window.parent.MTConquistas && window.parent.MTConquistas.sessao("treino"); }catch(e){}   /* o dia conta (conquistas) */
     var big=document.getElementById("endEmoji"); big.classList.toggle("ouro", estrelas===3);
     big.innerHTML = '<svg class="ic'+(estrelas===3?'':' cheio')+'"><use href="#i-'+(estrelas===3?'trofeu':'estrela')+'"/></svg>';
     document.getElementById("endTit").textContent = estrelas===3?"Fase perfeita!":"Fase concluída!";

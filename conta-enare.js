@@ -42,11 +42,13 @@
     planilha: "enarePlanilha_v1",        /* log de erros: célula por célula */
     fcards: "enareFcards_v1",            /* flashcards: cartão por cartão */
     treino: "enareTreino_v1",            /* treino: fase por fase */
-    exames: "enareExames_v1"             /* exames: "domino"/"rever" por cartão */
+    exames: "enareExames_v1",            /* exames: "domino"/"rever" por cartão */
+    conq: "enareFarmaConq_v1",           /* emblemas ganhos {id: momento} (conquistas-farma.js) */
+    dias: "enareFarmaDias_v1"            /* sessões de flashcards/treino que contam o dia {data: n} */
   };
   const TODAS = {
     resp: { tipo: "mapa" }, riscos: { tipo: "mapa" }, sinal: { tipo: "mapa" }, ocultos: { tipo: "mapa" },
-    plano: { tipo: "mapa" }, sim: { tipo: "mapa" }, planilha: { tipo: "mapa" }, fcards: { tipo: "mapa" }, treino: { tipo: "mapa" }, exames: { tipo: "mapa" },
+    plano: { tipo: "mapa" }, sim: { tipo: "mapa" }, planilha: { tipo: "mapa" }, fcards: { tipo: "mapa" }, treino: { tipo: "mapa" }, exames: { tipo: "mapa" }, conq: { tipo: "mapa" }, dias: { tipo: "mapa" },
     ativ: { tipo: "soma" },
     meta: { tipo: "doc" }
   };

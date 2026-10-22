@@ -349,6 +349,7 @@ h1,h2,h3{letter-spacing:-.02em;margin:0}
     };
   });
   function fim(){
+    if(vistos){ try{ window.parent.MTConquistas && window.parent.MTConquistas.sessao("fcards"); }catch(e){} }   /* o dia conta */
     elSessao.hidden=true; elDone.hidden=false;
     document.getElementById("kRev").textContent=vistos;
     document.getElementById("kAcc").textContent=(vistos? Math.round(100*acertos/vistos):0)+"%";

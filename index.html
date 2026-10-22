@@ -975,6 +975,12 @@
       <span class="dp-t"><b id="pnRefazerN"></b>Responda de novo só as que você errou. Acertou, ela sai da lista.</span>
       <button type="button" class="btn" id="pnRefazerBt">Refazer minhas erradas</button></div>
 
+    <div class="pn-sec" id="pnConqSec">
+      <h2><span class="ico" style="--k:var(--c-laranja)"><svg class="ic"><use href="#i-trophy"/></svg></span>Conquistas</h2>
+      <p>Um dia conta para a sequência com 5 questões ou uma sessão de flashcards ou treino. A cada 7 dias você ganha uma folga para um dia sem estudo.</p>
+    </div>
+    <div class="pn-card" id="pnConq"><!-- via conquistas-farma.js --></div>
+
     <div class="pn-sec">
       <h2><span class="ico" style="--k:var(--c-azul)"><svg class="ic"><use href="#i-target"/></svg></span>Meta até a prova</h2>
       <p>Defina a data e quantas questões quer ter feito. O app calcula o ritmo necessário.</p>
@@ -1798,6 +1804,7 @@ function registraAtividade(){
   const a = lerJSON(ATIV_KEY,{}), k = hojeISO();
   a[k] = (a[k]||0) + 1;
   try{ localStorage.setItem(ATIV_KEY, JSON.stringify(a)); }catch(e){}
+  if(window.MTConquistas) MTConquistas.avaliar();   // emblemas (conquistas-farma.js)
 }
 
 (function(){
@@ -1999,6 +2006,8 @@ function registraAtividade(){
       else { if(hojeISO(d) !== hojeISO(hoje)) break; }      // hoje ainda zerado não quebra a ofensiva
       if(streak > 400) break;
     }
+    /* a sequência oficial é a das conquistas (5 questões ou uma sessão por dia, com folga semanal) */
+    const ofc = window.MTConquistas && MTConquistas.ofensiva(); if(ofc) streak = ofc.atual;
     document.getElementById("pnStreak").innerHTML = streak>1 ? `<svg class="ic"><use href="#i-flame"/></svg> <b>${streak} dias seguidos</b>` : "";
   }
 
@@ -2461,7 +2470,7 @@ montaDiarios();
   function confirmFinish(){
     const {sim,state}=cur, n=visiveis(sim).length, answered=respondidas(sim, state);
     const msg = answered<n ? `Você respondeu ${answered} de ${n} questões. Finalizar e ver a nota mesmo assim?` : "Finalizar a prova e ver a nota final?";
-    if(confirm(msg)){ state.finished=true; saveState(); renderResult(); }
+    if(confirm(msg)){ state.finished=true; saveState(); renderResult(); if(window.MTConquistas) MTConquistas.avaliar(); }
   }
   function grade(){
     /* gabarito corrigido pela revisão: a nota é recalculada aqui com o gabarito novo (o salvo não muda) */
@@ -2860,6 +2869,8 @@ if ("serviceWorker" in navigator) {
 <!-- acesso por produto (paywall e CPF) e conta: depois do app, que avisa "enare-pronto" -->
 <script src="/_mtacesso.js?v=12"></script>
 <script src="conta-enare.js"></script>
+<script src="mtconquistas.js"></script>
+<script src="conquistas-farma.js"></script>
 <script src="/_mtvoltar.js?v=3" defer></script>
 </body>
 </html>
